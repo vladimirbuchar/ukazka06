@@ -1,0 +1,105 @@
+﻿using Core.Base.Dto;
+using Core.DataTypes;
+using EduServices.OrganizationRole.Service;
+using EduServices.StudentAttendance.Dto;
+using EduServices.StudentAttendance.Service;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+
+namespace EduApi.Controllers.ClientZone.StudentAttendance
+{
+    [ApiExplorerSettings(GroupName = "StudyZone")]
+    public class StudentAttendanceController : BaseClientZoneController
+    {
+        private readonly IStudentAttendanceService _studentAttendanceService;
+
+        public StudentAttendanceController(
+            IStudentAttendanceService studentAttendanceService,
+            ILogger<StudentAttendanceController> logger,
+            IOrganizationRoleService organizationRoleService
+        )
+            : base(logger, organizationRoleService)
+        {
+            _studentAttendanceService = studentAttendanceService;
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(Result), 200)]
+        [ProducesResponseType(typeof(void), 404)]
+        [ProducesResponseType(typeof(SystemError), 500)]
+        [ProducesResponseType(typeof(Result), 400)]
+        [ProducesResponseType(typeof(void), 403)]
+        public ActionResult Create(StudentAttendanceCreateDto saveStudentAttendanceDto)
+        {
+            try
+            {
+                _studentAttendanceService.AddObject(saveStudentAttendanceDto, GetLoggedUserId(), GetClientCulture());
+                return SendResponse();
+            }
+            catch (Exception e)
+            {
+                return SendSystemError(e);
+            }
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(HashSet<StudentAttendanceListDto>), 200)]
+        [ProducesResponseType(typeof(void), 404)]
+        [ProducesResponseType(typeof(SystemError), 500)]
+        [ProducesResponseType(typeof(Result), 400)]
+        [ProducesResponseType(typeof(void), 403)]
+        public ActionResult List([FromQuery] ListRequestDto request)
+        {
+            try
+            {
+                return SendResponse(_studentAttendanceService.GetList(x => x.CourseTermId == request.ParentId));
+            }
+            catch (Exception e)
+            {
+                return SendSystemError(e);
+            }
+        }
+
+        [HttpDelete]
+        [ProducesResponseType(typeof(Result), 200)]
+        [ProducesResponseType(typeof(void), 404)]
+        [ProducesResponseType(typeof(SystemError), 500)]
+        [ProducesResponseType(typeof(Result), 400)]
+        [ProducesResponseType(typeof(void), 403)]
+        public ActionResult Delete([FromQuery] DeleteDto request)
+        {
+            try
+            {
+                CheckPermition(GetOrganizationIdByBranch(request.Id));
+                _studentAttendanceService.DeleteObject(request.Id, GetLoggedUserId());
+                return SendResponse();
+            }
+            catch (Exception e)
+            {
+                return SendSystemError(e);
+            }
+        }
+
+        [HttpPut]
+        [ProducesResponseType(typeof(Result), 200)]
+        [ProducesResponseType(typeof(void), 404)]
+        [ProducesResponseType(typeof(SystemError), 500)]
+        [ProducesResponseType(typeof(Result), 400)]
+        [ProducesResponseType(typeof(void), 403)]
+        public ActionResult Restore([FromQuery] RestoreDto request)
+        {
+            try
+            {
+                CheckPermition(GetOrganizationIdByBranch(request.Id));
+                _studentAttendanceService.RestoreObject(request.Id, GetLoggedUserId());
+                return SendResponse();
+            }
+            catch (Exception e)
+            {
+                return SendSystemError(e);
+            }
+        }
+    }
+}

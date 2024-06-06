@@ -1,0 +1,195 @@
+﻿using Core.Base.Dto;
+using Core.DataTypes;
+using EduServices.Note.Dto;
+using EduServices.Note.Service;
+using EduServices.OrganizationRole.Service;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+
+namespace EduApi.Controllers.ClientZone.Note
+{
+    [ApiExplorerSettings(GroupName = "StudyZone")]
+    public class NoteController : BaseClientZoneController
+    {
+        private readonly INoteService _noteService;
+
+        public NoteController(INoteService noteService, ILogger<NoteController> logger, IOrganizationRoleService organizationRoleService)
+            : base(logger, organizationRoleService)
+
+        {
+            _noteService = noteService;
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(Result), 200)]
+        [ProducesResponseType(typeof(void), 404)]
+        [ProducesResponseType(typeof(SystemError), 500)]
+        [ProducesResponseType(typeof(Result), 400)]
+        [ProducesResponseType(typeof(void), 403)]
+        public ActionResult Create(NoteCreateDto addNoteDto)
+        {
+            try
+            {
+                addNoteDto.UserId = GetLoggedUserId();
+                return SendResponse(_noteService.AddObject(addNoteDto, GetLoggedUserId(), GetClientCulture()));
+            }
+            catch (Exception e)
+            {
+                return SendSystemError(e);
+            }
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(HashSet<NoteListDto>), 200)]
+        [ProducesResponseType(typeof(void), 404)]
+        [ProducesResponseType(typeof(SystemError), 500)]
+        [ProducesResponseType(typeof(Result), 400)]
+        [ProducesResponseType(typeof(void), 403)]
+        public ActionResult List([FromQuery] ListDeletedRequestDto request)
+        {
+            try
+            {
+
+                return SendResponse(_noteService.GetList(x => x.UserId == GetLoggedUserId(), request.IsDeleted, GetClientCulture()));
+            }
+            catch (Exception e)
+            {
+                return SendSystemError(e);
+            }
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(NoteDetailDto), 200)]
+        [ProducesResponseType(typeof(void), 404)]
+        [ProducesResponseType(typeof(SystemError), 500)]
+        [ProducesResponseType(typeof(Result), 400)]
+        [ProducesResponseType(typeof(void), 403)]
+        public ActionResult Detail([FromQuery] DetailRequestDto request)
+        {
+            try
+            {
+
+                return SendResponse(_noteService.GetDetail(request.Id, GetClientCulture()));
+            }
+            catch (Exception e)
+            {
+                return SendSystemError(e);
+            }
+        }
+
+        [HttpPut]
+        [ProducesResponseType(typeof(Result), 200)]
+        [ProducesResponseType(typeof(void), 404)]
+        [ProducesResponseType(typeof(SystemError), 500)]
+        [ProducesResponseType(typeof(Result), 400)]
+        [ProducesResponseType(typeof(void), 403)]
+        public ActionResult Update(NoteUpdateDto updateNoteDto)
+        {
+            try
+            {
+                _noteService.UpdateObject(updateNoteDto, GetLoggedUserId(), GetClientCulture());
+                return SendResponse();
+            }
+            catch (Exception e)
+            {
+                return SendSystemError(e);
+            }
+        }
+
+        [HttpDelete]
+        [ProducesResponseType(typeof(Result), 200)]
+        [ProducesResponseType(typeof(void), 404)]
+        [ProducesResponseType(typeof(SystemError), 500)]
+        [ProducesResponseType(typeof(Result), 400)]
+        [ProducesResponseType(typeof(void), 403)]
+        public ActionResult Delete([FromQuery] DeleteDto request)
+        {
+            try
+            {
+
+                _noteService.DeleteObject(request.Id, GetLoggedUserId());
+                return SendResponse();
+            }
+            catch (Exception e)
+            {
+                return SendSystemError(e);
+            }
+        }
+
+        [HttpPut]
+        [ProducesResponseType(typeof(Result), 200)]
+        [ProducesResponseType(typeof(void), 404)]
+        [ProducesResponseType(typeof(SystemError), 500)]
+        [ProducesResponseType(typeof(Result), 400)]
+        [ProducesResponseType(typeof(void), 403)]
+        public ActionResult Restore([FromQuery] RestoreDto request)
+        {
+            try
+            {
+                _noteService.RestoreObject(request.Id, GetLoggedUserId());
+                return SendResponse();
+            }
+            catch (Exception e)
+            {
+                return SendSystemError(e);
+            }
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(Result), 200)]
+        [ProducesResponseType(typeof(void), 404)]
+        [ProducesResponseType(typeof(SystemError), 500)]
+        [ProducesResponseType(typeof(Result), 400)]
+        [ProducesResponseType(typeof(void), 403)]
+        public ActionResult CreateImage(NoteCreateImageDto saveImageNoteDto)
+        {
+            try
+            {
+                return SendResponse(_noteService.SaveFile(saveImageNoteDto, GetLoggedUserId(), GetClientCulture()));
+            }
+            catch (Exception e)
+            {
+                return SendSystemError(e);
+            }
+        }
+
+        [HttpPut]
+        [ProducesResponseType(typeof(Result), 200)]
+        [ProducesResponseType(typeof(void), 404)]
+        [ProducesResponseType(typeof(SystemError), 500)]
+        [ProducesResponseType(typeof(Result), 400)]
+        [ProducesResponseType(typeof(void), 403)]
+        public ActionResult UpdateImage(NoteUpdateImageDto updateNoteImageDto)
+        {
+            try
+            {
+                _noteService.UpdateNoteImage(updateNoteImageDto, GetLoggedUserId(), GetClientCulture());
+                return SendResponse();
+            }
+            catch (Exception e)
+            {
+                return SendSystemError(e);
+            }
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(Result), 200)]
+        [ProducesResponseType(typeof(void), 404)]
+        [ProducesResponseType(typeof(SystemError), 500)]
+        [ProducesResponseType(typeof(Result), 400)]
+        [ProducesResponseType(typeof(void), 403)]
+        public ActionResult SaveTableAsNote(NoteCreateTableDto saveTableAsNoteDto)
+        {
+            try
+            {
+                return SendResponse(_noteService.SaveTableAsNote(saveTableAsNoteDto, GetLoggedUserId(), GetClientCulture()));
+            }
+            catch (Exception e)
+            {
+                return SendSystemError(e);
+            }
+        }
+    }
+}

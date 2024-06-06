@@ -1,0 +1,38 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using Core.Base.Repository;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
+using Model;
+using Model.Tables.Edu.CourseMaterial;
+
+namespace EduRepository.CourseMaterialRepository
+{
+    public class CourseMaterialRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<CourseMaterialDbo>(dbContext, memoryCache), ICourseMaterialRepository
+    {
+        public override CourseMaterialDbo GetEntity(Guid id)
+        {
+            return _dbContext.Set<CourseMaterialDbo>().Where(x => x.Id == id).Include(x => x.CourseMaterialTranslation).ThenInclude(x => x.Culture).FirstOrDefault();
+        }
+
+        public override HashSet<CourseMaterialDbo> GetEntities(bool deleted, Expression<Func<CourseMaterialDbo, bool>> predicate = null)
+        {
+            return [.. _dbContext.Set<CourseMaterialDbo>().Where(x => x.IsDeleted == deleted).Where(predicate).Include(x => x.CourseMaterialTranslation).ThenInclude(x => x.Culture)];
+        }
+
+        public override Guid GetOrganizationId(Guid objectId)
+        {
+            return _dbContext.Set<CourseMaterialDbo>().FirstOrDefault(x => x.Id == objectId).OrganizationId;
+        }
+
+        public HashSet<CourseMaterialFileRepositoryDbo> GetFiles(Guid id)
+        {
+            return
+            [
+                .. _dbContext.Set<CourseMaterialDbo>().Where(x => x.Id == id).Include(x => x.CourseMaterialFileRepositories).ThenInclude(x => x.Culture).FirstOrDefault().CourseMaterialFileRepositories
+            ];
+        }
+    }
+}

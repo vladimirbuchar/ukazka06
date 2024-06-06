@@ -1,0 +1,596 @@
+[
+  // Answer
+  {
+    "route": "/api/clientzone/Answer/Create",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/Answer/List",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/Answer/Detail",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/Answer/Update",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/Answer/Delete",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/Answer/Restore",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/Answer/FileUpload",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/Answer/DeleteAnswerInQuestion",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+
+  //BankOfQuestion
+  {
+    "route": "/api/clientzone/BankOfQuestion/Create",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/BankOfQuestion/List",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/BankOfQuestion/Detail",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/BankOfQuestion/Update",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/BankOfQuestion/Delete",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/BankOfQuestion/Restore",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+
+  //Branch 
+  {
+    "route": "/api/clientzone/Branch/Create",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/Branch/List",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/Branch/Detail",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/Branch/Update",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/Branch/Delete",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/Branch/Restore",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/Branch/ChangeMainBranch",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+
+  //Certificate
+  {
+    "route": "/api/clientzone/Certificate/Create",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/Certificate/List",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/Certificate/Detail",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/Certificate/Update",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/Certificate/Delete",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/Certificate/Restore",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+
+  //Classroom
+  {
+    "route": "/api/clientzone/ClassRoom/Create",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/ClassRoom/List",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/ClassRoom/Detail",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/ClassRoom/Update",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/ClassRoom/Delete",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/ClassRoom/Restore",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/ClassRoom/GetAllClassRoomInOrganization",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/ClassRoom/GetClassRoomTimeTable",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  // codebook
+  {
+    "route": "/api/clientzone/CodeBook/GetCodeBookItems/",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR", "COURSE_EDITOR" ]
+  },
+  // course
+
+  {
+    "route": "/api/clientzone/Course/Create",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/Course/List",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/Course/Detail",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/Course/Update",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/Course/Delete",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/Course/Restore",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+
+  //CourseLesson
+  {
+    "route": "/api/clientzone/CourseLesson/Create",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseLesson/List",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseLesson/Detail",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseLesson/Update",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseLesson/Delete",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseLesson/Restore",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseLesson/FileUpload",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseLesson/UpdatePositionCourseLesson",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+
+  //CourseLessonItem
+  {
+    "route": "/api/clientzone/CourseLessonItem/Create",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseLessonItem/List",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseLessonItem/Detail",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseLessonItem/Update",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseLessonItem/Delete",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseLessonItem/Restore",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseLessonItem/FileUpload",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseLessonItem/FileDelete",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseLessonItem/UpdatePositionCourseLessonItem",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+
+  //CourseMaterial
+
+  {
+    "route": "/api/clientzone/CourseMaterial/Create",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseMaterial/List",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseMaterial/Detail",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseMaterial/Update",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseMaterial/Delete",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseMaterial/Restore",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseMaterial/FileUpload",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseMaterial/FileDelete",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseMaterial/FileDelete",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseMaterial/GetFilesStudent",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+
+
+  {
+    "route": "/api/clientzone/CourseTerm/Create",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  //CourseTerm
+  {
+    "route": "/api/clientzone/CourseTerm/List",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseTerm/Detail",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseTerm/Update",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseTerm/Delete",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseTerm/Restore",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+
+  //CourseTermStudent
+  {
+    "route": "/api/clientzone/CourseTermStudent/Create",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+
+  {
+    "route": "/api/clientzone/CourseTermStudent/List",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseTermStudent/Delete",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+
+  //CourseTermTimeTable
+  {
+    "route": "/api/clientzone/CourseTermTimeTable/Create",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseTermTimeTable/List",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseTermTimeTable/CancelCourseTerm",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseTermTimeTable/RestoreCourseTerm",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  //CourseTest
+  {
+    "route": "/api/clientzone/CourseTest/Create",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseTest/Detail",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseTest/Update",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  //CourseTestEvaluation
+  {
+    "route": "/api/clientzone/CourseTestEvaluation/Create",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseTestEvaluation/List",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseTestEvaluation/Update",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/CourseTestEvaluation/Delete",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+
+  //organization
+  {
+    "route": "/api/clientzone/Organization/Detail",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+
+  {
+    "route": "/api/clientzone/Organization/Update",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/Organization/Delete",
+    "roles": [ "ORGANIZATION_OWNER" ]
+  },
+  {
+    "route": "/api/clientzone/Organization/FileUpload",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  //OrganizationCulture
+  {
+    "route": "/api/clientzone/OrganizationCulture/Create",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/OrganizationCulture/List",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/OrganizationCulture/Update",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/OrganizationCulture/Delete",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/OrganizationCulture/Restore",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  //OrganizationSetting
+  {
+    "route": "/api/clientzone/OrganizationSetting/Update",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/OrganizationSetting/Detail",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  //OrganizationStudyHours
+  {
+    "route": "/api/clientzone/OrganizationStudyHours/Create",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/OrganizationStudyHours/List",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/OrganizationStudyHours/Update",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/OrganizationStudyHours/Delete",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/OrganizationStudyHours/Restore",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+
+  //Question
+  {
+    "route": "/api/clientzone/Question/Create",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/Question/List",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/Question/Detail",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/Question/Update",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/Question/Delete",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/Question/Restore",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/Question/FileUpload",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  //SendMessage
+  {
+    "route": "/api/clientzone/SendMessage/Create",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/SendMessage/List",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/SendMessage/Detail",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/SendMessage/Update",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/SendMessage/Delete",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+
+  {
+    "route": "/api/clientzone/SendMessage/Restore",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+
+  {
+    "route": "/api/clientzone/SendMessage/GetSendMessageInOrganizationEmail",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  //StudentGroup
+  {
+    "route": "/api/clientzone/StudentGroup/Create",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/StudentGroup/List",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/StudentGroup/Detail",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/StudentGroup/Update",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/StudentGroup/Delete",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/StudentGroup/Restore",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+
+  //StudentInGroup
+  {
+    "route": "/api/clientzone/StudentInGroup/Create",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/StudentInGroup/List",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/StudentInGroup/Delete",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  //UserInOrganization
+  {
+    "route": "/api/clientzone/UserInOrganization/Create",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/UserInOrganization/List",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/UserInOrganization/Detail",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/UserInOrganization/Update",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/UserInOrganization/Delete",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+]

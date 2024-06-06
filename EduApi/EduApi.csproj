@@ -1,0 +1,90 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <NoWin32Manifest>true</NoWin32Manifest>
+    <Authors>Vladimír Buchar</Authors>
+    <Company></Company>
+    <Product>FlexibleLMS</Product>
+    <PackageProjectUrl>https://www.flexiblelms.com</PackageProjectUrl>
+    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+    <RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
+    <StartupObject />
+    <UserSecretsId>f6af155e-64de-45a9-9bcb-b4934c4c011e</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Import\Slider\**" />
+    <Compile Remove="Migrations\old\**" />
+    <Content Remove="Import\Slider\**" />
+    <Content Remove="Migrations\old\**" />
+    <EmbeddedResource Remove="Import\Slider\**" />
+    <EmbeddedResource Remove="Migrations\old\**" />
+    <None Remove="Import\Slider\**" />
+    <None Remove="Migrations\old\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20200421080809_GetMyOrganization.cs" />
+    <Compile Remove="Migrations\20200421080809_GetMyOrganization.Designer.cs" />
+    <Compile Remove="Migrations\20200425160641_RanameColumns.cs" />
+    <Compile Remove="Migrations\20200425160641_RanameColumns.Designer.cs" />
+    <Compile Remove="Migrations\20200518181626_AddClassRoomToCourseTerm.cs" />
+    <Compile Remove="Migrations\20200518181626_AddClassRoomToCourseTerm.Designer.cs" />
+    <Compile Remove="Migrations\20200531145130_AddFileRepository.cs" />
+    <Compile Remove="Migrations\20200531145130_AddFileRepository.Designer.cs" />
+    <Compile Remove="Migrations\20200620125455_AddCodeBookSelectValue.cs" />
+    <Compile Remove="Migrations\20200620125455_AddCodeBookSelectValue.Designer.cs" />
+    <Compile Remove="Migrations\20200620141726_AddCodeBookSelectValue.cs" />
+    <Compile Remove="Migrations\20200620141726_AddCodeBookSelectValue.Designer.cs" />
+    <Compile Remove="Migrations\20201230134950_AddCulture.cs" />
+    <Compile Remove="Migrations\20201230134950_AddCulture.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\Admin\Course\" />
+    <Folder Include="Controllers\Admin\User\" />
+    <Folder Include="Data\Slider\" />
+    <Folder Include="Log\" />
+    <Folder Include="wwwroot\FileRepository\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0" />
+    <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0" />
+    <PackageReference Include="Hangfire" Version="1.8.12" />
+    <PackageReference Include="Hangfire.AspNetCore" Version="1.8.12" />
+    <PackageReference Include="Hangfire.Dashboard.Authorization" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
+    <PackageReference Include="NetEscapades.Extensions.Logging.RollingFile" Version="2.5.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.6.2" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj" />
+    <ProjectReference Include="..\EduServices\EduServices.csproj" />
+    <ProjectReference Include="..\Model\Model.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\Users\Vladi\source\repos\FlexibleLMS_be\EduApi\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="C:\Users\Vladi\source\repos\FlexibleLMS_be\EduApi\.editorconfig" />
+  </ItemGroup>
+
+  
+
+</Project>
