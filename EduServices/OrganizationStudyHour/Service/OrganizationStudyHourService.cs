@@ -34,11 +34,11 @@ namespace EduServices.OrganizationStudyHour.Service
     {
         private readonly HashSet<TimeTableDbo> _timeTables = timeTableCodebook.GetCodeBookItems();
 
-        public override Result<StudyHourDetailDto> UpdateObject(StudyHourUpdateDto update, Guid userId, string culture)
+        public override Result<StudyHourDetailDto> UpdateObject(StudyHourUpdateDto update, Guid userId, string culture, Result<StudyHourDetailDto> result = null)
         {
             OrganizationStudyHourDbo organizationStudyHourDbo = _repository.GetEntity(update.Id) ?? throw new KeyNotFoundException(update.Id.ToString());
             OrganizationStudyHourDbo updateStudyHours = _convertor.ConvertToBussinessEntity(update, organizationStudyHourDbo, culture);
-            Result<StudyHourDetailDto> result = new() { Data = _convertor.ConvertToWebModel(_repository.UpdateEntity(updateStudyHours, Guid.Empty), culture) };
+            result = new() { Data = _convertor.ConvertToWebModel(_repository.UpdateEntity(updateStudyHours, Guid.Empty), culture) };
             return result;
         }
 

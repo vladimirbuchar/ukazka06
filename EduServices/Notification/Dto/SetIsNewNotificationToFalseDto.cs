@@ -2,7 +2,7 @@
 
 namespace EduServices.Notification.Dto
 {
-    public class SetIsNewNotificationToFalseDto : ListDto
+    public class SetIsNewNotificationToFalseDto : BaseDto
     {
 
     }

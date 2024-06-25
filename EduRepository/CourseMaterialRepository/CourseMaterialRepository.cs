@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using Core.Base.Repository;
+﻿using Core.Base.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
 using Model.Tables.Edu.CourseMaterial;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace EduRepository.CourseMaterialRepository
 {
@@ -14,12 +14,12 @@ namespace EduRepository.CourseMaterialRepository
     {
         public override CourseMaterialDbo GetEntity(Guid id)
         {
-            return _dbContext.Set<CourseMaterialDbo>().Where(x => x.Id == id).Include(x => x.CourseMaterialTranslation).ThenInclude(x => x.Culture).FirstOrDefault();
+            return _dbContext.Set<CourseMaterialDbo>().Include(x => x.CourseMaterialTranslation.Where(x => x.IsDeleted == false)).ThenInclude(x => x.Culture).FirstOrDefault(x => x.Id == id);
         }
 
         public override HashSet<CourseMaterialDbo> GetEntities(bool deleted, Expression<Func<CourseMaterialDbo, bool>> predicate = null)
         {
-            return [.. _dbContext.Set<CourseMaterialDbo>().Where(x => x.IsDeleted == deleted).Where(predicate).Include(x => x.CourseMaterialTranslation).ThenInclude(x => x.Culture)];
+            return [.. _dbContext.Set<CourseMaterialDbo>().Where(x => x.IsDeleted == deleted).Where(predicate).Include(x => x.CourseMaterialTranslation.Where(x => x.IsDeleted == false)).ThenInclude(x => x.Culture)];
         }
 
         public override Guid GetOrganizationId(Guid objectId)
@@ -31,7 +31,7 @@ namespace EduRepository.CourseMaterialRepository
         {
             return
             [
-                .. _dbContext.Set<CourseMaterialDbo>().Where(x => x.Id == id).Include(x => x.CourseMaterialFileRepositories).ThenInclude(x => x.Culture).FirstOrDefault().CourseMaterialFileRepositories
+                .. _dbContext.Set<CourseMaterialDbo>().Include(x => x.CourseMaterialFileRepositories.Where(x => x.IsDeleted == false)).ThenInclude(x => x.Culture).FirstOrDefault(x => x.Id == id).CourseMaterialFileRepositories
             ];
         }
     }

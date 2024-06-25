@@ -1,27 +1,21 @@
 ﻿using Asp.Versioning;
 using Core.Constants;
 using EduServices;
+using EduServices.Jobs;
 using Hangfire;
-using Hangfire.Dashboard;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using Model;
-using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -91,6 +85,7 @@ namespace EduApi
             services.RegistrationRoute();
             services.RegistrationPermissions();
             services.RegistrationSetup();
+            services.AddTransient<SendEmailJob>();
             services
                 .AddMvc(options =>
                 {
@@ -225,6 +220,7 @@ namespace EduApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        [Obsolete]
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseRouting();
@@ -257,7 +253,6 @@ namespace EduApi
             app.UseSwaggerUI(c =>
             {
                 c.DocumentTitle = "FlexibleLMS";
-
                 c.SwaggerEndpoint("/swagger/Public/swagger.json", "FlexibleLMS API V1 - internal public");
                 c.SwaggerEndpoint("/swagger/ClientZone/swagger.json", "FlexibleLMS API V1 - internal course");
                 c.SwaggerEndpoint("/swagger/Organization/swagger.json", "FlexibleLMS API V1 - internal organization");
@@ -275,138 +270,31 @@ namespace EduApi
                 c.RoutePrefix = "swagger";
             });
 
-
-
             app.UseHangfireDashboard("/hangfire", new DashboardOptions
             {
+                Authorization = new[]
+            {
+                new BasicAuthAuthorizationFilter(new BasicAuthAuthorizationFilterOptions
+                {
+                    SslRedirect = false,
+                    RequireSsl = false,
+                    LoginCaseSensitive = true,
+                    Users = new[]
+                    {
+                        new BasicAuthAuthorizationUser
+                        {
+                            Login = Configuration.GetSection("Hangfire").GetValue<string>("userName"),
+                            PasswordClear = Configuration.GetSection("Hangfire").GetValue<string>("userPassword")
+                        }
+                    }
+                })
+            }
             });
-
-        }
-    }
-
-    public class BasicAuthAuthorizationFilter : IDashboardAuthorizationFilter
-    {
-        private readonly BasicAuthAuthorizationFilterOptions _options;
-
-        public BasicAuthAuthorizationFilter([NotNull] BasicAuthAuthorizationFilterOptions options)
-        {
-            _options = options ?? throw new ArgumentNullException(nameof(options));
-        }
-
-        public bool Authorize([NotNull] DashboardContext context)
-        {
-            var httpContext = context.GetHttpContext();
-
-            string authHeader = httpContext.Request.Headers["Authorization"];
-            if (authHeader == null || !authHeader.StartsWith("Basic "))
-            {
-                return Challenge(httpContext);
-            }
-
-            string encodedUsernamePassword = authHeader.Substring("Basic ".Length).Trim();
-            string usernamePassword = Encoding.UTF8.GetString(Convert.FromBase64String(encodedUsernamePassword));
-
-            int separatorIndex = usernamePassword.IndexOf(':');
-            string username = usernamePassword.Substring(0, separatorIndex);
-            string password = usernamePassword.Substring(separatorIndex + 1);
-
-            foreach (var user in _options.Users)
-            {
-                if (string.Equals(username, user.Login, _options.LoginCaseSensitive ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase) &&
-                    string.Equals(password, user.PasswordClear))
-                {
-                    return true;
-                }
-            }
-
-            return Challenge(httpContext);
-        }
-
-        private bool Challenge(HttpContext httpContext)
-        {
-            httpContext.Response.StatusCode = 401;
-            httpContext.Response.Headers.Add("WWW-Authenticate", "Basic realm=\"Hangfire Dashboard\"");
-            return false;
-        }
-    }
-
-    public class BasicAuthAuthorizationFilterOptions
-    {
-        public bool SslRedirect { get; set; }
-        public bool RequireSsl { get; set; }
-        public bool LoginCaseSensitive { get; set; }
-        public BasicAuthAuthorizationUser[] Users { get; set; }
-    }
-
-    public class BasicAuthAuthorizationUser
-    {
-        public string Login { get; set; }
-        public string PasswordClear { get; set; }
-    }
-
-
-    public class AddRequiredHeaderParameter : IOperationFilter
-    {
-
-        public void Apply(OpenApiOperation operation, OperationFilterContext context)
-        {
-            if (operation.Parameters == null)
-                operation.Parameters = new List<OpenApiParameter>();
-
-            operation.Parameters.Add(new OpenApiParameter
-            {
-                Name = "ClientCulture",
-                In = ParameterLocation.Header,
-                Required = false
-            });
-        }
-    }
-
-
-    public class RemoveAuthorizationFilter : IDocumentFilter
-    {
-        public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context)
-        {
-            if (context.DocumentName == "Public" || context.DocumentName == "ExternalPublic" || context.DocumentName == "Setup")
-            {
-                swaggerDoc.Components.SecuritySchemes.Clear();
-            }
-        }
-
-
-    }
-    // Custom operation filter to set default values for Swagger
-    public class SwaggerDefaultValues : IOperationFilter
-    {
-        public void Apply(OpenApiOperation operation, OperationFilterContext context)
-        {
-            var apiDescription = context.ApiDescription;
-
-            operation.Deprecated |= apiDescription.IsDeprecated();
-
-            foreach (var responseType in context.ApiDescription.SupportedResponseTypes)
-            {
-                var responseKey = responseType.StatusCode.ToString();
-                if (!operation.Responses.ContainsKey(responseKey))
-                {
-                    operation.Responses[responseKey] = new OpenApiResponse { Description = "Default" };
-                }
-            }
-
-            foreach (var parameter in operation.Parameters)
-            {
-                var description = apiDescription.ParameterDescriptions
-                    .First(p => p.Name == parameter.Name);
-
-                parameter.Description ??= description.ModelMetadata.Description;
-
-                if (parameter.Schema.Default == null && description.DefaultValue != null)
-                {
-                    parameter.Schema.Default = new OpenApiString(description.DefaultValue.ToString());
-                }
-
-                parameter.Required |= description.IsRequired;
-            }
+            var serviceScopeFactory = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>();
+            var jobActivator = new ScopedJobActivator(serviceScopeFactory);
+            GlobalConfiguration.Configuration.UseActivator(jobActivator);
+            jobActivator.ActivateJob(typeof(SendEmailJob));
+            RecurringJob.AddOrUpdate<SendEmailJob>(job => job.Execute(), Cron.Minutely);
         }
     }
 }

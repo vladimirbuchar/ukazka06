@@ -106,8 +106,7 @@ namespace EduApi.Controllers.Admin.Permissions
         {
             try
             {
-                _permissionsService.DeleteObject(request.Id, GetLoggedUserId());
-                return SendResponse();
+                return SendResponse(_permissionsService.DeleteObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
             {
@@ -125,8 +124,7 @@ namespace EduApi.Controllers.Admin.Permissions
         {
             try
             {
-                _permissionsService.RestoreObject(request.Id, GetLoggedUserId());
-                return SendResponse();
+                return SendResponse(_permissionsService.RestoreObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
             {

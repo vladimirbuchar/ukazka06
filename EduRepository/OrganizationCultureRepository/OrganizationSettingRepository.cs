@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using Core.Base.Repository;
+﻿using Core.Base.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
 using Model.Tables.Link;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace EduRepository.OrganizationCultureRepository
 {
@@ -19,12 +19,12 @@ namespace EduRepository.OrganizationCultureRepository
 
         public override OrganizationCultureDbo GetEntity(Guid id)
         {
-            return _dbContext.Set<OrganizationCultureDbo>().Where(x => x.Id == id).Include(x => x.Culture).FirstOrDefault();
+            return _dbContext.Set<OrganizationCultureDbo>().Include(x => x.Culture).FirstOrDefault(x => x.Id == id);
         }
 
         public override Guid GetOrganizationId(Guid objectId)
         {
-            return _dbContext.Set<OrganizationCultureDbo>().Where(x => x.Id == objectId).FirstOrDefault().OrganizationId;
+            return _dbContext.Set<OrganizationCultureDbo>().FirstOrDefault(x => x.Id == objectId).OrganizationId;
         }
     }
 }

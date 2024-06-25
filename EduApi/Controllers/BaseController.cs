@@ -35,23 +35,6 @@ namespace EduApi.Controllers
             }
         }
 
-        protected string GetSystemRole()
-        {
-            var handler = new JwtSecurityTokenHandler();
-            string authHeader = Request.Headers.FirstOrDefault(x => x.Key == "Authorization").Value;
-            if (authHeader == null)
-            {
-                return UserRole.ANONYMOUS;
-            }
-            authHeader = authHeader.Replace("Bearer ", "");
-            var jsonToken = handler.ReadToken(authHeader);
-            var tokenS = handler.ReadToken(authHeader) as JwtSecurityToken;
-            return tokenS.Claims.First(claim => claim.Type == ClaimTypes.Role).Value;
-        }
-        protected bool IsAdmin()
-        {
-            return GetSystemRole() == UserRole.ADMINISTRATOR;
-        }
         protected string GetClientCulture()
         {
             if (Request.Headers.Any(x => x.Key == Constants.CLIENT_CULTURE))
@@ -140,10 +123,6 @@ namespace EduApi.Controllers
             )
             {
                 return StatusCode(403);
-            }
-            else if (response.IsNotFound)
-            {
-                return NotFound(response);
             }
             else if (response.IsError)
             {

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 
 namespace EduApi.Controllers.ClientZone.Certificate
 {
+    [ApiExplorerSettings(GroupName = "Organization")]
     public class CertificateController : BaseClientZoneController
     {
         private readonly ICertificateService _certificateService;
@@ -72,7 +73,7 @@ namespace EduApi.Controllers.ClientZone.Certificate
         {
             try
             {
-                CheckPermition(GetOrganizationByCertificate(request.Id));
+                CheckPermition(_certificateService.GetOrganizationIdByObjectId(request.Id));
                 return SendResponse(_certificateService.GetDetail(request.Id, GetClientCulture()));
             }
             catch (Exception e)
@@ -91,7 +92,7 @@ namespace EduApi.Controllers.ClientZone.Certificate
         {
             try
             {
-                CheckPermition(GetOrganizationByCertificate(updateCertificateDto.Id));
+                CheckPermition(_certificateService.GetOrganizationIdByObjectId(updateCertificateDto.Id));
                 return SendResponse(_certificateService.UpdateObject(updateCertificateDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
@@ -110,9 +111,8 @@ namespace EduApi.Controllers.ClientZone.Certificate
         {
             try
             {
-                CheckPermition(GetOrganizationByCertificate(request.Id));
-                _certificateService.DeleteObject(request.Id, GetLoggedUserId());
-                return SendResponse();
+                CheckPermition(_certificateService.GetOrganizationIdByObjectId(request.Id));
+                return SendResponse(_certificateService.DeleteObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
             {
@@ -130,9 +130,8 @@ namespace EduApi.Controllers.ClientZone.Certificate
         {
             try
             {
-                CheckPermition(GetOrganizationByCertificate(request.Id));
-                _certificateService.RestoreObject(request.Id, GetLoggedUserId());
-                return SendResponse();
+                CheckPermition(_certificateService.GetOrganizationIdByObjectId(request.Id));
+                return SendResponse(_certificateService.RestoreObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
             {

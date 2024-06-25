@@ -33,7 +33,7 @@ namespace EduApi.Controllers.ClientZone.CourseTest
         {
             try
             {
-                CheckPermition(GetOrganizationByCourseMaterial(addCourseTestDto.CourseLesson.MaterialId));
+                CheckPermition(_testService.GetOrganizationIdByObjectId(addCourseTestDto.CourseLesson.MaterialId));
                 return SendResponse(_testService.AddCourseTest(addCourseTestDto, GetClientCulture()));
             }
             catch (Exception e)
@@ -52,7 +52,7 @@ namespace EduApi.Controllers.ClientZone.CourseTest
         {
             try
             {
-                CheckPermition(GetOrganizationByCourseLesson(request.Id));
+                CheckPermition(_testService.GetOrganizationIdByObjectId(request.Id));
                 return SendResponse(_testService.GetCourseTestDetail(request.Id));
             }
             catch (Exception e)
@@ -71,7 +71,7 @@ namespace EduApi.Controllers.ClientZone.CourseTest
         {
             try
             {
-                CheckPermition(GetOrganizationByCourseLesson(updateCourseTestDto.Id));
+                CheckPermition(_testService.GetOrganizationIdByObjectId(updateCourseTestDto.Id));
                 return SendResponse(_testService.UpdateCourseTest(updateCourseTestDto, GetClientCulture()));
             }
             catch (Exception e)

@@ -41,6 +41,7 @@ namespace EduApi.Controllers.ClientZone.Organization
         {
             try
             {
+                addOrganizationDto.UserId = GetLoggedUserId();
                 return SendResponse(_organizationService.AddObject(addOrganizationDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
@@ -116,8 +117,7 @@ namespace EduApi.Controllers.ClientZone.Organization
             try
             {
                 CheckPermition(request.Id);
-                _organizationService.DeleteObject(request.Id, GetLoggedUserId());
-                return SendResponse();
+                return SendResponse(_organizationService.DeleteObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception ex)
             {
@@ -136,15 +136,14 @@ namespace EduApi.Controllers.ClientZone.Organization
             try
             {
                 CheckPermition(request.Id);
-                _organizationService.FileUpload(
+                return SendResponse(_organizationService.FileUpload(
                     request.Id,
                     GetClientCulture(),
                     GetLoggedUserId(),
                     new List<IFormFile>() { file },
                     new Model.Tables.Edu.Organization.OrganizationFileRepositoryDbo() { OrganizationId = request.Id, },
                     x => x.OrganizationId == request.Id && x.Culture.SystemIdentificator == GetClientCulture()
-                );
-                return SendResponse();
+                ));
             }
             catch (Exception e)
             {

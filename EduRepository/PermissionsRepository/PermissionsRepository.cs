@@ -22,7 +22,7 @@ namespace EduRepository.PermissionsRepository
                     .Where(x => x.IsDeleted == deleted)
                     .Include(x=>x.Route)
                     .Include(x => x.OrganizationRole)
-                    .ThenInclude(x=> x.UserInOrganizations)
+                    .ThenInclude(x=> x.UserInOrganizations.Where(x => x.IsDeleted == false))
                  ])
                  : ([
                      .. _dbContext
@@ -30,7 +30,7 @@ namespace EduRepository.PermissionsRepository
                     .Where(x => x.IsDeleted == deleted)
                     .Include(x=>x.Route)
                     .Include(x => x.OrganizationRole)
-                    .ThenInclude(x=> x.UserInOrganizations)
+                    .ThenInclude(x=> x.UserInOrganizations.Where(x => x.IsDeleted == false))
                     .Where(predicate)
                  ]);
         }
@@ -38,14 +38,12 @@ namespace EduRepository.PermissionsRepository
         public override PermissionsDbo GetEntity(Guid id)
         {
             return
-
                 _dbContext
                     .Set<PermissionsDbo>()
                     .Include(x => x.Route)
                     .Include(x => x.OrganizationRole)
-                    .ThenInclude(x => x.UserInOrganizations)
-                    .Where(x => x.Id == id).FirstOrDefault();
-
+                    .ThenInclude(x => x.UserInOrganizations.Where(x => x.IsDeleted == false))
+                    .FirstOrDefault(x => x.Id == id);
         }
     }
 }

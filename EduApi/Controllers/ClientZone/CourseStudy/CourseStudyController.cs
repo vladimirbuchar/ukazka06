@@ -181,7 +181,7 @@ namespace EduApi.Controllers.ClientZone.CourseStudy
         {
             try
             {
-                return SendResponse(_courseStudyService.FinishCourse(GetLoggedUserId(), courseStudentId, courseId, GetOrganizationIdByCourse(courseId), GetClientCulture()));
+                return SendResponse(_courseStudyService.FinishCourse(GetLoggedUserId(), courseStudentId, courseId, _courseStudyService.GetOrganizationIdByObjectId(courseId), GetClientCulture()));
             }
             catch (Exception e)
             {
@@ -255,7 +255,7 @@ namespace EduApi.Controllers.ClientZone.CourseStudy
         {
             try
             {
-                CheckPermition(GetOrganizationIdByCourse(courseId));
+                CheckPermition(_courseStudyService.GetOrganizationIdByObjectId(courseId));
                 return SendResponse(_courseStudyService.GetAllStudentTestResult(courseId, GetClientCulture()));
             }
             catch (Exception e)
@@ -274,7 +274,7 @@ namespace EduApi.Controllers.ClientZone.CourseStudy
         {
             try
             {
-                CheckPermition(GetOrganizationIdByCourse(courseId));
+                CheckPermition(_courseStudyService.GetOrganizationIdByObjectId(courseId));
                 return SendResponse(_courseStudyService.ShowStudentAnswer(studentTestResultId));
             }
             catch (Exception e)

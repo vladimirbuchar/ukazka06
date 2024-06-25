@@ -89,8 +89,7 @@ namespace EduApi.Controllers.ClientZone.Note
         {
             try
             {
-                _noteService.UpdateObject(updateNoteDto, GetLoggedUserId(), GetClientCulture());
-                return SendResponse();
+                return SendResponse(_noteService.UpdateObject(updateNoteDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
             {
@@ -108,9 +107,7 @@ namespace EduApi.Controllers.ClientZone.Note
         {
             try
             {
-
-                _noteService.DeleteObject(request.Id, GetLoggedUserId());
-                return SendResponse();
+                return SendResponse(_noteService.DeleteObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
             {
@@ -128,8 +125,7 @@ namespace EduApi.Controllers.ClientZone.Note
         {
             try
             {
-                _noteService.RestoreObject(request.Id, GetLoggedUserId());
-                return SendResponse();
+                return SendResponse(_noteService.RestoreObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
             {

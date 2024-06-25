@@ -1,5 +1,4 @@
-﻿using System;
-using Core.Base.Repository.CodeBookRepository;
+﻿using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Repository.FileRepository;
 using Core.Base.Service;
 using EduRepository.OrganizationRepository;
@@ -8,6 +7,7 @@ using EduServices.Organization.Dto;
 using EduServices.Organization.Validator;
 using Model.Tables.CodeBook;
 using Model.Tables.Edu.Organization;
+using System;
 
 namespace EduServices.Organization.Service
 {
@@ -34,6 +34,13 @@ namespace EduServices.Organization.Service
         public OrganizationDetailWebDto GetOrganizationDetailWeb(Guid organizationId)
         {
             return _convertor.ConvertToWebModelWeb(_repository.GetEntity(organizationId));
+        }
+        protected override bool IsChanged(OrganizationDbo oldVersion, OrganizationUpdateDto newVersion, string culture)
+        {
+            return oldVersion.Email != newVersion.Email ||
+                oldVersion.PhoneNumber != newVersion.PhoneNumber ||
+                oldVersion.WWW != newVersion.WWW ||
+                oldVersion.Name != newVersion.Name;
         }
     }
 }

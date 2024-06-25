@@ -110,8 +110,7 @@ namespace EduApi.Controllers.Admin.Route
         {
             try
             {
-                _routeService.DeleteObject(request.Id, GetLoggedUserId());
-                return SendResponse();
+                return SendResponse(_routeService.DeleteObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
             {
@@ -129,9 +128,7 @@ namespace EduApi.Controllers.Admin.Route
         {
             try
             {
-
-                _routeService.RestoreObject(request.Id, GetLoggedUserId());
-                return SendResponse();
+                return SendResponse(_routeService.RestoreObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
             {

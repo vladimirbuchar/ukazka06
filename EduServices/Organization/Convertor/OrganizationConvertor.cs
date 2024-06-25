@@ -29,6 +29,7 @@ namespace EduServices.Organization.Convertor
         private readonly HashSet<CountryDbo> _countries = countries.GetCodeBookItems();
         private readonly IOrganizationRoleRepository _organizationRoleRepository = organizationRoleRepository;
         private readonly string _elearningUrl = configuration.GetSection(ConfigValue.ElearningUrl).Value;
+        private readonly string _fileServerUrl = configuration.GetSection(ConfigValue.FILE_SERVER_URL).Value;
 
         public OrganizationDbo ConvertToBussinessEntity(OrganizationCreateDto addOrganizationDto, string culture)
         {
@@ -47,7 +48,6 @@ namespace EduServices.Organization.Convertor
                 .ToHashSet();
             return new OrganizationDbo()
             {
-                CanSendCourseInquiry = addOrganizationDto.CanSendCourseInquiry,
                 Name = addOrganizationDto.Name,
                 Email = addOrganizationDto.Email,
                 PhoneNumber = addOrganizationDto.PhoneNumber,
@@ -127,26 +127,44 @@ namespace EduServices.Organization.Convertor
 
         public OrganizationDbo ConvertToBussinessEntity(OrganizationUpdateDto updateOrganizationDto, OrganizationDbo entity, string culture)
         {
-            HashSet<OrganizationAddressDbo> addresses = updateOrganizationDto
-                .Addresses.Select(item => new OrganizationAddressDbo()
+            foreach (OrganizationAddressDbo addr in entity.Addresses)
+            {
+                if (updateOrganizationDto.Addresses.FirstOrDefault(x => x.Id == addr.Id) == null)
                 {
-                    Id = item.Id,
-                    AddressTypeId = item.AddressTypeId,
-                    City = item.City,
-                    CountryId = item.CountryId,
-                    HouseNumber = item.HouseNumber,
-                    Region = item.Region,
-                    Street = item.Street,
-                    ZipCode = item.ZipCode,
-                })
-                .ToHashSet();
-
+                    addr.IsDeleted = true;
+                }
+            }
+            foreach (Address address in updateOrganizationDto.Addresses)
+            {
+                OrganizationAddressDbo organizationAddress = entity.Addresses.FirstOrDefault(x => x.Id == address.Id);
+                if (organizationAddress == null)
+                {
+                    entity.Addresses.Add(new OrganizationAddressDbo()
+                    {
+                        AddressTypeId = address.AddressTypeId,
+                        City = address.City,
+                        CountryId = address.CountryId,
+                        HouseNumber = address.HouseNumber,
+                        Region = address.Region,
+                        Street = address.Street,
+                        ZipCode = address.ZipCode,
+                    });
+                }
+                else
+                {
+                    organizationAddress.AddressTypeId = address.AddressTypeId;
+                    organizationAddress.City = address.City;
+                    organizationAddress.CountryId = address.CountryId;
+                    organizationAddress.HouseNumber = address.HouseNumber;
+                    organizationAddress.Region = address.Region;
+                    organizationAddress.Street = address.Street;
+                    organizationAddress.ZipCode = address.ZipCode;
+                }
+            }
             entity.Name = updateOrganizationDto.Name;
-            entity.CanSendCourseInquiry = updateOrganizationDto.CanSendCourseInquiry;
             entity.Email = updateOrganizationDto.Email;
             entity.PhoneNumber = updateOrganizationDto.PhoneNumber;
             entity.WWW = updateOrganizationDto.WWW;
-            entity.Addresses = addresses;
             return entity;
         }
 
@@ -172,9 +190,9 @@ namespace EduServices.Organization.Convertor
                 Email = getOrganizationDetail.Email,
                 PhoneNumber = getOrganizationDetail.PhoneNumber,
                 WWW = getOrganizationDetail.WWW,
-                CanSendCourseInquiry = getOrganizationDetail.CanSendCourseInquiry,
                 LicenseId = getOrganizationDetail.LicenseId,
-                Addresses = addresss
+                Addresses = addresss,
+                Logo = string.Format("{0}{1}/{2}", _fileServerUrl, getOrganizationDetail.Id, getOrganizationDetail.OrganizationFileRepositories.FindTranslation(culture).FileName)
             };
         }
 
@@ -208,7 +226,6 @@ namespace EduServices.Organization.Convertor
             return new OrganizationCreateDto()
             {
                 Addresses = organizationCreateByUser.Addresses,
-                CanSendCourseInquiry = organizationCreateByUser.CanSendCourseInquiry,
                 DefaultCultureId = organizationCreateByUser.DefaultCultureId,
                 Email = organizationCreateByUser.Email,
                 Name = organizationCreateByUser.Name,

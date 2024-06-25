@@ -73,7 +73,7 @@ namespace EduApi.Controllers.ClientZone.SendMessage
         {
             try
             {
-                CheckPermition(GetOrganizationBySendMessage(request.Id));
+                CheckPermition(_sendMessageService.GetOrganizationIdByObjectId(request.Id));
                 return SendResponse(_sendMessageService.GetDetail(request.Id, GetClientCulture()));
             }
             catch (Exception e)
@@ -92,7 +92,7 @@ namespace EduApi.Controllers.ClientZone.SendMessage
         {
             try
             {
-                CheckPermition(GetOrganizationBySendMessage(updateSendMessageDto.Id));
+                CheckPermition(_sendMessageService.GetOrganizationIdByObjectId(updateSendMessageDto.Id));
                 return SendResponse(_sendMessageService.UpdateObject(updateSendMessageDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
@@ -111,9 +111,8 @@ namespace EduApi.Controllers.ClientZone.SendMessage
         {
             try
             {
-                CheckPermition(GetOrganizationBySendMessage(request.Id));
-                _sendMessageService.DeleteObject(request.Id, GetLoggedUserId());
-                return SendResponse();
+                CheckPermition(_sendMessageService.GetOrganizationIdByObjectId(request.Id));
+                return SendResponse(_sendMessageService.DeleteObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
             {
@@ -131,9 +130,8 @@ namespace EduApi.Controllers.ClientZone.SendMessage
         {
             try
             {
-                CheckPermition(GetOrganizationBySendMessage(request.Id));
-                _sendMessageService.RestoreObject(request.Id, GetLoggedUserId());
-                return SendResponse();
+                CheckPermition(_sendMessageService.GetOrganizationIdByObjectId(request.Id));
+                return SendResponse(_sendMessageService.RestoreObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
             {

@@ -11,7 +11,6 @@ namespace EduServices.Organization.Dto
         public string PhoneNumber { get; set; }
         public string WWW { get; set; }
         public HashSet<Address> Addresses { get; set; }
-        public bool CanSendCourseInquiry { get; set; } = false;
         public string Name { get; set; }
         public Guid DefaultCultureId { get; set; }
     }

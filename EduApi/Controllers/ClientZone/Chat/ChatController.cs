@@ -69,8 +69,7 @@ namespace EduApi.Controllers.ClientZone.Chat
         {
             try
             {
-                _chatService.UpdateObject(updateChatItemDto, GetLoggedUserId(), GetClientCulture());
-                return SendResponse();
+                return SendResponse(_chatService.UpdateObject(updateChatItemDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
             {
@@ -88,8 +87,7 @@ namespace EduApi.Controllers.ClientZone.Chat
         {
             try
             {
-                _chatService.DeleteObject(request.Id, GetLoggedUserId());
-                return SendResponse();
+                return SendResponse(_chatService.DeleteObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
             {

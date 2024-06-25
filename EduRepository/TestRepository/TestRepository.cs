@@ -18,9 +18,9 @@ namespace EduRepository.TestRepository
                 .Where(x => x.IsDeleted == deleted)
                 .Where(predicate)
                 .Include(x => x.CourseLesson)
-                .ThenInclude(x => x.CourseLessonTranslations)
+                .ThenInclude(x => x.CourseLessonTranslations.Where(x => x.IsDeleted == false))
                 .ThenInclude(x => x.Culture)
-                .Include(x => x.CourseTestBankOfQuestions)
+                .Include(x => x.CourseTestBankOfQuestions.Where(x => x.IsDeleted == false))
                 .FirstOrDefault();
         }
     }

@@ -84,8 +84,7 @@ namespace EduApi.Controllers.ClientZone.User
         {
             try
             {
-                _userService.DeleteObject(request.Id, GetLoggedUserId());
-                return SendResponse();
+                return SendResponse(_userService.DeleteObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
             {
@@ -103,6 +102,7 @@ namespace EduApi.Controllers.ClientZone.User
         {
             try
             {
+                changePasswordDto.UserId = GetLoggedUserId();
                 return SendResponse(_userService.ChangePassword(changePasswordDto));
             }
             catch (Exception e)
@@ -121,6 +121,7 @@ namespace EduApi.Controllers.ClientZone.User
         {
             try
             {
+                setPasswordDto.UserId = GetLoggedUserId();
                 return SendResponse(_userService.SetPassword(setPasswordDto));
             }
             catch (Exception e)

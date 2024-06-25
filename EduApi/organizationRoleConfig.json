@@ -574,23 +574,6 @@
   {
     "route": "/api/clientzone/UserInOrganization/Delete",
     "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
-  },
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  }
 
 ]

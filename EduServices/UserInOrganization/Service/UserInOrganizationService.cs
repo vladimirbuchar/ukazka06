@@ -139,7 +139,7 @@ namespace EduServices.UserInOrganization.Service
             return new Result<UserInOrganizationDetailDto>() { Data = GetDetail(x => x.UserId == user.Id && x.OrganizationId == addObject.OrganizationId) };
         }
 
-        public override Result<UserInOrganizationDetailDto> UpdateObject(UserInOrganizationUpdateDto update, Guid userId, string culture)
+        public override Result<UserInOrganizationDetailDto> UpdateObject(UserInOrganizationUpdateDto update, Guid userId, string culture, Result<UserInOrganizationDetailDto> result = null)
         {
             HashSet<UserInOrganizationDbo> getUserOrganizationRoles = _repository.GetEntities(false, x => x.UserId == update.Id && x.OrganizationId == update.OrganizationId);
             if (getUserOrganizationRoles.Where(x => x.SystemIdentificator == Core.Constants.OrganizationRole.ORGANIZATION_OWNER).ToList().Count > 0)

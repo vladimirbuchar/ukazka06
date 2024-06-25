@@ -34,7 +34,7 @@ namespace EduApi.Controllers.ClientZone.CourseTermTimeTable
         {
             try
             {
-                CheckPermition(GetOrganizationIdByCourseTerm(generateTimeTableDto.CourseTermId));
+                CheckPermition(_courseTermTimeTableService.GetOrganizationIdByObjectId(generateTimeTableDto.CourseTermId));
                 _courseTermTimeTableService.GenerateTimeTable(generateTimeTableDto.CourseTermId);
                 return SendResponse();
             }
@@ -52,7 +52,7 @@ namespace EduApi.Controllers.ClientZone.CourseTermTimeTable
         [ProducesResponseType(typeof(void), 403)]
         public ActionResult List([FromQuery] ListRequestDto requestDto)
         {
-            CheckPermition(GetOrganizationIdByCourseTerm(requestDto.ParentId));
+            CheckPermition(_courseTermTimeTableService.GetOrganizationIdByObjectId(requestDto.ParentId));
             return SendResponse(_courseTermTimeTableService.GetTimeTable(requestDto.ParentId, GetClientCulture()));
         }
 
@@ -66,7 +66,7 @@ namespace EduApi.Controllers.ClientZone.CourseTermTimeTable
         {
             try
             {
-                CheckPermition(GetOrganizationIdByCourseTerm(cancelCourseTermDto.CourseTermId));
+                CheckPermition(_courseTermTimeTableService.GetOrganizationIdByObjectId(cancelCourseTermDto.CourseTermId));
                 _courseTermTimeTableService.CancelCourseTerm(cancelCourseTermDto.Id);
                 return SendResponse();
             }
@@ -86,7 +86,7 @@ namespace EduApi.Controllers.ClientZone.CourseTermTimeTable
         {
             try
             {
-                CheckPermition(GetOrganizationIdByCourseTerm(restoreCourseTermDto.CourseTermId));
+                CheckPermition(_courseTermTimeTableService.GetOrganizationIdByObjectId(restoreCourseTermDto.CourseTermId));
                 _courseTermTimeTableService.Restore(restoreCourseTermDto.Id);
                 return SendResponse();
             }

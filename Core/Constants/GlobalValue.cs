@@ -9,8 +9,8 @@
         public const string EMAIL_EXIST = "EMAIL_EXIST";
         public const string STRING_IS_EMPTY = "STRING_IS_EMPTY";
         public const string NOT_EXISTS = "NOT_EXISTS";
-        public const string NOT_FOUND = "NOT_FOUND";
         public const string EXISTS = "EXISTS";
+        public const string CAN_NOT_DELETE = "CAN_NOT_DELETE";
 
     }
 }

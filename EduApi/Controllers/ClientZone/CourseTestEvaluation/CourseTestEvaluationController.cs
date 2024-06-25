@@ -33,7 +33,7 @@ namespace EduApi.Controllers.ClientZone.CourseTestEvaluation
         {
             try
             {
-                CheckPermition(GetOrganizationByCourseMaterial(addEvaluationTest.MaterialId));
+                CheckPermition(_courseTestEvaluationService.GetOrganizationIdByObjectId(addEvaluationTest.MaterialId));
                 return SendResponse(_courseTestEvaluationService.AddObject(addEvaluationTest, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
@@ -52,7 +52,7 @@ namespace EduApi.Controllers.ClientZone.CourseTestEvaluation
         {
             try
             {
-                CheckPermition(GetOrganizationByCourseLesson(list.ParentId));
+                CheckPermition(_courseTestEvaluationService.GetOrganizationIdByObjectId(list.ParentId));
                 return SendResponse(_courseTestEvaluationService.GetList(x => x.CourseTestId == list.ParentId, list.IsDeleted));
             }
             catch (Exception e)
@@ -71,7 +71,7 @@ namespace EduApi.Controllers.ClientZone.CourseTestEvaluation
         {
             try
             {
-                CheckPermition(GetOrganizationByCourseLesson(updateEvaluationTestDto.Id));
+                CheckPermition(_courseTestEvaluationService.GetOrganizationIdByObjectId(updateEvaluationTestDto.Id));
                 return SendResponse(_courseTestEvaluationService.UpdateObject(updateEvaluationTestDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
@@ -90,9 +90,7 @@ namespace EduApi.Controllers.ClientZone.CourseTestEvaluation
         {
             try
             {
-
-                _courseTestEvaluationService.DeleteObject(delete.Id, GetLoggedUserId());
-                return SendResponse();
+                return SendResponse(_courseTestEvaluationService.DeleteObject(delete.Id, GetLoggedUserId()));
             }
             catch (Exception e)
             {

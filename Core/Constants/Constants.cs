@@ -63,5 +63,6 @@
         public const string GOOGLE = "GOOGLE";
         public const string FACEBOOK = "FACEBOOK";
         public const string UserOrganizationRole = "UserOrganizationRole";
+
     };
 }

@@ -141,8 +141,7 @@ namespace Core.Base.Repository
         /// <returns></returns>
         public virtual Model CreateEntity(Model entity, Guid userId)
         {
-            entity = SaveEntity(entity, userId);
-            return GetEntity(entity.Id);
+            return SaveEntity(entity, userId);
         }
         /// <summary>
         /// update entity
@@ -152,8 +151,7 @@ namespace Core.Base.Repository
         /// <returns></returns>
         public virtual Model UpdateEntity(Model entity, Guid userId)
         {
-            entity = SaveEntity(entity, userId);
-            return GetEntity(entity.Id);
+            return SaveEntity(entity, userId);
         }
         /// <summary>
         /// get entity

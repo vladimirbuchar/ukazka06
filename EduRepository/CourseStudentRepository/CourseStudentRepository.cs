@@ -39,12 +39,12 @@ namespace EduRepository.CourseStudentRepository
                     .Set<CourseStudentDbo>()
                     .Include(x => x.CourseTerm)
                     .ThenInclude(x => x.ClassRoom)
-                    .ThenInclude(x=>x.ClassRoomTranslations)
+                    .ThenInclude(x=>x.ClassRoomTranslations.Where(x => x.IsDeleted == false))
                     .ThenInclude(x=>x.Culture)
                     .Include(x => x.CourseTerm)
                     .ThenInclude(x => x.ClassRoom)
                     .ThenInclude(x => x.Branch)
-                    .ThenInclude(x=>x.BranchTranslations)
+                    .ThenInclude(x=>x.BranchTranslations.Where(x => x.IsDeleted == false))
                     .ThenInclude(x=>x.Culture)
                     .Include(x => x.CourseTerm)
                     .ThenInclude(x => x.ClassRoom)
@@ -66,7 +66,8 @@ namespace EduRepository.CourseStudentRepository
 
         public override Guid GetOrganizationId(Guid objectId)
         {
-            return _dbContext.Set<CourseStudentDbo>().Include(x => x.CourseTerm).ThenInclude(x => x.Course).FirstOrDefault().CourseTerm.Course.OrganizationId;
+            return _dbContext.Set<CourseStudentDbo>()
+                .Include(x => x.CourseTerm).ThenInclude(x => x.Course).FirstOrDefault(x => x.Id == objectId).CourseTerm.Course.OrganizationId;
         }
     }
 }

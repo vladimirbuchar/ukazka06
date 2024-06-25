@@ -1,4 +1,5 @@
 ﻿using Core.Base.Service;
+using Core.DataTypes;
 using EduRepository.BankOfQuestionRepository;
 using EduRepository.QuestionRepository;
 using EduServices.BankOfQuestion.Convertor;
@@ -31,7 +32,7 @@ namespace EduServices.BankOfQuestion.Service
     {
         private readonly IQuestionRepository _questionRepository = questionRepository;
 
-        public override void DeleteObject(Guid objectId, Guid userId)
+        public override Result DeleteObject(Guid objectId, Guid userId)
         {
             HashSet<QuestionDbo> getQuestionsInBanks = _questionRepository.GetEntities(false, x => x.BankOfQuestionId == objectId);
             Guid organizationId = _repository.GetEntity(objectId).OrganizationId;
@@ -42,6 +43,7 @@ namespace EduServices.BankOfQuestion.Service
                 _ = _questionRepository.UpdateEntity(item, userId);
             }
             _repository.DeleteEntity(objectId, userId);
+            return new Result();
         }
     }
 }

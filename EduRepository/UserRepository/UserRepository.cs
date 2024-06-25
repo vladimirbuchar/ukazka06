@@ -13,16 +13,18 @@ namespace EduRepository.UserRepository
         public UserDbo LoginUser(string login, string password)
         {
             return _dbContext.Set<UserDbo>()
-                .Where(x => x.UserEmail == login && x.UserPassword == password && x.IsActive == true && x.IsDeleted == false && x.AllowCLassicLogin == true)
                 .Include(x => x.Person)
                 .Include(x => x.UserRole)
-                .FirstOrDefault();
+                .FirstOrDefault(x => x.UserEmail == login && x.UserPassword == password && x.IsActive == true && x.IsDeleted == false && x.AllowCLassicLogin == true);
         }
 
 
         public override UserDbo GetEntity(Guid id)
         {
-            return _dbContext.Set<UserDbo>().Where(x => x.Id == id && x.IsDeleted == false).Include(x => x.Person).Include(x => x.Person.PersonAddress).FirstOrDefault();
+            return _dbContext.Set<UserDbo>()
+                .Include(x => x.Person).Include(x => x.Person.PersonAddress.Where(x => x.IsDeleted == false))
+                .Include(x => x.UserRole)
+                .FirstOrDefault(x => x.Id == id && x.IsDeleted == false);
         }
 
     }

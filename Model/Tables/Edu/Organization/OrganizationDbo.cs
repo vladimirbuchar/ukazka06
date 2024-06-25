@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using Model.Tables.CodeBook;
+﻿using Model.Tables.CodeBook;
 using Model.Tables.Edu.BankOfQuestions;
 using Model.Tables.Edu.Branch;
 using Model.Tables.Edu.Certificate;
@@ -16,15 +13,15 @@ using Model.Tables.Edu.SendEmail;
 using Model.Tables.Edu.SendMessage;
 using Model.Tables.Edu.StudentGroup;
 using Model.Tables.Link;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Model.Tables.Edu.Organization
 {
     [Table("Edu_Organization")]
     public class OrganizationDbo : TableModel
     {
-        [Column("CanSendCourseInquiry")]
-        public virtual bool CanSendCourseInquiry { get; set; }
-
         [Column("Email")]
         public virtual string Email { get; set; }
 
@@ -36,7 +33,6 @@ namespace Model.Tables.Edu.Organization
         public virtual string Name { get; set; }
         public virtual LicenseDbo License { get; set; }
         public virtual Guid LicenseId { get; set; }
-
         public virtual OrganizationSettingDbo OrganizationSetting { get; set; }
         public virtual Guid OrganizationSettingId { get; set; }
         public virtual ICollection<OrganizationTranslationDbo> OrganizationTranslations { get; set; }

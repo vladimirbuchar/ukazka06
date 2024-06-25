@@ -69,7 +69,7 @@ namespace EduApi.Controllers.ClientZone.BankOfQuestion
         {
             try
             {
-                CheckPermition(GetOrganizationIdByBankOfQuestion(request.Id));
+                CheckPermition(_bankOfQuestionService.GetOrganizationIdByObjectId(request.Id));
                 return SendResponse(_bankOfQuestionService.GetDetail(request.Id, GetClientCulture()));
             }
             catch (Exception e)
@@ -88,7 +88,7 @@ namespace EduApi.Controllers.ClientZone.BankOfQuestion
         {
             try
             {
-                CheckPermition(GetOrganizationIdByBankOfQuestion(request.Id));
+                CheckPermition(_bankOfQuestionService.GetOrganizationIdByObjectId(request.Id));
                 return SendResponse(_bankOfQuestionService.UpdateObject(request, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
@@ -107,9 +107,8 @@ namespace EduApi.Controllers.ClientZone.BankOfQuestion
         {
             try
             {
-                CheckPermition(GetOrganizationIdByBankOfQuestion(request.Id));
-                _bankOfQuestionService.DeleteObject(request.Id, GetLoggedUserId());
-                return SendResponse();
+                CheckPermition(_bankOfQuestionService.GetOrganizationIdByObjectId(request.Id));
+                return SendResponse(_bankOfQuestionService.DeleteObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
             {
@@ -127,9 +126,8 @@ namespace EduApi.Controllers.ClientZone.BankOfQuestion
         {
             try
             {
-                CheckPermition(GetOrganizationIdByBankOfQuestion(request.Id));
-                _bankOfQuestionService.RestoreObject(request.Id, GetLoggedUserId());
-                return SendResponse();
+                CheckPermition(_bankOfQuestionService.GetOrganizationIdByObjectId(request.Id));
+                return SendResponse(_bankOfQuestionService.RestoreObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
             {

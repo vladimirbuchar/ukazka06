@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using Core.Base.Repository;
+﻿using Core.Base.Repository;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
 using Model.Tables.Link;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace EduRepository.CourseTestBankOfQuestionRepository
 {
@@ -20,7 +20,7 @@ namespace EduRepository.CourseTestBankOfQuestionRepository
 
         public override CourseTestBankOfQuestionDbo GetEntity(Guid id)
         {
-            return _dbContext.Set<CourseTestBankOfQuestionDbo>().Where(x => x.Id == id).FirstOrDefault();
+            return _dbContext.Set<CourseTestBankOfQuestionDbo>().FirstOrDefault(x => x.Id == id);
         }
     }
 }

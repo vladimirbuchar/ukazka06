@@ -34,8 +34,8 @@ public class StudentInGroupController : BaseClientZoneController
     {
         try
         {
-            CheckPermition(GetOrganizationByStudentGroupId(addStudentToGroupDto.StudentGroupId));
-            addStudentToGroupDto.OrganizationId = GetOrganizationByStudentGroupId(addStudentToGroupDto.StudentGroupId);
+            CheckPermition(_studentInGroupService.GetOrganizationIdByObjectId(addStudentToGroupDto.StudentGroupId));
+            addStudentToGroupDto.OrganizationId = _studentInGroupService.GetOrganizationIdByObjectId(addStudentToGroupDto.StudentGroupId);
             return SendResponse(_studentInGroupService.AddObject(addStudentToGroupDto, GetLoggedUserId(), GetClientCulture()));
         }
         catch (Exception e)
@@ -54,7 +54,7 @@ public class StudentInGroupController : BaseClientZoneController
     {
         try
         {
-            CheckPermition(GetOrganizationByStudentGroupId(requestDto.ParentId));
+            CheckPermition(_studentInGroupService.GetOrganizationIdByObjectId(requestDto.ParentId));
             return SendResponse(_studentInGroupService.GetList(x => x.StudentGroupId == requestDto.ParentId, requestDto.IsDeleted));
         }
         catch (Exception e)
@@ -73,9 +73,8 @@ public class StudentInGroupController : BaseClientZoneController
     {
         try
         {
-            CheckPermition(GetOrganizationByStudentGroupId(delete.Id));
-            _studentInGroupService.DeleteObject(delete.Id, GetLoggedUserId());
-            return SendResponse();
+            CheckPermition(_studentInGroupService.GetOrganizationIdByObjectId(delete.Id));
+            return SendResponse(_studentInGroupService.DeleteObject(delete.Id, GetLoggedUserId()));
         }
         catch (Exception e)
         {

@@ -43,7 +43,7 @@ namespace Core.Base.Service
         /// <param name="files"></param>
         /// <param name="model"></param>
         /// <param name="deleteFiles"></param>
-        public virtual void FileUpload(Guid parentId, string culture, Guid userId, List<IFormFile> files, FileModel model, System.Linq.Expressions.Expression<Func<FileModel, bool>> deleteFiles = null)
+        public virtual Result FileUpload(Guid parentId, string culture, Guid userId, List<IFormFile> files, FileModel model, System.Linq.Expressions.Expression<Func<FileModel, bool>> deleteFiles = null)
         {
             _fileRepository.CreateFileRepository(parentId);
             if (deleteFiles != null)
@@ -60,15 +60,17 @@ namespace Core.Base.Service
             {
                 _ = _fileRepository.FileUpload(model, parentId, file, userId);
             }
+            return new Result();
         }
         /// <summary>
         /// file delete
         /// </summary>
         /// <param name="id"></param>
         /// <param name="userId"></param>
-        public virtual void FileDelete(Guid id, Guid userId)
+        public virtual Result FileDelete(Guid id, Guid userId)
         {
             _fileRepository.DeleteEntity(id, userId);
+            return new Result();
         }
     }
 
@@ -92,14 +94,14 @@ namespace Core.Base.Service
         /// <param name="culture"></param>
         /// <returns></returns>
         /// <exception cref="KeyNotFoundException"></exception>
-        public virtual Result<Detail> UpdateObject(Update update, Guid userId, string culture)
+        public virtual Result<Detail> UpdateObject(Update update, Guid userId, string culture, Result<Detail> result = null)
         {
             Model oldEntity = _repository.GetEntity(update.Id) ?? throw new KeyNotFoundException(update.Id.ToString());
-            Result<Detail> result = _validator.IsValid(update);
+            result ??= _validator.IsValid(update);
             if (result.IsOk)
             {
                 Model entity = _convertor.ConvertToBussinessEntity(update, oldEntity, culture);
-                if (IsChanged(oldEntity, update, culture))
+                if (IsChanged(_repository.GetEntity(update.Id), update, culture))
                 {
                     entity = _repository.UpdateEntity(entity, userId);
                     result.DataChanged = true;
@@ -155,31 +157,34 @@ namespace Core.Base.Service
         /// </summary>
         /// <param name="objectId"></param>
         /// <param name="userId"></param>
-        public virtual void DeleteObject(Guid objectId, Guid userId)
+        public virtual Result DeleteObject(Guid objectId, Guid userId)
         {
             _repository.DeleteEntity(objectId, userId);
+            return new Result();
         }
         /// <summary>
         /// restore object
         /// </summary>
         /// <param name="objectId"></param>
         /// <param name="userId"></param>
-        public virtual void RestoreObject(Guid objectId, Guid userId)
+        public virtual Result RestoreObject(Guid objectId, Guid userId)
         {
             _repository.RestoreEntity(objectId, userId);
+            return new Result();
         }
         /// <summary>
         /// delete objects by condition
         /// </summary>
         /// <param name="predicate"></param>
         /// <param name="userId"></param>
-        public virtual void MultipleDelete(System.Linq.Expressions.Expression<Func<Model, bool>> predicate, Guid userId)
+        public virtual Result MultipleDelete(System.Linq.Expressions.Expression<Func<Model, bool>> predicate, Guid userId)
         {
             HashSet<Guid> ids = _repository.GetEntities(false, predicate).Select(x => x.Id).ToHashSet();
             foreach (Guid id in ids)
             {
                 _repository.DeleteEntity(id, userId);
             }
+            return new Result();
         }
         /// <summary>
         /// get object list
@@ -190,8 +195,7 @@ namespace Core.Base.Service
         /// <returns></returns>
         public virtual HashSet<ObjectĹist> GetList(System.Linq.Expressions.Expression<Func<Model, bool>> predicate = null, bool deleted = false, string culture = "")
         {
-            HashSet<ObjectĹist> list = _convertor.ConvertToWebModel(_repository.GetEntities(deleted, predicate), culture);
-            return list;
+            return _convertor.ConvertToWebModel(_repository.GetEntities(deleted, predicate), culture);
         }
         /// <summary>
         /// get object detail
@@ -201,8 +205,7 @@ namespace Core.Base.Service
         /// <returns></returns>
         public virtual Detail GetDetail(Guid objectId, string culture)
         {
-            Detail data = _convertor.ConvertToWebModel(_repository.GetEntity(objectId), culture);
-            return data;
+            return _convertor.ConvertToWebModel(_repository.GetEntity(objectId), culture);
         }
         /// <summary>
         /// get object detail by condition
@@ -212,8 +215,7 @@ namespace Core.Base.Service
         /// <returns></returns>
         public virtual Detail GetDetail(System.Linq.Expressions.Expression<Func<Model, bool>> predicate, string culture)
         {
-            Detail data = _convertor.ConvertToWebModel(_repository.GetEntity(false, predicate), culture);
-            return data;
+            return _convertor.ConvertToWebModel(_repository.GetEntity(false, predicate), culture);
         }
     }
 
@@ -239,6 +241,10 @@ namespace Core.Base.Service
         where Model : TableModel
     {
         protected Repository _repository = repository;
+        public override Guid GetOrganizationIdByObjectId(Guid objectId)
+        {
+            return _repository.GetOrganizationId(objectId);
+        }
     }
 
     public abstract class BaseService<Convertor>(Convertor convertor) : BaseService()
@@ -250,5 +256,9 @@ namespace Core.Base.Service
     public abstract class BaseService : IBaseService
     {
         public BaseService() { }
+        public virtual Guid GetOrganizationIdByObjectId(Guid objectId)
+        {
+            return Guid.Empty;
+        }
     }
 }

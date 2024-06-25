@@ -116,11 +116,10 @@ namespace EduApi.Controllers.ClientZone.UserInOrganization
             try
             {
                 CheckPermition(organizationId);
-                _userInOrganizationService.MultipleDelete(
+                return SendResponse(_userInOrganizationService.MultipleDelete(
                     x => x.UserId == userId && x.OrganizationId == organizationId && x.SystemIdentificator != OrganizationRole.ORGANIZATION_OWNER,
                     GetLoggedUserId()
-                );
-                return SendResponse();
+                ));
             }
             catch (Exception e)
             {
@@ -138,67 +137,9 @@ namespace EduApi.Controllers.ClientZone.UserInOrganization
         {
             try
             {
-                if (type == "branch")
-                {
-                    objectId = GetOrganizationIdByBranch(objectId);
-                }
-                else if (type == "classroom")
-                {
-                    objectId = GetOrganizationIdByClassRoom(objectId);
-                }
-                else if (type == "userinorganization")
-                {
-                    objectId = GetOrganizationByUserInOrganization(objectId);
-                }
-                else if (type == "question")
-                {
-                    objectId = GetOrganizationByQuestion(objectId);
-                }
-                else if (type == "answer")
-                {
-                    objectId = GetOrganizationByAnswer(objectId);
-                }
-                else if (type == "bankOfQuestion")
-                {
-                    objectId = GetOrganizationIdByBankOfQuestion(objectId);
-                }
-                else if (type == "course")
-                {
-                    objectId = GetOrganizationIdByCourse(objectId);
-                }
-                else if (type == "courseLesson")
-                {
-                    objectId = GetOrganizationByCourseLesson(objectId);
-                }
-                else if (type == "courseLessonItem")
-                {
-                    objectId = GetOrganizationByCourseLessonItem(objectId);
-                }
-                else if (type == "courseTerm")
-                {
-                    objectId = GetOrganizationIdByCourseTerm(objectId);
-                }
-                else if (type == "question")
-                {
-                    objectId = GetOrganizationByQuestion(objectId);
-                }
-                else if (type == "certificate")
-                {
-                    objectId = GetOrganizationByCertificate(objectId);
-                }
-                else if (type == "sendmessage")
-                {
-                    objectId = GetOrganizationBySendMessage(objectId);
-                }
-                else if (type == "studentgroup")
-                {
-                    objectId = GetOrganizationByStudentGroupId(objectId);
-                }
-                else if (type == "coursematerialedit")
-                {
-                    objectId = GetOrganizationByCourseMaterial(objectId);
-                }
-                else if (type == "courseBrowse")
+
+
+                if (type == "courseBrowse")
                 {
                     return SendResponse(_userInOrganizationService.CanCourseBrowse(objectId, GetLoggedUserId()));
                 }

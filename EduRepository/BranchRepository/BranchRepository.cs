@@ -14,17 +14,18 @@ namespace EduRepository.BranchRepository
     {
         public override HashSet<BranchDbo> GetEntities(bool deleted, Expression<Func<BranchDbo, bool>> predicate = null)
         {
-            return [.. _dbContext.Set<BranchDbo>().Where(x => x.IsDeleted == deleted).Where(predicate).Include(x => x.BranchTranslations).ThenInclude(x => x.Culture)];
+            return [.. _dbContext.Set<BranchDbo>().Where(x => x.IsDeleted == deleted).Where(predicate)
+                .Include(x => x.BranchTranslations.Where(x => x.IsDeleted == false)).ThenInclude(x => x.Culture)];
         }
 
         public override BranchDbo GetEntity(Guid id)
         {
-            return _dbContext.Set<BranchDbo>().Where(x => x.Id == id).Include(x => x.BranchTranslations).ThenInclude(x => x.Culture).FirstOrDefault();
+            return _dbContext.Set<BranchDbo>().Include(x => x.BranchTranslations.Where(x => x.IsDeleted == false)).ThenInclude(x => x.Culture).FirstOrDefault(x => x.Id == id);
         }
 
         public override Guid GetOrganizationId(Guid objectId)
         {
-            return _dbContext.Set<BranchDbo>().Where(x => x.Id == objectId).FirstOrDefault().OrganizationId;
+            return _dbContext.Set<BranchDbo>().FirstOrDefault(x => x.Id == objectId).OrganizationId;
         }
     }
 }

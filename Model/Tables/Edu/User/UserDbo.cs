@@ -28,6 +28,7 @@ namespace Model.Tables.Edu.User
         public virtual string GoogleId { get; set; }
         [Column("UserMustChangePassword")]
         public virtual bool UserMustChangePassword { get; set; }
+        [Column("AllowCLassicLogin")]
         public virtual bool AllowCLassicLogin { get; set; } = true;
         public virtual PersonDbo Person { get; set; }
         public virtual Guid PersonId { get; set; }

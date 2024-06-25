@@ -35,7 +35,7 @@ namespace EduApi.Controllers.ClientZone.Answer
         {
             try
             {
-                CheckPermition(GetOrganizationByQuestion(request.QuestionId));
+                CheckPermition(_answerService.GetOrganizationIdByObjectId(request.QuestionId));
                 return SendResponse(_answerService.AddObject(request, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
@@ -54,7 +54,7 @@ namespace EduApi.Controllers.ClientZone.Answer
         {
             try
             {
-                CheckPermition(GetOrganizationByQuestion(request.ParentId));
+                CheckPermition(_answerService.GetOrganizationIdByObjectId(request.ParentId));
                 return SendResponse(_answerService.GetList(x => x.TestQuestionId == request.ParentId, request.IsDeleted, GetClientCulture()));
             }
             catch (Exception e)
@@ -73,7 +73,7 @@ namespace EduApi.Controllers.ClientZone.Answer
         {
             try
             {
-                CheckPermition(GetOrganizationByAnswer(request.Id));
+                CheckPermition(_answerService.GetOrganizationIdByObjectId(request.Id));
                 return SendResponse(_answerService.GetDetail(request.Id, GetClientCulture()));
             }
             catch (Exception e)
@@ -92,7 +92,7 @@ namespace EduApi.Controllers.ClientZone.Answer
         {
             try
             {
-                CheckPermition(GetOrganizationByAnswer(request.Id));
+                CheckPermition(_answerService.GetOrganizationIdByObjectId(request.Id));
                 return SendResponse(_answerService.UpdateObject(request, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
@@ -111,9 +111,8 @@ namespace EduApi.Controllers.ClientZone.Answer
         {
             try
             {
-                CheckPermition(GetOrganizationByAnswer(request.Id));
-                _answerService.DeleteObject(request.Id, GetLoggedUserId());
-                return SendResponse();
+                CheckPermition(_answerService.GetOrganizationIdByObjectId(request.Id));
+                return SendResponse(_answerService.DeleteObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
             {
@@ -131,9 +130,8 @@ namespace EduApi.Controllers.ClientZone.Answer
         {
             try
             {
-                CheckPermition(GetOrganizationByAnswer(request.Id));
-                _answerService.RestoreObject(request.Id, GetLoggedUserId());
-                return SendResponse();
+                CheckPermition(_answerService.GetOrganizationIdByObjectId(request.Id));
+                return SendResponse(_answerService.RestoreObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
             {
@@ -151,8 +149,8 @@ namespace EduApi.Controllers.ClientZone.Answer
         {
             try
             {
-                CheckPermition(GetOrganizationByAnswer(request.Id));
-                _answerService.FileUpload(
+                CheckPermition(_answerService.GetOrganizationIdByObjectId(request.Id));
+                return SendResponse(_answerService.FileUpload(
                     request.Id,
                     GetClientCulture(),
                     GetLoggedUserId()
@@ -160,8 +158,7 @@ namespace EduApi.Controllers.ClientZone.Answer
                     new List<IFormFile>() { file },
                     new Model.Tables.Edu.Answer.AnswerFileRepositoryDbo() { AnswerId = request.Id, },
                     x => x.AnswerId == request.Id && x.Culture.SystemIdentificator == GetClientCulture()
-                );
-                return SendResponse();
+                ));
             }
             catch (Exception e)
             {
@@ -179,9 +176,8 @@ namespace EduApi.Controllers.ClientZone.Answer
         {
             try
             {
-                CheckPermition(GetOrganizationByQuestion(request.ParentId));
-                _answerService.MultipleDelete(x => x.TestQuestionId == request.ParentId, GetLoggedUserId());
-                return SendResponse();
+                CheckPermition(_answerService.GetOrganizationIdByObjectId(request.ParentId));
+                return SendResponse(_answerService.MultipleDelete(x => x.TestQuestionId == request.ParentId, GetLoggedUserId()));
             }
             catch (Exception e)
             {

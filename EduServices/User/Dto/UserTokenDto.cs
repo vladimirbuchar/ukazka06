@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace EduServices.User.Dto
 {
-    public class UserTokenDto : ListDto
+    public class UserTokenDto : DetailDto
     {
         public UserTokenDto()
         {

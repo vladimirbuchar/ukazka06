@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using Core.Base.Repository;
+﻿using Core.Base.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
 using Model.Tables.Link;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace EduRepository.UserInOrganizationRepository
 {
@@ -29,7 +29,7 @@ namespace EduRepository.UserInOrganizationRepository
 
         public override Guid GetOrganizationId(Guid objectId)
         {
-            return _dbContext.Set<UserInOrganizationDbo>().Where(x => x.Id == objectId).FirstOrDefault().OrganizationId;
+            return _dbContext.Set<UserInOrganizationDbo>().FirstOrDefault(x => x.Id == objectId).OrganizationId;
         }
     }
 }

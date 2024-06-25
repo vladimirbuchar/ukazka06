@@ -1,11 +1,10 @@
-﻿using System;
-using System.Linq;
-using Core.Base.Repository;
+﻿using Core.Base.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
-using Model.Tables.CodeBook;
 using Model.Tables.Edu.Organization;
+using System;
+using System.Linq;
 
 namespace EduRepository.OrganizationRepository
 {
@@ -13,13 +12,14 @@ namespace EduRepository.OrganizationRepository
     {
         public override OrganizationDbo GetEntity(Guid id)
         {
-            return _dbContext.Set<OrganizationDbo>().Where(x => x.Id == id && x.IsDeleted == false).Include(x => x.Addresses).Include(x => x.OrganizationTranslations).FirstOrDefault();
-        }
 
-        public LicenseDbo GetLicenseByOrganization(Guid organizationId)
-        {
-            OrganizationDbo org = _dbContext.Set<OrganizationDbo>().Where(x => x.Id == organizationId && x.IsDeleted == false).Include(x => x.License).FirstOrDefault();
-            return org.License;
+            return _dbContext.Set<OrganizationDbo>()
+                .Include(x => x.Addresses.Where(x => x.IsDeleted == false))
+                .Include(x => x.OrganizationTranslations.Where(x => x.IsDeleted == false))
+                .Include(x => x.OrganizationFileRepositories.Where(x => x.IsDeleted == false))
+                .ThenInclude(x => x.Culture)
+                .FirstOrDefault(x => x.Id == id);
+
         }
     }
 }

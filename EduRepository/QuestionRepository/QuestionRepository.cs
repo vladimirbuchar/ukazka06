@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using Core.Base.Repository;
+﻿using Core.Base.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
 using Model.Tables.Edu.TestQuestion;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace EduRepository.QuestionRepository
 {
@@ -16,14 +16,13 @@ namespace EduRepository.QuestionRepository
         {
             return _dbContext
                 .Set<QuestionDbo>()
-                .Where(x => x.Id == id)
-                .Include(x => x.TestQuestionTranslation)
+                .Include(x => x.TestQuestionTranslation.Where(x => x.IsDeleted == false))
                 .ThenInclude(x => x.Culture)
                 .Include(x => x.AnswerMode)
                 .Include(x => x.QuestionMode)
-                .Include(x => x.QuestionFileRepositories)
+                .Include(x => x.QuestionFileRepositories.Where(x => x.IsDeleted == false))
                 .ThenInclude(x => x.Culture)
-                .FirstOrDefault();
+                .FirstOrDefault(x => x.Id == id);
         }
 
         public override HashSet<QuestionDbo> GetEntities(bool deleted, Expression<Func<QuestionDbo, bool>> predicate = null)
@@ -34,10 +33,10 @@ namespace EduRepository.QuestionRepository
                     .Set<QuestionDbo>()
                     .Where(x => x.IsDeleted == deleted)
                     .Where(predicate)
-                    .Include(x => x.TestQuestionTranslation)
+                    .Include(x => x.TestQuestionTranslation.Where(x => x.IsDeleted == false))
                     .ThenInclude(x => x.Culture)
                     .Include(x => x.BankOfQuestion)
-                    .ThenInclude(x => x.BankOfQuestionsTranslations)
+                    .ThenInclude(x => x.BankOfQuestionsTranslations.Where(x => x.IsDeleted == false))
                     .ThenInclude(x => x.Culture)
                     .Include(x => x.BankOfQuestion)
                     .ThenInclude(x => x.Organization)
@@ -46,7 +45,7 @@ namespace EduRepository.QuestionRepository
 
         public override Guid GetOrganizationId(Guid objectId)
         {
-            return _dbContext.Set<QuestionDbo>().Where(x => x.Id == objectId).Include(x => x.BankOfQuestion).FirstOrDefault().BankOfQuestion.OrganizationId;
+            return _dbContext.Set<QuestionDbo>().Include(x => x.BankOfQuestion).FirstOrDefault(x => x.Id == objectId).BankOfQuestion.OrganizationId;
         }
     }
 }

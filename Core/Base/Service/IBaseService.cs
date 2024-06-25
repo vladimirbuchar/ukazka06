@@ -14,8 +14,8 @@ namespace Core.Base.Service
         where Detail : DetailDto
         where Model : TableModel
     {
-        void FileUpload(Guid parentId, string culture, Guid userId, List<IFormFile> files, FileModel model, System.Linq.Expressions.Expression<Func<FileModel, bool>> deleteFiles = null);
-        void FileDelete(Guid id, Guid userId);
+        Result FileUpload(Guid parentId, string culture, Guid userId, List<IFormFile> files, FileModel model, System.Linq.Expressions.Expression<Func<FileModel, bool>> deleteFiles = null);
+        Result FileDelete(Guid id, Guid userId);
     }
 
     public interface IBaseService<Model, Create, ObjectĹist, Detail, Update> : IBaseService<Model, Create, ObjectĹist, Detail>
@@ -25,7 +25,7 @@ namespace Core.Base.Service
         where Detail : DetailDto
         where Model : TableModel
     {
-        Result<Detail> UpdateObject(Update update, Guid userId, string culture);
+        Result<Detail> UpdateObject(Update update, Guid userId, string culture, Result<Detail> result = null);
     }
 
     public interface IBaseService<Model, Create, ObjectĹist, Detail> : IBaseService
@@ -35,13 +35,17 @@ namespace Core.Base.Service
         where Model : TableModel
     {
         Result<Detail> AddObject(Create addObject, Guid userId, string culture);
-        void DeleteObject(Guid objectId, Guid userId);
-        void MultipleDelete(System.Linq.Expressions.Expression<Func<Model, bool>> predicate, Guid userId);
+        Result DeleteObject(Guid objectId, Guid userId);
+        Result MultipleDelete(System.Linq.Expressions.Expression<Func<Model, bool>> predicate, Guid userId);
         HashSet<ObjectĹist> GetList(System.Linq.Expressions.Expression<Func<Model, bool>> predicate = null, bool deleted = false, string culture = "");
         Detail GetDetail(Guid objectId, string culture);
         Detail GetDetail(System.Linq.Expressions.Expression<Func<Model, bool>> predicate, string culture);
-        void RestoreObject(Guid objectId, Guid userId);
+        Result RestoreObject(Guid objectId, Guid userId);
+
     }
 
-    public interface IBaseService { }
+    public interface IBaseService
+    {
+        Guid GetOrganizationIdByObjectId(Guid objectId);
+    }
 }

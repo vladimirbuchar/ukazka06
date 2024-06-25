@@ -35,8 +35,7 @@ namespace EduApi.Controllers.ClientZone.StudentAttendance
         {
             try
             {
-                _studentAttendanceService.AddObject(saveStudentAttendanceDto, GetLoggedUserId(), GetClientCulture());
-                return SendResponse();
+                return SendResponse(_studentAttendanceService.AddObject(saveStudentAttendanceDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
             {
@@ -72,9 +71,8 @@ namespace EduApi.Controllers.ClientZone.StudentAttendance
         {
             try
             {
-                CheckPermition(GetOrganizationIdByBranch(request.Id));
-                _studentAttendanceService.DeleteObject(request.Id, GetLoggedUserId());
-                return SendResponse();
+                CheckPermition(_studentAttendanceService.GetOrganizationIdByObjectId(request.Id));
+                return SendResponse(_studentAttendanceService.DeleteObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
             {
@@ -92,9 +90,8 @@ namespace EduApi.Controllers.ClientZone.StudentAttendance
         {
             try
             {
-                CheckPermition(GetOrganizationIdByBranch(request.Id));
-                _studentAttendanceService.RestoreObject(request.Id, GetLoggedUserId());
-                return SendResponse();
+                CheckPermition(_studentAttendanceService.GetOrganizationIdByObjectId(request.Id));
+                return SendResponse(_studentAttendanceService.RestoreObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
             {

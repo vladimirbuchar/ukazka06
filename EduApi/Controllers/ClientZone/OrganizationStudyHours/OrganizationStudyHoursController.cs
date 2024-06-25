@@ -74,7 +74,7 @@ namespace EduApi.Controllers.ClientZone.OrganizationStudyHours
         {
             try
             {
-                CheckPermition(GetOrganizationByOrganizationStudyHour(updateStudyHoursDto.Id));
+                CheckPermition(_organizationService.GetOrganizationIdByObjectId(updateStudyHoursDto.Id));
                 return SendResponse(_organizationService.UpdateObject(updateStudyHoursDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
@@ -93,9 +93,8 @@ namespace EduApi.Controllers.ClientZone.OrganizationStudyHours
         {
             try
             {
-                CheckPermition(GetOrganizationByOrganizationStudyHour(delete.Id));
-                _organizationService.DeleteObject(delete.Id, GetLoggedUserId());
-                return SendResponse();
+                CheckPermition(_organizationService.GetOrganizationIdByObjectId(delete.Id));
+                return SendResponse(_organizationService.DeleteObject(delete.Id, GetLoggedUserId()));
             }
             catch (Exception ex)
             {
@@ -113,9 +112,8 @@ namespace EduApi.Controllers.ClientZone.OrganizationStudyHours
         {
             try
             {
-                CheckPermition(GetOrganizationByOrganizationStudyHour(restoreDto.Id));
-                _organizationService.RestoreObject(restoreDto.Id, GetLoggedUserId());
-                return SendResponse();
+                CheckPermition(_organizationService.GetOrganizationIdByObjectId(restoreDto.Id));
+                return SendResponse(_organizationService.RestoreObject(restoreDto.Id, GetLoggedUserId()));
             }
             catch (Exception ex)
             {

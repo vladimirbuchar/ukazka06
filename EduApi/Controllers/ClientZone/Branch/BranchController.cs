@@ -73,7 +73,7 @@ namespace EduApi.Controllers.ClientZone.Branch
         {
             try
             {
-                CheckPermition(GetOrganizationIdByBranch(request.Id));
+                CheckPermition(_branchService.GetOrganizationIdByObjectId(request.Id));
                 return SendResponse(_branchService.GetDetail(request.Id, GetClientCulture()));
             }
             catch (Exception e)
@@ -92,7 +92,7 @@ namespace EduApi.Controllers.ClientZone.Branch
         {
             try
             {
-                CheckPermition(GetOrganizationIdByBranch(updateBranchDto.Id));
+                CheckPermition(_branchService.GetOrganizationIdByObjectId(updateBranchDto.Id));
                 return SendResponse(_branchService.UpdateObject(updateBranchDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
@@ -111,9 +111,8 @@ namespace EduApi.Controllers.ClientZone.Branch
         {
             try
             {
-                CheckPermition(GetOrganizationIdByBranch(request.Id));
-                _branchService.DeleteObject(request.Id, GetLoggedUserId());
-                return SendResponse();
+                CheckPermition(_branchService.GetOrganizationIdByObjectId(request.Id));
+                return SendResponse(_branchService.DeleteObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
             {
@@ -131,9 +130,8 @@ namespace EduApi.Controllers.ClientZone.Branch
         {
             try
             {
-                CheckPermition(GetOrganizationIdByBranch(request.Id));
-                _branchService.RestoreObject(request.Id, GetLoggedUserId());
-                return SendResponse();
+                CheckPermition(_branchService.GetOrganizationIdByObjectId(request.Id));
+                return SendResponse(_branchService.RestoreObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
             {

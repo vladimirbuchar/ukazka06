@@ -2,6 +2,7 @@
 using Core.Base.Repository.FileRepository;
 using Core.Base.Service;
 using Core.Constants;
+using Core.DataTypes;
 using EduRepository.CourseLessonRepository;
 using EduServices.CourseLesson.Convertor;
 using EduServices.CourseLesson.Dto;
@@ -51,7 +52,7 @@ namespace EduServices.CourseLesson.Service
             }
         }
 
-        public override void FileUpload(
+        public override Result FileUpload(
             Guid parentId,
             string culture,
             Guid userId,
@@ -60,10 +61,14 @@ namespace EduServices.CourseLesson.Service
             Expression<Func<CourseLessonFileRepositoryDbo, bool>> deleteFiles = null
         )
         {
-            base.FileUpload(parentId, culture, userId, files, model, deleteFiles);
+            Result result = base.FileUpload(parentId, culture, userId, files, model, deleteFiles);
             CourseLessonDbo entity = _repository.GetEntity(parentId);
-            entity.Type = CourseLessonType.COURSE_ITEM_POWER_POINT;
-            _ = _repository.UpdateEntity(entity, userId);
+            if (entity != null)
+            {
+                entity.Type = CourseLessonType.COURSE_ITEM_POWER_POINT;
+                _ = _repository.UpdateEntity(entity, userId);
+            }
+            return result;
         }
     }
 }

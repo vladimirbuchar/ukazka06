@@ -35,8 +35,8 @@ namespace EduApi.Controllers.ClientZone.StudentEvaluation
         {
             try
             {
-                _studentEvaluationService.AddObject(addStudentEvaluationDto, GetLoggedUserId(), GetClientCulture());
-                return SendResponse();
+
+                return SendResponse(_studentEvaluationService.AddObject(addStudentEvaluationDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
             {
@@ -72,8 +72,7 @@ namespace EduApi.Controllers.ClientZone.StudentEvaluation
         {
             try
             {
-                _studentEvaluationService.DeleteObject(studentEvaluationId, GetLoggedUserId());
-                return SendResponse();
+                return SendResponse(_studentEvaluationService.DeleteObject(studentEvaluationId, GetLoggedUserId()));
             }
             catch (Exception e)
             {

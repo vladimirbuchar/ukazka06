@@ -1,10 +1,10 @@
-﻿using System;
-using System.Linq;
-using Core.Base.Repository;
+﻿using Core.Base.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
 using Model.Tables.Edu.LinkLifeTime;
+using System;
+using System.Linq;
 
 namespace EduRepository.LinkLifeTimeRepository
 {

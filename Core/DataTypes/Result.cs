@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Core.Constants;
 
 namespace Core.DataTypes
 {
@@ -34,8 +33,6 @@ namespace Core.DataTypes
         {
             return validationMessages.Any(x => x.BasicCode == validationMessage.BasicCode);
         }
-
-        public bool IsNotFound => Errors.Any(x => x.BasicCode.EndsWith(GlobalValue.NOT_FOUND));
     }
 
     public class Result<T> : Result

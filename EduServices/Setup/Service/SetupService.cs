@@ -79,7 +79,6 @@ namespace EduServices.Setup.Service
                     string route = item.Route.Trim('/');
                     if (_permissionsRepository.GetEntity(false, x => x.Route.Route == route && x.OrganizationRole.SystemIdentificator == role) == null)
                     {
-
                         Guid? routeId = _routeRepository.GetEntity(false, x => x.Route == route)?.Id;
                         if (routeId != null)
                         {

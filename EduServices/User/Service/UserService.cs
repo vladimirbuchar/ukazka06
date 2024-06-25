@@ -23,6 +23,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 
@@ -124,8 +125,6 @@ namespace EduServices.User.Service
                 new Claim(Constants.UserOrganizationRole,JsonConvert.SerializeObject(user.OrganizationRole))
             ];
 
-
-
             JwtPayload payload = new(
                 issuer: _configuration.GetValue<string>("JWTIssuer"),
                 audience: _configuration.GetValue<string>("JWTAudience"),
@@ -157,6 +156,10 @@ namespace EduServices.User.Service
                 if (user.UserRole == UserRole.REGISTERED_USER)
                 {
                     HashSet<UserInOrganizationDbo> roles = _userInOrganizationRepository.GetEntities(false, x => x.UserId == loginUser.Id);
+                    if (loginData.OrganizationId != null)
+                    {
+                        roles = roles.Where(x => x.OrganizationId == loginData.OrganizationId).ToHashSet();
+                    }
                     foreach (UserInOrganizationDbo role in roles)
                     {
                         if (!user.OrganizationRole.TryGetValue(role.OrganizationId, out List<string> value))
@@ -340,6 +343,16 @@ namespace EduServices.User.Service
                 return user;
             }
             return null;
+        }
+        public override Result DeleteObject(Guid objectId, Guid userId)
+        {
+            if (_userInOrganizationRepository.GetEntity(false, x => x.UserId == objectId && x.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.ORGANIZATION_OWNER) == null)
+            {
+                return base.DeleteObject(objectId, userId);
+            }
+            Result result = new();
+            result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.USER, GlobalValue.CAN_NOT_DELETE));
+            return result;
         }
     }
 }

@@ -15,12 +15,12 @@ namespace EduServices.SystemService.SendMailService
 {
     public class SendMailService(
         IOrganizationSettingRepository organizationSettingRepository,
-        IMailKitIntegration sendGridIntegration,
+        IMailKitIntegration mailKitIntegration,
         IEmailRepository emailRepository,
         ICodeBookRepository<EduEmailDbo> codeBookRepository
     ) : BaseService<IEmailRepository, SendEmailDbo>(emailRepository), ISendMailService
     {
-        private readonly IMailKitIntegration _mailKitIntegration = sendGridIntegration;
+        private readonly IMailKitIntegration _mailKitIntegration = mailKitIntegration;
         private readonly IOrganizationSettingRepository _organizationSettingRepository = organizationSettingRepository;
         private readonly ICodeBookRepository<EduEmailDbo> _email = codeBookRepository;
 
