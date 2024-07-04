@@ -25,7 +25,7 @@ namespace EduServices.User.Service
         Result ActivateUser(ActivateUserDto activateUser);
         Result SetNewPassword(SetNewPasswordDto setNewPasswordDto);
         UserTokenDto LoginSocialNetwork(LoginUserSocialNetworkDto loginSocialNetwork, string culture);
-        void GeneratePasswordResetEmail(GeneratePasswordResetEmailDto generatePasswordResetEmailDto, string clientCulture);
+        Result GeneratePasswordResetEmail(GeneratePasswordResetEmailDto generatePasswordResetEmailDto, string clientCulture);
         Result ChangePassword(ChangePasswordDto changePassword);
         string RefreshToken(Guid userId);
         Result SetPassword(SetPasswordDto changePassword);

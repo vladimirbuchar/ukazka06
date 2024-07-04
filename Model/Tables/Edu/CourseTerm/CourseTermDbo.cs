@@ -70,7 +70,7 @@ namespace Model.Tables.Edu.CourseTerm
         public virtual Guid? OrganizationStudyHourId { get; set; }
         public virtual Guid CourseId { get; set; }
         public virtual CourseDbo Course { get; set; }
-        public virtual ICollection<StudentAttendanceDbo> AttendanceStudents { get; set; }
+        public virtual ICollection<AttendanceStudentDbo> AttendanceStudents { get; set; }
         public virtual ICollection<CourseTermDateDbo> CourseTermDate { get; set; }
         public virtual ICollection<StudentInGroupCourseTermDbo> StudentInGroupCourseTerms { get; set; }
         public virtual ICollection<CourseLectorDbo> CourseLectors { get; set; }

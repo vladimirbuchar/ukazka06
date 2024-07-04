@@ -19,7 +19,7 @@ namespace Core.Base.Repository.FileRepository
             string projectRootPath = hostingEnvironment.ContentRootPath;
 
             string parent = Directory.GetParent(projectRootPath).FullName;
-            _fileRepositoryPath = string.Format("{0}{1}", parent, configuration.GetSection(ConfigValue.FileRepository).Value);
+            _fileRepositoryPath = string.Format("{0}{1}", parent, configuration.GetSection(ConfigValue.FILE_REPOSITORY).Value);
         }
         /// <summary>
         /// create file repository

@@ -5,5 +5,5 @@ using Model.Tables.Edu.AttendanceStudent;
 
 namespace EduServices.StudentAttendance.Validator
 {
-    public interface IStudentAttendanceValidator : IBaseValidator<StudentAttendanceDbo, IStudentAttendanceRepository, StudentAttendanceCreateDto, StudentAttendanceDetailDto> { }
+    public interface IStudentAttendanceValidator : IBaseValidator<AttendanceStudentDbo, IAttendanceStudentRepository, StudentAttendanceCreateDto, StudentAttendanceDetailDto> { }
 }

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace Core.Base.Repository
 {
@@ -102,6 +103,7 @@ namespace Core.Base.Repository
             Model entity = GetEntityWithoutInclude(guid) ?? throw new KeyNotFoundException(guid.ToString());
             entity.DeletedTime = null;
             entity.IsDeleted = false;
+            entity.DeletedBy = null;
             _ = _dbContext.Update(entity);
             _ = _dbContext.SaveChanges();
             _dbContext.ChangeTracker.Clear();
@@ -160,7 +162,8 @@ namespace Core.Base.Repository
         /// <returns></returns>
         public virtual Model GetEntity(Guid id)
         {
-            return _dbContext.Set<Model>().FirstOrDefault(x => x.Id == id);
+            IQueryable<Model> query = _dbContext.Set<Model>();
+            return query.FirstOrDefault(x => x.Id == id);
         }
         /// <summary>
         /// get entity without include
@@ -177,9 +180,10 @@ namespace Core.Base.Repository
         /// <param name="deleted"></param>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        public virtual Model GetEntity(bool deleted, System.Linq.Expressions.Expression<Func<Model, bool>> predicate = null)
+        public virtual Model GetEntity(bool deleted, Expression<Func<Model, bool>> predicate = null)
         {
-            return _dbContext.Set<Model>().Where(x => x.IsDeleted == deleted).FirstOrDefault(predicate);
+            IQueryable<Model> query = _dbContext.Set<Model>();
+            return query.Where(x => x.IsDeleted == deleted).FirstOrDefault(predicate);
         }
         /// <summary>
         /// get entity list
@@ -187,7 +191,7 @@ namespace Core.Base.Repository
         /// <param name="deleted"></param>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        public virtual HashSet<Model> GetEntities(bool deleted, System.Linq.Expressions.Expression<Func<Model, bool>> predicate = null)
+        public virtual HashSet<Model> GetEntities(bool deleted, Expression<Func<Model, bool>> predicate = null)
         {
             return predicate != null ? [.. _dbContext.Set<Model>().Where(predicate).Where(x => x.IsDeleted == deleted)] : [.. _dbContext.Set<Model>().Where(x => x.IsDeleted == deleted)];
         }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Core.Extension
 {
@@ -45,19 +44,6 @@ namespace Core.Extension
                 }
             }
             return newList;
-        }
-
-        /// <summary>
-        /// method for compare two lists
-        /// </summary>
-        /// <param name="list1"></param>
-        /// <param name="list2"></param>
-        /// <returns></returns>
-        public static bool Compare<T>(this IList<T> list1, IList<T> list2)
-        {
-            List<T> firstNotSecond = list1.Except(list2).ToList();
-            List<T> secondNotFirst = list2.Except(list1).ToList();
-            return firstNotSecond.Count == 0 && secondNotFirst.Count == 0;
         }
     }
 }

@@ -41,7 +41,6 @@ namespace Core.Base.Service
         Detail GetDetail(Guid objectId, string culture);
         Detail GetDetail(System.Linq.Expressions.Expression<Func<Model, bool>> predicate, string culture);
         Result RestoreObject(Guid objectId, Guid userId);
-
     }
 
     public interface IBaseService

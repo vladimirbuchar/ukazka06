@@ -4,5 +4,5 @@ using Model.Tables.Edu.AttendanceStudent;
 
 namespace EduServices.StudentAttendance.Service
 {
-    public interface IStudentAttendanceService : IBaseService<StudentAttendanceDbo, StudentAttendanceCreateDto, StudentAttendanceListDto, StudentAttendanceDetailDto> { }
+    public interface IStudentAttendanceService : IBaseService<AttendanceStudentDbo, StudentAttendanceCreateDto, StudentAttendanceListDto, StudentAttendanceDetailDto> { }
 }

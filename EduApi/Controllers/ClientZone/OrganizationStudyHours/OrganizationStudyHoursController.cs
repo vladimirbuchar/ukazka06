@@ -36,7 +36,7 @@ namespace EduApi.Controllers.ClientZone.OrganizationStudyHours
         {
             try
             {
-                CheckPermition(addOrganizationDto.OrganizationId);
+                CheckOrganizationPermition(addOrganizationDto.OrganizationId);
                 return SendResponse(_organizationService.AddObject(addOrganizationDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
@@ -55,7 +55,7 @@ namespace EduApi.Controllers.ClientZone.OrganizationStudyHours
         {
             try
             {
-                CheckPermition(request.ParentId);
+                CheckOrganizationPermition(request.ParentId);
                 return SendResponse(_organizationService.GetList(x => x.OrganizationId == request.ParentId, request.IsDeleted));
             }
             catch (Exception e)
@@ -74,7 +74,7 @@ namespace EduApi.Controllers.ClientZone.OrganizationStudyHours
         {
             try
             {
-                CheckPermition(_organizationService.GetOrganizationIdByObjectId(updateStudyHoursDto.Id));
+                CheckOrganizationPermition(_organizationService.GetOrganizationIdByObjectId(updateStudyHoursDto.Id));
                 return SendResponse(_organizationService.UpdateObject(updateStudyHoursDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
@@ -93,7 +93,7 @@ namespace EduApi.Controllers.ClientZone.OrganizationStudyHours
         {
             try
             {
-                CheckPermition(_organizationService.GetOrganizationIdByObjectId(delete.Id));
+                CheckOrganizationPermition(_organizationService.GetOrganizationIdByObjectId(delete.Id));
                 return SendResponse(_organizationService.DeleteObject(delete.Id, GetLoggedUserId()));
             }
             catch (Exception ex)
@@ -112,7 +112,7 @@ namespace EduApi.Controllers.ClientZone.OrganizationStudyHours
         {
             try
             {
-                CheckPermition(_organizationService.GetOrganizationIdByObjectId(restoreDto.Id));
+                CheckOrganizationPermition(_organizationService.GetOrganizationIdByObjectId(restoreDto.Id));
                 return SendResponse(_organizationService.RestoreObject(restoreDto.Id, GetLoggedUserId()));
             }
             catch (Exception ex)

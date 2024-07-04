@@ -1347,7 +1347,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_TestQuestionAnswerTanslation");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.AttendanceStudent.StudentAttendanceDbo", b =>
+            modelBuilder.Entity("Model.Tables.Edu.AttendanceStudent.AttendanceStudentDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -4196,8 +4196,8 @@ namespace EduApi.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("SmtpServerPassword");
 
-                    b.Property<string>("SmtpServerPort")
-                        .HasColumnType("nvarchar(max)")
+                    b.Property<int>("SmtpServerPort")
+                        .HasColumnType("int")
                         .HasColumnName("SmtpServerPort");
 
                     b.Property<string>("SmtpServerUrl")
@@ -5568,7 +5568,8 @@ namespace EduApi.Migrations
                         .HasColumnName("Id");
 
                     b.Property<bool>("AllowCLassicLogin")
-                        .HasColumnType("bit");
+                        .HasColumnType("bit")
+                        .HasColumnName("AllowCLassicLogin");
 
                     b.Property<Guid?>("CreatedBy")
                         .HasColumnType("uniqueidentifier")
@@ -6661,7 +6662,7 @@ namespace EduApi.Migrations
                     b.Navigation("TestQuestionAnswer");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.AttendanceStudent.StudentAttendanceDbo", b =>
+            modelBuilder.Entity("Model.Tables.Edu.AttendanceStudent.AttendanceStudentDbo", b =>
                 {
                     b.HasOne("Model.Tables.Link.CourseStudentDbo", "CourseStudent")
                         .WithMany("AttendanceStudents")

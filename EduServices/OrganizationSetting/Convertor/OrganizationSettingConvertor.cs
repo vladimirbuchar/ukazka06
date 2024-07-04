@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using EduServices.OrganizationCulture.Dto;
+﻿using Core.Extension;
 using EduServices.OrganizationSetting.Dto;
 using Model.Tables.Edu.OrganizationSetting;
-using Model.Tables.Link;
 
 namespace EduServices.OrganizationSetting.Convertor
 {
@@ -15,7 +12,7 @@ namespace EduServices.OrganizationSetting.Convertor
         {
             setting.UserDefaultPassword = saveOrganizationSettingDto.UserDefaultPassword;
             //setting.LicenseOldId = saveOrganizationSettingDto.LicenseId;
-            setting.ElearningUrl = saveOrganizationSettingDto.UrlElearning;
+            setting.ElearningUrl = saveOrganizationSettingDto.UrlElearning.ToUrl();
             setting.Registration = saveOrganizationSettingDto.Registration;
             setting.PasswordReset = saveOrganizationSettingDto.PasswordReset;
             setting.GoogleLogin = saveOrganizationSettingDto.GoogleLogin;
@@ -55,17 +52,7 @@ namespace EduServices.OrganizationSetting.Convertor
             };
         }
 
-        public HashSet<OrganizationCultureListDto> ConvertToWebModel(HashSet<OrganizationCultureDbo> getOrganizationCultures)
-        {
-            return getOrganizationCultures
-                .Select(x => new OrganizationCultureListDto()
-                {
-                    Id = x.Id,
-                    IsDefault = x.IsDefault,
-                    Name = x.Culture.Name
-                })
-                .ToHashSet();
-        }
+
 
         public OrganizationSettingByUrlDto ConvertToWebModel2(OrganizationSettingDbo getOrganizationSetting)
         {

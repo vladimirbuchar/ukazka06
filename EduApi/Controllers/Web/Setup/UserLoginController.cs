@@ -36,8 +36,7 @@ namespace EduApi.Controllers.Web.UserLogin
         {
             try
             {
-                _setupService.CreateAdministratorUser();
-                return SendResponse();
+                return SendResponse(_setupService.CreateAdministratorUser());
             }
             catch (Exception ex)
             {
@@ -57,9 +56,9 @@ namespace EduApi.Controllers.Web.UserLogin
             {
                 if (_setupService.CheckUser(setupLogin))
                 {
-                    _setupService.ImportDefaultPermitions(delete);
+                    return SendResponse(_setupService.ImportDefaultPermitions(delete));
                 }
-                return SendResponse();
+                return BadRequest();
             }
             catch (Exception e)
             {
@@ -80,7 +79,7 @@ namespace EduApi.Controllers.Web.UserLogin
                 {
                     _setupService.RegisterAllEndpoints();
                 }
-                return SendResponse();
+                return BadRequest();
             }
             catch (Exception e)
             {

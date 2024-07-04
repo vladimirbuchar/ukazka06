@@ -71,7 +71,7 @@ namespace EduApi.Controllers.ClientZone.StudentAttendance
         {
             try
             {
-                CheckPermition(_studentAttendanceService.GetOrganizationIdByObjectId(request.Id));
+                CheckOrganizationPermition(_studentAttendanceService.GetOrganizationIdByObjectId(request.Id));
                 return SendResponse(_studentAttendanceService.DeleteObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
@@ -90,7 +90,7 @@ namespace EduApi.Controllers.ClientZone.StudentAttendance
         {
             try
             {
-                CheckPermition(_studentAttendanceService.GetOrganizationIdByObjectId(request.Id));
+                CheckOrganizationPermition(_studentAttendanceService.GetOrganizationIdByObjectId(request.Id));
                 return SendResponse(_studentAttendanceService.RestoreObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)

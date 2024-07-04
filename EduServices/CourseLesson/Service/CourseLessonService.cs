@@ -36,7 +36,7 @@ namespace EduServices.CourseLesson.Service
         >(courseLessonRepository, convertor, validator, repository, culture),
             ICourseLessonService
     {
-        public void UpdatePositionCourseLesson(CourseLessonUpdatePositionDto updatePositionCourseLesson, Guid userId)
+        public Result UpdatePositionCourseLesson(CourseLessonUpdatePositionDto updatePositionCourseLesson, Guid userId)
         {
             int position = 0;
             foreach (string item in updatePositionCourseLesson.Ids)
@@ -50,6 +50,7 @@ namespace EduServices.CourseLesson.Service
                     position++;
                 }
             }
+            return new Result();
         }
 
         public override Result FileUpload(

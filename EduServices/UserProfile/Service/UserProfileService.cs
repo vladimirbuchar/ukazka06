@@ -29,7 +29,7 @@ namespace EduServices.UserProfile.Service
         IOrganizationStudyHourRepository organizationStudyHourRepository,
         IUserInOrganizationRepository userInOrganizationRepository,
         ICourseRepository courseRepository,
-        IStudentAttendanceRepository atendanceStudentRepository
+        IAttendanceStudentRepository atendanceStudentRepository
     ) : BaseService<IUserProfileConvertor>(convertor), IUserProfileService
     {
         private readonly IUserCertificateRepository _userCertificateRepository = userCertificateRepository;
@@ -38,7 +38,7 @@ namespace EduServices.UserProfile.Service
         private readonly IOrganizationStudyHourRepository _organizationStudyHourRepository = organizationStudyHourRepository;
         private readonly IUserInOrganizationRepository _userInOrganizationRepository = userInOrganizationRepository;
         private readonly ICourseRepository _courseRepository = courseRepository;
-        private readonly IStudentAttendanceRepository _attendanceStudentRepository = atendanceStudentRepository;
+        private readonly IAttendanceStudentRepository _attendanceStudentRepository = atendanceStudentRepository;
 
         public HashSet<MyCertificateListDto> GetMyCertificate(Guid userId)
         {
@@ -182,13 +182,13 @@ namespace EduServices.UserProfile.Service
 
             foreach (CourseStudentDbo course in myCourse)
             {
-                HashSet<StudentAttendanceDbo> getStudentAttendances = _attendanceStudentRepository
+                HashSet<AttendanceStudentDbo> getStudentAttendances = _attendanceStudentRepository
                     .GetEntities(false, x => x.CourseTermId == course.CourseTermId)
                     .Where(x => x.CourseStudentId == course.UserInOrganizationId)
                     .ToHashSet();
-                foreach (StudentAttendanceDbo item in getStudentAttendances)
+                foreach (AttendanceStudentDbo item in getStudentAttendances)
                 {
-                    StudentAttendanceDbo myAttendances = _attendanceStudentRepository.GetEntity(false, x => x.CourseStudentId == item.CourseStudentId && x.CourseTermDateId == item.CourseTermDateId);
+                    AttendanceStudentDbo myAttendances = _attendanceStudentRepository.GetEntity(false, x => x.CourseStudentId == item.CourseStudentId && x.CourseTermDateId == item.CourseTermDateId);
 
                     _ = getMyAttendanceDtos.Add(
                         new MyAttendanceListDto()

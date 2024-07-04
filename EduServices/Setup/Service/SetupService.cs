@@ -1,5 +1,6 @@
 ﻿using Core.Base.Service;
 using Core.Constants;
+using Core.DataTypes;
 using Core.Extension;
 using EduRepository.OrganizationRoleRepository;
 using EduRepository.PermissionsRepository;
@@ -39,9 +40,9 @@ namespace EduServices.Setup.Service
         private readonly IPermissionsRepository _permissionsRepository = permissionsRepository;
         private readonly IEnumerable<EndpointDataSource> _endpointSources = endpointSources;
 
-        public void CreateAdministratorUser()
+        public Result CreateAdministratorUser()
         {
-            UserDbo admin = _userRepository.GetEntity(false, x => x.UserEmail == "admin@flexiblelms.com");
+            UserDbo admin = _userRepository.GetEntity(false, x => x.UserEmail == _configuration.GetSection(ConfigValue.SETUP).GetSection(ConfigValue.USER_NAME).Value);
             if (admin == null)
             {
                 _ = _userRepository.CreateEntity(new UserDbo()
@@ -57,9 +58,10 @@ namespace EduServices.Setup.Service
 
                 }, Guid.Empty);
             }
+            return new Result();
         }
 
-        public void ImportDefaultPermitions(bool delete)
+        public Result ImportDefaultPermitions(bool delete)
         {
             if (delete)
             {
@@ -92,9 +94,10 @@ namespace EduServices.Setup.Service
                     }
                 }
             }
+            return new Result();
         }
 
-        public void RegisterAllEndpoints()
+        public Result RegisterAllEndpoints()
         {
             List<string> endpoints = _endpointSources
                .SelectMany(es => es.Endpoints)
@@ -110,10 +113,11 @@ namespace EduServices.Setup.Service
                 }
 
             }
+            return new Result();
         }
         public bool CheckUser(SetupLoginDto setupLogin)
         {
-            return _userRepository.LoginUser(setupLogin.UserEmail, setupLogin.Password.GetHashString())?.UserRole?.SystemIdentificator == UserRole.ADMINISTRATOR;
+            return _userRepository.GetEntity(false, x => x.UserEmail == setupLogin.UserEmail && x.UserPassword == setupLogin.Password.GetHashString() && x.IsActive == true && x.IsDeleted == false && x.AllowCLassicLogin == true)?.UserRole?.SystemIdentificator == UserRole.ADMINISTRATOR;
         }
         public class Permissions
         {

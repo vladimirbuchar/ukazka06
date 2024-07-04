@@ -1,5 +1,7 @@
 ﻿using Asp.Versioning;
 using Core.Constants;
+using EduApi.Configuration.Hangfire;
+using EduApi.Configuration.Swagger;
 using EduServices;
 using EduServices.Jobs;
 using Hangfire;
@@ -85,7 +87,7 @@ namespace EduApi
             services.RegistrationRoute();
             services.RegistrationPermissions();
             services.RegistrationSetup();
-            services.AddTransient<SendEmailJob>();
+            services.RegisterJob();
             services
                 .AddMvc(options =>
                 {
@@ -101,7 +103,7 @@ namespace EduApi
 
             services.AddCors(options =>
             {
-                options.AddPolicy("AllowAll", builder => builder.SetIsOriginAllowed(IsOriginAllowed).AllowAnyMethod().AllowAnyHeader());
+                options.AddPolicy("AllowInternal", builder => builder.SetIsOriginAllowed(IsOriginAllowed).AllowAnyMethod().AllowAnyHeader());
             });
             // Configure JWT authentication
 
@@ -159,10 +161,11 @@ namespace EduApi
                 c.SwaggerDoc("Setup", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - setup ", Version = "v1" });
                 c.SwaggerDoc("ExternalPublic", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - external public", Version = "v1" });
                 c.SwaggerDoc("ExternalClientZone", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - external course", Version = "v1" });
-                c.SwaggerDoc("ExternalStudyZone", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - external study zone", Version = "v1" });
+                c.SwaggerDoc("ExternalOrganization", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - external organization", Version = "v1" });
                 c.SwaggerDoc("ExternalUser", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - external user", Version = "v1" });
+                c.SwaggerDoc("ExternalStudyZone", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - external study zone", Version = "v1" });
                 c.SwaggerDoc("ExternalCodebook", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - external codebook", Version = "v1" });
-                c.SwaggerDoc("ExternlaOrganization", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - external organization", Version = "v1" });
+
                 c.DocInclusionPredicate((docName, apiDesc) =>
                 {
                     var actionApiDescription = apiDesc.ActionDescriptor.EndpointMetadata.OfType<ApiExplorerSettingsAttribute>().FirstOrDefault();
@@ -211,6 +214,7 @@ namespace EduApi
                     .UseSimpleAssemblyNameTypeSerializer()
                     .UseRecommendedSerializerSettings();
             });
+            services.AddHangfireServer();
         }
 
         private static bool IsOriginAllowed(string host)
@@ -266,7 +270,7 @@ namespace EduApi
                 c.SwaggerEndpoint("/swagger/ExternalStudyZone/swagger.json", "FlexibleLMS API V1 - external study zone");
                 c.SwaggerEndpoint("/swagger/ExternalUser/swagger.json", "FlexibleLMS API V1 - external user");
                 c.SwaggerEndpoint("/swagger/ExternalCodebook/swagger.json", "FlexibleLMS API V1 - external codebook");
-                c.SwaggerEndpoint("/swagger/ExternlaOrganization/swagger.json", "FlexibleLMS API V1 - external organization");
+                c.SwaggerEndpoint("/swagger/ExternalOrganization/swagger.json", "FlexibleLMS API V1 - external organization");
                 c.RoutePrefix = "swagger";
             });
 
@@ -274,26 +278,26 @@ namespace EduApi
             {
                 Authorization = new[]
             {
-                new BasicAuthAuthorizationFilter(new BasicAuthAuthorizationFilterOptions
-                {
-                    SslRedirect = false,
-                    RequireSsl = false,
-                    LoginCaseSensitive = true,
-                    Users = new[]
+                    new BasicAuthAuthorizationFilter(new BasicAuthAuthorizationFilterOptions
                     {
-                        new BasicAuthAuthorizationUser
-                        {
-                            Login = Configuration.GetSection("Hangfire").GetValue<string>("userName"),
-                            PasswordClear = Configuration.GetSection("Hangfire").GetValue<string>("userPassword")
+                        SslRedirect = false,
+                        RequireSsl = false,
+                        LoginCaseSensitive = true,
+                        Users = new[]
+                    {
+                            new BasicAuthAuthorizationUser
+                            {
+                                Login = Configuration.GetSection("Hangfire").GetValue<string>("userName"),
+                                PasswordClear = Configuration.GetSection("Hangfire").GetValue<string>("userPassword")
+                            }
                         }
-                    }
-                })
+                    })
+                }
             }
-            });
+            );
             var serviceScopeFactory = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>();
             var jobActivator = new ScopedJobActivator(serviceScopeFactory);
             GlobalConfiguration.Configuration.UseActivator(jobActivator);
-            jobActivator.ActivateJob(typeof(SendEmailJob));
             RecurringJob.AddOrUpdate<SendEmailJob>(job => job.Execute(), Cron.Minutely);
         }
     }

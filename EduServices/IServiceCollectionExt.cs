@@ -87,6 +87,7 @@ using EduServices.CourseTermTimeTable.Service;
 using EduServices.CourseTestEvaluation.Convertor;
 using EduServices.CourseTestEvaluation.Service;
 using EduServices.CourseTestEvaluation.Validator;
+using EduServices.Jobs;
 using EduServices.Note.Convertor;
 using EduServices.Note.Service;
 using EduServices.Notification.Convertor;
@@ -207,7 +208,6 @@ namespace EduServices
         {
             _ = service.AddScoped<IMailKitIntegration, MailKitIntegration>();
             _ = service.AddScoped<IHttpClient, HttpClient>();
-            //_ = service.AddHttpContextAccessor();
         }
 
         public static void RegistrationUser(this IServiceCollection service)
@@ -434,7 +434,7 @@ namespace EduServices
 
         public static void RegistrationAttendanceStudent(this IServiceCollection service)
         {
-            _ = service.AddScoped<IStudentAttendanceRepository, StudentAttendanceRepository>();
+            _ = service.AddScoped<IAttendanceStudentRepository, AttendanceStudentRepository>();
             _ = service.AddScoped<IStudentAttendanceService, StudentAttendanceService>();
         }
 
@@ -488,6 +488,10 @@ namespace EduServices
         public static void RegistrationSetup(this IServiceCollection service)
         {
             _ = service.AddScoped<ISetupService, SetupService>();
+        }
+        public static void RegisterJob(this IServiceCollection service)
+        {
+            _ = service.AddScoped<SendEmailJob>();
         }
     }
 }

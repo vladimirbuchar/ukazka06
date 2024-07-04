@@ -118,8 +118,7 @@ namespace EduApi.Controllers.Web.UserLogin
         {
             try
             {
-                _userService.GeneratePasswordResetEmail(generatePasswordResetEmailDto, GetClientCulture());
-                return SendResponse();
+                return SendResponse(_userService.GeneratePasswordResetEmail(generatePasswordResetEmailDto, GetClientCulture()));
             }
             catch (Exception ex)
             {

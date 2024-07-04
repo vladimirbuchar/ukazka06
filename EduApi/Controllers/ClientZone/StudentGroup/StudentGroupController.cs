@@ -36,7 +36,7 @@ namespace EduApi.Controllers.ClientZone.StudentGroup
         {
             try
             {
-                CheckPermition(addStudentGroupDto.OrganizationId);
+                CheckOrganizationPermition(addStudentGroupDto.OrganizationId);
                 return SendResponse(_studentGroupService.AddObject(addStudentGroupDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
@@ -55,7 +55,7 @@ namespace EduApi.Controllers.ClientZone.StudentGroup
         {
             try
             {
-                CheckPermition(reuest.ParentId);
+                CheckOrganizationPermition(reuest.ParentId);
                 return SendResponse(_studentGroupService.GetList(x => x.OrganizationId == reuest.ParentId, reuest.IsDeleted, GetClientCulture()));
             }
             catch (Exception e)
@@ -74,7 +74,7 @@ namespace EduApi.Controllers.ClientZone.StudentGroup
         {
             try
             {
-                CheckPermition(_studentGroupService.GetOrganizationIdByObjectId(request.Id));
+                CheckOrganizationPermition(_studentGroupService.GetOrganizationIdByObjectId(request.Id));
                 return SendResponse(_studentGroupService.GetDetail(request.Id, GetClientCulture()));
             }
             catch (Exception e)
@@ -93,7 +93,7 @@ namespace EduApi.Controllers.ClientZone.StudentGroup
         {
             try
             {
-                CheckPermition(_studentGroupService.GetOrganizationIdByObjectId(updateStudentGroupDto.Id));
+                CheckOrganizationPermition(_studentGroupService.GetOrganizationIdByObjectId(updateStudentGroupDto.Id));
                 return SendResponse(_studentGroupService.UpdateObject(updateStudentGroupDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
@@ -112,7 +112,7 @@ namespace EduApi.Controllers.ClientZone.StudentGroup
         {
             try
             {
-                CheckPermition(_studentGroupService.GetOrganizationIdByObjectId(request.Id));
+                CheckOrganizationPermition(_studentGroupService.GetOrganizationIdByObjectId(request.Id));
                 return SendResponse(_studentGroupService.DeleteObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
@@ -131,7 +131,7 @@ namespace EduApi.Controllers.ClientZone.StudentGroup
         {
             try
             {
-                CheckPermition(_studentGroupService.GetOrganizationIdByObjectId(request.Id));
+                CheckOrganizationPermition(_studentGroupService.GetOrganizationIdByObjectId(request.Id));
                 return SendResponse(_studentGroupService.RestoreObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)

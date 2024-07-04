@@ -11,6 +11,7 @@
         public const string NOT_EXISTS = "NOT_EXISTS";
         public const string EXISTS = "EXISTS";
         public const string CAN_NOT_DELETE = "CAN_NOT_DELETE";
+        public const string CAN_NOT_EDIT = "CAN_NOT_EDIT";
 
     }
 }

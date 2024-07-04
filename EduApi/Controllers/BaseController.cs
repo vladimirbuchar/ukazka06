@@ -11,7 +11,7 @@ using System.Security.Claims;
 
 namespace EduApi.Controllers
 {
-    [EnableCors("AllowAll")]
+    [EnableCors("AllowInternal")]
     [ApiController]
     public class BaseController : ControllerBase
     {
@@ -75,8 +75,7 @@ namespace EduApi.Controllers
         /// <returns></returns>
         protected ActionResult SendSystemError(Exception ex)
         {
-            Result result = new Result();
-            Result validation = result;
+            Result validation = new Result(); ;
             if (ex is PermitionDeniedException)
             {
                 validation.AddResultStatus(new ValidationMessage(MessageType.ERROR, SystemErrorValue.PERMITION_DENIED));
@@ -95,15 +94,6 @@ namespace EduApi.Controllers
             }
             _logger.LogCritical(SystemErrorValue.SYSTEM_EXCEPTION, ex);
             return StatusCode(500, new SystemError(SystemErrorValue.SYSTEM_EXCEPTION));
-        }
-
-        /// <summary>
-        /// send response
-        /// </summary>
-        /// <returns></returns>
-        protected ActionResult SendResponse()
-        {
-            return SendResponse(new Result());
         }
 
         /// <summary>

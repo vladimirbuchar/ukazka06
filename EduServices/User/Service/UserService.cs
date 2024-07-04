@@ -122,7 +122,7 @@ namespace EduServices.User.Service
                 new Claim(ClaimTypes.Role, user.UserRole),
                 new Claim(ClaimTypes.Email, user.UserEmail),
                 new Claim(ClaimTypes.Name, user.FullName),
-                new Claim(Constants.UserOrganizationRole,JsonConvert.SerializeObject(user.OrganizationRole))
+                new Claim(Constants.USER_ORGANIZATION_ROLE,JsonConvert.SerializeObject(user.OrganizationRole))
             ];
 
             JwtPayload payload = new(
@@ -144,7 +144,7 @@ namespace EduServices.User.Service
         }
         public UserTokenDto LoginUser(LoginUserDto loginData)
         {
-            UserDbo loginUser = _repository.LoginUser(loginData.UserEmail, loginData.UserPassword.GetHashString());
+            UserDbo loginUser = _repository.GetEntity(false, x => x.UserEmail == loginData.UserEmail && x.UserPassword == loginData.UserPassword.GetHashString() && x.IsActive == true && x.IsDeleted == false && x.AllowCLassicLogin == true);
             if (loginUser != null)
             {
                 if (loginData.OrganizationId != null && _userInOrganizationRepository.GetEntity(false, x => x.UserId == loginUser.Id && x.OrganizationId == loginData.OrganizationId) == null)
@@ -183,7 +183,7 @@ namespace EduServices.User.Service
             Result validate = _validator.IsValidActivateUser(activateUser);
             if (validate.IsOk)
             {
-                LinkLifeTimeDbo link = _linkLifeTimeRepository.GetLinkWithUser(activateUser.LinkId);
+                LinkLifeTimeDbo link = _linkLifeTimeRepository.GetEntity(activateUser.LinkId);
                 UserDbo user = link.User;
                 if (user != null)
                 {
@@ -195,7 +195,7 @@ namespace EduServices.User.Service
             return validate;
         }
 
-        public void ChangePassword(Guid userId, string newPassword)
+        public Result ChangePassword(Guid userId, string newPassword)
         {
             UserDbo user = _repository.GetEntity(userId);
             if (user != null)
@@ -203,9 +203,10 @@ namespace EduServices.User.Service
                 user.UserPassword = newPassword.GetHashString();
                 _ = _repository.UpdateEntity(user, userId);
             }
+            return new Result();
         }
 
-        private void SetPassword(Guid userId, string newPassword)
+        private Result SetPassword(Guid userId, string newPassword)
         {
             UserDbo user = _repository.GetEntity(userId);
             if (user != null && user.AllowCLassicLogin == false)
@@ -214,6 +215,7 @@ namespace EduServices.User.Service
                 user.AllowCLassicLogin = true;
                 _ = _repository.UpdateEntity(user, userId);
             }
+            return new Result();
         }
 
         public UserTokenDto LoginSocialNetwork(LoginUserSocialNetworkDto loginSocialNetwork, string culture)
@@ -297,7 +299,7 @@ namespace EduServices.User.Service
             Result validate = _validator.IsValidSetNewPassword(setNewPasswordDto);
             if (validate.IsOk)
             {
-                LinkLifeTimeDbo link = _linkLifeTimeRepository.GetLinkWithUser(setNewPasswordDto.LinkId);
+                LinkLifeTimeDbo link = _linkLifeTimeRepository.GetEntity(setNewPasswordDto.LinkId);
                 UserDbo user = link.User;
                 if (user != null)
                 {
@@ -314,7 +316,7 @@ namespace EduServices.User.Service
             Result validate = _validator.ChangePasswordValidate(changePassword);
             if (validate.IsOk)
             {
-                ChangePassword(changePassword.UserId, changePassword.NewUserPassword);
+                _ = ChangePassword(changePassword.UserId, changePassword.NewUserPassword);
             }
             return validate;
         }
@@ -324,14 +326,14 @@ namespace EduServices.User.Service
             Result validate = _validator.SetPasswordValidate(setPasswordDto);
             if (validate.IsOk)
             {
-                SetPassword(setPasswordDto.UserId, setPasswordDto.NewUserPassword);
+                _ = SetPassword(setPasswordDto.UserId, setPasswordDto.NewUserPassword);
             }
             return validate;
         }
 
         public UserTokenDto LoginUser(LoginUserAdminDto loginData)
         {
-            UserDbo loginUser = _repository.LoginUser(loginData.UserEmail, loginData.UserPassword.GetHashString());
+            UserDbo loginUser = _repository.GetEntity(false, x => x.UserEmail == loginData.UserEmail && x.UserPassword == loginData.UserPassword.GetHashString() && x.IsActive == true && x.IsDeleted == false && x.AllowCLassicLogin == true);
             if (loginUser != null)
             {
                 UserTokenDto user = _convertor.ConvertToWebModel(loginUser);
@@ -353,6 +355,16 @@ namespace EduServices.User.Service
             Result result = new();
             result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.USER, GlobalValue.CAN_NOT_DELETE));
             return result;
+        }
+
+        void IUserService.ChangePassword(Guid userId, string newPassword)
+        {
+            throw new NotImplementedException();
+        }
+
+        Result IUserService.GeneratePasswordResetEmail(GeneratePasswordResetEmailDto generatePasswordResetEmailDto, string clientCulture)
+        {
+            throw new NotImplementedException();
         }
     }
 }

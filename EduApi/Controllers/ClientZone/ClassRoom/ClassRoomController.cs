@@ -35,7 +35,7 @@ namespace EduApi.Controllers.ClientZone.ClassRoom
         {
             try
             {
-                CheckPermition(_classRoomService.GetOrganizationIdByObjectId(addClassRoomDto.BranchId));
+                CheckOrganizationPermition(_classRoomService.GetOrganizationIdByObjectId(addClassRoomDto.BranchId));
                 return SendResponse(_classRoomService.AddObject(addClassRoomDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
@@ -54,7 +54,7 @@ namespace EduApi.Controllers.ClientZone.ClassRoom
         {
             try
             {
-                CheckPermition(_classRoomService.GetOrganizationIdByObjectId(request.ParentId));
+                CheckOrganizationPermition(_classRoomService.GetOrganizationIdByObjectId(request.ParentId));
                 return SendResponse(_classRoomService.GetList(x => x.BranchId == request.ParentId, request.IsDeleted, GetClientCulture()));
             }
             catch (Exception e)
@@ -73,7 +73,7 @@ namespace EduApi.Controllers.ClientZone.ClassRoom
         {
             try
             {
-                CheckPermition(_classRoomService.GetOrganizationIdByObjectId(request.Id));
+                CheckOrganizationPermition(_classRoomService.GetOrganizationIdByObjectId(request.Id));
                 return SendResponse(_classRoomService.GetDetail(request.Id, GetClientCulture()));
             }
             catch (Exception e)
@@ -92,7 +92,7 @@ namespace EduApi.Controllers.ClientZone.ClassRoom
         {
             try
             {
-                CheckPermition(_classRoomService.GetOrganizationIdByObjectId(updateClassRoomDto.Id));
+                CheckOrganizationPermition(_classRoomService.GetOrganizationIdByObjectId(updateClassRoomDto.Id));
                 return SendResponse(_classRoomService.UpdateObject(updateClassRoomDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
@@ -111,7 +111,7 @@ namespace EduApi.Controllers.ClientZone.ClassRoom
         {
             try
             {
-                CheckPermition(_classRoomService.GetOrganizationIdByObjectId(request.Id));
+                CheckOrganizationPermition(_classRoomService.GetOrganizationIdByObjectId(request.Id));
                 return SendResponse(_classRoomService.DeleteObject(request.Id, GetLoggedUserId()));
 
             }
@@ -131,7 +131,7 @@ namespace EduApi.Controllers.ClientZone.ClassRoom
         {
             try
             {
-                CheckPermition(_classRoomService.GetOrganizationIdByObjectId(request.Id));
+                CheckOrganizationPermition(_classRoomService.GetOrganizationIdByObjectId(request.Id));
                 return SendResponse(_classRoomService.RestoreObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
@@ -150,7 +150,7 @@ namespace EduApi.Controllers.ClientZone.ClassRoom
         {
             try
             {
-                CheckPermition(list.ParentId);
+                CheckOrganizationPermition(list.ParentId);
                 return SendResponse(_classRoomService.GetAllClassRoomInOrganization(list.ParentId, GetClientCulture()));
             }
             catch (Exception e)
@@ -169,7 +169,7 @@ namespace EduApi.Controllers.ClientZone.ClassRoom
         {
             try
             {
-                CheckPermition(_classRoomService.GetOrganizationIdByObjectId(requestDto.ParentId));
+                CheckOrganizationPermition(_classRoomService.GetOrganizationIdByObjectId(requestDto.ParentId));
                 return SendResponse(_classRoomService.GetClassRoomTimeTable(requestDto.ParentId, _classRoomService.GetOrganizationIdByObjectId(requestDto.ParentId), GetClientCulture()));
             }
             catch (Exception e)

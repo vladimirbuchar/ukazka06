@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using Core.Base.Service;
+﻿using Core.Base.Service;
+using Core.DataTypes;
 using EduServices.CourseTermTimeTable.Dto;
+using System;
+using System.Collections.Generic;
 
 namespace EduServices.CourseTermTimeTable.Service
 {
     public interface ICourseTermTimeTableService : IBaseService
     {
-        void GenerateTimeTable(DateTime activeFrom, DateTime activeTo, Guid timeFromId, Guid timeToId, List<bool> days, Guid courseTermId, List<string> lectors, Guid classRoomId);
+        Result GenerateTimeTable(DateTime activeFrom, DateTime activeTo, Guid timeFromId, Guid timeToId, List<bool> days, Guid courseTermId, List<string> lectors, Guid classRoomId);
         HashSet<CourseTermTimeTableListDto> GetTimeTable(Guid courseTermId, string culture);
-        void CancelCourseTerm(Guid courseTermTimeTableId);
-        void Restore(Guid courseTermTimeTableId);
-        void GenerateTimeTable(Guid courseTermId);
+        Result CancelCourseTerm(Guid courseTermTimeTableId);
+        Result Restore(Guid courseTermTimeTableId);
+        Result GenerateTimeTable(Guid courseTermId);
     }
 }

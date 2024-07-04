@@ -35,7 +35,7 @@ namespace EduApi.Controllers.ClientZone.Certificate
         {
             try
             {
-                CheckPermition(addCertificateDto.OrganizationId);
+                CheckOrganizationPermition(addCertificateDto.OrganizationId);
                 return SendResponse(_certificateService.AddObject(addCertificateDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
@@ -54,7 +54,7 @@ namespace EduApi.Controllers.ClientZone.Certificate
         {
             try
             {
-                CheckPermition(request.ParentId);
+                CheckOrganizationPermition(request.ParentId);
                 return SendResponse(_certificateService.GetList(x => x.OrganizationId == request.ParentId, request.IsDeleted, GetClientCulture()));
             }
             catch (Exception e)
@@ -73,7 +73,7 @@ namespace EduApi.Controllers.ClientZone.Certificate
         {
             try
             {
-                CheckPermition(_certificateService.GetOrganizationIdByObjectId(request.Id));
+                CheckOrganizationPermition(_certificateService.GetOrganizationIdByObjectId(request.Id));
                 return SendResponse(_certificateService.GetDetail(request.Id, GetClientCulture()));
             }
             catch (Exception e)
@@ -92,7 +92,7 @@ namespace EduApi.Controllers.ClientZone.Certificate
         {
             try
             {
-                CheckPermition(_certificateService.GetOrganizationIdByObjectId(updateCertificateDto.Id));
+                CheckOrganizationPermition(_certificateService.GetOrganizationIdByObjectId(updateCertificateDto.Id));
                 return SendResponse(_certificateService.UpdateObject(updateCertificateDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
@@ -111,7 +111,7 @@ namespace EduApi.Controllers.ClientZone.Certificate
         {
             try
             {
-                CheckPermition(_certificateService.GetOrganizationIdByObjectId(request.Id));
+                CheckOrganizationPermition(_certificateService.GetOrganizationIdByObjectId(request.Id));
                 return SendResponse(_certificateService.DeleteObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
@@ -130,7 +130,7 @@ namespace EduApi.Controllers.ClientZone.Certificate
         {
             try
             {
-                CheckPermition(_certificateService.GetOrganizationIdByObjectId(request.Id));
+                CheckOrganizationPermition(_certificateService.GetOrganizationIdByObjectId(request.Id));
                 return SendResponse(_certificateService.RestoreObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)

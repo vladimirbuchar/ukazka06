@@ -16,17 +16,17 @@ namespace Integration.MailKitIntegration
         {
             SendEmail(
                 mail,
-                _configuration.GetSection(ConfigValue.Mail).GetSection(ConfigValue.SmtpServer).Value,
+                _configuration.GetSection(ConfigValue.MAIL).GetSection(ConfigValue.SMTP_SERVER).Value,
                 25,
-                _configuration.GetSection(ConfigValue.Mail).GetSection(ConfigValue.EmailUser).Value,
-                _configuration.GetSection(ConfigValue.Mail).GetSection(ConfigValue.EmailPassword).Value
+                _configuration.GetSection(ConfigValue.MAIL).GetSection(ConfigValue.EMAIL_USER).Value,
+                _configuration.GetSection(ConfigValue.MAIL).GetSection(ConfigValue.EMAIL_PASSWORD).Value
             );
         }
 
         public void SendEmail(Email mail, string smtpServer, int smtpPort, string smtpUser, string smtpPassword)
         {
             string reply = mail.Reply;
-            bool sendEmail = Convert.ToBoolean(_configuration.GetSection(ConfigValue.SendEmail).Value);
+            bool sendEmail = Convert.ToBoolean(_configuration.GetSection(ConfigValue.SEND_EMAIL).Value);
             if (sendEmail)
             {
                 MimeMessage message = new();

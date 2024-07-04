@@ -70,8 +70,7 @@ namespace EduApi.Controllers.ClientZone.Notification
         {
             try
             {
-                _notificationService.SetIsNewNotificationToFalse(GetLoggedUserId());
-                return SendResponse();
+                return SendResponse(_notificationService.SetIsNewNotificationToFalse(GetLoggedUserId()));
             }
             catch (Exception e)
             {

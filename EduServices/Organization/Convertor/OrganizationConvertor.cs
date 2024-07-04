@@ -28,7 +28,7 @@ namespace EduServices.Organization.Convertor
         private readonly HashSet<LicenseDbo> _licences = licences.GetCodeBookItems();
         private readonly HashSet<CountryDbo> _countries = countries.GetCodeBookItems();
         private readonly IOrganizationRoleRepository _organizationRoleRepository = organizationRoleRepository;
-        private readonly string _elearningUrl = configuration.GetSection(ConfigValue.ElearningUrl).Value;
+        private readonly string _elearningUrl = configuration.GetSection(ConfigValue.ELEARNING_URL).Value;
         private readonly string _fileServerUrl = configuration.GetSection(ConfigValue.FILE_SERVER_URL).Value;
 
         public OrganizationDbo ConvertToBussinessEntity(OrganizationCreateDto addOrganizationDto, string culture)

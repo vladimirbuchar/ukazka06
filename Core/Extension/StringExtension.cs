@@ -61,41 +61,6 @@ namespace Core.Extension
         }
 
         /// <summary>
-        /// method for convert normal string to base64
-        /// </summary>
-        /// <param name="inputString">some string value</param>
-        /// <returns>encode string value in base64</returns>
-        public static string ConvertToBase64(this string inputString)
-        {
-            byte[] encodedBytes = Encoding.Unicode.GetBytes(inputString);
-            return Convert.ToBase64String(encodedBytes);
-        }
-
-        /// <summary>
-        /// method for convert base64 to normal string
-        /// </summary>
-        /// <param name="inputString">some base64 string</param>
-        /// <returns>encode string value </returns>
-        public static string ConvertFromBase64ToUTF8(this string inputString)
-        {
-            byte[] decodedBytes = Convert.FromBase64String(Convert.ToBase64String(Encoding.Unicode.GetBytes(inputString)));
-            return Encoding.UTF8.GetString(decodedBytes);
-        }
-
-        /// <summary>
-        /// metohod return text backwards
-        /// </summary>
-        /// example abcd => dcba
-        /// <param name="s"></param>
-        /// <returns></returns>
-        public static string ReverseText(this string s)
-        {
-            char[] charArray = s.ToCharArray();
-            Array.Reverse(charArray);
-            return new string(charArray);
-        }
-
-        /// <summary>
         /// it is asmae function isnulloremty but it makes trim after
         /// </summary>
         /// <param name="s"></param>

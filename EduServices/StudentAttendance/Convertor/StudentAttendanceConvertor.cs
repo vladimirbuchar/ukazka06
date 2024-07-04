@@ -7,9 +7,9 @@ namespace EduServices.StudentAttendance.Convertor
 {
     public class StudentAttendanceConvertor : IStudentAttendanceConvertor
     {
-        public StudentAttendanceDbo ConvertToBussinessEntity(StudentAttendanceCreateDto create, string culture)
+        public AttendanceStudentDbo ConvertToBussinessEntity(StudentAttendanceCreateDto create, string culture)
         {
-            return new StudentAttendanceDbo()
+            return new AttendanceStudentDbo()
             {
                 CourseTermDateId = create.CourseTermDateId,
                 CourseStudentId = create.StudentId,
@@ -17,12 +17,12 @@ namespace EduServices.StudentAttendance.Convertor
             };
         }
 
-        public HashSet<StudentAttendanceListDto> ConvertToWebModel(HashSet<StudentAttendanceDbo> list, string culture)
+        public HashSet<StudentAttendanceListDto> ConvertToWebModel(HashSet<AttendanceStudentDbo> list, string culture)
         {
             throw new NotImplementedException();
         }
 
-        public StudentAttendanceDetailDto ConvertToWebModel(StudentAttendanceDbo detail, string culture)
+        public StudentAttendanceDetailDto ConvertToWebModel(AttendanceStudentDbo detail, string culture)
         {
             return new StudentAttendanceDetailDto();
         }

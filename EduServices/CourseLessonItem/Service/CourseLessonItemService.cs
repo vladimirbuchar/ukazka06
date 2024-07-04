@@ -1,6 +1,7 @@
 ﻿using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Repository.FileRepository;
 using Core.Base.Service;
+using Core.DataTypes;
 using EduRepository.CourseLessonItemRepository;
 using EduServices.CourseLessonItem.Convertor;
 using EduServices.CourseLessonItem.Dto;
@@ -31,7 +32,7 @@ namespace EduServices.CourseLessonItem.Service
         >(courseLessonItemRepository, courseLessonItemConvertor, validator, repository, culture),
             ICourseLessonItemService
     {
-        public void UpdatePositionCourseLessonItem(CourseLessonItemUpdatePositionDto updatePositionCourseLesson, Guid userId)
+        public Result UpdatePositionCourseLessonItem(CourseLessonItemUpdatePositionDto updatePositionCourseLesson, Guid userId)
         {
             int position = 0;
             foreach (string item in updatePositionCourseLesson.Ids)
@@ -45,6 +46,7 @@ namespace EduServices.CourseLessonItem.Service
                 }
                 position++;
             }
+            return new Result();
         }
     }
 }

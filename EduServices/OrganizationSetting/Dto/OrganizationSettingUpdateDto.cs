@@ -20,7 +20,7 @@ namespace EduServices.OrganizationSetting.Dto
         public string SmtpServerUrl { get; set; }
         public string SmtpServerUserName { get; set; }
         public string SmtpServerPassword { get; set; }
-        public string SmtpServerPort { get; set; }
+        public int SmtpServerPort { get; set; }
         public string GoogleApiToken { get; set; }
     }
 }

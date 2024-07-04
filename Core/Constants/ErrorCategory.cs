@@ -26,5 +26,6 @@
         public const string NOTE = "NOTE";
         public const string STUDENT_GROUP = "STUDENT_GROUP";
         public const string PERMISSTIONS = "PERMISSTIONS";
+        public const string ORGANIZATION_CULTURE = "ORGANIZATION_CULTURE";
     }
 }

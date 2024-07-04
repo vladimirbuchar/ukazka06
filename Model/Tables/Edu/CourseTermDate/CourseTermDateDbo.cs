@@ -31,6 +31,6 @@ namespace Model.Tables.Edu.CourseTermDate
         public virtual Guid UserInOrganizationId { get; set; }
         public virtual CourseTermDbo CourseTerm { get; set; }
         public virtual Guid CourseTermId { get; set; }
-        public virtual IEnumerable<StudentAttendanceDbo> AttendanceStudents { get; set; }
+        public virtual IEnumerable<AttendanceStudentDbo> AttendanceStudents { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Core.Base.Service;
+using Core.Constants;
 using Core.DataTypes;
 using EduRepository.OrganizationCultureRepository;
 using EduServices.OrganizationCulture.Convertor;
@@ -25,10 +26,13 @@ namespace EduServices.OrganizationCulture.Service
         public override Result DeleteObject(Guid objectId, Guid userId)
         {
             OrganizationCultureDbo organizationCulture = _repository.GetEntity(objectId);
-            if (organizationCulture.IsDefault == false)
+            if (organizationCulture.IsDefault == true)
             {
-                _repository.DeleteEntity(organizationCulture, userId);
+                Result result = new();
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.ORGANIZATION_CULTURE, Constants.CAN_NOT_DELETE_DEFAULT_CULTURE));
+                return result;
             }
+            _repository.DeleteEntity(organizationCulture, userId);
             return new Result();
         }
         public override Result<OrganizationCultureDetailDto> UpdateObject(OrganizationCultureUpdateDto update, Guid userId, string culture, Result<OrganizationCultureDetailDto> result = null)

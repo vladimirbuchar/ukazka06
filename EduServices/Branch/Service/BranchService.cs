@@ -33,16 +33,21 @@ namespace EduServices.Branch.Service
 
         public override Result<BranchDetailDto> AddObject(BranchCreateDto addObject, Guid userId, string culture)
         {
-            if (addObject.IsMainBranch)
+            Result<BranchDetailDto> result = _validator.IsValid(addObject);
+            if (result.IsOk)
             {
-                BranchDbo mainBranch = _repository.GetEntity(false, x => x.OrganizationId == addObject.OrganizationId && x.IsMainBranch);
-                if (mainBranch != null)
+                if (addObject.IsMainBranch)
                 {
-                    mainBranch.IsMainBranch = false;
-                    _ = _repository.UpdateEntity(mainBranch, userId);
+                    BranchDbo mainBranch = _repository.GetEntity(false, x => x.OrganizationId == addObject.OrganizationId && x.IsMainBranch);
+                    if (mainBranch != null)
+                    {
+                        mainBranch.IsMainBranch = false;
+                        _ = _repository.UpdateEntity(mainBranch, userId);
+                    }
                 }
+                return base.AddObject(addObject, userId, culture);
             }
-            return base.AddObject(addObject, userId, culture);
+            return result;
         }
 
         public override Result<BranchDetailDto> UpdateObject(BranchUpdateDto update, Guid userId, string culture, Result<BranchDetailDto> result = null)
@@ -50,7 +55,8 @@ namespace EduServices.Branch.Service
             BranchDbo oldEntity = _repository.GetEntity(update.Id) ?? throw new KeyNotFoundException(update.Id.ToString());
             if (oldEntity.IsOnline)
             {
-                return new Result<BranchDetailDto>();
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.BRANCH, GlobalValue.CAN_NOT_EDIT));
+                return result;
             }
             result = _validator.IsValid(update);
             if (result.IsOk)
@@ -82,7 +88,7 @@ namespace EduServices.Branch.Service
             return base.DeleteObject(objectId, userId);
         }
 
-        public void ChangeMainBranch(Guid organizationId, Guid newBranchId, Guid userId)
+        public Result ChangeMainBranch(Guid organizationId, Guid newBranchId, Guid userId)
         {
             BranchDbo branch = _repository.GetEntity(false, x => x.OrganizationId == organizationId && x.IsMainBranch);
             if (branch != null)
@@ -96,6 +102,7 @@ namespace EduServices.Branch.Service
                 branch.IsMainBranch = true;
                 _ = _repository.UpdateEntity(branch, userId);
             }
+            return new Result();
         }
     }
 }

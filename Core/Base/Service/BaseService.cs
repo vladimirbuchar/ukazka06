@@ -32,7 +32,7 @@ namespace Core.Base.Service
         where FileModel : FileRepositoryModel
     {
         protected readonly IFileUploadRepository<FileModel> _fileRepository = fileRepository;
-        private HashSet<CultureDbo> Culture { get; set; } = codeBookRepository.GetCodeBookItems();
+        private HashSet<CultureDbo> _culture { get; set; } = codeBookRepository.GetCodeBookItems();
 
         /// <summary>
         /// file upload 
@@ -54,7 +54,7 @@ namespace Core.Base.Service
                     _fileRepository.DeleteEntity(item, userId);
                 }
             }
-            Guid cultureId = Culture.FirstOrDefault(x => x.SystemIdentificator == culture).Id;
+            Guid cultureId = _culture.FirstOrDefault(x => x.SystemIdentificator == culture).Id;
             model.CultureId = cultureId;
             foreach (IFormFile file in files)
             {

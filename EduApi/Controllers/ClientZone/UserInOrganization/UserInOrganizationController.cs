@@ -39,7 +39,7 @@ namespace EduApi.Controllers.ClientZone.UserInOrganization
         {
             try
             {
-                CheckPermition(addUserToOrganizationDto.OrganizationId);
+                CheckOrganizationPermition(addUserToOrganizationDto.OrganizationId);
                 return SendResponse(_userInOrganizationService.AddObject(addUserToOrganizationDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
@@ -58,7 +58,7 @@ namespace EduApi.Controllers.ClientZone.UserInOrganization
         {
             try
             {
-                CheckPermition(list.ParentId);
+                CheckOrganizationPermition(list.ParentId);
                 return SendResponse(_userInOrganizationService.GetList(x => x.OrganizationId == list.ParentId, list.IsDeleted));
             }
             catch (Exception e)
@@ -77,7 +77,7 @@ namespace EduApi.Controllers.ClientZone.UserInOrganization
         {
             try
             {
-                CheckPermition(organizationId);
+                CheckOrganizationPermition(organizationId);
                 return SendResponse(_userInOrganizationService.GetDetail(x => x.UserId == userId && x.OrganizationId == organizationId, GetClientCulture()));
             }
             catch (Exception e)
@@ -96,7 +96,7 @@ namespace EduApi.Controllers.ClientZone.UserInOrganization
         {
             try
             {
-                CheckPermition(updateUserInOrganizationRoleDto.OrganizationId);
+                CheckOrganizationPermition(updateUserInOrganizationRoleDto.OrganizationId);
                 return SendResponse(_userInOrganizationService.UpdateObject(updateUserInOrganizationRoleDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
@@ -115,7 +115,7 @@ namespace EduApi.Controllers.ClientZone.UserInOrganization
         {
             try
             {
-                CheckPermition(organizationId);
+                CheckOrganizationPermition(organizationId);
                 return SendResponse(_userInOrganizationService.MultipleDelete(
                     x => x.UserId == userId && x.OrganizationId == organizationId && x.SystemIdentificator != OrganizationRole.ORGANIZATION_OWNER,
                     GetLoggedUserId()

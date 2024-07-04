@@ -34,9 +34,8 @@ namespace EduApi.Controllers.ClientZone.CourseTermTimeTable
         {
             try
             {
-                CheckPermition(_courseTermTimeTableService.GetOrganizationIdByObjectId(generateTimeTableDto.CourseTermId));
-                _courseTermTimeTableService.GenerateTimeTable(generateTimeTableDto.CourseTermId);
-                return SendResponse();
+                CheckOrganizationPermition(_courseTermTimeTableService.GetOrganizationIdByObjectId(generateTimeTableDto.CourseTermId));
+                return SendResponse(_courseTermTimeTableService.GenerateTimeTable(generateTimeTableDto.CourseTermId));
             }
             catch (Exception e)
             {
@@ -52,7 +51,7 @@ namespace EduApi.Controllers.ClientZone.CourseTermTimeTable
         [ProducesResponseType(typeof(void), 403)]
         public ActionResult List([FromQuery] ListRequestDto requestDto)
         {
-            CheckPermition(_courseTermTimeTableService.GetOrganizationIdByObjectId(requestDto.ParentId));
+            CheckOrganizationPermition(_courseTermTimeTableService.GetOrganizationIdByObjectId(requestDto.ParentId));
             return SendResponse(_courseTermTimeTableService.GetTimeTable(requestDto.ParentId, GetClientCulture()));
         }
 
@@ -66,9 +65,8 @@ namespace EduApi.Controllers.ClientZone.CourseTermTimeTable
         {
             try
             {
-                CheckPermition(_courseTermTimeTableService.GetOrganizationIdByObjectId(cancelCourseTermDto.CourseTermId));
-                _courseTermTimeTableService.CancelCourseTerm(cancelCourseTermDto.Id);
-                return SendResponse();
+                CheckOrganizationPermition(_courseTermTimeTableService.GetOrganizationIdByObjectId(cancelCourseTermDto.CourseTermId));
+                return SendResponse(_courseTermTimeTableService.CancelCourseTerm(cancelCourseTermDto.Id));
             }
             catch (Exception e)
             {
@@ -86,9 +84,8 @@ namespace EduApi.Controllers.ClientZone.CourseTermTimeTable
         {
             try
             {
-                CheckPermition(_courseTermTimeTableService.GetOrganizationIdByObjectId(restoreCourseTermDto.CourseTermId));
-                _courseTermTimeTableService.Restore(restoreCourseTermDto.Id);
-                return SendResponse();
+                CheckOrganizationPermition(_courseTermTimeTableService.GetOrganizationIdByObjectId(restoreCourseTermDto.CourseTermId));
+                return SendResponse(_courseTermTimeTableService.Restore(restoreCourseTermDto.Id));
             }
             catch (Exception e)
             {

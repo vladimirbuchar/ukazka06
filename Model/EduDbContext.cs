@@ -59,7 +59,7 @@ namespace Model
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            SetTableDefault<StudentAttendanceDbo>(modelBuilder);
+            SetTableDefault<AttendanceStudentDbo>(modelBuilder);
             SetTableDefault<CourseDbo>(modelBuilder);
             SetTableDefault<CourseLessonItemDbo>(modelBuilder);
             SetTableDefault<CourseLectorDbo>(modelBuilder);
@@ -288,7 +288,7 @@ namespace Model
         public DbSet<StudentInGroupDbo> StudentInGroups { get; set; }
         public DbSet<StudentInGroupCourseTermDbo> StudentInGroupCourseTerm { get; set; }
         public DbSet<QuestionModeDbo> QuestionMode { get; set; }
-        public DbSet<StudentAttendanceDbo> AttendanceStudent { get; set; }
+        public DbSet<AttendanceStudentDbo> AttendanceStudent { get; set; }
         public DbSet<StudentEvaluationDbo> StudentEvaluation { get; set; }
         public DbSet<NoteDbo> Notes { get; set; }
         public DbSet<NoteTypeDbo> NoteType { get; set; }

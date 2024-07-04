@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Core.Base.Service;
+﻿using Core.Base.Service;
 using Core.Constants;
+using Core.DataTypes;
 using EduRepository.ClassRoomRepository;
 using EduRepository.OrganizationHoursRepository;
 using EduServices.ClassRoom.Convertor;
@@ -10,10 +8,14 @@ using EduServices.ClassRoom.Dto;
 using EduServices.ClassRoom.Validator;
 using EduServices.OrganizationStudyHour.Dto;
 using EduServices.User.Dto;
+using Model.Tables.Edu.Branch;
 using Model.Tables.Edu.ClassRoom;
 using Model.Tables.Edu.Course;
 using Model.Tables.Edu.CourseTermDate;
 using Model.Tables.Edu.OrganizationStudyHour;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace EduServices.ClassRoom.Service
 {
@@ -80,6 +82,17 @@ namespace EduServices.ClassRoom.Service
                 timeTableDto.CourseTerm.Add(courseName);
             }
             _ = timeTableItem.TimeTable.Add(timeTableDto);
+        }
+        public override Result DeleteObject(Guid objectId, Guid userId)
+        {
+            ClassRoomDbo classRoomDbo = _repository.GetEntity(objectId);
+            if (classRoomDbo != null && classRoomDbo.IsOnline)
+            {
+                Result result = new();
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.CLASS_ROOM, GlobalValue.CAN_NOT_DELETE));
+                return result;
+            }
+            return base.DeleteObject(objectId, userId);
         }
     }
 }

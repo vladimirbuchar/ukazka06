@@ -8,8 +8,8 @@ using Model.Tables.Edu.AttendanceStudent;
 
 namespace EduServices.StudentAttendance.Validator
 {
-    public class StudentAttendanceValidator(IStudentAttendanceRepository repository, ICourseStudentRepository courseStudentRepository)
-        : BaseValidator<StudentAttendanceDbo, IStudentAttendanceRepository, StudentAttendanceCreateDto, StudentAttendanceDetailDto>(repository),
+    public class StudentAttendanceValidator(IAttendanceStudentRepository repository, ICourseStudentRepository courseStudentRepository)
+        : BaseValidator<AttendanceStudentDbo, IAttendanceStudentRepository, StudentAttendanceCreateDto, StudentAttendanceDetailDto>(repository),
             IStudentAttendanceValidator
     {
         private readonly ICourseStudentRepository _courseStudentRepository = courseStudentRepository;
@@ -29,7 +29,6 @@ namespace EduServices.StudentAttendance.Validator
             {
                 validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.COURSE_TERM, GlobalValue.NOT_EXISTS));
             }
-
             return validate;
         }
     }

@@ -1,5 +1,6 @@
 ﻿using Core.Base.Service;
 using Core.Constants;
+using Core.DataTypes;
 using EduRepository.NotificationRepository;
 using EduRepository.OrganizationRepository;
 using EduServices.Notification.Convertor;
@@ -38,7 +39,7 @@ namespace EduServices.Notification.Service
             return _convertor.ConvertToWebModel(notifications);
         }
 
-        public void SetIsNewNotificationToFalse(Guid userId)
+        public Result SetIsNewNotificationToFalse(Guid userId)
         {
             HashSet<NotificationDbo> notificationDbo = _repository.GetEntities(false, x => x.UserId == userId && x.IsNew == true);
             foreach (NotificationDbo item in notificationDbo)
@@ -46,6 +47,7 @@ namespace EduServices.Notification.Service
                 item.IsNew = false;
                 _ = _repository.UpdateEntity(item, userId);
             }
+            return new Result();
         }
     }
 }

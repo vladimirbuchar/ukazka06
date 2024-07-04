@@ -108,7 +108,7 @@ namespace EduServices.CourseStudy.Service
         private readonly IOrganizationRepository _organizationRepository = organizationRepository;
         private readonly ICourseRepository _courseRespository = courseRepository;
 
-        public void SaveActiveSlide(Guid slideId, Guid userId, Guid courseId)
+        public Result SaveActiveSlide(Guid slideId, Guid userId, Guid courseId)
         {
             int count = _couseStudentMaterialRepository.GetEntities(false, x => x.UserId == userId && x.CourseId == courseId).Count;
             if (count == 0)
@@ -129,13 +129,15 @@ namespace EduServices.CourseStudy.Service
                 enity.CourseLessonItemId = slideId;
                 _ = _couseStudentMaterialRepository.UpdateEntity(enity, userId);
             }
+            return new Result();
         }
 
-        public void ResetCourse(Guid studentTermId)
+        public Result ResetCourse(Guid studentTermId)
         {
             CourseStudentDbo entity = _courseStudentRepository.GetEntity(studentTermId);
             entity.CourseFinish = false;
             _ = _courseStudentRepository.UpdateEntity(entity, Guid.Empty);
+            return new Result();
         }
 
         public HashSet<CourseMenuItemDto> GetCourseMenu(Guid courseId, Guid userId, string culture)
@@ -245,7 +247,7 @@ namespace EduServices.CourseStudy.Service
             //.GetDetail(slideId).Data;
             if (getCourseLessonItemDetail != null)
             {
-                SaveActiveSlide(slideId, userId, courseId);
+                _ = SaveActiveSlide(slideId, userId, courseId);
                 return new CourseLessonStudyDto()
                 {
                     Name = getCourseLessonItemDetail?.CourseLessonItemTranslations.FindTranslation(culture).Name,
@@ -262,7 +264,7 @@ namespace EduServices.CourseStudy.Service
             CourseLessonPowerPointFileDto getCourseLessonPowerPointFile = GetCourseLessonPowerPointFile(slideId, culture);
             if (getCourseLessonPowerPointFile != null && !getCourseLessonPowerPointFile.PowerPointFile.IsNullOrEmptyWithTrim())
             {
-                SaveActiveSlide(slideId, userId, courseId);
+                _ = SaveActiveSlide(slideId, userId, courseId);
                 return new CourseLessonStudyDto()
                 {
                     Name = getCourseLessonPowerPointFile?.Name,
@@ -279,7 +281,7 @@ namespace EduServices.CourseStudy.Service
             CourseTestDbo getCourseTestDetail = _testRepository.GetEntity(false, x => x.CourseLessonId == slideId);
             if (getCourseTestDetail != null)
             {
-                SaveActiveSlide(slideId, userId, courseId);
+                _ = SaveActiveSlide(slideId, userId, courseId);
                 return new CourseLessonStudyDto()
                 {
                     Name = getCourseTestDetail?.CourseLesson.CourseLessonTranslations.FindTranslation(culture).Name,
@@ -777,12 +779,13 @@ namespace EduServices.CourseStudy.Service
             return _convertor.ConvertToWebModel(showTestResult);
         }
 
-        public void SetLectorControl(SetLectorControlDto setLectorControlDto)
+        public Result SetLectorControl(SetLectorControlDto setLectorControlDto)
         {
-            SetLectorControl(setLectorControlDto.QuestionId, setLectorControlDto.IsTrue, setLectorControlDto.Score, setLectorControlDto.StudentTestResultId);
+            _ = SetLectorControl(setLectorControlDto.QuestionId, setLectorControlDto.IsTrue, setLectorControlDto.Score, setLectorControlDto.StudentTestResultId);
+            return new Result();
         }
 
-        public void SetLectorControl(Guid questionId, bool isTrue, int score, Guid studentTestResultId)
+        public Result SetLectorControl(Guid questionId, bool isTrue, int score, Guid studentTestResultId)
         {
             StudentTestSummaryQuestionDbo question = _studentTestSummaryQuestionRepository.GetEntity(false, x => x.Id == questionId);
             question.IsTrue = isTrue;
@@ -805,6 +808,12 @@ namespace EduServices.CourseStudy.Service
             entity.IsAutomaticEvaluate =
                 _studentTestSummaryQuestionRepository.GetEntity(false, x => x.StudentTestSummaryId == studentTestResultId && x.IsAutomaticEvaluate == true) != null;
             _ = _studentTestSummaryRepository.UpdateEntity(entity, Guid.Empty);
+            return new Result();
+        }
+
+        Result ICourseStudyService.UpdateActualTable(ActualTableUpdateDto updateActualTableDto)
+        {
+            throw new NotImplementedException();
         }
     }
 }

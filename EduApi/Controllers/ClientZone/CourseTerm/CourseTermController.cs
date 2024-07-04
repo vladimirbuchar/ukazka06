@@ -38,7 +38,7 @@ namespace EduApi.Controllers.ClientZone.CourseTerm
         {
             try
             {
-                CheckPermition(_courseService.GetOrganizationIdByObjectId(addCourseTermDto.CourseId));
+                CheckOrganizationPermition(_courseService.GetOrganizationIdByObjectId(addCourseTermDto.CourseId));
                 return SendResponse(_courseTermService.AddObject(addCourseTermDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
@@ -57,7 +57,7 @@ namespace EduApi.Controllers.ClientZone.CourseTerm
         {
             try
             {
-                CheckPermition(_courseService.GetOrganizationIdByObjectId(request.ParentId));
+                CheckOrganizationPermition(_courseService.GetOrganizationIdByObjectId(request.ParentId));
                 return SendResponse(_courseTermService.GetList(x => x.CourseId == request.ParentId, request.IsDeleted, GetClientCulture()));
             }
             catch (Exception e)
@@ -76,7 +76,7 @@ namespace EduApi.Controllers.ClientZone.CourseTerm
         {
             try
             {
-                CheckPermition(_courseTermService.GetOrganizationIdByObjectId(request.Id));
+                CheckOrganizationPermition(_courseTermService.GetOrganizationIdByObjectId(request.Id));
                 return SendResponse(_courseTermService.GetDetail(request.Id, GetClientCulture()));
             }
             catch (Exception e)
@@ -95,7 +95,7 @@ namespace EduApi.Controllers.ClientZone.CourseTerm
         {
             try
             {
-                CheckPermition(_courseTermService.GetOrganizationIdByObjectId(updateCourseTermDto.Id));
+                CheckOrganizationPermition(_courseTermService.GetOrganizationIdByObjectId(updateCourseTermDto.Id));
                 return SendResponse(_courseTermService.UpdateObject(updateCourseTermDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
@@ -114,7 +114,7 @@ namespace EduApi.Controllers.ClientZone.CourseTerm
         {
             try
             {
-                CheckPermition(_courseTermService.GetOrganizationIdByObjectId(request.Id));
+                CheckOrganizationPermition(_courseTermService.GetOrganizationIdByObjectId(request.Id));
                 return SendResponse(_courseTermService.DeleteObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
@@ -133,7 +133,7 @@ namespace EduApi.Controllers.ClientZone.CourseTerm
         {
             try
             {
-                CheckPermition(_courseTermService.GetOrganizationIdByObjectId(request.Id));
+                CheckOrganizationPermition(_courseTermService.GetOrganizationIdByObjectId(request.Id));
                 return SendResponse(_courseTermService.RestoreObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)

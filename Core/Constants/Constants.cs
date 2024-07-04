@@ -62,7 +62,7 @@
         public const string DEFAULT_CULTURE = "cs";
         public const string GOOGLE = "GOOGLE";
         public const string FACEBOOK = "FACEBOOK";
-        public const string UserOrganizationRole = "UserOrganizationRole";
-
+        public const string USER_ORGANIZATION_ROLE = "UserOrganizationRole";
+        public const string CAN_NOT_DELETE_DEFAULT_CULTURE = "CAN_NOT_DELETE_DEFAULT_CULTURE";
     };
 }

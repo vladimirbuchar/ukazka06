@@ -5,7 +5,6 @@ namespace EduRepository.UserRepository
 {
     public interface IUserRepository : IBaseRepository<UserDbo>
     {
-        UserDbo LoginUser(string email, string password);
 
     }
 }

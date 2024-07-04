@@ -7,10 +7,10 @@ using Model.Tables.Edu.AttendanceStudent;
 
 namespace EduServices.StudentAttendance.Service
 {
-    public class StudentAttendanceService(IStudentAttendanceRepository repository, IStudentAttendanceConvertor convertor, IStudentAttendanceValidator validator)
+    public class StudentAttendanceService(IAttendanceStudentRepository repository, IStudentAttendanceConvertor convertor, IStudentAttendanceValidator validator)
         : BaseService<
-            IStudentAttendanceRepository,
-            StudentAttendanceDbo,
+            IAttendanceStudentRepository,
+            AttendanceStudentDbo,
             IStudentAttendanceConvertor,
             IStudentAttendanceValidator,
             StudentAttendanceCreateDto,

@@ -199,8 +199,7 @@ namespace EduApi.Controllers.ClientZone.CourseStudy
         {
             try
             {
-                _courseStudyService.ResetCourse(resetCourseDto.StudentTermId);
-                return SendResponse();
+                return SendResponse(_courseStudyService.ResetCourse(resetCourseDto.StudentTermId));
             }
             catch (Exception e)
             {
@@ -218,8 +217,7 @@ namespace EduApi.Controllers.ClientZone.CourseStudy
         {
             try
             {
-                _courseStudyService.UpdateActualTable(updateActualTableDto);
-                return SendResponse();
+                return SendResponse(_courseStudyService.UpdateActualTable(updateActualTableDto));
             }
             catch (Exception e)
             {
@@ -255,7 +253,7 @@ namespace EduApi.Controllers.ClientZone.CourseStudy
         {
             try
             {
-                CheckPermition(_courseStudyService.GetOrganizationIdByObjectId(courseId));
+                CheckOrganizationPermition(_courseStudyService.GetOrganizationIdByObjectId(courseId));
                 return SendResponse(_courseStudyService.GetAllStudentTestResult(courseId, GetClientCulture()));
             }
             catch (Exception e)
@@ -274,7 +272,7 @@ namespace EduApi.Controllers.ClientZone.CourseStudy
         {
             try
             {
-                CheckPermition(_courseStudyService.GetOrganizationIdByObjectId(courseId));
+                CheckOrganizationPermition(_courseStudyService.GetOrganizationIdByObjectId(courseId));
                 return SendResponse(_courseStudyService.ShowStudentAnswer(studentTestResultId));
             }
             catch (Exception e)
@@ -293,9 +291,8 @@ namespace EduApi.Controllers.ClientZone.CourseStudy
         {
             try
             {
-                CheckPermition(setLectorControlDto.Id);
-                _courseStudyService.SetLectorControl(setLectorControlDto);
-                return SendResponse();
+                CheckOrganizationPermition(setLectorControlDto.Id);
+                return SendResponse(_courseStudyService.SetLectorControl(setLectorControlDto));
             }
             catch (Exception e)
             {

@@ -29,7 +29,7 @@ namespace EduServices.OrganizationSetting.Validator
         private readonly ICodeBookRepository<AddressTypeDbo> _addressType = addressType;
         private readonly IUserRepository _userRepository = userRepository;
         private readonly IOrganizationSettingRepository _organizationSettingRepository = organizationSettingRepository;
-        private readonly string _elearningUrl = configuration.GetSection(ConfigValue.ElearningUrl).Value;
+        private readonly string _elearningUrl = configuration.GetSection(ConfigValue.ELEARNING_URL).Value;
 
         public override Result<OrganizationDetailDto> IsValid(OrganizationCreateDto create)
         {
@@ -84,7 +84,7 @@ namespace EduServices.OrganizationSetting.Validator
                 IsValidString(saveOrganizationSettingDto.SmtpServerUrl, validate, ErrorCategory.ORGANIZATION, Constants.SMTP_SERVER);
                 IsValidString(saveOrganizationSettingDto.SmtpServerUserName, validate, ErrorCategory.ORGANIZATION, Constants.SMTP_LOGIN);
                 IsValidString(saveOrganizationSettingDto.SmtpServerPassword, validate, ErrorCategory.ORGANIZATION, Constants.SMTP_PASSWORD);
-                IsValidString(saveOrganizationSettingDto.SmtpServerPort, validate, ErrorCategory.ORGANIZATION, Constants.SMTP_PORT);
+                IsValidPostiveNumber(saveOrganizationSettingDto.SmtpServerPort, validate, ErrorCategory.ORGANIZATION, Constants.SMTP_PORT);
             }
             return validate;
         }

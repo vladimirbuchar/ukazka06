@@ -35,7 +35,7 @@ namespace EduApi.Controllers.ClientZone.SendMessage
         {
             try
             {
-                CheckPermition(addSendMessageDto.OrganizationId);
+                CheckOrganizationPermition(addSendMessageDto.OrganizationId);
                 return SendResponse(_sendMessageService.AddObject(addSendMessageDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
@@ -54,7 +54,7 @@ namespace EduApi.Controllers.ClientZone.SendMessage
         {
             try
             {
-                CheckPermition(request.ParentId);
+                CheckOrganizationPermition(request.ParentId);
                 return SendResponse(_sendMessageService.GetList(x => x.OrganizationId == request.ParentId, request.IsDeleted, GetClientCulture()));
             }
             catch (Exception e)
@@ -73,7 +73,7 @@ namespace EduApi.Controllers.ClientZone.SendMessage
         {
             try
             {
-                CheckPermition(_sendMessageService.GetOrganizationIdByObjectId(request.Id));
+                CheckOrganizationPermition(_sendMessageService.GetOrganizationIdByObjectId(request.Id));
                 return SendResponse(_sendMessageService.GetDetail(request.Id, GetClientCulture()));
             }
             catch (Exception e)
@@ -92,7 +92,7 @@ namespace EduApi.Controllers.ClientZone.SendMessage
         {
             try
             {
-                CheckPermition(_sendMessageService.GetOrganizationIdByObjectId(updateSendMessageDto.Id));
+                CheckOrganizationPermition(_sendMessageService.GetOrganizationIdByObjectId(updateSendMessageDto.Id));
                 return SendResponse(_sendMessageService.UpdateObject(updateSendMessageDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
@@ -111,7 +111,7 @@ namespace EduApi.Controllers.ClientZone.SendMessage
         {
             try
             {
-                CheckPermition(_sendMessageService.GetOrganizationIdByObjectId(request.Id));
+                CheckOrganizationPermition(_sendMessageService.GetOrganizationIdByObjectId(request.Id));
                 return SendResponse(_sendMessageService.DeleteObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
@@ -130,7 +130,7 @@ namespace EduApi.Controllers.ClientZone.SendMessage
         {
             try
             {
-                CheckPermition(_sendMessageService.GetOrganizationIdByObjectId(request.Id));
+                CheckOrganizationPermition(_sendMessageService.GetOrganizationIdByObjectId(request.Id));
                 return SendResponse(_sendMessageService.RestoreObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
@@ -149,7 +149,7 @@ namespace EduApi.Controllers.ClientZone.SendMessage
         {
             try
             {
-                CheckPermition(organizationId);
+                CheckOrganizationPermition(organizationId);
                 return SendResponse(_sendMessageService.GetSendMessageInOrganizationEmail(organizationId));
             }
             catch (Exception e)

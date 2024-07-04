@@ -7,6 +7,5 @@ namespace EduServices.Route.Service
     public interface IRouteService : IBaseService<RouteDbo, RouteCreateDto, RouteListDto, RouteDetailDto, RouteUpdateDto>
     {
 
-
     }
 }

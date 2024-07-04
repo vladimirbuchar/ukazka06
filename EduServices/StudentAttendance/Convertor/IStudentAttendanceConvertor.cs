@@ -4,5 +4,5 @@ using Model.Tables.Edu.AttendanceStudent;
 
 namespace EduServices.StudentAttendance.Convertor
 {
-    public interface IStudentAttendanceConvertor : IBaseConvertor<StudentAttendanceDbo, StudentAttendanceCreateDto, StudentAttendanceListDto, StudentAttendanceDetailDto> { }
+    public interface IStudentAttendanceConvertor : IBaseConvertor<AttendanceStudentDbo, StudentAttendanceCreateDto, StudentAttendanceListDto, StudentAttendanceDetailDto> { }
 }

@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Model.Tables.Edu.Organization;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
-using Model.Tables.Edu.Organization;
 
 namespace Model.Tables.Edu.OrganizationSetting
 {
@@ -49,7 +49,7 @@ namespace Model.Tables.Edu.OrganizationSetting
         public string SmtpServerPassword { get; set; }
 
         [Column("SmtpServerPort")]
-        public string SmtpServerPort { get; set; }
+        public int SmtpServerPort { get; set; }
 
         [Column("GoogleApiToken")]
         public string GoogleApiToken { get; set; }

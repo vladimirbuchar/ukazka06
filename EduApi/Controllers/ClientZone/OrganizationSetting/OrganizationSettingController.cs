@@ -35,7 +35,7 @@ namespace EduApi.Controllers.ClientZone.OrganizationSetting
         {
             try
             {
-                CheckPermition(saveOrganizationSettingDto.OrganizationId);
+                CheckOrganizationPermition(saveOrganizationSettingDto.OrganizationId);
                 return SendResponse(_organizationSettingService.SaveOrganizationSetting(saveOrganizationSettingDto));
             }
             catch (Exception e)
@@ -54,7 +54,7 @@ namespace EduApi.Controllers.ClientZone.OrganizationSetting
         {
             try
             {
-                CheckPermition(request.Id);
+                CheckOrganizationPermition(request.Id);
                 return SendResponse(_organizationSettingService.GetOrganizationSetting(request.Id));
             }
             catch (Exception e)

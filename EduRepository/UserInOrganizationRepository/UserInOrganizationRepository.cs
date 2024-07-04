@@ -23,7 +23,7 @@ namespace EduRepository.UserInOrganizationRepository
                     .Include(x => x.OrganizationRole)
                     .Include(x => x.Organization)
                     .Include(x => x.User)
-                    .Include(x => x.User.Person)
+                    .ThenInclude(x=>x.Person)
             ];
         }
 

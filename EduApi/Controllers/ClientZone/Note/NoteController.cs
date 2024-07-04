@@ -161,8 +161,7 @@ namespace EduApi.Controllers.ClientZone.Note
         {
             try
             {
-                _noteService.UpdateNoteImage(updateNoteImageDto, GetLoggedUserId(), GetClientCulture());
-                return SendResponse();
+                return SendResponse(_noteService.UpdateNoteImage(updateNoteImageDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
             {

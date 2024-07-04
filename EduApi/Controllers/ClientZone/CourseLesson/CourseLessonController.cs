@@ -36,7 +36,7 @@ namespace EduApi.Controllers.ClientZone.CourseLesson
         {
             try
             {
-                CheckPermition(_courseLessonService.GetOrganizationIdByObjectId(addCourseLessonDto.MaterialId));
+                CheckOrganizationPermition(_courseLessonService.GetOrganizationIdByObjectId(addCourseLessonDto.MaterialId));
                 return SendResponse(_courseLessonService.AddObject(addCourseLessonDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
@@ -55,7 +55,7 @@ namespace EduApi.Controllers.ClientZone.CourseLesson
         {
             try
             {
-                CheckPermition(_courseLessonService.GetOrganizationIdByObjectId(request.ParentId));
+                CheckOrganizationPermition(_courseLessonService.GetOrganizationIdByObjectId(request.ParentId));
                 return SendResponse(_courseLessonService.GetList(x => x.CourseMaterialId == request.ParentId, request.IsDeleted, GetClientCulture()));
             }
             catch (Exception e)
@@ -74,7 +74,7 @@ namespace EduApi.Controllers.ClientZone.CourseLesson
         {
             try
             {
-                CheckPermition(_courseLessonService.GetOrganizationIdByObjectId(request.Id));
+                CheckOrganizationPermition(_courseLessonService.GetOrganizationIdByObjectId(request.Id));
                 return SendResponse(_courseLessonService.GetDetail(request.Id, GetClientCulture()));
             }
             catch (Exception e)
@@ -93,7 +93,7 @@ namespace EduApi.Controllers.ClientZone.CourseLesson
         {
             try
             {
-                CheckPermition(_courseLessonService.GetOrganizationIdByObjectId(updateCourseLessonDto.Id));
+                CheckOrganizationPermition(_courseLessonService.GetOrganizationIdByObjectId(updateCourseLessonDto.Id));
                 return SendResponse(_courseLessonService.UpdateObject(updateCourseLessonDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
@@ -112,7 +112,7 @@ namespace EduApi.Controllers.ClientZone.CourseLesson
         {
             try
             {
-                CheckPermition(_courseLessonService.GetOrganizationIdByObjectId(request.Id));
+                CheckOrganizationPermition(_courseLessonService.GetOrganizationIdByObjectId(request.Id));
                 return SendResponse(_courseLessonService.DeleteObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
@@ -131,7 +131,7 @@ namespace EduApi.Controllers.ClientZone.CourseLesson
         {
             try
             {
-                CheckPermition(_courseLessonService.GetOrganizationIdByObjectId(request.Id));
+                CheckOrganizationPermition(_courseLessonService.GetOrganizationIdByObjectId(request.Id));
                 return SendResponse(_courseLessonService.RestoreObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
@@ -150,7 +150,7 @@ namespace EduApi.Controllers.ClientZone.CourseLesson
         {
             try
             {
-                CheckPermition(_courseLessonService.GetOrganizationIdByObjectId(request.Id));
+                CheckOrganizationPermition(_courseLessonService.GetOrganizationIdByObjectId(request.Id));
                 return SendResponse(_courseLessonService.FileUpload(
                     request.Id,
                     GetClientCulture(),
@@ -176,9 +176,8 @@ namespace EduApi.Controllers.ClientZone.CourseLesson
         {
             try
             {
-                CheckPermition(_courseLessonService.GetOrganizationIdByObjectId(Guid.Parse(updatePositionCourseLesson.Ids.First())));
-                _courseLessonService.UpdatePositionCourseLesson(updatePositionCourseLesson, GetLoggedUserId());
-                return SendResponse();
+                CheckOrganizationPermition(_courseLessonService.GetOrganizationIdByObjectId(Guid.Parse(updatePositionCourseLesson.Ids.First())));
+                return SendResponse(_courseLessonService.UpdatePositionCourseLesson(updatePositionCourseLesson, GetLoggedUserId()));
             }
             catch (Exception e)
             {

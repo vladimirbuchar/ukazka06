@@ -5,19 +5,12 @@ using Model;
 using Model.Tables.Edu.User;
 using System;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace EduRepository.UserRepository
 {
     public class UserRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<UserDbo>(dbContext, memoryCache), IUserRepository
     {
-        public UserDbo LoginUser(string login, string password)
-        {
-            return _dbContext.Set<UserDbo>()
-                .Include(x => x.Person)
-                .Include(x => x.UserRole)
-                .FirstOrDefault(x => x.UserEmail == login && x.UserPassword == password && x.IsActive == true && x.IsDeleted == false && x.AllowCLassicLogin == true);
-        }
-
 
         public override UserDbo GetEntity(Guid id)
         {
@@ -26,6 +19,11 @@ namespace EduRepository.UserRepository
                 .Include(x => x.UserRole)
                 .FirstOrDefault(x => x.Id == id && x.IsDeleted == false);
         }
-
+        public override UserDbo GetEntity(bool deleted, Expression<Func<UserDbo, bool>> predicate = null)
+        {
+            return _dbContext.Set<UserDbo>()
+                .Include(x => x.Person)
+                .Include(x => x.UserRole).Where(x => x.IsDeleted == deleted).FirstOrDefault(predicate);
+        }
     }
 }

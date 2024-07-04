@@ -2,10 +2,6 @@
 using Microsoft.Extensions.Caching.Memory;
 using Model;
 using Model.Tables.Link;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 
 namespace EduRepository.CourseTestBankOfQuestionRepository
 {
@@ -13,14 +9,6 @@ namespace EduRepository.CourseTestBankOfQuestionRepository
         : BaseRepository<CourseTestBankOfQuestionDbo>(dbContext, memoryCache),
             ICourseTestBankOfQuestionRepository
     {
-        public override HashSet<CourseTestBankOfQuestionDbo> GetEntities(bool deleted, Expression<Func<CourseTestBankOfQuestionDbo, bool>> predicate = null)
-        {
-            return [.. _dbContext.Set<CourseTestBankOfQuestionDbo>().Where(x => x.IsDeleted == deleted).Where(predicate)];
-        }
 
-        public override CourseTestBankOfQuestionDbo GetEntity(Guid id)
-        {
-            return _dbContext.Set<CourseTestBankOfQuestionDbo>().FirstOrDefault(x => x.Id == id);
-        }
     }
 }
