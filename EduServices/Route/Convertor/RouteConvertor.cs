@@ -1,5 +1,5 @@
 ﻿using EduServices.Route.Dto;
-using Model.Tables.System;
+using Model.System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,7 +7,6 @@ namespace EduServices.Route.Convertor
 {
     public class RouteConvertor() : IRouteConvertor
     {
-
         public RouteDbo ConvertToBussinessEntity(RouteCreateDto addAnswerDto, string culture)
         {
             return new RouteDbo()
@@ -41,7 +40,5 @@ namespace EduServices.Route.Convertor
                 Route = answerDetail.Route
             };
         }
-
-
     }
 }

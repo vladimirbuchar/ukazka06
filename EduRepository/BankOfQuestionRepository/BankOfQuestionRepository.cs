@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
-using Model.Tables.Edu.BankOfQuestions;
+using Model.Edu.BankOfQuestions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,11 +20,14 @@ namespace EduRepository.BankOfQuestionRepository
                 .FirstOrDefault(x => x.Id == id);
         }
 
-        public override HashSet<BankOfQuestionDbo> GetEntities(bool deleted, Expression<Func<BankOfQuestionDbo, bool>> predicate = null)
+        public override HashSet<BankOfQuestionDbo> GetEntities(bool deleted, Expression<Func<BankOfQuestionDbo, bool>> predicate = null, Expression<Func<BankOfQuestionDbo, object>> orderBy = null, Expression<Func<BankOfQuestionDbo, object>> orderByDesc = null)
         {
-            return [.. _dbContext.Set<BankOfQuestionDbo>().Where(x => x.IsDeleted == deleted).Where(predicate)
+            return [.. _dbContext.Set<BankOfQuestionDbo>()
                 .Include(x => x.BankOfQuestionsTranslations.Where(x => x.IsDeleted == false))
-                .ThenInclude(x => x.Culture)];
+                .ThenInclude(x => x.Culture)
+                .Where(predicate)
+                .Where(x => x.IsDeleted == deleted)
+                ];
         }
 
         public override Guid GetOrganizationId(Guid objectId)

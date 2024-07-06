@@ -17,10 +17,11 @@ using EduServices.UserInOrganization.Convertor;
 using EduServices.UserInOrganization.Dto;
 using EduServices.UserInOrganization.Validator;
 using Microsoft.Extensions.Configuration;
-using Model.Tables.CodeBook;
-using Model.Tables.Edu.Person;
-using Model.Tables.Edu.User;
-using Model.Tables.Link;
+using Model.CodeBook;
+using Model.Edu.Notification;
+using Model.Edu.Person;
+using Model.Edu.User;
+using Model.Link;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,7 +61,7 @@ namespace EduServices.UserInOrganization.Service
         private readonly ISendMailService _sendMailService = sendMailService;
         private readonly IOrganizationRoleRepository _organizationRoleRepository = organizationRoleRepository;
         private readonly INotificationRepository _notificationRepository = notificationRepository;
-        private readonly HashSet<NotificationTypeDbo> _notificationTypes = notificationTypeCodebook.GetCodeBookItems();
+        private readonly HashSet<NotificationTypeDbo> _notificationTypes = notificationTypeCodebook.GetEntities(false);
         private readonly IUserRepository _userRepository = userRepository;
         private readonly IOrganizationSettingRepository _organizationSettingRepository = organizationSettingRepository;
         private readonly ICourseLectorRepository _courseLectorRepository = courseLectorRepository;
@@ -120,7 +121,7 @@ namespace EduServices.UserInOrganization.Service
                     }
 
                     _ = _notificationRepository.CreateEntity(
-                        new Model.Tables.Edu.Notification.NotificationDbo()
+                        new NotificationDbo()
                         {
                             IsNew = true,
                             NotificationTypeId = _notificationTypes.FirstOrDefault(x => x.SystemIdentificator == NotificationType.INVITE_TO_ORGANIZATION).Id,
@@ -133,7 +134,7 @@ namespace EduServices.UserInOrganization.Service
                 }
                 else
                 {
-                    result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.ADD_USER_TO_ORGANIZATION, GlobalValue.EMAIL_IS_NOT_VALID, email, 0));
+                    result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.ADD_USER_TO_ORGANIZATION, GlobalValue.EMAIL_IS_NOT_VALID, email, 0));
                 }
             }
             return new Result<UserInOrganizationDetailDto>() { Data = GetDetail(x => x.UserId == user.Id && x.OrganizationId == addObject.OrganizationId) };
@@ -178,7 +179,7 @@ namespace EduServices.UserInOrganization.Service
 
         public HashSet<OrganizationRoleListDto> GetOrganizationRoles()
         {
-            return _convertor.ConvertToWebModel([.. _organizationRoleRepository.GetEntities(false).OrderBy(x => x.Priority)]);
+            return _convertor.ConvertToWebModel([.. _organizationRoleRepository.GetEntities(false, null, x => x.Priority)]);
         }
 
         public override UserInOrganizationDetailDto GetDetail(Expression<Func<UserInOrganizationDbo, bool>> predicate, string culture = "")
@@ -214,7 +215,7 @@ namespace EduServices.UserInOrganization.Service
                     IsCourseEditor = false,
                     IsOrganizationAdministrator = false,
                     IsOrganizationOwner = false,
-                    IsLector = _courseLectorRepository.GetLectorCourse(userId).FirstOrDefault(x => x.Id == courseId) != null,
+                    IsLector = _courseLectorRepository.GetEntities(false, x => x.UserInOrganization.UserId == userId).FirstOrDefault(x => x.Id == courseId) != null,
                     IsStudent = _courseStudentRepository.GetStudentCourse(userId, false).FirstOrDefault(x => x.Id == courseId) != null
                 }
                 : new UserOrganizationRoleDetailDto()
@@ -223,7 +224,7 @@ namespace EduServices.UserInOrganization.Service
                     IsCourseEditor = getAllUserInOrganizations.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.COURSE_EDITOR,
                     IsOrganizationAdministrator = getAllUserInOrganizations.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.ORGANIZATION_ADMINISTRATOR,
                     IsOrganizationOwner = getAllUserInOrganizations.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.ORGANIZATION_OWNER,
-                    IsLector = _courseLectorRepository.GetLectorCourse(userId).FirstOrDefault(x => x.Id == courseId) != null,
+                    IsLector = _courseLectorRepository.GetEntities(false, x => x.UserInOrganization.UserId == userId).FirstOrDefault(x => x.Id == courseId) != null,
                     IsStudent = _courseStudentRepository.GetStudentCourse(userId, false).FirstOrDefault(x => x.Id == courseId) != null
                 };
         }
@@ -234,7 +235,7 @@ namespace EduServices.UserInOrganization.Service
             {
                 IsCourseAdministrator = false,
                 IsCourseEditor = false,
-                IsLector = _courseLectorRepository.GetLectorCourse(userId).FirstOrDefault(x => x.Id == courseId) != null,
+                IsLector = _courseLectorRepository.GetEntities(false, x => x.UserInOrganization.UserId == userId).FirstOrDefault(x => x.Id == courseId) != null,
                 IsOrganizationAdministrator = false,
                 IsOrganizationOwner = false,
                 IsStudent = _courseStudentRepository.GetStudentCourse(userId, false).FirstOrDefault(x => x.Id == courseId) != null

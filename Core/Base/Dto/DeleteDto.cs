@@ -7,6 +7,5 @@ namespace Core.Base.Dto
     {
         [Required]
         public Guid Id { get; set; }
-
     }
 }

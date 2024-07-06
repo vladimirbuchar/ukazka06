@@ -8,8 +8,8 @@ using EduRepository.CourseRepository;
 using EduRepository.OrganizationRepository;
 using EduRepository.SendMessageRepository;
 using EduServices.Course.Dto;
-using Model.Tables.CodeBook;
-using Model.Tables.Edu.Course;
+using Model.CodeBook;
+using Model.Edu.Course;
 using System;
 
 namespace EduServices.Course.Validator
@@ -34,9 +34,9 @@ namespace EduServices.Course.Validator
         public override Result<CourseDetailDto> IsValid(CourseCreateDto create)
         {
             Result<CourseDetailDto> result = new();
-            IsValidString(create.Name, result, ErrorCategory.COURSE, GlobalValue.STRING_IS_EMPTY);
-            IsValidPostiveNumber(create.Price, result, ErrorCategory.COURSE, Constants.PRICE_IS_LESS_THAN_ZERO);
-            IsValidPostiveNumber(create.Sale, result, ErrorCategory.COURSE, Constants.SALE_IS_LESS_THAN_ZERO);
+            IsValidString(create.Name, result, Category.COURSE, GlobalValue.STRING_IS_EMPTY);
+            IsValidPostiveNumber(create.Price, result, Category.COURSE, Constants.PRICE_IS_LESS_THAN_ZERO);
+            IsValidPostiveNumber(create.Sale, result, Category.COURSE, Constants.SALE_IS_LESS_THAN_ZERO);
             _ = IsValidStudentCount(create.DefaultMinimumStudents, create.DefaultMaximumStudents, result);
             _ = IsValidCourseStatus(create.CourseStatusId, result);
             _ = IsValidCourseType(create.CourseTypeId, result);
@@ -45,7 +45,7 @@ namespace EduServices.Course.Validator
             _ = IsValidEmailTemplate(create.EmailTemplateId, result);
             if (_organizationRepository.GetEntity(create.OrganizationId) == null)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.ORGANIZATION, GlobalValue.NOT_EXISTS));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.ORGANIZATION, GlobalValue.NOT_EXISTS));
             }
 
             return result;
@@ -54,9 +54,9 @@ namespace EduServices.Course.Validator
         public override Result<CourseDetailDto> IsValid(CourseUpdateDto update)
         {
             Result<CourseDetailDto> result = new();
-            IsValidString(update.Name, result, ErrorCategory.COURSE, GlobalValue.STRING_IS_EMPTY);
-            IsValidPostiveNumber(update.Price, result, ErrorCategory.COURSE, Constants.PRICE_IS_LESS_THAN_ZERO);
-            IsValidPostiveNumber(update.Sale, result, ErrorCategory.COURSE, Constants.SALE_IS_LESS_THAN_ZERO);
+            IsValidString(update.Name, result, Category.COURSE, GlobalValue.STRING_IS_EMPTY);
+            IsValidPostiveNumber(update.Price, result, Category.COURSE, Constants.PRICE_IS_LESS_THAN_ZERO);
+            IsValidPostiveNumber(update.Sale, result, Category.COURSE, Constants.SALE_IS_LESS_THAN_ZERO);
             _ = IsValidStudentCount(update.DefaultMinimumStudents, update.DefaultMaximumStudents, result);
             _ = IsValidCourseStatus(update.CourseStatusId, result);
             _ = IsValidCourseType(update.CourseTypeId, result);
@@ -70,15 +70,15 @@ namespace EduServices.Course.Validator
         {
             if (defaultMaximumStudents < 0)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.COURSE, Constants.MAXIMUM_STUDENT_IS_LESS_THAN_ZERO));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.COURSE, Constants.MAXIMUM_STUDENT_IS_LESS_THAN_ZERO));
             }
             if (defaultMinimumStudents < 0)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.COURSE, Constants.MINIMUM_STUDENT_IS_LESS_THAN_ZERO));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.COURSE, Constants.MINIMUM_STUDENT_IS_LESS_THAN_ZERO));
             }
             if (defaultMinimumStudents > defaultMaximumStudents)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.COURSE, Constants.MAXIMUM_STUDENT_IS_LESS_THAN_MINIMUM_STUDENT));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.COURSE, Constants.MAXIMUM_STUDENT_IS_LESS_THAN_MINIMUM_STUDENT));
             }
             return result;
         }
@@ -87,7 +87,7 @@ namespace EduServices.Course.Validator
         {
             if (certficateId.HasValue && _certificateRepository.GetEntity(certficateId.Value) == null)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.CERTIFICATE, GlobalValue.NOT_EXISTS));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.CERTIFICATE, GlobalValue.NOT_EXISTS));
             }
             return result;
         }
@@ -96,7 +96,7 @@ namespace EduServices.Course.Validator
         {
             if (courseMaterialId.HasValue && _courseMaterialRepository.GetEntity(courseMaterialId.Value) == null)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.COURSE_MATERIAL, GlobalValue.NOT_EXISTS));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.COURSE_MATERIAL, GlobalValue.NOT_EXISTS));
             }
             return result;
         }
@@ -105,7 +105,7 @@ namespace EduServices.Course.Validator
         {
             if (templateId.HasValue && _sendMessageRepository.GetEntity(templateId.Value) == null)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.COURSE, Constants.TEMPLATE_EMAIL_NOT_EXIST));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.COURSE, Constants.TEMPLATE_EMAIL_NOT_EXIST));
             }
             return result;
         }
@@ -115,7 +115,7 @@ namespace EduServices.Course.Validator
             CourseStatusDbo status = _courseStatusCodeBook.GetEntity(courseStatus);
             if (status == null || status.SystemIdentificator == CodebookValue.CODEBOOK_SELECT_VALUE)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.COURSE, Constants.INVALID_COURSE_STATUS));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.COURSE, Constants.INVALID_COURSE_STATUS));
             }
             return result;
         }
@@ -125,7 +125,7 @@ namespace EduServices.Course.Validator
             CourseTypeDbo type = _courseTypeCodeBook.GetEntity(courseType);
             if (type == null || type.SystemIdentificator == CodebookValue.CODEBOOK_SELECT_VALUE)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.COURSE, Constants.INVALID_COURSE_TYPE));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.COURSE, Constants.INVALID_COURSE_TYPE));
             }
             return result;
         }

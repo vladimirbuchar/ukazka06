@@ -8,9 +8,9 @@ using EduServices.CourseLesson.Dto;
 using EduServices.CourseLesson.Validator;
 using EduServices.Test.Convertor;
 using EduServices.Test.Dto;
-using Model.Tables.Edu.CourseLesson;
-using Model.Tables.Edu.CourseTest;
-using Model.Tables.Link;
+using Model.Edu.CourseLesson;
+using Model.Edu.CourseTest;
+using Model.Link;
 using System;
 using System.Linq;
 

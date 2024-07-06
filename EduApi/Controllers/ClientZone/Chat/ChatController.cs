@@ -50,7 +50,6 @@ namespace EduApi.Controllers.ClientZone.Chat
         {
             try
             {
-
                 return SendResponse(_chatService.GetList(x => x.UserId == GetLoggedUserId() && x.CourseTermId == request.ParentId, false, GetClientCulture()));
             }
             catch (Exception e)

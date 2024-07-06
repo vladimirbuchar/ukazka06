@@ -1,5 +1,5 @@
 ﻿using EduServices.StudentInGroup.Dto;
-using Model.Tables.Link;
+using Model.Link;
 using System.Collections.Generic;
 
 namespace EduServices.StudentInGroup.Convertor

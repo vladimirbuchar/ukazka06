@@ -1,6 +1,6 @@
 ﻿using Core.Base.Convertor;
 using EduServices.BankOfQuestion.Dto;
-using Model.Tables.Edu.BankOfQuestions;
+using Model.Edu.BankOfQuestions;
 
 namespace EduServices.BankOfQuestion.Convertor
 {

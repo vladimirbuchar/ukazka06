@@ -16,9 +16,9 @@ using EduServices.User.Dto;
 using EduServices.User.Validator;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using Model.Tables.Edu.LinkLifeTime;
-using Model.Tables.Edu.User;
-using Model.Tables.Link;
+using Model.Edu.LinkLifeTime;
+using Model.Edu.User;
+using Model.Link;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -144,7 +144,7 @@ namespace EduServices.User.Service
         }
         public UserTokenDto LoginUser(LoginUserDto loginData)
         {
-            UserDbo loginUser = _repository.GetEntity(false, x => x.UserEmail == loginData.UserEmail && x.UserPassword == loginData.UserPassword.GetHashString() && x.IsActive == true && x.IsDeleted == false && x.AllowCLassicLogin == true);
+            UserDbo loginUser = _repository.GetEntity(false, x => x.UserEmail == loginData.UserEmail && x.UserPassword == loginData.UserPassword.GetHashString() && x.IsActive == true && x.AllowCLassicLogin == true);
             if (loginUser != null)
             {
                 if (loginData.OrganizationId != null && _userInOrganizationRepository.GetEntity(false, x => x.UserId == loginUser.Id && x.OrganizationId == loginData.OrganizationId) == null)
@@ -254,7 +254,7 @@ namespace EduServices.User.Service
             }
             if (loginSocialNetwork.OrganizationId != null)
             {
-                if (_userInOrganizationRepository.GetEntity(false, x => x.IsDeleted == false && x.UserId == detail.Id && x.OrganizationId == loginSocialNetwork.OrganizationId) == null)
+                if (_userInOrganizationRepository.GetEntity(false, x => x.UserId == detail.Id && x.OrganizationId == loginSocialNetwork.OrganizationId) == null)
                 {
                     return null;
                 }
@@ -280,7 +280,7 @@ namespace EduServices.User.Service
             return userTokenDto;
         }
 
-        public void GeneratePasswordResetEmail(GeneratePasswordResetEmailDto generatePasswordResetEmailDto, string clientCulture)
+        public Result GeneratePasswordResetEmail(GeneratePasswordResetEmailDto generatePasswordResetEmailDto, string clientCulture)
         {
             UserDbo userDetail = _repository.GetEntity(false, x => x.UserEmail == generatePasswordResetEmailDto.UserEmail);
 
@@ -292,6 +292,7 @@ namespace EduServices.User.Service
 
                 _sendMailService.AddEmailToQueue(EduEmail.PASSWORD_RESET, clientCulture, new EmailAddress() { Email = userDetail.UserEmail }, replace);
             }
+            return new Result();
         }
 
         public Result SetNewPassword(SetNewPasswordDto setNewPasswordDto)
@@ -333,7 +334,7 @@ namespace EduServices.User.Service
 
         public UserTokenDto LoginUser(LoginUserAdminDto loginData)
         {
-            UserDbo loginUser = _repository.GetEntity(false, x => x.UserEmail == loginData.UserEmail && x.UserPassword == loginData.UserPassword.GetHashString() && x.IsActive == true && x.IsDeleted == false && x.AllowCLassicLogin == true);
+            UserDbo loginUser = _repository.GetEntity(false, x => x.UserEmail == loginData.UserEmail && x.UserPassword == loginData.UserPassword.GetHashString() && x.IsActive == true && x.AllowCLassicLogin == true);
             if (loginUser != null)
             {
                 UserTokenDto user = _convertor.ConvertToWebModel(loginUser);
@@ -353,18 +354,12 @@ namespace EduServices.User.Service
                 return base.DeleteObject(objectId, userId);
             }
             Result result = new();
-            result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.USER, GlobalValue.CAN_NOT_DELETE));
+            result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.USER, GlobalValue.CAN_NOT_DELETE));
             return result;
         }
 
-        void IUserService.ChangePassword(Guid userId, string newPassword)
-        {
-            throw new NotImplementedException();
-        }
 
-        Result IUserService.GeneratePasswordResetEmail(GeneratePasswordResetEmailDto generatePasswordResetEmailDto, string clientCulture)
-        {
-            throw new NotImplementedException();
-        }
+
+
     }
 }

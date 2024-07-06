@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using Core.Base.Service;
+﻿using Core.Base.Service;
 using EduServices.Organization.Dto;
+using EduServices.StudentEvaluation.Dto;
 using EduServices.User.Dto;
 using EduServices.UserProfile.Dto;
+using System;
+using System.Collections.Generic;
 
 namespace EduServices.UserProfile.Service
 {
@@ -15,5 +16,6 @@ namespace EduServices.UserProfile.Service
         HashSet<ManagedCourseListDto> GetManagedCourse(Guid userId);
         HashSet<MyAttendanceListDto> GetMyAttendance(Guid userId, string culture);
         HashSet<MyOrganizationListDto> GetMyOrganization(Guid userId);
+        HashSet<MyEvaluationListDto> GetMyEvaluation(Guid userId);
     }
 }

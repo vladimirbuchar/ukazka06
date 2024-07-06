@@ -1,8 +1,7 @@
 ﻿using Core.Base.Repository.CodeBookRepository;
 using EduServices.BankOfQuestion.Dto;
-using Model.Tables.CodeBook;
-using Model.Tables.Edu.BankOfQuestions;
-using Model.Tables.Edu.ClassRoom;
+using Model.CodeBook;
+using Model.Edu.BankOfQuestions;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,7 +9,7 @@ namespace EduServices.BankOfQuestion.Convertor
 {
     public class BankOfQuestionConvertor(ICodeBookRepository<CultureDbo> codeBookService) : IBankOfQuestionConvertor
     {
-        private readonly HashSet<CultureDbo> _cultureList = codeBookService.GetCodeBookItems();
+        private readonly HashSet<CultureDbo> _cultureList = codeBookService.GetEntities(false);
 
         public BankOfQuestionDbo ConvertToBussinessEntity(BankOfQuestionCreateDto addBankOfQuestionDto, string culture)
         {

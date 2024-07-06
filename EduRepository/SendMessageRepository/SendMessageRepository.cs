@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
-using Model.Tables.Edu.SendMessage;
+using Model.Edu.SendMessage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,17 +14,26 @@ namespace EduRepository.SendMessageRepository
     {
         public override SendMessageDbo GetEntity(Guid id)
         {
-            return _dbContext.Set<SendMessageDbo>().Include(x => x.SendMessageTranslations.Where(x => x.IsDeleted == false)).ThenInclude(x => x.Culture).FirstOrDefault(x => x.Id == id);
+            return _dbContext.Set<SendMessageDbo>()
+                .Include(x => x.SendMessageTranslations.Where(x => x.IsDeleted == false))
+                .ThenInclude(x => x.Culture)
+                .FirstOrDefault(x => x.Id == id);
         }
 
-        public override HashSet<SendMessageDbo> GetEntities(bool deleted, Expression<Func<SendMessageDbo, bool>> predicate = null)
+        public override HashSet<SendMessageDbo> GetEntities(bool deleted, Expression<Func<SendMessageDbo, bool>> predicate = null, Expression<Func<SendMessageDbo, object>> orderBy = null, Expression<Func<SendMessageDbo, object>> orderByDesc = null)
         {
-            return [.. _dbContext.Set<SendMessageDbo>().Where(x => x.IsDeleted == deleted).Where(predicate).Include(x => x.SendMessageTranslations.Where(x => x.IsDeleted == false)).ThenInclude(x => x.Culture)];
+            return [.. _dbContext.Set<SendMessageDbo>()
+                .Include(x => x.SendMessageTranslations.Where(x => x.IsDeleted == false))
+                .ThenInclude(x => x.Culture)
+                .Where(predicate)
+                .Where(x => x.IsDeleted == deleted)
+                ];
         }
 
         public override Guid GetOrganizationId(Guid objectId)
         {
-            return _dbContext.Set<SendMessageDbo>().FirstOrDefault(x => x.Id == objectId).OrganizationId;
+            return _dbContext.Set<SendMessageDbo>()
+                .FirstOrDefault(x => x.Id == objectId).OrganizationId;
         }
     }
 }

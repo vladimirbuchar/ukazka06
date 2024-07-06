@@ -3,7 +3,7 @@ using EduRepository.StudentGroupRepository;
 using EduServices.StudentGroup.Convertor;
 using EduServices.StudentGroup.Dto;
 using EduServices.StudentGroup.Validator;
-using Model.Tables.Edu.StudentGroup;
+using Model.Edu.StudentGroup;
 
 namespace EduServices.StudentGroup.Service
 {

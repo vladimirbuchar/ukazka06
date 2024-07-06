@@ -1,5 +1,5 @@
 ﻿using Core.Base.Repository;
-using Model.Tables.Edu.LinkLifeTime;
+using Model.Edu.LinkLifeTime;
 
 namespace EduRepository.LinkLifeTimeRepository
 {

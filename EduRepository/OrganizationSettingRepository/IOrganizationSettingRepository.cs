@@ -1,5 +1,5 @@
 ﻿using Core.Base.Repository;
-using Model.Tables.Edu.OrganizationSetting;
+using Model.Edu.OrganizationSetting;
 
 namespace EduRepository.OrganizationSettingRepository
 {

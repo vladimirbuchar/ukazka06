@@ -6,8 +6,8 @@ using Core.Extension;
 using EduRepository.OrganizationHoursRepository;
 using EduRepository.OrganizationRepository;
 using EduServices.OrganizationStudyHour.Dto;
-using Model.Tables.CodeBook;
-using Model.Tables.Edu.OrganizationStudyHour;
+using Model.CodeBook;
+using Model.Edu.OrganizationStudyHour;
 using System;
 
 namespace EduServices.OrganizationStudyHour.Validator
@@ -35,7 +35,7 @@ namespace EduServices.OrganizationStudyHour.Validator
 
             if (_organizationRepository.GetEntity(create.OrganizationId) == null)
             {
-                validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.ORGANIZATION, GlobalValue.NOT_EXISTS));
+                validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.ORGANIZATION, GlobalValue.NOT_EXISTS));
             }
             if (_timeTable.GetEntity(activeFromId) == null)
             {

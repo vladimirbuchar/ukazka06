@@ -1,6 +1,6 @@
 ﻿using Core.Base.Convertor;
 using EduServices.StudentAttendance.Dto;
-using Model.Tables.Edu.AttendanceStudent;
+using Model.Edu.AttendanceStudent;
 
 namespace EduServices.StudentAttendance.Convertor
 {

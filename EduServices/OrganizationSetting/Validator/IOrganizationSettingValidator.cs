@@ -3,7 +3,7 @@ using Core.DataTypes;
 using EduRepository.OrganizationRepository;
 using EduServices.Organization.Dto;
 using EduServices.OrganizationSetting.Dto;
-using Model.Tables.Edu.Organization;
+using Model.Edu.Organization;
 
 namespace EduServices.OrganizationSetting.Validator
 {

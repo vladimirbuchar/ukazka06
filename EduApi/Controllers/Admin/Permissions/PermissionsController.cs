@@ -52,7 +52,7 @@ namespace EduApi.Controllers.Admin.Permissions
         {
             try
             {
-                return SendResponse(_permissionsService.GetList(null, request.IsDeleted, GetClientCulture()));
+                return SendResponse(_permissionsService.GetList(request.IsDeleted, GetClientCulture()));
             }
             catch (Exception e)
             {

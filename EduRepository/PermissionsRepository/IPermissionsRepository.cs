@@ -1,5 +1,5 @@
 ﻿using Core.Base.Repository;
-using Model.Tables.System;
+using Model.System;
 
 namespace EduRepository.PermissionsRepository
 {

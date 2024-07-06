@@ -1,7 +1,7 @@
 ﻿using Core.Base.Service;
 using Core.DataTypes;
 using EduServices.Branch.Dto;
-using Model.Tables.Edu.Branch;
+using Model.Edu.Branch;
 using System;
 
 namespace EduServices.Branch.Service

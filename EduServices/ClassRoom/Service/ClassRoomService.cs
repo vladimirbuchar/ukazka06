@@ -8,11 +8,10 @@ using EduServices.ClassRoom.Dto;
 using EduServices.ClassRoom.Validator;
 using EduServices.OrganizationStudyHour.Dto;
 using EduServices.User.Dto;
-using Model.Tables.Edu.Branch;
-using Model.Tables.Edu.ClassRoom;
-using Model.Tables.Edu.Course;
-using Model.Tables.Edu.CourseTermDate;
-using Model.Tables.Edu.OrganizationStudyHour;
+using Model.Edu.ClassRoom;
+using Model.Edu.Course;
+using Model.Edu.CourseTermDate;
+using Model.Edu.OrganizationStudyHour;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,16 +33,11 @@ namespace EduServices.ClassRoom.Service
     {
         private readonly IOrganizationStudyHourRepository _organizationStudyHourRepository = organizationStudyHourRepository;
 
-        public HashSet<ClassRoomListDto> GetAllClassRoomInOrganization(Guid organizationId, string culture)
-        {
-            return _convertor.ConvertToWebModel(_repository.GetEntities(false, x => x.Branch.OrganizationId == organizationId && x.IsDeleted == false), culture);
-        }
-
         public ClassRoomTimeTableDto GetClassRoomTimeTable(Guid classRoomId, Guid organizationId, string culture)
         {
             ClassRoomTimeTableDto getClassRoomTimeTableDtos = new();
-            HashSet<CourseTermDateDbo> getClassRoomTimeTables = _repository.GetClassRoomTimeTable(classRoomId);
-            HashSet<OrganizationStudyHourDbo> getStudyHours = [.. _organizationStudyHourRepository.GetEntities(false, x => x.OrganizationId == organizationId).OrderBy(x => x.Position)];
+            HashSet<CourseTermDateDbo> getClassRoomTimeTables = _repository.GetEntity(false, x => x.Id == classRoomId).CourseTermDates.ToHashSet();
+            HashSet<OrganizationStudyHourDbo> getStudyHours = [.. _organizationStudyHourRepository.GetEntities(false, x => x.OrganizationId == organizationId, x => x.Position)];
             getClassRoomTimeTableDtos.StudyHours = getStudyHours
                 .Select(x => new StudyHourListDto()
                 {
@@ -89,7 +83,7 @@ namespace EduServices.ClassRoom.Service
             if (classRoomDbo != null && classRoomDbo.IsOnline)
             {
                 Result result = new();
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.CLASS_ROOM, GlobalValue.CAN_NOT_DELETE));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.CLASS_ROOM, GlobalValue.CAN_NOT_DELETE));
                 return result;
             }
             return base.DeleteObject(objectId, userId);

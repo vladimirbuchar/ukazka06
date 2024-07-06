@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Core.Base.Service;
 using EduServices.CourseTermStudent.Dto;
-using Model.Tables.Link;
+using Model.Link;
 
 namespace EduServices.CourseTermStudent.Service
 {

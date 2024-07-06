@@ -1,7 +1,7 @@
 ﻿using Core.Base.Validator;
 using EduRepository.SendMessageRepository;
 using EduServices.SendMessage.Dto;
-using Model.Tables.Edu.SendMessage;
+using Model.Edu.SendMessage;
 
 namespace EduServices.SendMessage.Validator
 {

@@ -80,10 +80,6 @@ namespace EduApi.Controllers
             {
                 validation.AddResultStatus(new ValidationMessage(MessageType.ERROR, SystemErrorValue.PERMITION_DENIED));
             }
-            else if (ex is RequestIsNullException)
-            {
-                validation.AddResultStatus(new ValidationMessage(MessageType.ERROR, SystemErrorValue.REQUEST_IS_NULL));
-            }
             else if (ex is LicenseException)
             {
                 validation.AddResultStatus(new ValidationMessage(MessageType.ERROR, SystemErrorValue.BAD_LICENSE));
@@ -106,10 +102,7 @@ namespace EduApi.Controllers
             LogValidate(response);
             if (
                 response.IsError
-                && (
-                    response.Contains(new ValidationMessage(MessageType.ERROR, SystemErrorValue.BAD_ACCESS_TOKEN))
-                    || response.Contains(new ValidationMessage(MessageType.ERROR, SystemErrorValue.PERMITION_DENIED))
-                )
+                && response.Contains(new ValidationMessage(MessageType.ERROR, SystemErrorValue.PERMITION_DENIED))
             )
             {
                 return StatusCode(403);
@@ -143,13 +136,7 @@ namespace EduApi.Controllers
             {
                 return NotFound();
             }
-            if (
-                response.IsError
-                && (
-                    response.Contains(new ValidationMessage(MessageType.ERROR, SystemErrorValue.BAD_ACCESS_TOKEN))
-                    || response.Contains(new ValidationMessage(MessageType.ERROR, SystemErrorValue.PERMITION_DENIED))
-                )
-            )
+            if (response.IsError && response.Contains(new ValidationMessage(MessageType.ERROR, SystemErrorValue.PERMITION_DENIED)))
             {
                 return StatusCode(403);
             }

@@ -1,6 +1,6 @@
 ﻿using Core.Base.Convertor;
 using EduServices.CourseLesson.Dto;
-using Model.Tables.Edu.CourseLesson;
+using Model.Edu.CourseLesson;
 
 namespace EduServices.CourseLesson.Convertor
 {

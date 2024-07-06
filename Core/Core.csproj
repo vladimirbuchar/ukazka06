@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <Folder Include="Base\Controller\" />
-    <Folder Include="Attribute\" />
   </ItemGroup>
 
 </Project>

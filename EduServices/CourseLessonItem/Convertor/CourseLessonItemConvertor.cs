@@ -1,7 +1,7 @@
 ﻿using Core.Base.Repository.CodeBookRepository;
 using EduServices.CourseLessonItem.Dto;
-using Model.Tables.CodeBook;
-using Model.Tables.Edu.CourseLessonItem;
+using Model.CodeBook;
+using Model.Edu.CourseLessonItem;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,7 +9,7 @@ namespace EduServices.CourseLessonItem.Convertor
 {
     public class CourseLessonItemConvertor(ICodeBookRepository<CultureDbo> codeBookService) : ICourseLessonItemConvertor
     {
-        private readonly HashSet<CultureDbo> _cultureList = codeBookService.GetCodeBookItems();
+        private readonly HashSet<CultureDbo> _cultureList = codeBookService.GetEntities(false);
 
         public CourseLessonItemDbo ConvertToBussinessEntity(CourseLessonItemCreateDto addCourseLessonItemDto, string culture)
         {

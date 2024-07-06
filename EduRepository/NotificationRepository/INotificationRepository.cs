@@ -1,5 +1,5 @@
 ﻿using Core.Base.Repository;
-using Model.Tables.Edu.Notification;
+using Model.Edu.Notification;
 
 namespace EduRepository.NotificationRepository
 {

@@ -6,7 +6,7 @@ using EduServices.OrganizationRole.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Model.Tables.Edu.CourseLessonItem;
+using Model.Edu.CourseLessonItem;
 using System;
 using System.Collections.Generic;
 using System.Linq;

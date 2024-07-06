@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
-using Model.Tables.Edu.Answer;
+using Model.Edu.Answer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,18 +24,18 @@ namespace EduRepository.AnswerRepository
                 .FirstOrDefault(x => x.Id == id);
         }
 
-        public override HashSet<AnswerDbo> GetEntities(bool deleted, Expression<Func<AnswerDbo, bool>> predicate = null)
+        public override HashSet<AnswerDbo> GetEntities(bool deleted, Expression<Func<AnswerDbo, bool>> predicate = null, Expression<Func<AnswerDbo, object>> orderBy = null, Expression<Func<AnswerDbo, object>> orderByDesc = null)
         {
             return
             [
                 .. _dbContext
                     .Set<AnswerDbo>()
-                    .Where(x => x.IsDeleted == deleted)
-                    .Where(predicate)
                     .Include(x => x.TestQuestionAnswerTranslations.Where(x=>x.IsDeleted == false))
                     .ThenInclude(x => x.Culture)
                     .Include(x => x.AnswerFileRepository.Where(x=>x.IsDeleted == false))
                     .ThenInclude(x => x.Culture)
+                    .Where(predicate)
+                    .Where(x => x.IsDeleted == deleted)
             ];
         }
 

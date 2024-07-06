@@ -1,6 +1,6 @@
 ﻿using Core.Base.Service;
 using EduServices.StudentGroup.Dto;
-using Model.Tables.Edu.StudentGroup;
+using Model.Edu.StudentGroup;
 
 namespace EduServices.StudentGroup.Service
 {

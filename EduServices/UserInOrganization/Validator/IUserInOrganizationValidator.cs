@@ -1,7 +1,7 @@
 ﻿using Core.Base.Validator;
 using EduRepository.UserInOrganizationRepository;
 using EduServices.UserInOrganization.Dto;
-using Model.Tables.Link;
+using Model.Link;
 
 namespace EduServices.UserInOrganization.Validator
 {

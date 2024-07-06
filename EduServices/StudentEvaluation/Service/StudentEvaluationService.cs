@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Core.Base.Service;
+﻿using Core.Base.Service;
 using EduRepository.StudentEvaluationRepository;
 using EduServices.StudentEvaluation.Convertor;
 using EduServices.StudentEvaluation.Dto;
 using EduServices.StudentEvaluation.Validator;
-using Model.Tables.Edu.StudentEvaluation;
+using Model.Edu.StudentEvaluation;
 
 namespace EduServices.StudentEvaluation.Service
 {
@@ -21,9 +19,6 @@ namespace EduServices.StudentEvaluation.Service
         >(courseTermRepository, courseTermConvertor, validator),
             IStudentEvaluationService
     {
-        public HashSet<MyEvaluationListDto> GetMyEvaluation(Guid id)
-        {
-            return _convertor.ConvertToWebModel(_repository.GetEntities(false, x => x.CourseStudent.UserInOrganization.UserId == id));
-        }
+
     }
 }

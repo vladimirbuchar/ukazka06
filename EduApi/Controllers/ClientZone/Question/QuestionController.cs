@@ -8,6 +8,7 @@ using EduServices.Question.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Model.Edu.Question;
 using System;
 using System.Collections.Generic;
 
@@ -157,7 +158,7 @@ namespace EduApi.Controllers.ClientZone.Question
                     GetClientCulture(),
                     GetLoggedUserId(),
                     new List<IFormFile>() { file },
-                    new Model.Tables.Edu.TestQuestion.QuestionFileRepositoryDbo() { QuestionId = request.Id, },
+                    new QuestionFileRepositoryDbo() { QuestionId = request.Id, },
                     x => x.QuestionId == request.Id && x.Culture.SystemIdentificator == GetClientCulture()
                 ));
             }

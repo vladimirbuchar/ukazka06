@@ -1,12 +1,14 @@
 ﻿using Core.Constants;
 using EduServices.Organization.Dto;
+using EduServices.StudentEvaluation.Dto;
 using EduServices.UserInOrganization.Dto;
 using EduServices.UserProfile.Dto;
 using Microsoft.Extensions.Configuration;
-using Model.Tables.Edu.Branch;
-using Model.Tables.Edu.ClassRoom;
-using Model.Tables.Edu.UserCertificate;
-using Model.Tables.Link;
+using Model.Edu.Branch;
+using Model.Edu.ClassRoom;
+using Model.Edu.StudentEvaluation;
+using Model.Edu.UserCertificate;
+using Model.Link;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -128,6 +130,14 @@ namespace EduServices.UserProfile.Convertor
                 }
             }
             return data;
+        }
+
+        public HashSet<MyEvaluationListDto> ConvertToWebModel(HashSet<StudentEvaluationDbo> getStudentEvaluation)
+        {
+            return getStudentEvaluation.Select(x => new MyEvaluationListDto()
+            {
+
+            }).ToHashSet();
         }
     }
 }

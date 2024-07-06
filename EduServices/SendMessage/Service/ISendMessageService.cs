@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Core.Base.Service;
+﻿using Core.Base.Service;
 using EduServices.SendMessage.Dto;
-using Model.Tables.Edu.SendMessage;
+using Model.Edu.SendMessage;
+using System;
+using System.Collections.Generic;
 
 namespace EduServices.SendMessage.Service
 {

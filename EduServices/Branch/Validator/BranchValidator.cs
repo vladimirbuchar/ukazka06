@@ -5,8 +5,8 @@ using Core.DataTypes;
 using EduRepository.BranchRepository;
 using EduRepository.OrganizationRepository;
 using EduServices.Branch.Dto;
-using Model.Tables.CodeBook;
-using Model.Tables.Edu.Branch;
+using Model.CodeBook;
+using Model.Edu.Branch;
 
 namespace EduServices.Branch.Validator
 {
@@ -20,13 +20,13 @@ namespace EduServices.Branch.Validator
         public override Result<BranchDetailDto> IsValid(BranchCreateDto create)
         {
             Result<BranchDetailDto> validate = new();
-            IsValidEmail(create.Email, validate, ErrorCategory.BRANCH, GlobalValue.EMAIL_IS_NOT_VALID);
-            IsValidUri(create.WWW, validate, ErrorCategory.BRANCH, GlobalValue.IS_NOT_VALID_URI);
-            IsValidPhoneNumber(create.PhoneNumber, validate, ErrorCategory.BRANCH, GlobalValue.IS_NOT_VALID_PHONE_NUMBER);
-            IsValidString(create.Name, validate, ErrorCategory.BRANCH, GlobalValue.STRING_IS_EMPTY);
+            IsValidEmail(create.Email, validate, Category.BRANCH, GlobalValue.EMAIL_IS_NOT_VALID);
+            IsValidUri(create.WWW, validate, Category.BRANCH, GlobalValue.IS_NOT_VALID_URI);
+            IsValidPhoneNumber(create.PhoneNumber, validate, Category.BRANCH, GlobalValue.IS_NOT_VALID_PHONE_NUMBER);
+            IsValidString(create.Name, validate, Category.BRANCH, GlobalValue.STRING_IS_EMPTY);
             if (_organizationRepository.GetEntity(create.OrganizationId) == null)
             {
-                validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.ORGANIZATION, GlobalValue.NOT_EXISTS));
+                validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.ORGANIZATION, GlobalValue.NOT_EXISTS));
             }
             if (create.CountryId.HasValue)
             {
@@ -39,10 +39,10 @@ namespace EduServices.Branch.Validator
         public override Result<BranchDetailDto> IsValid(BranchUpdateDto update)
         {
             Result<BranchDetailDto> validate = new();
-            IsValidEmail(update.Email, validate, ErrorCategory.BRANCH, GlobalValue.EMAIL_IS_NOT_VALID);
-            IsValidUri(update.WWW, validate, ErrorCategory.BRANCH, GlobalValue.IS_NOT_VALID_URI);
-            IsValidPhoneNumber(update.PhoneNumber, validate, ErrorCategory.BRANCH, GlobalValue.IS_NOT_VALID_PHONE_NUMBER);
-            IsValidString(update.Name, validate, ErrorCategory.BRANCH, GlobalValue.STRING_IS_EMPTY);
+            IsValidEmail(update.Email, validate, Category.BRANCH, GlobalValue.EMAIL_IS_NOT_VALID);
+            IsValidUri(update.WWW, validate, Category.BRANCH, GlobalValue.IS_NOT_VALID_URI);
+            IsValidPhoneNumber(update.PhoneNumber, validate, Category.BRANCH, GlobalValue.IS_NOT_VALID_PHONE_NUMBER);
+            IsValidString(update.Name, validate, Category.BRANCH, GlobalValue.STRING_IS_EMPTY);
             if (update.CountryId.HasValue)
             {
                 base.CodeBookValueExist(_country, x => x.Id == update.CountryId, validate, AddressValidator.COUNTRY, AddressValidator.COUNTRY_NOT_EXIST, update.CountryId.ToString());

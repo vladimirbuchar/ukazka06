@@ -1,8 +1,7 @@
 ﻿using Core.Base.Repository.CodeBookRepository;
 using EduServices.ClassRoom.Dto;
-using Model.Tables.CodeBook;
-using Model.Tables.Edu.ClassRoom;
-using Model.Tables.Edu.Course;
+using Model.CodeBook;
+using Model.Edu.ClassRoom;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,7 +9,7 @@ namespace EduServices.ClassRoom.Convertor
 {
     public class ClasssRoomConvertor(ICodeBookRepository<CultureDbo> codeBookService) : IClassRoomConvertor
     {
-        private readonly HashSet<CultureDbo> _cultureList = codeBookService.GetCodeBookItems();
+        private readonly HashSet<CultureDbo> _cultureList = codeBookService.GetEntities(false);
 
         public ClassRoomDbo ConvertToBussinessEntity(ClassRoomCreateDto addClassRoomDto, string culture)
         {

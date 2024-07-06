@@ -1,46 +1,48 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Model.Tables.CodeBook;
-using Model.Tables.Edu.Answer;
-using Model.Tables.Edu.AttendanceStudent;
-using Model.Tables.Edu.BankOfQuestions;
-using Model.Tables.Edu.Branch;
-using Model.Tables.Edu.Certificate;
-using Model.Tables.Edu.Chat;
-using Model.Tables.Edu.ClassRoom;
-using Model.Tables.Edu.Course;
-using Model.Tables.Edu.CourseLesson;
-using Model.Tables.Edu.CourseLessonItem;
-using Model.Tables.Edu.CourseMaterial;
-using Model.Tables.Edu.CourseTable;
-using Model.Tables.Edu.CourseTerm;
-using Model.Tables.Edu.CourseTermDate;
-using Model.Tables.Edu.CourseTest;
-using Model.Tables.Edu.CourseTestEvaluation;
-using Model.Tables.Edu.LicenseChange;
-using Model.Tables.Edu.LinkLifeTime;
-using Model.Tables.Edu.Note;
-using Model.Tables.Edu.Notification;
-using Model.Tables.Edu.Organization;
-using Model.Tables.Edu.OrganizationAddress;
-using Model.Tables.Edu.OrganizationRole;
-using Model.Tables.Edu.OrganizationRolePermition;
-using Model.Tables.Edu.OrganizationSetting;
-using Model.Tables.Edu.OrganizationStudyHour;
-using Model.Tables.Edu.Person;
-using Model.Tables.Edu.PersonAddress;
-using Model.Tables.Edu.SendMessage;
-using Model.Tables.Edu.StudentEvaluation;
-using Model.Tables.Edu.StudentGroup;
-using Model.Tables.Edu.StudentTestSummary;
-using Model.Tables.Edu.StudentTestSummaryAnswer;
-using Model.Tables.Edu.StudentTestSummaryQuestion;
-using Model.Tables.Edu.TestQuestion;
-using Model.Tables.Edu.TestUserAnswer;
-using Model.Tables.Edu.User;
-using Model.Tables.Edu.UserCertificate;
-using Model.Tables.Edu.UserRole;
-using Model.Tables.Link;
-using Model.Tables.System;
+using Model.CodeBook;
+using Model.Edu.Answer;
+using Model.Edu.AttendanceStudent;
+using Model.Edu.BankOfQuestions;
+using Model.Edu.Branch;
+using Model.Edu.Certificate;
+using Model.Edu.Chat;
+using Model.Edu.ClassRoom;
+using Model.Edu.Course;
+using Model.Edu.CourseLesson;
+using Model.Edu.CourseLessonItem;
+using Model.Edu.CourseMaterial;
+using Model.Edu.CourseTable;
+using Model.Edu.CourseTerm;
+using Model.Edu.CourseTermDate;
+using Model.Edu.CourseTest;
+using Model.Edu.CourseTestEvaluation;
+using Model.Edu.LicenseChange;
+using Model.Edu.LinkLifeTime;
+using Model.Edu.Note;
+using Model.Edu.Notification;
+using Model.Edu.Organization;
+using Model.Edu.OrganizationAddress;
+using Model.Edu.OrganizationRole;
+using Model.Edu.OrganizationRolePermition;
+using Model.Edu.OrganizationSetting;
+using Model.Edu.OrganizationStudyHour;
+using Model.Edu.Person;
+using Model.Edu.PersonAddress;
+using Model.Edu.Question;
+using Model.Edu.SendEmail;
+using Model.Edu.SendEmailAttachment;
+using Model.Edu.SendMessage;
+using Model.Edu.StudentEvaluation;
+using Model.Edu.StudentGroup;
+using Model.Edu.StudentTestSummary;
+using Model.Edu.StudentTestSummaryAnswer;
+using Model.Edu.StudentTestSummaryQuestion;
+using Model.Edu.TestUserAnswer;
+using Model.Edu.User;
+using Model.Edu.UserCertificate;
+using Model.Edu.UserRole;
+using Model.Link;
+using Model.System;
 
 namespace Model
 {
@@ -82,7 +84,6 @@ namespace Model
             SetTableDefault<StudentTestSummaryDbo>(modelBuilder);
             SetTableDefault<AddressTypeDbo>(modelBuilder);
             SetTableDefault<GalleryItemTypeDbo>(modelBuilder);
-            SetTableDefault<ObjectHistoryDbo>(modelBuilder);
             SetTableDefault<CourseStatusDbo>(modelBuilder);
             SetTableDefault<CourseTypeDbo>(modelBuilder);
             SetTableDefault<TimeTableDbo>(modelBuilder);
@@ -142,6 +143,8 @@ namespace Model
             SetTableDefault<CourseLessonFileRepositoryDbo>(modelBuilder);
             SetTableDefault<CourseLessonItemFileRepositoryDbo>(modelBuilder);
             SetTableDefault<RouteDbo>(modelBuilder);
+            SetTableDefault<SendEmailDbo>(modelBuilder);
+            SetTableDefault<SendEmailAttachmentDbo>(modelBuilder);
             SetTableDefault<PermissionsDbo>(modelBuilder);
             //
             _ = modelBuilder.Entity<UserDbo>().HasIndex(u => u.UserEmail).IsUnique();
@@ -263,7 +266,6 @@ namespace Model
         public DbSet<StudentTestSummaryDbo> StudentTestSummary { get; set; }
         public DbSet<AddressTypeDbo> AddressType { get; set; }
         public DbSet<GalleryItemTypeDbo> GalleryItemType { get; set; }
-        public DbSet<ObjectHistoryDbo> ObjectHistory { get; set; }
         public DbSet<CourseStatusDbo> CourseStatus { get; set; }
         public DbSet<CourseTypeDbo> CourseType { get; set; }
         public DbSet<TimeTableDbo> TimeTable { get; set; }
@@ -325,5 +327,7 @@ namespace Model
         public DbSet<CourseLessonItemFileRepositoryDbo> CourseLessonItemFileRepositories { get; set; }
         public DbSet<RouteDbo> Routes { get; set; }
         public DbSet<PermissionsDbo> Permissions { get; set; }
+        public DbSet<SendEmailDbo> SendEmails { get; set; }
+        public DbSet<SendEmailAttachmentDbo> SendEmailAttachments { get; set; }
     }
 }

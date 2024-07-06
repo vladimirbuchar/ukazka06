@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Model;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace Core.Base.Service
 {
@@ -14,7 +15,7 @@ namespace Core.Base.Service
         where Detail : DetailDto
         where Model : TableModel
     {
-        Result FileUpload(Guid parentId, string culture, Guid userId, List<IFormFile> files, FileModel model, System.Linq.Expressions.Expression<Func<FileModel, bool>> deleteFiles = null);
+        Result FileUpload(Guid parentId, string culture, Guid userId, List<IFormFile> files, FileModel model, Expression<Func<FileModel, bool>> deleteFiles = null);
         Result FileDelete(Guid id, Guid userId);
     }
 
@@ -36,10 +37,12 @@ namespace Core.Base.Service
     {
         Result<Detail> AddObject(Create addObject, Guid userId, string culture);
         Result DeleteObject(Guid objectId, Guid userId);
-        Result MultipleDelete(System.Linq.Expressions.Expression<Func<Model, bool>> predicate, Guid userId);
-        HashSet<ObjectĹist> GetList(System.Linq.Expressions.Expression<Func<Model, bool>> predicate = null, bool deleted = false, string culture = "");
+        Result MultipleDelete(Expression<Func<Model, bool>> predicate, Guid userId);
+        HashSet<ObjectĹist> GetList(Expression<Func<Model, bool>> predicate = null, bool deleted = false, string culture = "");
+        HashSet<ObjectĹist> GetList();
+        HashSet<ObjectĹist> GetList(bool deleted = false, string culture = "");
         Detail GetDetail(Guid objectId, string culture);
-        Detail GetDetail(System.Linq.Expressions.Expression<Func<Model, bool>> predicate, string culture);
+        Detail GetDetail(Expression<Func<Model, bool>> predicate, string culture);
         Result RestoreObject(Guid objectId, Guid userId);
     }
 

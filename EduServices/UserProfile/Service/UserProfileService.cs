@@ -4,17 +4,19 @@ using EduRepository.CourseLectorRepository;
 using EduRepository.CourseRepository;
 using EduRepository.CourseStudentRepository;
 using EduRepository.OrganizationHoursRepository;
+using EduRepository.StudentEvaluationRepository;
 using EduRepository.UserCertificateRepository;
 using EduRepository.UserInOrganizationRepository;
 using EduServices.Organization.Dto;
 using EduServices.OrganizationStudyHour.Dto;
+using EduServices.StudentEvaluation.Dto;
 using EduServices.User.Dto;
 using EduServices.UserProfile.Convertor;
 using EduServices.UserProfile.Dto;
-using Model.Tables.Edu.AttendanceStudent;
-using Model.Tables.Edu.Course;
-using Model.Tables.Edu.OrganizationStudyHour;
-using Model.Tables.Link;
+using Model.Edu.AttendanceStudent;
+using Model.Edu.Course;
+using Model.Edu.OrganizationStudyHour;
+using Model.Link;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +31,8 @@ namespace EduServices.UserProfile.Service
         IOrganizationStudyHourRepository organizationStudyHourRepository,
         IUserInOrganizationRepository userInOrganizationRepository,
         ICourseRepository courseRepository,
-        IAttendanceStudentRepository atendanceStudentRepository
+        IAttendanceStudentRepository atendanceStudentRepository,
+        IStudentEvaluationRepository studentEvaluationRepository
     ) : BaseService<IUserProfileConvertor>(convertor), IUserProfileService
     {
         private readonly IUserCertificateRepository _userCertificateRepository = userCertificateRepository;
@@ -39,10 +42,11 @@ namespace EduServices.UserProfile.Service
         private readonly IUserInOrganizationRepository _userInOrganizationRepository = userInOrganizationRepository;
         private readonly ICourseRepository _courseRepository = courseRepository;
         private readonly IAttendanceStudentRepository _attendanceStudentRepository = atendanceStudentRepository;
+        private readonly IStudentEvaluationRepository _studentEvaluationRepository = studentEvaluationRepository;
 
         public HashSet<MyCertificateListDto> GetMyCertificate(Guid userId)
         {
-            return _convertor.ConvertToWebModel([.. _userCertificateRepository.GetEntities(false, x => x.UserId == userId).OrderByDescending(x => x.ActiveFrom)]);
+            return _convertor.ConvertToWebModel([.. _userCertificateRepository.GetEntities(false, x => x.UserId == userId, null, x => x.ActiveFrom)]);
         }
 
         public HashSet<MyCourseListDto> GetMyCourse(Guid userId, bool hideFinishCourse, string culture)
@@ -53,7 +57,7 @@ namespace EduServices.UserProfile.Service
             {
                 item.IsStudent = true;
             }
-            HashSet<MyCourseListDto> lector = _convertor.ConvertToWebModel(_courseLectorRepository.GetLectorCourse(userId), culture);
+            HashSet<MyCourseListDto> lector = _convertor.ConvertToWebModel(_courseLectorRepository.GetEntities(false, x => x.UserInOrganization.UserId == userId), culture);
             foreach (MyCourseListDto item in lector)
             {
                 item.IsLector = true;
@@ -69,13 +73,13 @@ namespace EduServices.UserProfile.Service
             List<MyTimeTableListDto> getUserDetailDtos = [];
             HashSet<UserInOrganizationDbo> organizations = _userInOrganizationRepository.GetEntities(false, x => x.UserId == userId && (x.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.STUDENT || x.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.LECTOR));
             HashSet<CourseStudentDbo> myCourse = _courseStudentRepository.GetStudentCourse(userId, true);
-            HashSet<CourseLectorDbo> myCourseLector = _courseLectorRepository.GetLectorCourse(userId);
+            HashSet<CourseLectorDbo> myCourseLector = _courseLectorRepository.GetEntities(false, x => x.UserInOrganization.UserId == userId);
 
             foreach (UserInOrganizationDbo item in organizations)
             {
                 HashSet<CourseStudentDbo> courseInOrganization = myCourse.Where(x => x.CourseTerm.ClassRoom.Branch.OrganizationId == item.Id).ToHashSet();
                 MyTimeTableListDto timeTableItem = new();
-                HashSet<OrganizationStudyHourDbo> getStudyHours = [.. _organizationStudyHourRepository.GetEntities(false, x => x.OrganizationId == item.Id).OrderBy(x => x.Position)];
+                HashSet<OrganizationStudyHourDbo> getStudyHours = [.. _organizationStudyHourRepository.GetEntities(false, x => x.OrganizationId == item.Id, x => x.Position)];
                 HashSet<TimeTableDto> timeTable = [];
                 HashSet<CourseStudentDbo> monday = courseInOrganization.Where(x => x.CourseTerm.Monday).ToHashSet();
                 HashSet<CourseStudentDbo> tuesday = courseInOrganization.Where(x => x.CourseTerm.Tuesday).ToHashSet();
@@ -112,7 +116,7 @@ namespace EduServices.UserProfile.Service
             {
                 HashSet<CourseLectorDbo> courseInOrganization = myCourseLector.Where(x => x.CourseTerm.ClassRoom.Branch.OrganizationId == item.Id).ToHashSet();
                 MyTimeTableListDto timeTableItem = new();
-                HashSet<OrganizationStudyHourDbo> getStudyHours = [.. _organizationStudyHourRepository.GetEntities(false, x => x.OrganizationId == item.Id).OrderBy(x => x.Position)];
+                HashSet<OrganizationStudyHourDbo> getStudyHours = [.. _organizationStudyHourRepository.GetEntities(false, x => x.OrganizationId == item.Id, x => x.Position)];
                 HashSet<TimeTableDto> timeTable = [];
                 HashSet<CourseLectorDbo> monday = courseInOrganization.Where(x => x.CourseTerm.Monday).ToHashSet();
                 HashSet<CourseLectorDbo> tuesday = courseInOrganization.Where(x => x.CourseTerm.Tuesday).ToHashSet();
@@ -246,6 +250,10 @@ namespace EduServices.UserProfile.Service
         public HashSet<MyOrganizationListDto> GetMyOrganization(Guid userId)
         {
             return _convertor.ConvertToWebModel(_userInOrganizationRepository.GetEntities(false, x => x.UserId == userId));
+        }
+        public HashSet<MyEvaluationListDto> GetMyEvaluation(Guid id)
+        {
+            return _convertor.ConvertToWebModel(_studentEvaluationRepository.GetEntities(false, x => x.CourseStudent.UserInOrganization.UserId == id));
         }
     }
 }

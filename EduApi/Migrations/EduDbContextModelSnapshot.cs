@@ -22,7 +22,7 @@ namespace EduApi.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Model.Tables.CodeBook.AddressTypeDbo", b =>
+            modelBuilder.Entity("Model.CodeBook.AddressTypeDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -94,7 +94,7 @@ namespace EduApi.Migrations
                     b.ToTable("Cb_AddressType");
                 });
 
-            modelBuilder.Entity("Model.Tables.CodeBook.AnswerModeDbo", b =>
+            modelBuilder.Entity("Model.CodeBook.AnswerModeDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -162,7 +162,7 @@ namespace EduApi.Migrations
                     b.ToTable("Cb_AnswerMode");
                 });
 
-            modelBuilder.Entity("Model.Tables.CodeBook.CountryDbo", b =>
+            modelBuilder.Entity("Model.CodeBook.CountryDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -234,7 +234,7 @@ namespace EduApi.Migrations
                     b.ToTable("Cb_Country");
                 });
 
-            modelBuilder.Entity("Model.Tables.CodeBook.CourseLessonItemTemplateDbo", b =>
+            modelBuilder.Entity("Model.CodeBook.CourseLessonItemTemplateDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -306,7 +306,7 @@ namespace EduApi.Migrations
                     b.ToTable("Cb_CourseLessonItemTemplate");
                 });
 
-            modelBuilder.Entity("Model.Tables.CodeBook.CourseStatusDbo", b =>
+            modelBuilder.Entity("Model.CodeBook.CourseStatusDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -378,7 +378,7 @@ namespace EduApi.Migrations
                     b.ToTable("Cb_CourseStatus");
                 });
 
-            modelBuilder.Entity("Model.Tables.CodeBook.CourseTypeDbo", b =>
+            modelBuilder.Entity("Model.CodeBook.CourseTypeDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -450,7 +450,7 @@ namespace EduApi.Migrations
                     b.ToTable("Cb_CourseType");
                 });
 
-            modelBuilder.Entity("Model.Tables.CodeBook.CultureDbo", b =>
+            modelBuilder.Entity("Model.CodeBook.CultureDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -526,7 +526,7 @@ namespace EduApi.Migrations
                     b.ToTable("Cb_Culture");
                 });
 
-            modelBuilder.Entity("Model.Tables.CodeBook.EduEmailDbo", b =>
+            modelBuilder.Entity("Model.CodeBook.EduEmailDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -618,7 +618,7 @@ namespace EduApi.Migrations
                     b.ToTable("Cb_Email");
                 });
 
-            modelBuilder.Entity("Model.Tables.CodeBook.GalleryItemTypeDbo", b =>
+            modelBuilder.Entity("Model.CodeBook.GalleryItemTypeDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -690,7 +690,7 @@ namespace EduApi.Migrations
                     b.ToTable("Cb_GalleryItemType");
                 });
 
-            modelBuilder.Entity("Model.Tables.CodeBook.LicenseDbo", b =>
+            modelBuilder.Entity("Model.CodeBook.LicenseDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -770,7 +770,7 @@ namespace EduApi.Migrations
                     b.ToTable("Cb_License");
                 });
 
-            modelBuilder.Entity("Model.Tables.CodeBook.NoteTypeDbo", b =>
+            modelBuilder.Entity("Model.CodeBook.NoteTypeDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -842,7 +842,7 @@ namespace EduApi.Migrations
                     b.ToTable("Cb_NoteType");
                 });
 
-            modelBuilder.Entity("Model.Tables.CodeBook.NotificationTypeDbo", b =>
+            modelBuilder.Entity("Model.CodeBook.NotificationTypeDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -914,7 +914,7 @@ namespace EduApi.Migrations
                     b.ToTable("Cb_NotificationType");
                 });
 
-            modelBuilder.Entity("Model.Tables.CodeBook.QuestionModeDbo", b =>
+            modelBuilder.Entity("Model.CodeBook.QuestionModeDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -986,7 +986,7 @@ namespace EduApi.Migrations
                     b.ToTable("Cb_QuestionMode");
                 });
 
-            modelBuilder.Entity("Model.Tables.CodeBook.SendMessageTypeDbo", b =>
+            modelBuilder.Entity("Model.CodeBook.SendMessageTypeDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1058,7 +1058,7 @@ namespace EduApi.Migrations
                     b.ToTable("Cb_SendMessageType");
                 });
 
-            modelBuilder.Entity("Model.Tables.CodeBook.TimeTableDbo", b =>
+            modelBuilder.Entity("Model.CodeBook.TimeTableDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1130,7 +1130,7 @@ namespace EduApi.Migrations
                     b.ToTable("Cb_TimeTable");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Answer.AnswerDbo", b =>
+            modelBuilder.Entity("Model.Edu.Answer.AnswerDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1200,7 +1200,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_TestQuestionAnswer");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Answer.AnswerFileRepositoryDbo", b =>
+            modelBuilder.Entity("Model.Edu.Answer.AnswerFileRepositoryDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1230,7 +1230,8 @@ namespace EduApi.Migrations
                         .HasColumnName("DeletedTime");
 
                     b.Property<byte[]>("FileContent")
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("varbinary(max)")
+                        .HasColumnName("FileContent");
 
                     b.Property<string>("FileName")
                         .HasColumnType("nvarchar(max)")
@@ -1277,7 +1278,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_AnswerFileRepository");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Answer.AnswerTanslationDbo", b =>
+            modelBuilder.Entity("Model.Edu.Answer.AnswerTanslationDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1347,7 +1348,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_TestQuestionAnswerTanslation");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.AttendanceStudent.AttendanceStudentDbo", b =>
+            modelBuilder.Entity("Model.Edu.AttendanceStudent.AttendanceStudentDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1418,7 +1419,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_AttendanceStudent");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.BankOfQuestions.BankOfQuestionDbo", b =>
+            modelBuilder.Entity("Model.Edu.BankOfQuestions.BankOfQuestionDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1487,7 +1488,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_BankOfQuestion");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.BankOfQuestions.BankOfQuestionsTranslationDbo", b =>
+            modelBuilder.Entity("Model.Edu.BankOfQuestions.BankOfQuestionsTranslationDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1529,7 +1530,8 @@ namespace EduApi.Migrations
                         .HasColumnName("IsSystemObject");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Name");
 
                     b.Property<string>("SystemIdentificator")
                         .HasColumnType("nvarchar(450)")
@@ -1556,7 +1558,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_BankOfQuestionTranslation");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Branch.BranchDbo", b =>
+            modelBuilder.Entity("Model.Edu.Branch.BranchDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1662,7 +1664,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_Branch");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Branch.BranchTranslationDbo", b =>
+            modelBuilder.Entity("Model.Edu.Branch.BranchTranslationDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1692,7 +1694,8 @@ namespace EduApi.Migrations
                         .HasColumnName("DeletedTime");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Description");
 
                     b.Property<bool?>("IsActive")
                         .HasColumnType("bit")
@@ -1707,7 +1710,8 @@ namespace EduApi.Migrations
                         .HasColumnName("IsSystemObject");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Name");
 
                     b.Property<string>("SystemIdentificator")
                         .HasColumnType("nvarchar(450)")
@@ -1734,7 +1738,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_BranchTranslation");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Certificate.CertificateDbo", b =>
+            modelBuilder.Entity("Model.Edu.Certificate.CertificateDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1799,7 +1803,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_Certificate");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Certificate.CertificateTranslationDbo", b =>
+            modelBuilder.Entity("Model.Edu.Certificate.CertificateTranslationDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1873,7 +1877,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_CertificateTranslation");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Chat.ChatDbo", b =>
+            modelBuilder.Entity("Model.Edu.Chat.ChatDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1947,7 +1951,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_Chat");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.ClassRoom.ClassRoomDbo", b =>
+            modelBuilder.Entity("Model.Edu.ClassRoom.ClassRoomDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2020,7 +2024,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_ClassRoom");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.ClassRoom.ClassRoomTranslationDbo", b =>
+            modelBuilder.Entity("Model.Edu.ClassRoom.ClassRoomTranslationDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2090,7 +2094,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_ClassRoomTranslation");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Course.CourseDbo", b =>
+            modelBuilder.Entity("Model.Edu.Course.CourseDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2208,7 +2212,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_Course");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Course.CourseTranslationDbo", b =>
+            modelBuilder.Entity("Model.Edu.Course.CourseTranslationDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2282,7 +2286,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_CourseTranslation");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.CourseLesson.CourseLessonDbo", b =>
+            modelBuilder.Entity("Model.Edu.CourseLesson.CourseLessonDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2358,7 +2362,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_CourseLesson");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.CourseLesson.CourseLessonFileRepositoryDbo", b =>
+            modelBuilder.Entity("Model.Edu.CourseLesson.CourseLessonFileRepositoryDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2388,7 +2392,8 @@ namespace EduApi.Migrations
                         .HasColumnName("DeletedTime");
 
                     b.Property<byte[]>("FileContent")
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("varbinary(max)")
+                        .HasColumnName("FileContent");
 
                     b.Property<string>("FileName")
                         .HasColumnType("nvarchar(max)")
@@ -2435,7 +2440,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_CourseLessonFileRepository");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.CourseLesson.CourseLessonTranslationDbo", b =>
+            modelBuilder.Entity("Model.Edu.CourseLesson.CourseLessonTranslationDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2505,7 +2510,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_CourseLessonTranslation");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.CourseLessonItem.CourseLessonItemDbo", b =>
+            modelBuilder.Entity("Model.Edu.CourseLessonItem.CourseLessonItemDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2579,7 +2584,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_CourseLessonItem");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.CourseLessonItem.CourseLessonItemFileRepositoryDbo", b =>
+            modelBuilder.Entity("Model.Edu.CourseLessonItem.CourseLessonItemFileRepositoryDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2609,7 +2614,8 @@ namespace EduApi.Migrations
                         .HasColumnName("DeletedTime");
 
                     b.Property<byte[]>("FileContent")
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("varbinary(max)")
+                        .HasColumnName("FileContent");
 
                     b.Property<string>("FileName")
                         .HasColumnType("nvarchar(max)")
@@ -2656,7 +2662,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_CourseLessonItemFileRepository");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.CourseLessonItem.CourseLessonItemTranslationDbo", b =>
+            modelBuilder.Entity("Model.Edu.CourseLessonItem.CourseLessonItemTranslationDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2730,7 +2736,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_CourseLessonItemTranslation");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.CourseMaterial.CourseMaterialDbo", b =>
+            modelBuilder.Entity("Model.Edu.CourseMaterial.CourseMaterialDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2791,7 +2797,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_CourseMaterial");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.CourseMaterial.CourseMaterialFileRepositoryDbo", b =>
+            modelBuilder.Entity("Model.Edu.CourseMaterial.CourseMaterialFileRepositoryDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2821,7 +2827,8 @@ namespace EduApi.Migrations
                         .HasColumnName("DeletedTime");
 
                     b.Property<byte[]>("FileContent")
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("varbinary(max)")
+                        .HasColumnName("FileContent");
 
                     b.Property<string>("FileName")
                         .HasColumnType("nvarchar(max)")
@@ -2868,7 +2875,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_CourseMaterialileRepository");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.CourseMaterial.CourseMaterialTranslationDbo", b =>
+            modelBuilder.Entity("Model.Edu.CourseMaterial.CourseMaterialTranslationDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2942,7 +2949,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_CourseMaterialTranslation");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.CourseTable.CourseTableDbo", b =>
+            modelBuilder.Entity("Model.Edu.CourseTable.CourseTableDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2998,7 +3005,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_CourseTable");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.CourseTerm.CourseTermDbo", b =>
+            modelBuilder.Entity("Model.Edu.CourseTerm.CourseTermDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -3139,7 +3146,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_CourseTerm");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.CourseTermDate.CourseTermDateDbo", b =>
+            modelBuilder.Entity("Model.Edu.CourseTermDate.CourseTermDateDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -3228,7 +3235,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_CourseTermDate");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.CourseTest.CourseTestDbo", b =>
+            modelBuilder.Entity("Model.Edu.CourseTest.CourseTestDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -3307,7 +3314,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_CourseTest");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.CourseTestEvaluation.CourseTestEvaluationDbo", b =>
+            modelBuilder.Entity("Model.Edu.CourseTestEvaluation.CourseTestEvaluationDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -3334,7 +3341,8 @@ namespace EduApi.Migrations
                         .HasColumnName("DeletedTime");
 
                     b.Property<string>("Evaluation")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Evaluation");
 
                     b.Property<bool?>("IsActive")
                         .HasColumnType("bit")
@@ -3349,10 +3357,12 @@ namespace EduApi.Migrations
                         .HasColumnName("IsSystemObject");
 
                     b.Property<int?>("PointFrom")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("PointFrom");
 
                     b.Property<int?>("PointTo")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("PointTo");
 
                     b.Property<string>("SystemIdentificator")
                         .HasColumnType("nvarchar(450)")
@@ -3377,7 +3387,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_CourseTestEvaluation");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.LicenseChange.LicenseChangeDbo", b =>
+            modelBuilder.Entity("Model.Edu.LicenseChange.LicenseChangeDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -3447,7 +3457,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_LicenseChange");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.LinkLifeTime.LinkLifeTimeDbo", b =>
+            modelBuilder.Entity("Model.Edu.LinkLifeTime.LinkLifeTimeDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -3512,7 +3522,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_LinkLifeTime");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Note.NoteDbo", b =>
+            modelBuilder.Entity("Model.Edu.Note.NoteDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -3595,7 +3605,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_Note");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Notification.NotificationDbo", b =>
+            modelBuilder.Entity("Model.Edu.Notification.NotificationDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -3679,7 +3689,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_Notification");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Organization.OrganizationDbo", b =>
+            modelBuilder.Entity("Model.Edu.Organization.OrganizationDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -3722,7 +3732,8 @@ namespace EduApi.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Name");
 
                     b.Property<Guid>("OrganizationSettingId")
                         .HasColumnType("uniqueidentifier");
@@ -3758,7 +3769,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_Organization");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Organization.OrganizationFileRepositoryDbo", b =>
+            modelBuilder.Entity("Model.Edu.Organization.OrganizationFileRepositoryDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -3785,7 +3796,8 @@ namespace EduApi.Migrations
                         .HasColumnName("DeletedTime");
 
                     b.Property<byte[]>("FileContent")
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("varbinary(max)")
+                        .HasColumnName("FileContent");
 
                     b.Property<string>("FileName")
                         .HasColumnType("nvarchar(max)")
@@ -3835,7 +3847,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_OrganizationFileRepository");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Organization.OrganizationTranslationDbo", b =>
+            modelBuilder.Entity("Model.Edu.Organization.OrganizationTranslationDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -3905,7 +3917,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_OrganizationTranslation");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.OrganizationAddress.OrganizationAddressDbo", b =>
+            modelBuilder.Entity("Model.Edu.OrganizationAddress.OrganizationAddressDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -3996,7 +4008,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_OrganizationAddress");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.OrganizationRole.OrganizationRoleDbo", b =>
+            modelBuilder.Entity("Model.Edu.OrganizationRole.OrganizationRoleDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -4056,7 +4068,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_OrganizationRole");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.OrganizationRolePermition.OrganizationRolePermitionDbo", b =>
+            modelBuilder.Entity("Model.Edu.OrganizationRolePermition.OrganizationRolePermitionDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -4121,7 +4133,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_OrganizationRolePermition");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.OrganizationSetting.OrganizationSettingDbo", b =>
+            modelBuilder.Entity("Model.Edu.OrganizationSetting.OrganizationSettingDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -4244,7 +4256,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_OrganizationSetting");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.OrganizationStudyHour.OrganizationStudyHourDbo", b =>
+            modelBuilder.Entity("Model.Edu.OrganizationStudyHour.OrganizationStudyHourDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -4319,7 +4331,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_OrganizationStudyHour");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Person.PersonDbo", b =>
+            modelBuilder.Entity("Model.Edu.Person.PersonDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -4391,7 +4403,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_Person");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.PersonAddress.PersonAddressDbo", b =>
+            modelBuilder.Entity("Model.Edu.PersonAddress.PersonAddressDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -4482,15 +4494,18 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_PersonAddress");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.SendEmail.SendEmailAttachmentDbo", b =>
+            modelBuilder.Entity("Model.Edu.Question.QuestionDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("Id");
 
-                    b.Property<string>("Attachment")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("AnswerModeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BankOfQuestionId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("CreatedBy")
                         .HasColumnType("uniqueidentifier")
@@ -4520,11 +4535,15 @@ namespace EduApi.Migrations
                         .HasColumnType("bit")
                         .HasColumnName("IsSystemObject");
 
-                    b.Property<Guid>("SendEmailId")
+                    b.Property<int>("Position")
+                        .HasColumnType("int")
+                        .HasColumnName("Position");
+
+                    b.Property<Guid>("QuestionModeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("SystemIdentificator")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("SystemIdentificator");
 
                     b.Property<Guid?>("UpdatedBy")
@@ -4537,12 +4556,168 @@ namespace EduApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SendEmailId");
+                    b.HasIndex("AnswerModeId");
 
-                    b.ToTable("SendEmailAttachmentDbo");
+                    b.HasIndex("BankOfQuestionId");
+
+                    b.HasIndex("QuestionModeId");
+
+                    b.HasIndex("SystemIdentificator")
+                        .IsUnique()
+                        .HasFilter("[SystemIdentificator] IS NOT NULL");
+
+                    b.ToTable("Edu_TestQuestion");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.SendEmail.SendEmailDbo", b =>
+            modelBuilder.Entity("Model.Edu.Question.QuestionFileRepositoryDbo", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatedBy");
+
+                    b.Property<DateTime?>("CreatedTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreatedTime");
+
+                    b.Property<Guid>("CultureId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("DeletedBy");
+
+                    b.Property<DateTime?>("DeletedTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletedTime");
+
+                    b.Property<byte[]>("FileContent")
+                        .HasColumnType("varbinary(max)")
+                        .HasColumnName("FileContent");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("FileName");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit")
+                        .HasColumnName("IsActive");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit")
+                        .HasColumnName("IsDeleted");
+
+                    b.Property<bool>("IsSystemObject")
+                        .HasColumnType("bit")
+                        .HasColumnName("IsSystemObject");
+
+                    b.Property<string>("OriginalFileName")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("OriginalFileName");
+
+                    b.Property<Guid>("QuestionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("SystemIdentificator")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("SystemIdentificator");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("UpdatedBy");
+
+                    b.Property<DateTime?>("UpdatedTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("UpdatedTime");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CultureId");
+
+                    b.HasIndex("QuestionId");
+
+                    b.HasIndex("SystemIdentificator")
+                        .IsUnique()
+                        .HasFilter("[SystemIdentificator] IS NOT NULL");
+
+                    b.ToTable("Edu_QuestionFileRepository");
+                });
+
+            modelBuilder.Entity("Model.Edu.Question.QuestionTranslationDbo", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatedBy");
+
+                    b.Property<DateTime?>("CreatedTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreatedTime");
+
+                    b.Property<Guid>("CultureId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("DeletedBy");
+
+                    b.Property<DateTime?>("DeletedTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletedTime");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit")
+                        .HasColumnName("IsActive");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit")
+                        .HasColumnName("IsDeleted");
+
+                    b.Property<bool>("IsSystemObject")
+                        .HasColumnType("bit")
+                        .HasColumnName("IsSystemObject");
+
+                    b.Property<string>("Question")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Question");
+
+                    b.Property<string>("SystemIdentificator")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("SystemIdentificator");
+
+                    b.Property<Guid>("TestQuestionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("UpdatedBy");
+
+                    b.Property<DateTime?>("UpdatedTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("UpdatedTime");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CultureId");
+
+                    b.HasIndex("SystemIdentificator")
+                        .IsUnique()
+                        .HasFilter("[SystemIdentificator] IS NOT NULL");
+
+                    b.HasIndex("TestQuestionId");
+
+                    b.ToTable("Edu_TestQuestionTranslation");
+                });
+
+            modelBuilder.Entity("Model.Edu.SendEmail.SendEmailDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -4611,7 +4786,7 @@ namespace EduApi.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SystemIdentificator")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("SystemIdentificator");
 
                     b.Property<Guid?>("UpdatedBy")
@@ -4626,10 +4801,79 @@ namespace EduApi.Migrations
 
                     b.HasIndex("OrganizationId");
 
+                    b.HasIndex("SystemIdentificator")
+                        .IsUnique()
+                        .HasFilter("[SystemIdentificator] IS NOT NULL");
+
                     b.ToTable("Edu_SendEmail");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.SendMessage.SendMessageDbo", b =>
+            modelBuilder.Entity("Model.Edu.SendEmailAttachment.SendEmailAttachmentDbo", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
+
+                    b.Property<string>("Attachment")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Attachment");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatedBy");
+
+                    b.Property<DateTime?>("CreatedTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreatedTime");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("DeletedBy");
+
+                    b.Property<DateTime?>("DeletedTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletedTime");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit")
+                        .HasColumnName("IsActive");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit")
+                        .HasColumnName("IsDeleted");
+
+                    b.Property<bool>("IsSystemObject")
+                        .HasColumnType("bit")
+                        .HasColumnName("IsSystemObject");
+
+                    b.Property<Guid>("SendEmailId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("SystemIdentificator")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("SystemIdentificator");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("UpdatedBy");
+
+                    b.Property<DateTime?>("UpdatedTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("UpdatedTime");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SendEmailId");
+
+                    b.HasIndex("SystemIdentificator")
+                        .IsUnique()
+                        .HasFilter("[SystemIdentificator] IS NOT NULL");
+
+                    b.ToTable("Edu_SendEmailAttachment");
+                });
+
+            modelBuilder.Entity("Model.Edu.SendMessage.SendMessageDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -4699,7 +4943,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_SendMessage");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.SendMessage.SendMessageTranslationDbo", b =>
+            modelBuilder.Entity("Model.Edu.SendMessage.SendMessageTranslationDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -4773,7 +5017,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_SendMessageTranslation");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.StudentEvaluation.StudentEvaluationDbo", b =>
+            modelBuilder.Entity("Model.Edu.StudentEvaluation.StudentEvaluationDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -4847,7 +5091,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_StudentEvaluation");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.StudentGroup.StudentGroupDbo", b =>
+            modelBuilder.Entity("Model.Edu.StudentGroup.StudentGroupDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -4908,7 +5152,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_StudentGroup");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.StudentGroup.StudentGroupTranslationDbo", b =>
+            modelBuilder.Entity("Model.Edu.StudentGroup.StudentGroupTranslationDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -4978,7 +5222,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_StudentGroupTranslation");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.StudentTestSummary.StudentTestSummaryDbo", b =>
+            modelBuilder.Entity("Model.Edu.StudentTestSummary.StudentTestSummaryDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -5069,7 +5313,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_StudentTestSummary");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.StudentTestSummaryAnswer.StudentTestSummaryAnswerDbo", b =>
+            modelBuilder.Entity("Model.Edu.StudentTestSummaryAnswer.StudentTestSummaryAnswerDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -5167,7 +5411,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_StudentTestSummaryAnswer");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.StudentTestSummaryQuestion.StudentTestSummaryQuestionDbo", b =>
+            modelBuilder.Entity("Model.Edu.StudentTestSummaryQuestion.StudentTestSummaryQuestionDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -5267,229 +5511,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_StudentTestSummaryQuestion");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.TestQuestion.QuestionDbo", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("Id");
-
-                    b.Property<Guid>("AnswerModeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("BankOfQuestionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("CreatedBy")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("CreatedBy");
-
-                    b.Property<DateTime?>("CreatedTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("CreatedTime");
-
-                    b.Property<Guid?>("DeletedBy")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("DeletedBy");
-
-                    b.Property<DateTime?>("DeletedTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DeletedTime");
-
-                    b.Property<bool?>("IsActive")
-                        .HasColumnType("bit")
-                        .HasColumnName("IsActive");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit")
-                        .HasColumnName("IsDeleted");
-
-                    b.Property<bool>("IsSystemObject")
-                        .HasColumnType("bit")
-                        .HasColumnName("IsSystemObject");
-
-                    b.Property<int>("Position")
-                        .HasColumnType("int")
-                        .HasColumnName("Position");
-
-                    b.Property<Guid>("QuestionModeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("SystemIdentificator")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("SystemIdentificator");
-
-                    b.Property<Guid?>("UpdatedBy")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("UpdatedBy");
-
-                    b.Property<DateTime?>("UpdatedTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("UpdatedTime");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AnswerModeId");
-
-                    b.HasIndex("BankOfQuestionId");
-
-                    b.HasIndex("QuestionModeId");
-
-                    b.HasIndex("SystemIdentificator")
-                        .IsUnique()
-                        .HasFilter("[SystemIdentificator] IS NOT NULL");
-
-                    b.ToTable("Edu_TestQuestion");
-                });
-
-            modelBuilder.Entity("Model.Tables.Edu.TestQuestion.QuestionFileRepositoryDbo", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("Id");
-
-                    b.Property<Guid?>("CreatedBy")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("CreatedBy");
-
-                    b.Property<DateTime?>("CreatedTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("CreatedTime");
-
-                    b.Property<Guid>("CultureId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("DeletedBy")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("DeletedBy");
-
-                    b.Property<DateTime?>("DeletedTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DeletedTime");
-
-                    b.Property<byte[]>("FileContent")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<string>("FileName")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("FileName");
-
-                    b.Property<bool?>("IsActive")
-                        .HasColumnType("bit")
-                        .HasColumnName("IsActive");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit")
-                        .HasColumnName("IsDeleted");
-
-                    b.Property<bool>("IsSystemObject")
-                        .HasColumnType("bit")
-                        .HasColumnName("IsSystemObject");
-
-                    b.Property<string>("OriginalFileName")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("OriginalFileName");
-
-                    b.Property<Guid>("QuestionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("SystemIdentificator")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("SystemIdentificator");
-
-                    b.Property<Guid?>("UpdatedBy")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("UpdatedBy");
-
-                    b.Property<DateTime?>("UpdatedTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("UpdatedTime");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CultureId");
-
-                    b.HasIndex("QuestionId");
-
-                    b.HasIndex("SystemIdentificator")
-                        .IsUnique()
-                        .HasFilter("[SystemIdentificator] IS NOT NULL");
-
-                    b.ToTable("Edu_QuestionFileRepository");
-                });
-
-            modelBuilder.Entity("Model.Tables.Edu.TestQuestion.QuestionTranslationDbo", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("Id");
-
-                    b.Property<Guid?>("CreatedBy")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("CreatedBy");
-
-                    b.Property<DateTime?>("CreatedTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("CreatedTime");
-
-                    b.Property<Guid>("CultureId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("DeletedBy")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("DeletedBy");
-
-                    b.Property<DateTime?>("DeletedTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DeletedTime");
-
-                    b.Property<bool?>("IsActive")
-                        .HasColumnType("bit")
-                        .HasColumnName("IsActive");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit")
-                        .HasColumnName("IsDeleted");
-
-                    b.Property<bool>("IsSystemObject")
-                        .HasColumnType("bit")
-                        .HasColumnName("IsSystemObject");
-
-                    b.Property<string>("Question")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Question");
-
-                    b.Property<string>("SystemIdentificator")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("SystemIdentificator");
-
-                    b.Property<Guid>("TestQuestionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("UpdatedBy")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("UpdatedBy");
-
-                    b.Property<DateTime?>("UpdatedTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("UpdatedTime");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CultureId");
-
-                    b.HasIndex("SystemIdentificator")
-                        .IsUnique()
-                        .HasFilter("[SystemIdentificator] IS NOT NULL");
-
-                    b.HasIndex("TestQuestionId");
-
-                    b.ToTable("Edu_TestQuestionTranslation");
-                });
-
-            modelBuilder.Entity("Model.Tables.Edu.TestUserAnswer.TestUserAnswerDbo", b =>
+            modelBuilder.Entity("Model.Edu.TestUserAnswer.TestUserAnswerDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -5560,7 +5582,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_TestUserAnswer");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.User.UserDbo", b =>
+            modelBuilder.Entity("Model.Edu.User.UserDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -5654,7 +5676,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_User");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.UserCertificate.UserCertificateDbo", b =>
+            modelBuilder.Entity("Model.Edu.UserCertificate.UserCertificateDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -5731,7 +5753,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_UserCertificate");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.UserRole.UserRoleDbo", b =>
+            modelBuilder.Entity("Model.Edu.UserRole.UserRoleDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -5787,7 +5809,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_UserRole");
                 });
 
-            modelBuilder.Entity("Model.Tables.Link.CourseBrowseDbo", b =>
+            modelBuilder.Entity("Model.Link.CourseBrowseDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -5858,7 +5880,7 @@ namespace EduApi.Migrations
                     b.ToTable("Link_CourseBrowse");
                 });
 
-            modelBuilder.Entity("Model.Tables.Link.CourseLectorDbo", b =>
+            modelBuilder.Entity("Model.Link.CourseLectorDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -5924,7 +5946,7 @@ namespace EduApi.Migrations
                     b.ToTable("Link_CourseLector");
                 });
 
-            modelBuilder.Entity("Model.Tables.Link.CourseStudentDbo", b =>
+            modelBuilder.Entity("Model.Link.CourseStudentDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -5932,7 +5954,8 @@ namespace EduApi.Migrations
                         .HasColumnName("Id");
 
                     b.Property<bool>("CourseFinish")
-                        .HasColumnType("bit");
+                        .HasColumnType("bit")
+                        .HasColumnName("CourseFinish");
 
                     b.Property<Guid>("CourseTermId")
                         .HasColumnType("uniqueidentifier");
@@ -5993,7 +6016,7 @@ namespace EduApi.Migrations
                     b.ToTable("Link_CourseStudent");
                 });
 
-            modelBuilder.Entity("Model.Tables.Link.CourseTestBankOfQuestionDbo", b =>
+            modelBuilder.Entity("Model.Link.CourseTestBankOfQuestionDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -6059,7 +6082,7 @@ namespace EduApi.Migrations
                     b.ToTable("Link_TestBankOfQuestion");
                 });
 
-            modelBuilder.Entity("Model.Tables.Link.CouseStudentMaterialDbo", b =>
+            modelBuilder.Entity("Model.Link.CouseStudentMaterialDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -6130,7 +6153,7 @@ namespace EduApi.Migrations
                     b.ToTable("Link_CouseStudentMaterial");
                 });
 
-            modelBuilder.Entity("Model.Tables.Link.OrganizationCultureDbo", b =>
+            modelBuilder.Entity("Model.Link.OrganizationCultureDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -6161,7 +6184,8 @@ namespace EduApi.Migrations
                         .HasColumnName("IsActive");
 
                     b.Property<bool>("IsDefault")
-                        .HasColumnType("bit");
+                        .HasColumnType("bit")
+                        .HasColumnName("IsDefault");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit")
@@ -6199,7 +6223,7 @@ namespace EduApi.Migrations
                     b.ToTable("Link_OrganizationCulture");
                 });
 
-            modelBuilder.Entity("Model.Tables.Link.StudentInGroupCourseTermDbo", b =>
+            modelBuilder.Entity("Model.Link.StudentInGroupCourseTermDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -6265,7 +6289,7 @@ namespace EduApi.Migrations
                     b.ToTable("Link_StudentInGroupCourseTerm");
                 });
 
-            modelBuilder.Entity("Model.Tables.Link.StudentInGroupDbo", b =>
+            modelBuilder.Entity("Model.Link.StudentInGroupDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -6331,7 +6355,7 @@ namespace EduApi.Migrations
                     b.ToTable("Link_StudentInGroup");
                 });
 
-            modelBuilder.Entity("Model.Tables.Link.UserInOrganizationDbo", b =>
+            modelBuilder.Entity("Model.Link.UserInOrganizationDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -6407,88 +6431,7 @@ namespace EduApi.Migrations
                     b.ToTable("Link_UserInOrganization");
                 });
 
-            modelBuilder.Entity("Model.Tables.System.ObjectHistoryDbo", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("Id");
-
-                    b.Property<DateTime>("ActionTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("ActionTime");
-
-                    b.Property<Guid?>("CreatedBy")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("CreatedBy");
-
-                    b.Property<DateTime?>("CreatedTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("CreatedTime");
-
-                    b.Property<Guid?>("DeletedBy")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("DeletedBy");
-
-                    b.Property<DateTime?>("DeletedTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DeletedTime");
-
-                    b.Property<string>("EventType")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("EventType");
-
-                    b.Property<bool?>("IsActive")
-                        .HasColumnType("bit")
-                        .HasColumnName("IsActive");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit")
-                        .HasColumnName("IsDeleted");
-
-                    b.Property<bool>("IsSystemObject")
-                        .HasColumnType("bit")
-                        .HasColumnName("IsSystemObject");
-
-                    b.Property<Guid>("ObjectId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("ObjectId");
-
-                    b.Property<string>("ObjectType")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ObjectType");
-
-                    b.Property<string>("OldValue")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("OldValue");
-
-                    b.Property<string>("SystemIdentificator")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("SystemIdentificator");
-
-                    b.Property<Guid?>("UpdatedBy")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("UpdatedBy");
-
-                    b.Property<DateTime?>("UpdatedTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("UpdatedTime");
-
-                    b.Property<Guid?>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SystemIdentificator")
-                        .IsUnique()
-                        .HasFilter("[SystemIdentificator] IS NOT NULL");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("System_ObjectHistory");
-                });
-
-            modelBuilder.Entity("Model.Tables.System.PermissionsDbo", b =>
+            modelBuilder.Entity("Model.System.PermissionsDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -6554,7 +6497,7 @@ namespace EduApi.Migrations
                     b.ToTable("Permissions");
                 });
 
-            modelBuilder.Entity("Model.Tables.System.RouteDbo", b =>
+            modelBuilder.Entity("Model.System.RouteDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -6613,9 +6556,9 @@ namespace EduApi.Migrations
                     b.ToTable("Routes");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Answer.AnswerDbo", b =>
+            modelBuilder.Entity("Model.Edu.Answer.AnswerDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.TestQuestion.QuestionDbo", "TestQuestion")
+                    b.HasOne("Model.Edu.Question.QuestionDbo", "TestQuestion")
                         .WithMany("TestQuestionAnswer")
                         .HasForeignKey("TestQuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -6624,15 +6567,15 @@ namespace EduApi.Migrations
                     b.Navigation("TestQuestion");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Answer.AnswerFileRepositoryDbo", b =>
+            modelBuilder.Entity("Model.Edu.Answer.AnswerFileRepositoryDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.Answer.AnswerDbo", "Answer")
+                    b.HasOne("Model.Edu.Answer.AnswerDbo", "Answer")
                         .WithMany("AnswerFileRepository")
                         .HasForeignKey("AnswerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.CodeBook.CultureDbo", "Culture")
+                    b.HasOne("Model.CodeBook.CultureDbo", "Culture")
                         .WithMany()
                         .HasForeignKey("CultureId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -6643,15 +6586,15 @@ namespace EduApi.Migrations
                     b.Navigation("Culture");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Answer.AnswerTanslationDbo", b =>
+            modelBuilder.Entity("Model.Edu.Answer.AnswerTanslationDbo", b =>
                 {
-                    b.HasOne("Model.Tables.CodeBook.CultureDbo", "Culture")
+                    b.HasOne("Model.CodeBook.CultureDbo", "Culture")
                         .WithMany()
                         .HasForeignKey("CultureId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.Answer.AnswerDbo", "TestQuestionAnswer")
+                    b.HasOne("Model.Edu.Answer.AnswerDbo", "TestQuestionAnswer")
                         .WithMany("TestQuestionAnswerTranslations")
                         .HasForeignKey("TestQuestionAnswerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -6662,21 +6605,21 @@ namespace EduApi.Migrations
                     b.Navigation("TestQuestionAnswer");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.AttendanceStudent.AttendanceStudentDbo", b =>
+            modelBuilder.Entity("Model.Edu.AttendanceStudent.AttendanceStudentDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Link.CourseStudentDbo", "CourseStudent")
+                    b.HasOne("Model.Link.CourseStudentDbo", "CourseStudent")
                         .WithMany("AttendanceStudents")
                         .HasForeignKey("CourseStudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.CourseTermDate.CourseTermDateDbo", "CourseTermDate")
+                    b.HasOne("Model.Edu.CourseTermDate.CourseTermDateDbo", "CourseTermDate")
                         .WithMany("AttendanceStudents")
                         .HasForeignKey("CourseTermDateId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.CourseTerm.CourseTermDbo", "CourseTerm")
+                    b.HasOne("Model.Edu.CourseTerm.CourseTermDbo", "CourseTerm")
                         .WithMany("AttendanceStudents")
                         .HasForeignKey("CourseTermId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -6689,9 +6632,9 @@ namespace EduApi.Migrations
                     b.Navigation("CourseTermDate");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.BankOfQuestions.BankOfQuestionDbo", b =>
+            modelBuilder.Entity("Model.Edu.BankOfQuestions.BankOfQuestionDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.Organization.OrganizationDbo", "Organization")
+                    b.HasOne("Model.Edu.Organization.OrganizationDbo", "Organization")
                         .WithMany("BankOfQuestions")
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -6700,15 +6643,15 @@ namespace EduApi.Migrations
                     b.Navigation("Organization");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.BankOfQuestions.BankOfQuestionsTranslationDbo", b =>
+            modelBuilder.Entity("Model.Edu.BankOfQuestions.BankOfQuestionsTranslationDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.BankOfQuestions.BankOfQuestionDbo", "BankOfQuestion")
+                    b.HasOne("Model.Edu.BankOfQuestions.BankOfQuestionDbo", "BankOfQuestion")
                         .WithMany("BankOfQuestionsTranslations")
                         .HasForeignKey("BankOfQuestionId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.CodeBook.CultureDbo", "Culture")
+                    b.HasOne("Model.CodeBook.CultureDbo", "Culture")
                         .WithMany()
                         .HasForeignKey("CultureId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -6719,13 +6662,13 @@ namespace EduApi.Migrations
                     b.Navigation("Culture");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Branch.BranchDbo", b =>
+            modelBuilder.Entity("Model.Edu.Branch.BranchDbo", b =>
                 {
-                    b.HasOne("Model.Tables.CodeBook.CountryDbo", "Country")
+                    b.HasOne("Model.CodeBook.CountryDbo", "Country")
                         .WithMany("Branchs")
                         .HasForeignKey("CountryId");
 
-                    b.HasOne("Model.Tables.Edu.Organization.OrganizationDbo", "Organization")
+                    b.HasOne("Model.Edu.Organization.OrganizationDbo", "Organization")
                         .WithMany("Branch")
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -6736,15 +6679,15 @@ namespace EduApi.Migrations
                     b.Navigation("Organization");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Branch.BranchTranslationDbo", b =>
+            modelBuilder.Entity("Model.Edu.Branch.BranchTranslationDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.Branch.BranchDbo", "Branch")
+                    b.HasOne("Model.Edu.Branch.BranchDbo", "Branch")
                         .WithMany("BranchTranslations")
                         .HasForeignKey("BranchId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.CodeBook.CultureDbo", "Culture")
+                    b.HasOne("Model.CodeBook.CultureDbo", "Culture")
                         .WithMany()
                         .HasForeignKey("CultureId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -6755,9 +6698,9 @@ namespace EduApi.Migrations
                     b.Navigation("Culture");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Certificate.CertificateDbo", b =>
+            modelBuilder.Entity("Model.Edu.Certificate.CertificateDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.Organization.OrganizationDbo", "Organization")
+                    b.HasOne("Model.Edu.Organization.OrganizationDbo", "Organization")
                         .WithMany("Certificates")
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -6766,15 +6709,15 @@ namespace EduApi.Migrations
                     b.Navigation("Organization");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Certificate.CertificateTranslationDbo", b =>
+            modelBuilder.Entity("Model.Edu.Certificate.CertificateTranslationDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.Certificate.CertificateDbo", "Certificate")
+                    b.HasOne("Model.Edu.Certificate.CertificateDbo", "Certificate")
                         .WithMany("CertificateTranslations")
                         .HasForeignKey("CertificateId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.CodeBook.CultureDbo", "Culture")
+                    b.HasOne("Model.CodeBook.CultureDbo", "Culture")
                         .WithMany()
                         .HasForeignKey("CultureId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -6785,15 +6728,15 @@ namespace EduApi.Migrations
                     b.Navigation("Culture");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Chat.ChatDbo", b =>
+            modelBuilder.Entity("Model.Edu.Chat.ChatDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.CourseTerm.CourseTermDbo", "CourseTerm")
+                    b.HasOne("Model.Edu.CourseTerm.CourseTermDbo", "CourseTerm")
                         .WithMany("Chats")
                         .HasForeignKey("CourseTermId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.User.UserDbo", "User")
+                    b.HasOne("Model.Edu.User.UserDbo", "User")
                         .WithMany("Chats")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -6804,9 +6747,9 @@ namespace EduApi.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.ClassRoom.ClassRoomDbo", b =>
+            modelBuilder.Entity("Model.Edu.ClassRoom.ClassRoomDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.Branch.BranchDbo", "Branch")
+                    b.HasOne("Model.Edu.Branch.BranchDbo", "Branch")
                         .WithMany("ClassRoom")
                         .HasForeignKey("BranchId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -6815,15 +6758,15 @@ namespace EduApi.Migrations
                     b.Navigation("Branch");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.ClassRoom.ClassRoomTranslationDbo", b =>
+            modelBuilder.Entity("Model.Edu.ClassRoom.ClassRoomTranslationDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.ClassRoom.ClassRoomDbo", "ClassRoom")
+                    b.HasOne("Model.Edu.ClassRoom.ClassRoomDbo", "ClassRoom")
                         .WithMany("ClassRoomTranslations")
                         .HasForeignKey("ClassRoomId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.CodeBook.CultureDbo", "Culture")
+                    b.HasOne("Model.CodeBook.CultureDbo", "Culture")
                         .WithMany()
                         .HasForeignKey("CultureId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -6834,36 +6777,36 @@ namespace EduApi.Migrations
                     b.Navigation("Culture");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Course.CourseDbo", b =>
+            modelBuilder.Entity("Model.Edu.Course.CourseDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.Certificate.CertificateDbo", "Certificate")
+                    b.HasOne("Model.Edu.Certificate.CertificateDbo", "Certificate")
                         .WithMany()
                         .HasForeignKey("CertificateId");
 
-                    b.HasOne("Model.Tables.Edu.CourseMaterial.CourseMaterialDbo", "CourseMaterial")
+                    b.HasOne("Model.Edu.CourseMaterial.CourseMaterialDbo", "CourseMaterial")
                         .WithMany("Courses")
                         .HasForeignKey("CourseMaterialId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Model.Tables.CodeBook.CourseStatusDbo", "CourseStatus")
+                    b.HasOne("Model.CodeBook.CourseStatusDbo", "CourseStatus")
                         .WithMany("Courses")
                         .HasForeignKey("CourseStatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.CodeBook.CourseTypeDbo", "CourseType")
+                    b.HasOne("Model.CodeBook.CourseTypeDbo", "CourseType")
                         .WithMany("Courses")
                         .HasForeignKey("CourseTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.Organization.OrganizationDbo", "Organization")
+                    b.HasOne("Model.Edu.Organization.OrganizationDbo", "Organization")
                         .WithMany("Course")
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.SendMessage.SendMessageDbo", "SendMessage")
+                    b.HasOne("Model.Edu.SendMessage.SendMessageDbo", "SendMessage")
                         .WithMany()
                         .HasForeignKey("SendMessageId");
 
@@ -6880,15 +6823,15 @@ namespace EduApi.Migrations
                     b.Navigation("SendMessage");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Course.CourseTranslationDbo", b =>
+            modelBuilder.Entity("Model.Edu.Course.CourseTranslationDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.Course.CourseDbo", "Course")
+                    b.HasOne("Model.Edu.Course.CourseDbo", "Course")
                         .WithMany("CourseTranslations")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.CodeBook.CultureDbo", "Culture")
+                    b.HasOne("Model.CodeBook.CultureDbo", "Culture")
                         .WithMany()
                         .HasForeignKey("CultureId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -6899,32 +6842,32 @@ namespace EduApi.Migrations
                     b.Navigation("Culture");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.CourseLesson.CourseLessonDbo", b =>
+            modelBuilder.Entity("Model.Edu.CourseLesson.CourseLessonDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.CourseMaterial.CourseMaterialDbo", "CourseMaterial")
+                    b.HasOne("Model.Edu.CourseMaterial.CourseMaterialDbo", "CourseMaterial")
                         .WithMany("CourseLessons")
                         .HasForeignKey("CourseMaterialId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.CourseTest.CourseTestDbo", "CourseTest")
+                    b.HasOne("Model.Edu.CourseTest.CourseTestDbo", "CourseTest")
                         .WithOne("CourseLesson")
-                        .HasForeignKey("Model.Tables.Edu.CourseLesson.CourseLessonDbo", "CourseTestId");
+                        .HasForeignKey("Model.Edu.CourseLesson.CourseLessonDbo", "CourseTestId");
 
                     b.Navigation("CourseMaterial");
 
                     b.Navigation("CourseTest");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.CourseLesson.CourseLessonFileRepositoryDbo", b =>
+            modelBuilder.Entity("Model.Edu.CourseLesson.CourseLessonFileRepositoryDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.CourseLesson.CourseLessonDbo", "CourseLesson")
+                    b.HasOne("Model.Edu.CourseLesson.CourseLessonDbo", "CourseLesson")
                         .WithMany()
                         .HasForeignKey("CourseLessonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.CodeBook.CultureDbo", "Culture")
+                    b.HasOne("Model.CodeBook.CultureDbo", "Culture")
                         .WithMany()
                         .HasForeignKey("CultureId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -6935,15 +6878,15 @@ namespace EduApi.Migrations
                     b.Navigation("Culture");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.CourseLesson.CourseLessonTranslationDbo", b =>
+            modelBuilder.Entity("Model.Edu.CourseLesson.CourseLessonTranslationDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.CourseLesson.CourseLessonDbo", "CourseLesson")
+                    b.HasOne("Model.Edu.CourseLesson.CourseLessonDbo", "CourseLesson")
                         .WithMany("CourseLessonTranslations")
                         .HasForeignKey("CourseLessonId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.CodeBook.CultureDbo", "Culture")
+                    b.HasOne("Model.CodeBook.CultureDbo", "Culture")
                         .WithMany()
                         .HasForeignKey("CultureId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -6954,15 +6897,15 @@ namespace EduApi.Migrations
                     b.Navigation("Culture");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.CourseLessonItem.CourseLessonItemDbo", b =>
+            modelBuilder.Entity("Model.Edu.CourseLessonItem.CourseLessonItemDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.CourseLesson.CourseLessonDbo", "CourseLesson")
+                    b.HasOne("Model.Edu.CourseLesson.CourseLessonDbo", "CourseLesson")
                         .WithMany("CourseItem")
                         .HasForeignKey("CourseLessonId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.CodeBook.CourseLessonItemTemplateDbo", "CourseLessonItemTemplate")
+                    b.HasOne("Model.CodeBook.CourseLessonItemTemplateDbo", "CourseLessonItemTemplate")
                         .WithMany("CourseLessonItems")
                         .HasForeignKey("CourseLessonItemTemplateId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -6973,15 +6916,15 @@ namespace EduApi.Migrations
                     b.Navigation("CourseLessonItemTemplate");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.CourseLessonItem.CourseLessonItemFileRepositoryDbo", b =>
+            modelBuilder.Entity("Model.Edu.CourseLessonItem.CourseLessonItemFileRepositoryDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.CourseLessonItem.CourseLessonItemDbo", "CourseLessonItem")
+                    b.HasOne("Model.Edu.CourseLessonItem.CourseLessonItemDbo", "CourseLessonItem")
                         .WithMany("CourseLessonItemFileRepositories")
                         .HasForeignKey("CourseLessonItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.CodeBook.CultureDbo", "Culture")
+                    b.HasOne("Model.CodeBook.CultureDbo", "Culture")
                         .WithMany()
                         .HasForeignKey("CultureId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -6992,15 +6935,15 @@ namespace EduApi.Migrations
                     b.Navigation("Culture");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.CourseLessonItem.CourseLessonItemTranslationDbo", b =>
+            modelBuilder.Entity("Model.Edu.CourseLessonItem.CourseLessonItemTranslationDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.CourseLessonItem.CourseLessonItemDbo", "CourseLessonItem")
+                    b.HasOne("Model.Edu.CourseLessonItem.CourseLessonItemDbo", "CourseLessonItem")
                         .WithMany("CourseLessonItemTranslations")
                         .HasForeignKey("CourseLessonItemId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.CodeBook.CultureDbo", "Culture")
+                    b.HasOne("Model.CodeBook.CultureDbo", "Culture")
                         .WithMany()
                         .HasForeignKey("CultureId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -7011,9 +6954,9 @@ namespace EduApi.Migrations
                     b.Navigation("Culture");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.CourseMaterial.CourseMaterialDbo", b =>
+            modelBuilder.Entity("Model.Edu.CourseMaterial.CourseMaterialDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.Organization.OrganizationDbo", "Organization")
+                    b.HasOne("Model.Edu.Organization.OrganizationDbo", "Organization")
                         .WithMany("CourseMaterials")
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -7022,15 +6965,15 @@ namespace EduApi.Migrations
                     b.Navigation("Organization");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.CourseMaterial.CourseMaterialFileRepositoryDbo", b =>
+            modelBuilder.Entity("Model.Edu.CourseMaterial.CourseMaterialFileRepositoryDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.CourseMaterial.CourseMaterialDbo", "CourseMaterial")
+                    b.HasOne("Model.Edu.CourseMaterial.CourseMaterialDbo", "CourseMaterial")
                         .WithMany("CourseMaterialFileRepositories")
                         .HasForeignKey("CourseMaterialId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.CodeBook.CultureDbo", "Culture")
+                    b.HasOne("Model.CodeBook.CultureDbo", "Culture")
                         .WithMany()
                         .HasForeignKey("CultureId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -7041,15 +6984,15 @@ namespace EduApi.Migrations
                     b.Navigation("Culture");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.CourseMaterial.CourseMaterialTranslationDbo", b =>
+            modelBuilder.Entity("Model.Edu.CourseMaterial.CourseMaterialTranslationDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.CourseMaterial.CourseMaterialDbo", "CourseMaterial")
+                    b.HasOne("Model.Edu.CourseMaterial.CourseMaterialDbo", "CourseMaterial")
                         .WithMany("CourseMaterialTranslation")
                         .HasForeignKey("CourseMaterialId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.CodeBook.CultureDbo", "Culture")
+                    b.HasOne("Model.CodeBook.CultureDbo", "Culture")
                         .WithMany()
                         .HasForeignKey("CultureId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -7060,31 +7003,31 @@ namespace EduApi.Migrations
                     b.Navigation("Culture");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.CourseTerm.CourseTermDbo", b =>
+            modelBuilder.Entity("Model.Edu.CourseTerm.CourseTermDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.ClassRoom.ClassRoomDbo", "ClassRoom")
+                    b.HasOne("Model.Edu.ClassRoom.ClassRoomDbo", "ClassRoom")
                         .WithMany()
                         .HasForeignKey("ClassRoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.Course.CourseDbo", "Course")
+                    b.HasOne("Model.Edu.Course.CourseDbo", "Course")
                         .WithMany("CourseTerm")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.OrganizationStudyHour.OrganizationStudyHourDbo", "OrganizationStudyHour")
+                    b.HasOne("Model.Edu.OrganizationStudyHour.OrganizationStudyHourDbo", "OrganizationStudyHour")
                         .WithMany()
                         .HasForeignKey("OrganizationStudyHourId");
 
-                    b.HasOne("Model.Tables.CodeBook.TimeTableDbo", "TimeFrom")
+                    b.HasOne("Model.CodeBook.TimeTableDbo", "TimeFrom")
                         .WithMany("CourseTermFrom")
                         .HasForeignKey("TimeFromId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.CodeBook.TimeTableDbo", "TimeTo")
+                    b.HasOne("Model.CodeBook.TimeTableDbo", "TimeTo")
                         .WithMany("CourseTermTo")
                         .HasForeignKey("TimeToId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -7101,33 +7044,33 @@ namespace EduApi.Migrations
                     b.Navigation("TimeTo");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.CourseTermDate.CourseTermDateDbo", b =>
+            modelBuilder.Entity("Model.Edu.CourseTermDate.CourseTermDateDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.ClassRoom.ClassRoomDbo", "ClassRoom")
+                    b.HasOne("Model.Edu.ClassRoom.ClassRoomDbo", "ClassRoom")
                         .WithMany("CourseTermDates")
                         .HasForeignKey("ClassRoomId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.CourseTerm.CourseTermDbo", "CourseTerm")
+                    b.HasOne("Model.Edu.CourseTerm.CourseTermDbo", "CourseTerm")
                         .WithMany("CourseTermDate")
                         .HasForeignKey("CourseTermId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.CodeBook.TimeTableDbo", "TimeFrom")
+                    b.HasOne("Model.CodeBook.TimeTableDbo", "TimeFrom")
                         .WithMany("CourseTermDateFrom")
                         .HasForeignKey("TimeFromId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.CodeBook.TimeTableDbo", "TimeTo")
+                    b.HasOne("Model.CodeBook.TimeTableDbo", "TimeTo")
                         .WithMany("CourseTermDateTo")
                         .HasForeignKey("TimeToId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Link.UserInOrganizationDbo", "UserInOrganization")
+                    b.HasOne("Model.Link.UserInOrganizationDbo", "UserInOrganization")
                         .WithMany()
                         .HasForeignKey("UserInOrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -7144,9 +7087,9 @@ namespace EduApi.Migrations
                     b.Navigation("UserInOrganization");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.CourseTestEvaluation.CourseTestEvaluationDbo", b =>
+            modelBuilder.Entity("Model.Edu.CourseTestEvaluation.CourseTestEvaluationDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.CourseTest.CourseTestDbo", "CourseTest")
+                    b.HasOne("Model.Edu.CourseTest.CourseTestDbo", "CourseTest")
                         .WithMany("CourseTestEvaluations")
                         .HasForeignKey("CourseTestId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -7155,15 +7098,15 @@ namespace EduApi.Migrations
                     b.Navigation("CourseTest");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.LicenseChange.LicenseChangeDbo", b =>
+            modelBuilder.Entity("Model.Edu.LicenseChange.LicenseChangeDbo", b =>
                 {
-                    b.HasOne("Model.Tables.CodeBook.LicenseDbo", "LicenseOld")
+                    b.HasOne("Model.CodeBook.LicenseDbo", "LicenseOld")
                         .WithMany()
                         .HasForeignKey("LicenseOldId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.Organization.OrganizationDbo", "Organization")
+                    b.HasOne("Model.Edu.Organization.OrganizationDbo", "Organization")
                         .WithMany("LicenseChanges")
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -7174,9 +7117,9 @@ namespace EduApi.Migrations
                     b.Navigation("Organization");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.LinkLifeTime.LinkLifeTimeDbo", b =>
+            modelBuilder.Entity("Model.Edu.LinkLifeTime.LinkLifeTimeDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.User.UserDbo", "User")
+                    b.HasOne("Model.Edu.User.UserDbo", "User")
                         .WithMany("LinkLifeTime")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -7185,21 +7128,21 @@ namespace EduApi.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Note.NoteDbo", b =>
+            modelBuilder.Entity("Model.Edu.Note.NoteDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.Course.CourseDbo", "Course")
+                    b.HasOne("Model.Edu.Course.CourseDbo", "Course")
                         .WithMany("Notes")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.CodeBook.NoteTypeDbo", "NoteType")
+                    b.HasOne("Model.CodeBook.NoteTypeDbo", "NoteType")
                         .WithMany("NoteDbos")
                         .HasForeignKey("NoteTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.User.UserDbo", "User")
+                    b.HasOne("Model.Edu.User.UserDbo", "User")
                         .WithMany("Notes")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -7212,22 +7155,22 @@ namespace EduApi.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Notification.NotificationDbo", b =>
+            modelBuilder.Entity("Model.Edu.Notification.NotificationDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.CourseTerm.CourseTermDbo", "CourseTerm")
+                    b.HasOne("Model.Edu.CourseTerm.CourseTermDbo", "CourseTerm")
                         .WithMany("Notifications")
                         .HasForeignKey("CourseTermId");
 
-                    b.HasOne("Model.Tables.CodeBook.NotificationTypeDbo", "NotificationType")
+                    b.HasOne("Model.CodeBook.NotificationTypeDbo", "NotificationType")
                         .WithMany("Notifications")
                         .HasForeignKey("NotificationTypeId");
 
-                    b.HasOne("Model.Tables.Edu.Organization.OrganizationDbo", "Organization")
+                    b.HasOne("Model.Edu.Organization.OrganizationDbo", "Organization")
                         .WithMany("Notifications")
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Model.Tables.Edu.User.UserDbo", "User")
+                    b.HasOne("Model.Edu.User.UserDbo", "User")
                         .WithMany("Notifications")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -7242,9 +7185,9 @@ namespace EduApi.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Organization.OrganizationDbo", b =>
+            modelBuilder.Entity("Model.Edu.Organization.OrganizationDbo", b =>
                 {
-                    b.HasOne("Model.Tables.CodeBook.LicenseDbo", "License")
+                    b.HasOne("Model.CodeBook.LicenseDbo", "License")
                         .WithMany("Organizations")
                         .HasForeignKey("LicenseId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -7253,15 +7196,15 @@ namespace EduApi.Migrations
                     b.Navigation("License");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Organization.OrganizationFileRepositoryDbo", b =>
+            modelBuilder.Entity("Model.Edu.Organization.OrganizationFileRepositoryDbo", b =>
                 {
-                    b.HasOne("Model.Tables.CodeBook.CultureDbo", "Culture")
+                    b.HasOne("Model.CodeBook.CultureDbo", "Culture")
                         .WithMany()
                         .HasForeignKey("CultureId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.Organization.OrganizationDbo", "Organization")
+                    b.HasOne("Model.Edu.Organization.OrganizationDbo", "Organization")
                         .WithMany("OrganizationFileRepositories")
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -7272,15 +7215,15 @@ namespace EduApi.Migrations
                     b.Navigation("Organization");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Organization.OrganizationTranslationDbo", b =>
+            modelBuilder.Entity("Model.Edu.Organization.OrganizationTranslationDbo", b =>
                 {
-                    b.HasOne("Model.Tables.CodeBook.CultureDbo", "Culture")
+                    b.HasOne("Model.CodeBook.CultureDbo", "Culture")
                         .WithMany()
                         .HasForeignKey("CultureId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.Organization.OrganizationDbo", "Organization")
+                    b.HasOne("Model.Edu.Organization.OrganizationDbo", "Organization")
                         .WithMany("OrganizationTranslations")
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -7291,19 +7234,19 @@ namespace EduApi.Migrations
                     b.Navigation("Organization");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.OrganizationAddress.OrganizationAddressDbo", b =>
+            modelBuilder.Entity("Model.Edu.OrganizationAddress.OrganizationAddressDbo", b =>
                 {
-                    b.HasOne("Model.Tables.CodeBook.AddressTypeDbo", "AddressType")
+                    b.HasOne("Model.CodeBook.AddressTypeDbo", "AddressType")
                         .WithMany()
                         .HasForeignKey("AddressTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.CodeBook.CountryDbo", "Country")
+                    b.HasOne("Model.CodeBook.CountryDbo", "Country")
                         .WithMany()
                         .HasForeignKey("CountryId");
 
-                    b.HasOne("Model.Tables.Edu.Organization.OrganizationDbo", "Organization")
+                    b.HasOne("Model.Edu.Organization.OrganizationDbo", "Organization")
                         .WithMany("Addresses")
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -7316,9 +7259,9 @@ namespace EduApi.Migrations
                     b.Navigation("Organization");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.OrganizationRolePermition.OrganizationRolePermitionDbo", b =>
+            modelBuilder.Entity("Model.Edu.OrganizationRolePermition.OrganizationRolePermitionDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.OrganizationRole.OrganizationRoleDbo", "OrganizationRole")
+                    b.HasOne("Model.Edu.OrganizationRole.OrganizationRoleDbo", "OrganizationRole")
                         .WithMany()
                         .HasForeignKey("OrganizationRoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -7327,32 +7270,32 @@ namespace EduApi.Migrations
                     b.Navigation("OrganizationRole");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.OrganizationSetting.OrganizationSettingDbo", b =>
+            modelBuilder.Entity("Model.Edu.OrganizationSetting.OrganizationSettingDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.Organization.OrganizationDbo", "Organization")
+                    b.HasOne("Model.Edu.Organization.OrganizationDbo", "Organization")
                         .WithOne("OrganizationSetting")
-                        .HasForeignKey("Model.Tables.Edu.OrganizationSetting.OrganizationSettingDbo", "OrganizationId")
+                        .HasForeignKey("Model.Edu.OrganizationSetting.OrganizationSettingDbo", "OrganizationId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Organization");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.OrganizationStudyHour.OrganizationStudyHourDbo", b =>
+            modelBuilder.Entity("Model.Edu.OrganizationStudyHour.OrganizationStudyHourDbo", b =>
                 {
-                    b.HasOne("Model.Tables.CodeBook.TimeTableDbo", "ActiveFrom")
+                    b.HasOne("Model.CodeBook.TimeTableDbo", "ActiveFrom")
                         .WithMany("OrganizationStudyHourFrom")
                         .HasForeignKey("ActiveFromId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.CodeBook.TimeTableDbo", "ActiveTo")
+                    b.HasOne("Model.CodeBook.TimeTableDbo", "ActiveTo")
                         .WithMany("OrganizationStudyHourTo")
                         .HasForeignKey("ActiveToId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.Organization.OrganizationDbo", "Organization")
+                    b.HasOne("Model.Edu.Organization.OrganizationDbo", "Organization")
                         .WithMany("OrganizationStudyHours")
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -7365,19 +7308,19 @@ namespace EduApi.Migrations
                     b.Navigation("Organization");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.PersonAddress.PersonAddressDbo", b =>
+            modelBuilder.Entity("Model.Edu.PersonAddress.PersonAddressDbo", b =>
                 {
-                    b.HasOne("Model.Tables.CodeBook.AddressTypeDbo", "AddressType")
+                    b.HasOne("Model.CodeBook.AddressTypeDbo", "AddressType")
                         .WithMany("PersonAddresses")
                         .HasForeignKey("AddressTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.CodeBook.CountryDbo", "Country")
+                    b.HasOne("Model.CodeBook.CountryDbo", "Country")
                         .WithMany("PersonAddresses")
                         .HasForeignKey("CountryId");
 
-                    b.HasOne("Model.Tables.Edu.Person.PersonDbo", "Person")
+                    b.HasOne("Model.Edu.Person.PersonDbo", "Person")
                         .WithMany("PersonAddress")
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -7390,9 +7333,83 @@ namespace EduApi.Migrations
                     b.Navigation("Person");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.SendEmail.SendEmailAttachmentDbo", b =>
+            modelBuilder.Entity("Model.Edu.Question.QuestionDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.SendEmail.SendEmailDbo", "SendEmail")
+                    b.HasOne("Model.CodeBook.AnswerModeDbo", "AnswerMode")
+                        .WithMany()
+                        .HasForeignKey("AnswerModeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Model.Edu.BankOfQuestions.BankOfQuestionDbo", "BankOfQuestion")
+                        .WithMany("TestQuestions")
+                        .HasForeignKey("BankOfQuestionId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Model.CodeBook.QuestionModeDbo", "QuestionMode")
+                        .WithMany()
+                        .HasForeignKey("QuestionModeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AnswerMode");
+
+                    b.Navigation("BankOfQuestion");
+
+                    b.Navigation("QuestionMode");
+                });
+
+            modelBuilder.Entity("Model.Edu.Question.QuestionFileRepositoryDbo", b =>
+                {
+                    b.HasOne("Model.CodeBook.CultureDbo", "Culture")
+                        .WithMany()
+                        .HasForeignKey("CultureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Model.Edu.Question.QuestionDbo", "Question")
+                        .WithMany("QuestionFileRepositories")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Culture");
+
+                    b.Navigation("Question");
+                });
+
+            modelBuilder.Entity("Model.Edu.Question.QuestionTranslationDbo", b =>
+                {
+                    b.HasOne("Model.CodeBook.CultureDbo", "Culture")
+                        .WithMany()
+                        .HasForeignKey("CultureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Model.Edu.Question.QuestionDbo", "TestQuestion")
+                        .WithMany("TestQuestionTranslation")
+                        .HasForeignKey("TestQuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Culture");
+
+                    b.Navigation("TestQuestion");
+                });
+
+            modelBuilder.Entity("Model.Edu.SendEmail.SendEmailDbo", b =>
+                {
+                    b.HasOne("Model.Edu.Organization.OrganizationDbo", "Organization")
+                        .WithMany("SendEmails")
+                        .HasForeignKey("OrganizationId");
+
+                    b.Navigation("Organization");
+                });
+
+            modelBuilder.Entity("Model.Edu.SendEmailAttachment.SendEmailAttachmentDbo", b =>
+                {
+                    b.HasOne("Model.Edu.SendEmail.SendEmailDbo", "SendEmail")
                         .WithMany("SendEmailAttachments")
                         .HasForeignKey("SendEmailId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -7401,24 +7418,15 @@ namespace EduApi.Migrations
                     b.Navigation("SendEmail");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.SendEmail.SendEmailDbo", b =>
+            modelBuilder.Entity("Model.Edu.SendMessage.SendMessageDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.Organization.OrganizationDbo", "Organization")
-                        .WithMany("SendEmails")
-                        .HasForeignKey("OrganizationId");
-
-                    b.Navigation("Organization");
-                });
-
-            modelBuilder.Entity("Model.Tables.Edu.SendMessage.SendMessageDbo", b =>
-                {
-                    b.HasOne("Model.Tables.Edu.Organization.OrganizationDbo", "Organization")
+                    b.HasOne("Model.Edu.Organization.OrganizationDbo", "Organization")
                         .WithMany("SendMessages")
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.CodeBook.SendMessageTypeDbo", "SendMessageType")
+                    b.HasOne("Model.CodeBook.SendMessageTypeDbo", "SendMessageType")
                         .WithMany()
                         .HasForeignKey("SendMessageTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -7429,15 +7437,15 @@ namespace EduApi.Migrations
                     b.Navigation("SendMessageType");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.SendMessage.SendMessageTranslationDbo", b =>
+            modelBuilder.Entity("Model.Edu.SendMessage.SendMessageTranslationDbo", b =>
                 {
-                    b.HasOne("Model.Tables.CodeBook.CultureDbo", "Culture")
+                    b.HasOne("Model.CodeBook.CultureDbo", "Culture")
                         .WithMany()
                         .HasForeignKey("CultureId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.SendMessage.SendMessageDbo", "SendMessage")
+                    b.HasOne("Model.Edu.SendMessage.SendMessageDbo", "SendMessage")
                         .WithMany("SendMessageTranslations")
                         .HasForeignKey("SendMessageId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -7448,15 +7456,15 @@ namespace EduApi.Migrations
                     b.Navigation("SendMessage");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.StudentEvaluation.StudentEvaluationDbo", b =>
+            modelBuilder.Entity("Model.Edu.StudentEvaluation.StudentEvaluationDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Link.CourseStudentDbo", "CourseStudent")
+                    b.HasOne("Model.Link.CourseStudentDbo", "CourseStudent")
                         .WithMany()
                         .HasForeignKey("CourseStudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.CourseTerm.CourseTermDbo", "CourseTerm")
+                    b.HasOne("Model.Edu.CourseTerm.CourseTermDbo", "CourseTerm")
                         .WithMany()
                         .HasForeignKey("CourseTermId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -7467,9 +7475,9 @@ namespace EduApi.Migrations
                     b.Navigation("CourseTerm");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.StudentGroup.StudentGroupDbo", b =>
+            modelBuilder.Entity("Model.Edu.StudentGroup.StudentGroupDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.Organization.OrganizationDbo", "Organization")
+                    b.HasOne("Model.Edu.Organization.OrganizationDbo", "Organization")
                         .WithMany("StudentGroups")
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -7478,15 +7486,15 @@ namespace EduApi.Migrations
                     b.Navigation("Organization");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.StudentGroup.StudentGroupTranslationDbo", b =>
+            modelBuilder.Entity("Model.Edu.StudentGroup.StudentGroupTranslationDbo", b =>
                 {
-                    b.HasOne("Model.Tables.CodeBook.CultureDbo", "Culture")
+                    b.HasOne("Model.CodeBook.CultureDbo", "Culture")
                         .WithMany()
                         .HasForeignKey("CultureId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.StudentGroup.StudentGroupDbo", "StudentGroup")
+                    b.HasOne("Model.Edu.StudentGroup.StudentGroupDbo", "StudentGroup")
                         .WithMany("StudentGroupTranslations")
                         .HasForeignKey("StudentGroupId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -7497,21 +7505,21 @@ namespace EduApi.Migrations
                     b.Navigation("StudentGroup");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.StudentTestSummary.StudentTestSummaryDbo", b =>
+            modelBuilder.Entity("Model.Edu.StudentTestSummary.StudentTestSummaryDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.Course.CourseDbo", "Course")
+                    b.HasOne("Model.Edu.Course.CourseDbo", "Course")
                         .WithMany()
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.CourseTest.CourseTestDbo", "CourseTest")
+                    b.HasOne("Model.Edu.CourseTest.CourseTestDbo", "CourseTest")
                         .WithMany()
                         .HasForeignKey("CourseTestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.User.UserDbo", "User")
+                    b.HasOne("Model.Edu.User.UserDbo", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -7524,15 +7532,15 @@ namespace EduApi.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.StudentTestSummaryAnswer.StudentTestSummaryAnswerDbo", b =>
+            modelBuilder.Entity("Model.Edu.StudentTestSummaryAnswer.StudentTestSummaryAnswerDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.StudentTestSummaryQuestion.StudentTestSummaryQuestionDbo", "StudentTestSummaryQuestion")
+                    b.HasOne("Model.Edu.StudentTestSummaryQuestion.StudentTestSummaryQuestionDbo", "StudentTestSummaryQuestion")
                         .WithMany("StudentTestSummaryAnswers")
                         .HasForeignKey("StudentTestSummaryQuestionId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.Answer.AnswerDbo", "TestQuestionAnswer")
+                    b.HasOne("Model.Edu.Answer.AnswerDbo", "TestQuestionAnswer")
                         .WithMany()
                         .HasForeignKey("TestQuestionAnswerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -7543,27 +7551,27 @@ namespace EduApi.Migrations
                     b.Navigation("TestQuestionAnswer");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.StudentTestSummaryQuestion.StudentTestSummaryQuestionDbo", b =>
+            modelBuilder.Entity("Model.Edu.StudentTestSummaryQuestion.StudentTestSummaryQuestionDbo", b =>
                 {
-                    b.HasOne("Model.Tables.CodeBook.AnswerModeDbo", "AnswerMode")
+                    b.HasOne("Model.CodeBook.AnswerModeDbo", "AnswerMode")
                         .WithMany()
                         .HasForeignKey("AnswerModeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.CodeBook.QuestionModeDbo", "QuestionMode")
+                    b.HasOne("Model.CodeBook.QuestionModeDbo", "QuestionMode")
                         .WithMany()
                         .HasForeignKey("QuestionModeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.StudentTestSummary.StudentTestSummaryDbo", "StudentTestSummary")
+                    b.HasOne("Model.Edu.StudentTestSummary.StudentTestSummaryDbo", "StudentTestSummary")
                         .WithMany("StudentTestSummaryQuestionDbos")
                         .HasForeignKey("StudentTestSummaryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.TestQuestion.QuestionDbo", "TestQuestion")
+                    b.HasOne("Model.Edu.Question.QuestionDbo", "TestQuestion")
                         .WithMany("StudentTestSummaryQuestions")
                         .HasForeignKey("TestQuestionId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -7578,86 +7586,21 @@ namespace EduApi.Migrations
                     b.Navigation("TestQuestion");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.TestQuestion.QuestionDbo", b =>
+            modelBuilder.Entity("Model.Edu.TestUserAnswer.TestUserAnswerDbo", b =>
                 {
-                    b.HasOne("Model.Tables.CodeBook.AnswerModeDbo", "AnswerMode")
-                        .WithMany()
-                        .HasForeignKey("AnswerModeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Model.Tables.Edu.BankOfQuestions.BankOfQuestionDbo", "BankOfQuestion")
-                        .WithMany("TestQuestions")
-                        .HasForeignKey("BankOfQuestionId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Model.Tables.CodeBook.QuestionModeDbo", "QuestionMode")
-                        .WithMany()
-                        .HasForeignKey("QuestionModeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AnswerMode");
-
-                    b.Navigation("BankOfQuestion");
-
-                    b.Navigation("QuestionMode");
-                });
-
-            modelBuilder.Entity("Model.Tables.Edu.TestQuestion.QuestionFileRepositoryDbo", b =>
-                {
-                    b.HasOne("Model.Tables.CodeBook.CultureDbo", "Culture")
-                        .WithMany()
-                        .HasForeignKey("CultureId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Model.Tables.Edu.TestQuestion.QuestionDbo", "Question")
-                        .WithMany("QuestionFileRepositories")
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Culture");
-
-                    b.Navigation("Question");
-                });
-
-            modelBuilder.Entity("Model.Tables.Edu.TestQuestion.QuestionTranslationDbo", b =>
-                {
-                    b.HasOne("Model.Tables.CodeBook.CultureDbo", "Culture")
-                        .WithMany()
-                        .HasForeignKey("CultureId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Model.Tables.Edu.TestQuestion.QuestionDbo", "TestQuestion")
-                        .WithMany("TestQuestionTranslation")
-                        .HasForeignKey("TestQuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Culture");
-
-                    b.Navigation("TestQuestion");
-                });
-
-            modelBuilder.Entity("Model.Tables.Edu.TestUserAnswer.TestUserAnswerDbo", b =>
-                {
-                    b.HasOne("Model.Tables.Edu.StudentTestSummary.StudentTestSummaryDbo", "StudentTestSummary")
+                    b.HasOne("Model.Edu.StudentTestSummary.StudentTestSummaryDbo", "StudentTestSummary")
                         .WithMany()
                         .HasForeignKey("StudentTestSummaryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.Answer.AnswerDbo", "TestQuestionAnswer")
+                    b.HasOne("Model.Edu.Answer.AnswerDbo", "TestQuestionAnswer")
                         .WithMany("TestUserAnswers")
                         .HasForeignKey("TestQuestionAnswerId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.TestQuestion.QuestionDbo", "TestQuestion")
+                    b.HasOne("Model.Edu.Question.QuestionDbo", "TestQuestion")
                         .WithMany("TestUserAnswers")
                         .HasForeignKey("TestQuestionId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -7670,15 +7613,15 @@ namespace EduApi.Migrations
                     b.Navigation("TestQuestionAnswer");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.User.UserDbo", b =>
+            modelBuilder.Entity("Model.Edu.User.UserDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.Person.PersonDbo", "Person")
+                    b.HasOne("Model.Edu.Person.PersonDbo", "Person")
                         .WithMany()
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.UserRole.UserRoleDbo", "UserRole")
+                    b.HasOne("Model.Edu.UserRole.UserRoleDbo", "UserRole")
                         .WithMany("Users")
                         .HasForeignKey("UserRoleId")
                         .OnDelete(DeleteBehavior.NoAction);
@@ -7688,9 +7631,9 @@ namespace EduApi.Migrations
                     b.Navigation("UserRole");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.UserCertificate.UserCertificateDbo", b =>
+            modelBuilder.Entity("Model.Edu.UserCertificate.UserCertificateDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.User.UserDbo", "User")
+                    b.HasOne("Model.Edu.User.UserDbo", "User")
                         .WithMany("UserCertificates")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -7699,21 +7642,21 @@ namespace EduApi.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Model.Tables.Link.CourseBrowseDbo", b =>
+            modelBuilder.Entity("Model.Link.CourseBrowseDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.Course.CourseDbo", "Course")
+                    b.HasOne("Model.Edu.Course.CourseDbo", "Course")
                         .WithMany("CourseBrowses")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.CourseLessonItem.CourseLessonItemDbo", "CourseLessonItem")
+                    b.HasOne("Model.Edu.CourseLessonItem.CourseLessonItemDbo", "CourseLessonItem")
                         .WithMany("CourseBrowses")
                         .HasForeignKey("CourseLessonItemId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.User.UserDbo", "User")
+                    b.HasOne("Model.Edu.User.UserDbo", "User")
                         .WithMany("CourseBrowses")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -7726,15 +7669,15 @@ namespace EduApi.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Model.Tables.Link.CourseLectorDbo", b =>
+            modelBuilder.Entity("Model.Link.CourseLectorDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.CourseTerm.CourseTermDbo", "CourseTerm")
+                    b.HasOne("Model.Edu.CourseTerm.CourseTermDbo", "CourseTerm")
                         .WithMany("CourseLectors")
                         .HasForeignKey("CourseTermId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Link.UserInOrganizationDbo", "UserInOrganization")
+                    b.HasOne("Model.Link.UserInOrganizationDbo", "UserInOrganization")
                         .WithMany("CourseLectors")
                         .HasForeignKey("UserInOrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -7745,15 +7688,15 @@ namespace EduApi.Migrations
                     b.Navigation("UserInOrganization");
                 });
 
-            modelBuilder.Entity("Model.Tables.Link.CourseStudentDbo", b =>
+            modelBuilder.Entity("Model.Link.CourseStudentDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.CourseTerm.CourseTermDbo", "CourseTerm")
+                    b.HasOne("Model.Edu.CourseTerm.CourseTermDbo", "CourseTerm")
                         .WithMany("CourseStudents")
                         .HasForeignKey("CourseTermId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Link.UserInOrganizationDbo", "UserInOrganization")
+                    b.HasOne("Model.Link.UserInOrganizationDbo", "UserInOrganization")
                         .WithMany("CourseStudents")
                         .HasForeignKey("UserInOrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -7764,15 +7707,15 @@ namespace EduApi.Migrations
                     b.Navigation("UserInOrganization");
                 });
 
-            modelBuilder.Entity("Model.Tables.Link.CourseTestBankOfQuestionDbo", b =>
+            modelBuilder.Entity("Model.Link.CourseTestBankOfQuestionDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.BankOfQuestions.BankOfQuestionDbo", "BankOfQuestion")
+                    b.HasOne("Model.Edu.BankOfQuestions.BankOfQuestionDbo", "BankOfQuestion")
                         .WithMany()
                         .HasForeignKey("BankOfQuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.CourseTest.CourseTestDbo", "CourseTest")
+                    b.HasOne("Model.Edu.CourseTest.CourseTestDbo", "CourseTest")
                         .WithMany("CourseTestBankOfQuestions")
                         .HasForeignKey("CourseTestId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -7783,21 +7726,21 @@ namespace EduApi.Migrations
                     b.Navigation("CourseTest");
                 });
 
-            modelBuilder.Entity("Model.Tables.Link.CouseStudentMaterialDbo", b =>
+            modelBuilder.Entity("Model.Link.CouseStudentMaterialDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.Course.CourseDbo", "Course")
+                    b.HasOne("Model.Edu.Course.CourseDbo", "Course")
                         .WithMany()
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.CourseLessonItem.CourseLessonItemDbo", "CourseLessonItem")
+                    b.HasOne("Model.Edu.CourseLessonItem.CourseLessonItemDbo", "CourseLessonItem")
                         .WithMany("CouseStudentMaterials")
                         .HasForeignKey("CourseLessonItemId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.User.UserDbo", "User")
+                    b.HasOne("Model.Edu.User.UserDbo", "User")
                         .WithMany("CouseStudentMaterials")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -7810,15 +7753,15 @@ namespace EduApi.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Model.Tables.Link.OrganizationCultureDbo", b =>
+            modelBuilder.Entity("Model.Link.OrganizationCultureDbo", b =>
                 {
-                    b.HasOne("Model.Tables.CodeBook.CultureDbo", "Culture")
+                    b.HasOne("Model.CodeBook.CultureDbo", "Culture")
                         .WithMany()
                         .HasForeignKey("CultureId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.Organization.OrganizationDbo", "Organization")
+                    b.HasOne("Model.Edu.Organization.OrganizationDbo", "Organization")
                         .WithMany("OrganizationCultures")
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -7829,15 +7772,15 @@ namespace EduApi.Migrations
                     b.Navigation("Organization");
                 });
 
-            modelBuilder.Entity("Model.Tables.Link.StudentInGroupCourseTermDbo", b =>
+            modelBuilder.Entity("Model.Link.StudentInGroupCourseTermDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.CourseTerm.CourseTermDbo", "CourseTerm")
+                    b.HasOne("Model.Edu.CourseTerm.CourseTermDbo", "CourseTerm")
                         .WithMany("StudentInGroupCourseTerms")
                         .HasForeignKey("CourseTermId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.StudentGroup.StudentGroupDbo", "StudentGroup")
+                    b.HasOne("Model.Edu.StudentGroup.StudentGroupDbo", "StudentGroup")
                         .WithMany("StudentInGroupCourseTerms")
                         .HasForeignKey("StudentGroupId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -7848,15 +7791,15 @@ namespace EduApi.Migrations
                     b.Navigation("StudentGroup");
                 });
 
-            modelBuilder.Entity("Model.Tables.Link.StudentInGroupDbo", b =>
+            modelBuilder.Entity("Model.Link.StudentInGroupDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.StudentGroup.StudentGroupDbo", "StudentGroup")
+                    b.HasOne("Model.Edu.StudentGroup.StudentGroupDbo", "StudentGroup")
                         .WithMany()
                         .HasForeignKey("StudentGroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Link.UserInOrganizationDbo", "UserInOrganization")
+                    b.HasOne("Model.Link.UserInOrganizationDbo", "UserInOrganization")
                         .WithMany("StudentInGroups")
                         .HasForeignKey("UserInOrganizationId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -7867,25 +7810,25 @@ namespace EduApi.Migrations
                     b.Navigation("UserInOrganization");
                 });
 
-            modelBuilder.Entity("Model.Tables.Link.UserInOrganizationDbo", b =>
+            modelBuilder.Entity("Model.Link.UserInOrganizationDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.Organization.OrganizationDbo", "Organization")
+                    b.HasOne("Model.Edu.Organization.OrganizationDbo", "Organization")
                         .WithMany("UserInOrganizations")
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.OrganizationRole.OrganizationRoleDbo", "OrganizationRole")
+                    b.HasOne("Model.Edu.OrganizationRole.OrganizationRoleDbo", "OrganizationRole")
                         .WithMany("UserInOrganizations")
                         .HasForeignKey("OrganizationRoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.Edu.StudentGroup.StudentGroupDbo", null)
+                    b.HasOne("Model.Edu.StudentGroup.StudentGroupDbo", null)
                         .WithMany("UserInOrganization")
                         .HasForeignKey("StudentGroupDboId");
 
-                    b.HasOne("Model.Tables.Edu.User.UserDbo", "User")
+                    b.HasOne("Model.Edu.User.UserDbo", "User")
                         .WithMany("UserInOrganizations")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -7898,24 +7841,15 @@ namespace EduApi.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Model.Tables.System.ObjectHistoryDbo", b =>
+            modelBuilder.Entity("Model.System.PermissionsDbo", b =>
                 {
-                    b.HasOne("Model.Tables.Edu.User.UserDbo", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Model.Tables.System.PermissionsDbo", b =>
-                {
-                    b.HasOne("Model.Tables.Edu.OrganizationRole.OrganizationRoleDbo", "OrganizationRole")
+                    b.HasOne("Model.Edu.OrganizationRole.OrganizationRoleDbo", "OrganizationRole")
                         .WithMany("Permissions")
                         .HasForeignKey("OrganizationRoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Model.Tables.System.RouteDbo", "Route")
+                    b.HasOne("Model.System.RouteDbo", "Route")
                         .WithMany("Permissions")
                         .HasForeignKey("RouteId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -7926,49 +7860,49 @@ namespace EduApi.Migrations
                     b.Navigation("Route");
                 });
 
-            modelBuilder.Entity("Model.Tables.CodeBook.AddressTypeDbo", b =>
+            modelBuilder.Entity("Model.CodeBook.AddressTypeDbo", b =>
                 {
                     b.Navigation("PersonAddresses");
                 });
 
-            modelBuilder.Entity("Model.Tables.CodeBook.CountryDbo", b =>
+            modelBuilder.Entity("Model.CodeBook.CountryDbo", b =>
                 {
                     b.Navigation("Branchs");
 
                     b.Navigation("PersonAddresses");
                 });
 
-            modelBuilder.Entity("Model.Tables.CodeBook.CourseLessonItemTemplateDbo", b =>
+            modelBuilder.Entity("Model.CodeBook.CourseLessonItemTemplateDbo", b =>
                 {
                     b.Navigation("CourseLessonItems");
                 });
 
-            modelBuilder.Entity("Model.Tables.CodeBook.CourseStatusDbo", b =>
+            modelBuilder.Entity("Model.CodeBook.CourseStatusDbo", b =>
                 {
                     b.Navigation("Courses");
                 });
 
-            modelBuilder.Entity("Model.Tables.CodeBook.CourseTypeDbo", b =>
+            modelBuilder.Entity("Model.CodeBook.CourseTypeDbo", b =>
                 {
                     b.Navigation("Courses");
                 });
 
-            modelBuilder.Entity("Model.Tables.CodeBook.LicenseDbo", b =>
+            modelBuilder.Entity("Model.CodeBook.LicenseDbo", b =>
                 {
                     b.Navigation("Organizations");
                 });
 
-            modelBuilder.Entity("Model.Tables.CodeBook.NoteTypeDbo", b =>
+            modelBuilder.Entity("Model.CodeBook.NoteTypeDbo", b =>
                 {
                     b.Navigation("NoteDbos");
                 });
 
-            modelBuilder.Entity("Model.Tables.CodeBook.NotificationTypeDbo", b =>
+            modelBuilder.Entity("Model.CodeBook.NotificationTypeDbo", b =>
                 {
                     b.Navigation("Notifications");
                 });
 
-            modelBuilder.Entity("Model.Tables.CodeBook.TimeTableDbo", b =>
+            modelBuilder.Entity("Model.CodeBook.TimeTableDbo", b =>
                 {
                     b.Navigation("CourseTermDateFrom");
 
@@ -7983,7 +7917,7 @@ namespace EduApi.Migrations
                     b.Navigation("OrganizationStudyHourTo");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Answer.AnswerDbo", b =>
+            modelBuilder.Entity("Model.Edu.Answer.AnswerDbo", b =>
                 {
                     b.Navigation("AnswerFileRepository");
 
@@ -7992,33 +7926,33 @@ namespace EduApi.Migrations
                     b.Navigation("TestUserAnswers");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.BankOfQuestions.BankOfQuestionDbo", b =>
+            modelBuilder.Entity("Model.Edu.BankOfQuestions.BankOfQuestionDbo", b =>
                 {
                     b.Navigation("BankOfQuestionsTranslations");
 
                     b.Navigation("TestQuestions");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Branch.BranchDbo", b =>
+            modelBuilder.Entity("Model.Edu.Branch.BranchDbo", b =>
                 {
                     b.Navigation("BranchTranslations");
 
                     b.Navigation("ClassRoom");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Certificate.CertificateDbo", b =>
+            modelBuilder.Entity("Model.Edu.Certificate.CertificateDbo", b =>
                 {
                     b.Navigation("CertificateTranslations");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.ClassRoom.ClassRoomDbo", b =>
+            modelBuilder.Entity("Model.Edu.ClassRoom.ClassRoomDbo", b =>
                 {
                     b.Navigation("ClassRoomTranslations");
 
                     b.Navigation("CourseTermDates");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Course.CourseDbo", b =>
+            modelBuilder.Entity("Model.Edu.Course.CourseDbo", b =>
                 {
                     b.Navigation("CourseBrowses");
 
@@ -8029,14 +7963,14 @@ namespace EduApi.Migrations
                     b.Navigation("Notes");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.CourseLesson.CourseLessonDbo", b =>
+            modelBuilder.Entity("Model.Edu.CourseLesson.CourseLessonDbo", b =>
                 {
                     b.Navigation("CourseItem");
 
                     b.Navigation("CourseLessonTranslations");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.CourseLessonItem.CourseLessonItemDbo", b =>
+            modelBuilder.Entity("Model.Edu.CourseLessonItem.CourseLessonItemDbo", b =>
                 {
                     b.Navigation("CourseBrowses");
 
@@ -8047,7 +7981,7 @@ namespace EduApi.Migrations
                     b.Navigation("CouseStudentMaterials");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.CourseMaterial.CourseMaterialDbo", b =>
+            modelBuilder.Entity("Model.Edu.CourseMaterial.CourseMaterialDbo", b =>
                 {
                     b.Navigation("CourseLessons");
 
@@ -8058,7 +7992,7 @@ namespace EduApi.Migrations
                     b.Navigation("Courses");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.CourseTerm.CourseTermDbo", b =>
+            modelBuilder.Entity("Model.Edu.CourseTerm.CourseTermDbo", b =>
                 {
                     b.Navigation("AttendanceStudents");
 
@@ -8075,12 +8009,12 @@ namespace EduApi.Migrations
                     b.Navigation("StudentInGroupCourseTerms");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.CourseTermDate.CourseTermDateDbo", b =>
+            modelBuilder.Entity("Model.Edu.CourseTermDate.CourseTermDateDbo", b =>
                 {
                     b.Navigation("AttendanceStudents");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.CourseTest.CourseTestDbo", b =>
+            modelBuilder.Entity("Model.Edu.CourseTest.CourseTestDbo", b =>
                 {
                     b.Navigation("CourseLesson");
 
@@ -8089,7 +8023,7 @@ namespace EduApi.Migrations
                     b.Navigation("CourseTestEvaluations");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Organization.OrganizationDbo", b =>
+            modelBuilder.Entity("Model.Edu.Organization.OrganizationDbo", b =>
                 {
                     b.Navigation("Addresses");
 
@@ -8126,48 +8060,19 @@ namespace EduApi.Migrations
                     b.Navigation("UserInOrganizations");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.OrganizationRole.OrganizationRoleDbo", b =>
+            modelBuilder.Entity("Model.Edu.OrganizationRole.OrganizationRoleDbo", b =>
                 {
                     b.Navigation("Permissions");
 
                     b.Navigation("UserInOrganizations");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.Person.PersonDbo", b =>
+            modelBuilder.Entity("Model.Edu.Person.PersonDbo", b =>
                 {
                     b.Navigation("PersonAddress");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.SendEmail.SendEmailDbo", b =>
-                {
-                    b.Navigation("SendEmailAttachments");
-                });
-
-            modelBuilder.Entity("Model.Tables.Edu.SendMessage.SendMessageDbo", b =>
-                {
-                    b.Navigation("SendMessageTranslations");
-                });
-
-            modelBuilder.Entity("Model.Tables.Edu.StudentGroup.StudentGroupDbo", b =>
-                {
-                    b.Navigation("StudentGroupTranslations");
-
-                    b.Navigation("StudentInGroupCourseTerms");
-
-                    b.Navigation("UserInOrganization");
-                });
-
-            modelBuilder.Entity("Model.Tables.Edu.StudentTestSummary.StudentTestSummaryDbo", b =>
-                {
-                    b.Navigation("StudentTestSummaryQuestionDbos");
-                });
-
-            modelBuilder.Entity("Model.Tables.Edu.StudentTestSummaryQuestion.StudentTestSummaryQuestionDbo", b =>
-                {
-                    b.Navigation("StudentTestSummaryAnswers");
-                });
-
-            modelBuilder.Entity("Model.Tables.Edu.TestQuestion.QuestionDbo", b =>
+            modelBuilder.Entity("Model.Edu.Question.QuestionDbo", b =>
                 {
                     b.Navigation("QuestionFileRepositories");
 
@@ -8180,7 +8085,36 @@ namespace EduApi.Migrations
                     b.Navigation("TestUserAnswers");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.User.UserDbo", b =>
+            modelBuilder.Entity("Model.Edu.SendEmail.SendEmailDbo", b =>
+                {
+                    b.Navigation("SendEmailAttachments");
+                });
+
+            modelBuilder.Entity("Model.Edu.SendMessage.SendMessageDbo", b =>
+                {
+                    b.Navigation("SendMessageTranslations");
+                });
+
+            modelBuilder.Entity("Model.Edu.StudentGroup.StudentGroupDbo", b =>
+                {
+                    b.Navigation("StudentGroupTranslations");
+
+                    b.Navigation("StudentInGroupCourseTerms");
+
+                    b.Navigation("UserInOrganization");
+                });
+
+            modelBuilder.Entity("Model.Edu.StudentTestSummary.StudentTestSummaryDbo", b =>
+                {
+                    b.Navigation("StudentTestSummaryQuestionDbos");
+                });
+
+            modelBuilder.Entity("Model.Edu.StudentTestSummaryQuestion.StudentTestSummaryQuestionDbo", b =>
+                {
+                    b.Navigation("StudentTestSummaryAnswers");
+                });
+
+            modelBuilder.Entity("Model.Edu.User.UserDbo", b =>
                 {
                     b.Navigation("Chats");
 
@@ -8199,17 +8133,17 @@ namespace EduApi.Migrations
                     b.Navigation("UserInOrganizations");
                 });
 
-            modelBuilder.Entity("Model.Tables.Edu.UserRole.UserRoleDbo", b =>
+            modelBuilder.Entity("Model.Edu.UserRole.UserRoleDbo", b =>
                 {
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("Model.Tables.Link.CourseStudentDbo", b =>
+            modelBuilder.Entity("Model.Link.CourseStudentDbo", b =>
                 {
                     b.Navigation("AttendanceStudents");
                 });
 
-            modelBuilder.Entity("Model.Tables.Link.UserInOrganizationDbo", b =>
+            modelBuilder.Entity("Model.Link.UserInOrganizationDbo", b =>
                 {
                     b.Navigation("CourseLectors");
 
@@ -8218,7 +8152,7 @@ namespace EduApi.Migrations
                     b.Navigation("StudentInGroups");
                 });
 
-            modelBuilder.Entity("Model.Tables.System.RouteDbo", b =>
+            modelBuilder.Entity("Model.System.RouteDbo", b =>
                 {
                     b.Navigation("Permissions");
                 });

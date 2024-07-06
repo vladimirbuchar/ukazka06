@@ -2,8 +2,8 @@
 using Core.Constants;
 using EduServices.CourseMaterial.Dto;
 using Microsoft.Extensions.Configuration;
-using Model.Tables.CodeBook;
-using Model.Tables.Edu.CourseMaterial;
+using Model.CodeBook;
+using Model.Edu.CourseMaterial;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,7 +12,7 @@ namespace EduServices.CourseMaterial.Convertor
     public class CourseMaterialConvertor(IConfiguration configuration, ICodeBookRepository<CultureDbo> codeBookService) : ICourseMaterialConvertor
     {
         private readonly IConfiguration _configuration = configuration;
-        private readonly HashSet<CultureDbo> _cultureList = codeBookService.GetCodeBookItems();
+        private readonly HashSet<CultureDbo> _cultureList = codeBookService.GetEntities(false);
 
         public HashSet<CourseMaterialListDto> ConvertToWebModel(HashSet<CourseMaterialDbo> getCourseMaterialInOrganizations, string culture)
         {

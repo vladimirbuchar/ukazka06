@@ -2,6 +2,7 @@
 using EduApi.Controllers.ClientZone.Certificate;
 using EduServices.Organization.Dto;
 using EduServices.OrganizationRole.Service;
+using EduServices.StudentEvaluation.Dto;
 using EduServices.User.Dto;
 using EduServices.UserProfile.Dto;
 using EduServices.UserProfile.Service;
@@ -130,6 +131,23 @@ namespace EduApi.Controllers.ClientZone.UserProfile
             try
             {
                 return SendResponse(_userProfileService.GetManagedCourse(GetLoggedUserId()));
+            }
+            catch (Exception e)
+            {
+                return SendSystemError(e);
+            }
+        }
+        [HttpGet]
+        [ProducesResponseType(typeof(HashSet<MyEvaluationListDto>), 200)]
+        [ProducesResponseType(typeof(void), 404)]
+        [ProducesResponseType(typeof(SystemError), 500)]
+        [ProducesResponseType(typeof(Result), 400)]
+        [ProducesResponseType(typeof(void), 403)]
+        public ActionResult GetMyEvaluation([FromQuery] Guid userId)
+        {
+            try
+            {
+                return SendResponse(_userProfileService.GetMyEvaluation(GetLoggedUserId()));
             }
             catch (Exception e)
             {

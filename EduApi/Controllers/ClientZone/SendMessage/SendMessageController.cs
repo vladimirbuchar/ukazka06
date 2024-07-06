@@ -1,4 +1,5 @@
 ﻿using Core.Base.Dto;
+using Core.Constants;
 using Core.DataTypes;
 using EduServices.OrganizationRole.Service;
 using EduServices.SendMessage.Dto;
@@ -150,7 +151,7 @@ namespace EduApi.Controllers.ClientZone.SendMessage
             try
             {
                 CheckOrganizationPermition(organizationId);
-                return SendResponse(_sendMessageService.GetSendMessageInOrganizationEmail(organizationId));
+                return SendResponse(_sendMessageService.GetList(x => x.OrganizationId == organizationId && x.SystemIdentificator == SendMessageType.EMAIL, false));
             }
             catch (Exception e)
             {

@@ -5,8 +5,8 @@ using Core.DataTypes;
 using EduRepository.OrganizationRepository;
 using EduRepository.UserRepository;
 using EduServices.Organization.Dto;
-using Model.Tables.CodeBook;
-using Model.Tables.Edu.Organization;
+using Model.CodeBook;
+using Model.Edu.Organization;
 using System.Collections.Generic;
 
 namespace EduServices.Organization.Validator
@@ -28,15 +28,15 @@ namespace EduServices.Organization.Validator
         public override Result<OrganizationDetailDto> IsValid(OrganizationCreateDto create)
         {
             Result<OrganizationDetailDto> validate = new();
-            IsValidEmail(create.Email, validate, ErrorCategory.ORGANIZATION, GlobalValue.EMAIL_IS_NOT_VALID);
-            IsValidPhoneNumber(create.PhoneNumber, validate, ErrorCategory.ORGANIZATION, GlobalValue.IS_NOT_VALID_PHONE_NUMBER);
-            IsValidUri(create.WWW, validate, ErrorCategory.ORGANIZATION, GlobalValue.IS_NOT_VALID_URI);
+            IsValidEmail(create.Email, validate, Category.ORGANIZATION, GlobalValue.EMAIL_IS_NOT_VALID);
+            IsValidPhoneNumber(create.PhoneNumber, validate, Category.ORGANIZATION, GlobalValue.IS_NOT_VALID_PHONE_NUMBER);
+            IsValidUri(create.WWW, validate, Category.ORGANIZATION, GlobalValue.IS_NOT_VALID_URI);
             ValidateAddress(create.Addresses, validate);
-            IsValidString(create.Name, validate, ErrorCategory.ORGANIZATION, GlobalValue.STRING_IS_EMPTY);
-            CodeBookValueExist(_culture, x => x.Id == create.DefaultCultureId, validate, ErrorCategory.CULTURE, GlobalValue.NOT_EXISTS, create.DefaultCultureId.ToString());
+            IsValidString(create.Name, validate, Category.ORGANIZATION, GlobalValue.STRING_IS_EMPTY);
+            CodeBookValueExist(_culture, x => x.Id == create.DefaultCultureId, validate, Category.CULTURE, GlobalValue.NOT_EXISTS, create.DefaultCultureId.ToString());
             if (ValidateUser && _userRepository.GetEntity(false, x => x.Id == create.UserId) == null)
             {
-                validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.USER, GlobalValue.NOT_EXISTS));
+                validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.USER, GlobalValue.NOT_EXISTS));
             }
             return validate;
         }
@@ -44,11 +44,11 @@ namespace EduServices.Organization.Validator
         public override Result<OrganizationDetailDto> IsValid(OrganizationUpdateDto update)
         {
             Result<OrganizationDetailDto> validate = new();
-            IsValidEmail(update.Email, validate, ErrorCategory.ORGANIZATION, GlobalValue.EMAIL_IS_NOT_VALID);
-            IsValidPhoneNumber(update.PhoneNumber, validate, ErrorCategory.ORGANIZATION, GlobalValue.IS_NOT_VALID_PHONE_NUMBER);
-            IsValidUri(update.WWW, validate, ErrorCategory.ORGANIZATION, GlobalValue.IS_NOT_VALID_URI);
+            IsValidEmail(update.Email, validate, Category.ORGANIZATION, GlobalValue.EMAIL_IS_NOT_VALID);
+            IsValidPhoneNumber(update.PhoneNumber, validate, Category.ORGANIZATION, GlobalValue.IS_NOT_VALID_PHONE_NUMBER);
+            IsValidUri(update.WWW, validate, Category.ORGANIZATION, GlobalValue.IS_NOT_VALID_URI);
             ValidateAddress(update.Addresses, validate);
-            IsValidString(update.Name, validate, ErrorCategory.ORGANIZATION, GlobalValue.STRING_IS_EMPTY);
+            IsValidString(update.Name, validate, Category.ORGANIZATION, GlobalValue.STRING_IS_EMPTY);
             return validate;
         }
 

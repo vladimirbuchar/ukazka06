@@ -3,7 +3,7 @@ using EduRepository.RouteRepository;
 using EduServices.Route.Convertor;
 using EduServices.Route.Dto;
 using EduServices.Route.Validator;
-using Model.Tables.System;
+using Model.System;
 
 namespace EduServices.Route.Service
 {

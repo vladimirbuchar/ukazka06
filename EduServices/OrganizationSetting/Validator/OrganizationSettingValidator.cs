@@ -9,8 +9,8 @@ using EduRepository.UserRepository;
 using EduServices.Organization.Dto;
 using EduServices.OrganizationSetting.Dto;
 using Microsoft.Extensions.Configuration;
-using Model.Tables.CodeBook;
-using Model.Tables.Edu.Organization;
+using Model.CodeBook;
+using Model.Edu.Organization;
 using System;
 using System.Collections.Generic;
 
@@ -34,14 +34,14 @@ namespace EduServices.OrganizationSetting.Validator
         public override Result<OrganizationDetailDto> IsValid(OrganizationCreateDto create)
         {
             Result<OrganizationDetailDto> validate = new();
-            IsValidEmail(create.Email, validate, ErrorCategory.ORGANIZATION, GlobalValue.EMAIL_IS_NOT_VALID);
-            IsValidPhoneNumber(create.PhoneNumber, validate, ErrorCategory.ORGANIZATION, GlobalValue.IS_NOT_VALID_PHONE_NUMBER);
-            IsValidUri(create.WWW, validate, ErrorCategory.ORGANIZATION, GlobalValue.IS_NOT_VALID_URI);
+            IsValidEmail(create.Email, validate, Category.ORGANIZATION, GlobalValue.EMAIL_IS_NOT_VALID);
+            IsValidPhoneNumber(create.PhoneNumber, validate, Category.ORGANIZATION, GlobalValue.IS_NOT_VALID_PHONE_NUMBER);
+            IsValidUri(create.WWW, validate, Category.ORGANIZATION, GlobalValue.IS_NOT_VALID_URI);
             ValidateAddress(create.Addresses, validate);
-            IsValidString(create.Name, validate, ErrorCategory.ORGANIZATION, GlobalValue.STRING_IS_EMPTY);
+            IsValidString(create.Name, validate, Category.ORGANIZATION, GlobalValue.STRING_IS_EMPTY);
             if (_userRepository.GetEntity(false, x => x.Id == create.UserId) == null)
             {
-                validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.USER, GlobalValue.NOT_EXISTS));
+                validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.USER, GlobalValue.NOT_EXISTS));
             }
             return validate;
         }
@@ -49,11 +49,11 @@ namespace EduServices.OrganizationSetting.Validator
         public override Result<OrganizationDetailDto> IsValid(OrganizationUpdateDto update)
         {
             Result<OrganizationDetailDto> validate = new();
-            IsValidEmail(update.Email, validate, ErrorCategory.ORGANIZATION, GlobalValue.EMAIL_IS_NOT_VALID);
-            IsValidPhoneNumber(update.PhoneNumber, validate, ErrorCategory.ORGANIZATION, GlobalValue.IS_NOT_VALID_PHONE_NUMBER);
-            IsValidUri(update.WWW, validate, ErrorCategory.ORGANIZATION, GlobalValue.IS_NOT_VALID_URI);
+            IsValidEmail(update.Email, validate, Category.ORGANIZATION, GlobalValue.EMAIL_IS_NOT_VALID);
+            IsValidPhoneNumber(update.PhoneNumber, validate, Category.ORGANIZATION, GlobalValue.IS_NOT_VALID_PHONE_NUMBER);
+            IsValidUri(update.WWW, validate, Category.ORGANIZATION, GlobalValue.IS_NOT_VALID_URI);
             ValidateAddress(update.Addresses, validate);
-            IsValidString(update.Name, validate, ErrorCategory.ORGANIZATION, GlobalValue.STRING_IS_EMPTY);
+            IsValidString(update.Name, validate, Category.ORGANIZATION, GlobalValue.STRING_IS_EMPTY);
             return validate;
         }
 
@@ -61,15 +61,15 @@ namespace EduServices.OrganizationSetting.Validator
         {
             if (url.IsNullOrEmptyWithTrim() || url == _elearningUrl)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.ORGANIZATION, Constants.ELEARNIG_BAD_EMPTY_URL));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.ORGANIZATION, Constants.ELEARNIG_BAD_EMPTY_URL));
             }
             if (_organizationSettingRepository.GetEntities(false, x => x.ElearningUrl == url && x.OrganizationId != organizationId).Count > 0)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.ORGANIZATION, Constants.ELEARNIG_URL_EXISTS, url));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.ORGANIZATION, Constants.ELEARNIG_URL_EXISTS, url));
             }
             if (!url.IsValidUri())
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.ORGANIZATION, Constants.ELEARNIG_IS_NOT_VALID, url));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.ORGANIZATION, Constants.ELEARNIG_IS_NOT_VALID, url));
             }
         }
 
@@ -78,13 +78,13 @@ namespace EduServices.OrganizationSetting.Validator
             Result validate = new();
             //CodeBookValueExist<CultureDbo>(_culture,x=>x.Id == saveOrganizationSettingDto.DefaultCulture,validate,Constants.ORGANIZATION , "BAD_DEFAULT_CULTURE");
             IsValidOrganizationUrl(saveOrganizationSettingDto.UrlElearning, saveOrganizationSettingDto.OrganizationId, validate);
-            IsValidPostiveNumber(saveOrganizationSettingDto.LessonLength, validate, ErrorCategory.ORGANIZATION, Constants.LESSON_LENGTH);
+            IsValidPostiveNumber(saveOrganizationSettingDto.LessonLength, validate, Category.ORGANIZATION, Constants.LESSON_LENGTH);
             if (saveOrganizationSettingDto.UseCustomSmtpServer)
             {
-                IsValidString(saveOrganizationSettingDto.SmtpServerUrl, validate, ErrorCategory.ORGANIZATION, Constants.SMTP_SERVER);
-                IsValidString(saveOrganizationSettingDto.SmtpServerUserName, validate, ErrorCategory.ORGANIZATION, Constants.SMTP_LOGIN);
-                IsValidString(saveOrganizationSettingDto.SmtpServerPassword, validate, ErrorCategory.ORGANIZATION, Constants.SMTP_PASSWORD);
-                IsValidPostiveNumber(saveOrganizationSettingDto.SmtpServerPort, validate, ErrorCategory.ORGANIZATION, Constants.SMTP_PORT);
+                IsValidString(saveOrganizationSettingDto.SmtpServerUrl, validate, Category.ORGANIZATION, Constants.SMTP_SERVER);
+                IsValidString(saveOrganizationSettingDto.SmtpServerUserName, validate, Category.ORGANIZATION, Constants.SMTP_LOGIN);
+                IsValidString(saveOrganizationSettingDto.SmtpServerPassword, validate, Category.ORGANIZATION, Constants.SMTP_PASSWORD);
+                IsValidPostiveNumber(saveOrganizationSettingDto.SmtpServerPort, validate, Category.ORGANIZATION, Constants.SMTP_PORT);
             }
             return validate;
         }

@@ -3,7 +3,7 @@ using EduRepository.CertificateRepository;
 using EduServices.Certificate.Convertor;
 using EduServices.Certificate.Dto;
 using EduServices.Certificate.Validator;
-using Model.Tables.Edu.Certificate;
+using Model.Edu.Certificate;
 
 namespace EduServices.Certificate.Service
 {

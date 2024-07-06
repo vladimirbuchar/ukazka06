@@ -1,6 +1,6 @@
 ﻿using Core.Base.Convertor;
 using EduServices.StudentInGroup.Dto;
-using Model.Tables.Link;
+using Model.Link;
 
 namespace EduServices.StudentInGroup.Convertor
 {

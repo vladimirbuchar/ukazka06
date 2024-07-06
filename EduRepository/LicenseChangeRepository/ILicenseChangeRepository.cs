@@ -1,5 +1,5 @@
 ﻿using Core.Base.Repository;
-using Model.Tables.Edu.LicenseChange;
+using Model.Edu.LicenseChange;
 
 namespace EduRepository.LicenseChangeRepository
 {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Core.Base.Convertor;
 using EduServices.CourseMaterial.Dto;
-using Model.Tables.Edu.CourseMaterial;
+using Model.Edu.CourseMaterial;
 
 namespace EduServices.CourseMaterial.Convertor
 {

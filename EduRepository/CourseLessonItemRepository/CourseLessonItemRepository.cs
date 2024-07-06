@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
-using Model.Tables.Edu.CourseLessonItem;
+using Model.Edu.CourseLessonItem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,9 +22,16 @@ namespace EduRepository.CourseLessonItemRepository
                 .FirstOrDefault(x => x.Id == id);
         }
 
-        public override HashSet<CourseLessonItemDbo> GetEntities(bool deleted, Expression<Func<CourseLessonItemDbo, bool>> predicate = null)
+        public override HashSet<CourseLessonItemDbo> GetEntities(bool deleted, Expression<Func<CourseLessonItemDbo, bool>> predicate = null, Expression<Func<CourseLessonItemDbo, object>> orderBy = null, Expression<Func<CourseLessonItemDbo, object>> orderByDesc = null)
         {
-            return [.. _dbContext.Set<CourseLessonItemDbo>().Where(x => x.IsDeleted == deleted).Where(predicate).Include(x => x.CourseLessonItemTranslations.Where(x => x.IsDeleted == false)).ThenInclude(x => x.Culture)];
+            return [.. _dbContext.Set<CourseLessonItemDbo>()
+                .Include(x => x.CourseLessonItemTranslations.Where(x => x.IsDeleted == false))
+                .ThenInclude(x => x.Culture)
+                .Where(predicate)
+                .Where(x => x.IsDeleted == deleted)
+
+                ];
+            ;
         }
 
         public override Guid GetOrganizationId(Guid objectId)
@@ -33,8 +40,7 @@ namespace EduRepository.CourseLessonItemRepository
                 .Set<CourseLessonItemDbo>()
                 .Include(x => x.CourseLesson)
                 .ThenInclude(x => x.CourseMaterial)
-                .FirstOrDefault(x => x.Id == objectId)
-                .CourseLesson.CourseMaterial.OrganizationId;
+                .FirstOrDefault(x => x.Id == objectId).CourseLesson.CourseMaterial.OrganizationId;
         }
     }
 }

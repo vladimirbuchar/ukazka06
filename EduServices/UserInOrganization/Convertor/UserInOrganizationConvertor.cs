@@ -1,6 +1,6 @@
 ﻿using EduServices.UserInOrganization.Dto;
-using Model.Tables.Edu.OrganizationRole;
-using Model.Tables.Link;
+using Model.Edu.OrganizationRole;
+using Model.Link;
 using System;
 using System.Collections.Generic;
 using System.Linq;

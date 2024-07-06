@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
-using Model.Tables.Edu.Certificate;
+using Model.Edu.Certificate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,16 +16,18 @@ namespace EduRepository.CertificateRepository
         {
             return _dbContext.Set<CertificateDbo>()
                 .Include(x => x.CertificateTranslations.Where(x => x.IsDeleted == false))
-                .ThenInclude(x => x.Culture).FirstOrDefault(x => x.Id == id);
+                .ThenInclude(x => x.Culture)
+                .FirstOrDefault(x => x.Id == id);
         }
 
-        public override HashSet<CertificateDbo> GetEntities(bool deleted, Expression<Func<CertificateDbo, bool>> predicate = null)
+        public override HashSet<CertificateDbo> GetEntities(bool deleted, Expression<Func<CertificateDbo, bool>> predicate = null, Expression<Func<CertificateDbo, object>> orderBy = null, Expression<Func<CertificateDbo, object>> orderByDesc = null)
         {
             return [.. _dbContext.Set<CertificateDbo>()
-                .Where(x => x.IsDeleted == deleted)
-                .Where(predicate)
                 .Include(x => x.CertificateTranslations.Where(x => x.IsDeleted == false))
-                .ThenInclude(x => x.Culture)];
+                .ThenInclude(x => x.Culture)
+                .Where(predicate)
+                .Where(x => x.IsDeleted == deleted)
+                ];
         }
 
         public override Guid GetOrganizationId(Guid objectId)

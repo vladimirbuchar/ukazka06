@@ -1,7 +1,7 @@
 ﻿using Core.Base.Repository;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
-using Model.Tables.System;
+using Model.System;
 
 namespace EduRepository.RouteRepository
 {

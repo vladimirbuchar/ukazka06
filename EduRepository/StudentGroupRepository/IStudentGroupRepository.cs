@@ -1,5 +1,5 @@
 ﻿using Core.Base.Repository;
-using Model.Tables.Edu.StudentGroup;
+using Model.Edu.StudentGroup;
 
 namespace EduRepository.StudentGroupRepository
 {

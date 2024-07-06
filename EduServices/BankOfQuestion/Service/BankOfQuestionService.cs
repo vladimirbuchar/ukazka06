@@ -5,8 +5,8 @@ using EduRepository.QuestionRepository;
 using EduServices.BankOfQuestion.Convertor;
 using EduServices.BankOfQuestion.Dto;
 using EduServices.BankOfQuestion.Validator;
-using Model.Tables.Edu.BankOfQuestions;
-using Model.Tables.Edu.TestQuestion;
+using Model.Edu.BankOfQuestions;
+using Model.Edu.Question;
 using System;
 using System.Collections.Generic;
 

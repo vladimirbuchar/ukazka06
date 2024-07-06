@@ -4,7 +4,5 @@
     {
         public const string REGISTERED_USER = "REGISTERED_USER";
         public const string ADMINISTRATOR = "ADMINISTRATOR";
-        public const string ANONYMOUS = "ANONYMOUS";
-
     }
 }

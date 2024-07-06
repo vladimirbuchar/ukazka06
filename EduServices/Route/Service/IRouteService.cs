@@ -1,6 +1,6 @@
 ﻿using Core.Base.Service;
 using EduServices.Route.Dto;
-using Model.Tables.System;
+using Model.System;
 
 namespace EduServices.Route.Service
 {

@@ -2,7 +2,7 @@
 using Core.DataTypes;
 using EduRepository.UserRepository;
 using EduServices.User.Dto;
-using Model.Tables.Edu.User;
+using Model.Edu.User;
 
 namespace EduServices.User.Validator
 {

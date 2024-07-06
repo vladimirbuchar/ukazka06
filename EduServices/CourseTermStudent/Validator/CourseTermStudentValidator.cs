@@ -4,8 +4,8 @@ using Core.DataTypes;
 using EduRepository.CourseStudentRepository;
 using EduRepository.CourseTermRepository;
 using EduServices.CourseTermStudent.Dto;
-using Model.Tables.Edu.CourseTerm;
-using Model.Tables.Link;
+using Model.Edu.CourseTerm;
+using Model.Link;
 using System;
 
 namespace EduServices.CourseTermStudent.Validator
@@ -29,9 +29,9 @@ namespace EduServices.CourseTermStudent.Validator
             int maximumStudent = term?.MaximumStudent ?? 0;
             if (maximumStudent > 0)
             {
-                if (maximumStudent < _repository.GetAllStudentInCourseTerm(termId).Count + 1)
+                if (maximumStudent < _repository.GetEntities(false, x => x.CourseTermId == termId).Count + 1)
                 {
-                    result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.COURSE, Constants.ADD_MORE_STUDENTS_THAN_MAXIMUM));
+                    result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.COURSE, Constants.ADD_MORE_STUDENTS_THAN_MAXIMUM));
                 }
             }
         }

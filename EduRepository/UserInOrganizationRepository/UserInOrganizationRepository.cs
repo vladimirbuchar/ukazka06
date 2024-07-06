@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
-using Model.Tables.Link;
+using Model.Link;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,18 +12,18 @@ namespace EduRepository.UserInOrganizationRepository
 {
     public class UserInOrganizationRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<UserInOrganizationDbo>(dbContext, memoryCache), IUserInOrganizationRepository
     {
-        public override HashSet<UserInOrganizationDbo> GetEntities(bool deleted, Expression<Func<UserInOrganizationDbo, bool>> predicate = null)
+        public override HashSet<UserInOrganizationDbo> GetEntities(bool deleted, Expression<Func<UserInOrganizationDbo, bool>> predicate = null, Expression<Func<UserInOrganizationDbo, object>> orderBy = null, Expression<Func<UserInOrganizationDbo, object>> orderByDesc = null)
         {
             return
             [
                 .. _dbContext
                     .Set<UserInOrganizationDbo>()
-                    .Where(predicate)
-                    .Where(x => x.IsDeleted == deleted && x.Organization.IsDeleted == false)
                     .Include(x => x.OrganizationRole)
                     .Include(x => x.Organization)
                     .Include(x => x.User)
                     .ThenInclude(x=>x.Person)
+                    .Where(predicate)
+                    .Where(x => x.IsDeleted == deleted && x.Organization.IsDeleted == false)
             ];
         }
 

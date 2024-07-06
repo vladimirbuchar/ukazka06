@@ -5,8 +5,8 @@ using EduRepository.OrganizationHoursRepository;
 using EduServices.OrganizationStudyHour.Convertor;
 using EduServices.OrganizationStudyHour.Dto;
 using EduServices.OrganizationStudyHour.Validator;
-using Model.Tables.CodeBook;
-using Model.Tables.Edu.OrganizationStudyHour;
+using Model.CodeBook;
+using Model.Edu.OrganizationStudyHour;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +32,7 @@ namespace EduServices.OrganizationStudyHour.Service
         >(organizationStudyHoursRepository, organizationConvertor, validator),
             IOrganizationStudyHourService
     {
-        private readonly HashSet<TimeTableDbo> _timeTables = timeTableCodebook.GetCodeBookItems();
+        private readonly HashSet<TimeTableDbo> _timeTables = timeTableCodebook.GetEntities(false);
 
         public override Result<StudyHourDetailDto> UpdateObject(StudyHourUpdateDto update, Guid userId, string culture, Result<StudyHourDetailDto> result = null)
         {
@@ -44,7 +44,7 @@ namespace EduServices.OrganizationStudyHour.Service
 
         public override HashSet<StudyHourListDto> GetList(Expression<Func<OrganizationStudyHourDbo, bool>> predicate = null, bool deleted = false, string culture = "")
         {
-            return _convertor.ConvertToWebModel([.. _repository.GetEntities(deleted, predicate).OrderBy(x => x.Position)], string.Empty);
+            return _convertor.ConvertToWebModel([.. _repository.GetEntities(deleted, predicate, x => x.Position)], string.Empty);
         }
 
         public override Result<StudyHourDetailDto> AddObject(StudyHourCreateDto addObject, Guid userId, string culture)

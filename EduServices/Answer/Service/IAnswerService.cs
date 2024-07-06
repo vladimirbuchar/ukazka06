@@ -1,6 +1,6 @@
 ﻿using Core.Base.Service;
 using EduServices.Answer.Dto;
-using Model.Tables.Edu.Answer;
+using Model.Edu.Answer;
 
 namespace EduServices.Answer.Service
 {

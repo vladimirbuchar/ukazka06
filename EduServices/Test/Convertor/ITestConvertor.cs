@@ -1,6 +1,6 @@
 ﻿using Core.Base.Convertor;
 using EduServices.Test.Dto;
-using Model.Tables.Edu.CourseTest;
+using Model.Edu.CourseTest;
 
 namespace EduServices.Test.Convertor
 {

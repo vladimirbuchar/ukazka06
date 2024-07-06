@@ -5,8 +5,8 @@ using EduRepository.QuestionRepository;
 using EduServices.Question.Convertor;
 using EduServices.Question.Dto;
 using EduServices.Question.Validator;
-using Model.Tables.CodeBook;
-using Model.Tables.Edu.TestQuestion;
+using Model.CodeBook;
+using Model.Edu.Question;
 
 namespace EduServices.Question.Service
 {

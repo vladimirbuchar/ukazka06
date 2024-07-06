@@ -15,10 +15,11 @@ using EduServices.CourseTermStudent.Dto;
 using EduServices.CourseTermStudent.Validator;
 using EduServices.SystemService.SendMailService;
 using Microsoft.Extensions.Configuration;
-using Model.Tables.CodeBook;
-using Model.Tables.Edu.Notification;
-using Model.Tables.Edu.User;
-using Model.Tables.Link;
+using Model.CodeBook;
+using Model.Edu.Notification;
+using Model.Edu.Person;
+using Model.Edu.User;
+using Model.Link;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,7 +55,7 @@ namespace EduServices.CourseTermStudent.Service
         private readonly IRoleRepository _roleRepository = roleRepository;
         private readonly IOrganizationRoleRepository _organizationRoleRepository = organizationRoleRepository;
         private readonly INotificationRepository _notificationRepository = notificationService;
-        private readonly HashSet<NotificationTypeDbo> _notificationTypes = codeBooService.GetCodeBookItems();
+        private readonly HashSet<NotificationTypeDbo> _notificationTypes = codeBooService.GetEntities(false);
         private readonly IOrganizationSettingRepository _organizationSettingRepository = organizationSettingRepository;
         private readonly ISendMailService _sendMailService = sendMailService;
         private readonly IConfiguration _configuration = configuration;
@@ -79,7 +80,7 @@ namespace EduServices.CourseTermStudent.Service
                                 UserEmail = email,
                                 UserRoleId = _roleRepository.GetEntity(false, x => x.SystemIdentificator == UserRole.REGISTERED_USER).Id,
                                 UserPassword = defaultPassword,
-                                Person = new Model.Tables.Edu.Person.PersonDbo() { FirstName = addObject.FirstName, LastName = addObject.LastName }
+                                Person = new PersonDbo() { FirstName = addObject.FirstName, LastName = addObject.LastName }
                             },
                            userId
                         );
@@ -143,7 +144,7 @@ namespace EduServices.CourseTermStudent.Service
                 }
                 else
                 {
-                    result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.ADD_STUDENT_TO_COURSE, GlobalValue.EMAIL_IS_NOT_VALID, email, 0));
+                    result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.ADD_STUDENT_TO_COURSE, GlobalValue.EMAIL_IS_NOT_VALID, email, 0));
                 }
             }
             return result;
@@ -151,7 +152,7 @@ namespace EduServices.CourseTermStudent.Service
 
         HashSet<CourseTermStudentListDto> ICourseTermStudentService.GetAllStudentInCourseTerm(Guid courseTermId)
         {
-            return _convertor.ConvertToWebModel(_repository.GetAllStudentInCourseTerm(courseTermId), string.Empty);
+            return _convertor.ConvertToWebModel(_repository.GetEntities(false, x => x.CourseTermId == courseTermId), string.Empty);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Core.Base.Convertor;
 using EduServices.Note.Dto;
-using Model.Tables.Edu.Note;
+using Model.Edu.Note;
 
 namespace EduServices.Note.Convertor
 {

@@ -1,5 +1,5 @@
 ﻿using EduServices.StudentAttendance.Dto;
-using Model.Tables.Edu.AttendanceStudent;
+using Model.Edu.AttendanceStudent;
 using System;
 using System.Collections.Generic;
 

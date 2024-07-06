@@ -1,9 +1,9 @@
 ﻿using Core.DataTypes;
 using Core.Extension;
 using EduServices.User.Dto;
-using Model.Tables.Edu.Person;
-using Model.Tables.Edu.PersonAddress;
-using Model.Tables.Edu.User;
+using Model.Edu.Person;
+using Model.Edu.PersonAddress;
+using Model.Edu.User;
 using System.Collections.Generic;
 using System.Linq;
 

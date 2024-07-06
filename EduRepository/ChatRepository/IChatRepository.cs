@@ -1,5 +1,5 @@
 ﻿using Core.Base.Repository;
-using Model.Tables.Edu.Chat;
+using Model.Edu.Chat;
 
 namespace EduRepository.ChatRepository
 {

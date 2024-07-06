@@ -4,7 +4,7 @@ using Core.DataTypes;
 using EduRepository.CourseMaterialRepository;
 using EduRepository.OrganizationRepository;
 using EduServices.CourseMaterial.Dto;
-using Model.Tables.Edu.CourseMaterial;
+using Model.Edu.CourseMaterial;
 
 namespace EduServices.CourseMaterial.Validator
 {
@@ -17,10 +17,10 @@ namespace EduServices.CourseMaterial.Validator
         public override Result<CourseMaterialDetailDto> IsValid(CourseMaterialCreateDto create)
         {
             Result<CourseMaterialDetailDto> result = new();
-            IsValidString(create.Name, result, ErrorCategory.COURSE_MATERIAL, GlobalValue.STRING_IS_EMPTY);
+            IsValidString(create.Name, result, Category.COURSE_MATERIAL, GlobalValue.STRING_IS_EMPTY);
             if (_organizationRepository.GetEntity(create.OrganizationId) == null)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.ORGANIZATION, GlobalValue.NOT_EXISTS));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.ORGANIZATION, GlobalValue.NOT_EXISTS));
             }
             return result;
         }
@@ -28,7 +28,7 @@ namespace EduServices.CourseMaterial.Validator
         public override Result<CourseMaterialDetailDto> IsValid(CourseMaterialUpdateDto update)
         {
             Result<CourseMaterialDetailDto> result = new();
-            IsValidString(update.Name, result, ErrorCategory.COURSE_MATERIAL, GlobalValue.STRING_IS_EMPTY);
+            IsValidString(update.Name, result, Category.COURSE_MATERIAL, GlobalValue.STRING_IS_EMPTY);
             return result;
         }
     }

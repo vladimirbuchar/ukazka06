@@ -1,8 +1,8 @@
 ﻿using Core.Extension;
 using EduServices.CourseTerm.Dto;
-using Model.Tables.Edu.Branch;
-using Model.Tables.Edu.ClassRoom;
-using Model.Tables.Edu.CourseTerm;
+using Model.Edu.Branch;
+using Model.Edu.ClassRoom;
+using Model.Edu.CourseTerm;
 using System;
 using System.Collections.Generic;
 using System.Linq;

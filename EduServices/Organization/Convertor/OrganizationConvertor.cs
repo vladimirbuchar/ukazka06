@@ -4,14 +4,14 @@ using Core.DataTypes;
 using EduRepository.OrganizationRoleRepository;
 using EduServices.Organization.Dto;
 using Microsoft.Extensions.Configuration;
-using Model.Tables.CodeBook;
-using Model.Tables.Edu.BankOfQuestions;
-using Model.Tables.Edu.Branch;
-using Model.Tables.Edu.ClassRoom;
-using Model.Tables.Edu.Organization;
-using Model.Tables.Edu.OrganizationAddress;
-using Model.Tables.Edu.OrganizationSetting;
-using Model.Tables.Link;
+using Model.CodeBook;
+using Model.Edu.BankOfQuestions;
+using Model.Edu.Branch;
+using Model.Edu.ClassRoom;
+using Model.Edu.Organization;
+using Model.Edu.OrganizationAddress;
+using Model.Edu.OrganizationSetting;
+using Model.Link;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,8 +25,8 @@ namespace EduServices.Organization.Convertor
         IOrganizationRoleRepository organizationRoleRepository
         ) : IOrganizationConvertor
     {
-        private readonly HashSet<LicenseDbo> _licences = licences.GetCodeBookItems();
-        private readonly HashSet<CountryDbo> _countries = countries.GetCodeBookItems();
+        private readonly HashSet<LicenseDbo> _licences = licences.GetEntities(false);
+        private readonly HashSet<CountryDbo> _countries = countries.GetEntities(false);
         private readonly IOrganizationRoleRepository _organizationRoleRepository = organizationRoleRepository;
         private readonly string _elearningUrl = configuration.GetSection(ConfigValue.ELEARNING_URL).Value;
         private readonly string _fileServerUrl = configuration.GetSection(ConfigValue.FILE_SERVER_URL).Value;

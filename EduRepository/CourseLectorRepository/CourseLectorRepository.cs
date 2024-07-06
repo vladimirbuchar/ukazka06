@@ -2,16 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
-using Model.Tables.Link;
+using Model.Link;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace EduRepository.CourseLectorRepository
 {
     public class CourseLectorRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<CourseLectorDbo>(dbContext, memoryCache), ICourseLectorRepository
     {
-        public HashSet<CourseLectorDbo> GetLectorCourse(Guid userId)
+        public override HashSet<CourseLectorDbo> GetEntities(bool deleted, Expression<Func<CourseLectorDbo, bool>> predicate = null, Expression<Func<CourseLectorDbo, object>> orderBy = null, Expression<Func<CourseLectorDbo, object>> orderByDesc = null)
         {
             return
             [
@@ -35,8 +36,8 @@ namespace EduRepository.CourseLectorRepository
                     .Include(x => x.CourseTerm)
                     .ThenInclude(x => x.TimeTo)
                     .Include(x=>x.UserInOrganization)
-                    .Where(x=>x.UserInOrganization.UserId == userId)
-
+                    .Where(predicate)
+                    .Where(x => x.IsDeleted == deleted)
             ];
         }
     }

@@ -1,7 +1,7 @@
 ﻿using System;
 using Core.Base.Service;
 using EduServices.Organization.Dto;
-using Model.Tables.Edu.Organization;
+using Model.Edu.Organization;
 
 namespace EduServices.Organization.Service
 {

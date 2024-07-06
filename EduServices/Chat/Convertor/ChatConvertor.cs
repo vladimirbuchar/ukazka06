@@ -1,7 +1,6 @@
 ﻿using Core.Extension;
 using EduServices.Chat.Dto;
-using Model.Tables.Edu.Chat;
-using System;
+using Model.Edu.Chat;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -69,7 +68,18 @@ namespace EduServices.Chat.Convertor
 
         public ChatItemDetailDto ConvertToWebModel(ChatDbo detail, string culture)
         {
-            throw new NotImplementedException();
+            return new ChatItemDetailDto()
+            {
+                Avatar = detail.User.Person.AvatarUrl,
+                Answers = [],
+                Date = detail.Date,
+                FirstName = detail.User.Person.FirstName,
+                Id = detail.Id,
+                LastName = detail.User.Person.LastName,
+                UserId = detail.UserId,
+                Text = detail.Text,
+                SecondName = detail.User.Person.SecondName
+            };
         }
     }
 }

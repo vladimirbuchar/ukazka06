@@ -6,9 +6,9 @@ using Core.Extension;
 using EduRepository.LinkLifeTimeRepository;
 using EduRepository.UserRepository;
 using EduServices.User.Dto;
-using Model.Tables.CodeBook;
-using Model.Tables.Edu.LinkLifeTime;
-using Model.Tables.Edu.User;
+using Model.CodeBook;
+using Model.Edu.LinkLifeTime;
+using Model.Edu.User;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
@@ -31,8 +31,8 @@ namespace EduServices.User.Validator
             Result<UserDetailDto> validate = new();
             IsValidUserEmail(create.UserEmail, Guid.Empty, validate);
             IsValidPassword(create.UserPassword, create.UserPassword2, validate);
-            IsValidString(create.Person.FirstName, validate, ErrorCategory.USER, Constants.FIRST_NAME_IS_EMPTY);
-            IsValidString(create.Person.LastName, validate, ErrorCategory.USER, Constants.LAST_NAME_IS_EMPTY);
+            IsValidString(create.Person.FirstName, validate, Category.USER, Constants.FIRST_NAME_IS_EMPTY);
+            IsValidString(create.Person.LastName, validate, Category.USER, Constants.LAST_NAME_IS_EMPTY);
             ValidateAddress(create.Person.Address, validate);
             return validate;
         }
@@ -59,11 +59,11 @@ namespace EduServices.User.Validator
         private void IsValidUserEmail(string email, Guid id, Result result)
         {
             email = email?.Trim();
-            IsValidString(email, result, ErrorCategory.USER, GlobalValue.EMAIL_IS_EMPTY);
-            IsValidEmail(email, result, ErrorCategory.USER, GlobalValue.EMAIL_IS_NOT_VALID);
+            IsValidString(email, result, Category.USER, GlobalValue.EMAIL_IS_EMPTY);
+            IsValidEmail(email, result, Category.USER, GlobalValue.EMAIL_IS_NOT_VALID);
             if (id == Guid.Empty)
             {
-                IsExist(x => x.UserEmail == email, result, ErrorCategory.USER, GlobalValue.EMAIL_EXIST, email);
+                IsExist(x => x.UserEmail == email, result, Category.USER, GlobalValue.EMAIL_EXIST, email);
             }
         }
 
@@ -78,31 +78,31 @@ namespace EduServices.User.Validator
             Regex hasSymbols = SymbolRegex();
             if (password2.IsNullOrEmptyWithTrim() || password1.IsNullOrEmptyWithTrim())
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.USER, GlobalValue.STRING_IS_EMPTY));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.USER, GlobalValue.STRING_IS_EMPTY));
             }
             if (password1 != password2)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.USER, Constants.PASSWORD_ARE_DIFFERENT));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.USER, Constants.PASSWORD_ARE_DIFFERENT));
             }
             if (!hasLowerChar.IsMatch(password1))
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.USER, Constants.PASSWORD_NOT_LOWER_CHAR));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.USER, Constants.PASSWORD_NOT_LOWER_CHAR));
             }
             if (!hasUpperChar.IsMatch(password1))
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.USER, Constants.PASSWORD_NOT_UPPER_CHAR));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.USER, Constants.PASSWORD_NOT_UPPER_CHAR));
             }
             if (!hasMinChars.IsMatch(password1))
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.USER, Constants.PASSWORD_NOT_MIN_LENGTH));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.USER, Constants.PASSWORD_NOT_MIN_LENGTH));
             }
             if (!hasNumber.IsMatch(password1))
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.USER, Constants.PASSWORD_NOT_NUMBER));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.USER, Constants.PASSWORD_NOT_NUMBER));
             }
             if (!hasSymbols.IsMatch(password1))
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.USER, Constants.PASSWORD_NOT_SYMBOLS));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.USER, Constants.PASSWORD_NOT_SYMBOLS));
             }
         }
 
@@ -113,7 +113,7 @@ namespace EduServices.User.Validator
             LinkLifeTimeDbo linkLifeTime = _linkLifeTimeRepository.GetEntity(false, x => x.Id == validate.LinkId && x.EndTime >= DateTime.Now);
             if (linkLifeTime == null)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.USER, Constants.LINK_IS_NOT_VALID));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.USER, Constants.LINK_IS_NOT_VALID));
             }
 
             return result;
@@ -125,25 +125,25 @@ namespace EduServices.User.Validator
             LinkLifeTimeDbo linkLifeTime = _linkLifeTimeRepository.GetEntity(false, x => x.Id == validate.LinkId && x.EndTime >= DateTime.Now);
             if (linkLifeTime == null)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.USER, Constants.LINK_IS_NOT_VALID));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.USER, Constants.LINK_IS_NOT_VALID));
             }
 
             return result;
         }
 
-        public void IsvalidOldPassword(Guid userId, string oldPassword, Result result)
+        public void IsValidOldPassword(Guid userId, string oldPassword, Result result)
         {
             UserDbo user = _repository.GetEntity(userId);
             if (user.UserPassword != oldPassword.GetHashString())
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.USER, Constants.OLD_PASSWORD_IS_BAD));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.USER, Constants.OLD_PASSWORD_IS_BAD));
             }
         }
 
         public Result ChangePasswordValidate(ChangePasswordDto changePassword)
         {
             Result validate = new();
-            IsvalidOldPassword(changePassword.UserId, changePassword.OldUserPassword, validate);
+            IsValidOldPassword(changePassword.UserId, changePassword.OldUserPassword, validate);
             IsValidPassword(changePassword.NewUserPassword, changePassword.NewUserPassword2, validate);
             return validate;
         }

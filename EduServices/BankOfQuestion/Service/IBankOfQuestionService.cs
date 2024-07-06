@@ -1,6 +1,6 @@
 ﻿using Core.Base.Service;
 using EduServices.BankOfQuestion.Dto;
-using Model.Tables.Edu.BankOfQuestions;
+using Model.Edu.BankOfQuestions;
 
 namespace EduServices.BankOfQuestion.Service
 {

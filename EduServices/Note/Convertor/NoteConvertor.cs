@@ -1,7 +1,7 @@
 ﻿using Core.Constants;
 using EduServices.Note.Dto;
 using Microsoft.Extensions.Configuration;
-using Model.Tables.Edu.Note;
+using Model.Edu.Note;
 using System.Collections.Generic;
 using System.Linq;
 

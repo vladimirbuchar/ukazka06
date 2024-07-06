@@ -1,6 +1,6 @@
 ﻿using Core.Base.Convertor;
 using EduServices.User.Dto;
-using Model.Tables.Edu.User;
+using Model.Edu.User;
 
 namespace EduServices.User.Convertor
 {

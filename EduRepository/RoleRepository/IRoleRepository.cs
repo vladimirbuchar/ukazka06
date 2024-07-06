@@ -1,5 +1,5 @@
 ﻿using Core.Base.Repository;
-using Model.Tables.Edu.UserRole;
+using Model.Edu.UserRole;
 
 namespace EduRepository.RoleRepository
 {

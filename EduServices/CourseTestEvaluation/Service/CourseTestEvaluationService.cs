@@ -3,7 +3,7 @@ using EduRepository.CourseTestEvaluationRepository;
 using EduServices.CourseTestEvaluation.Convertor;
 using EduServices.CourseTestEvaluation.Dto;
 using EduServices.CourseTestEvaluation.Validator;
-using Model.Tables.Edu.CourseTestEvaluation;
+using Model.Edu.CourseTestEvaluation;
 
 namespace EduServices.CourseTestEvaluation.Service
 {

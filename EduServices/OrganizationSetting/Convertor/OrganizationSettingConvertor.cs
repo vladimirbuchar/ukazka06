@@ -1,6 +1,6 @@
 ﻿using Core.Extension;
 using EduServices.OrganizationSetting.Dto;
-using Model.Tables.Edu.OrganizationSetting;
+using Model.Edu.OrganizationSetting;
 
 namespace EduServices.OrganizationSetting.Convertor
 {

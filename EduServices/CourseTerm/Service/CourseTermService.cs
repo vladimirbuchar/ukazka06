@@ -8,9 +8,9 @@ using EduRepository.StudentInGroupCourseTerm;
 using EduServices.CourseTerm.Convertor;
 using EduServices.CourseTerm.Dto;
 using EduServices.CourseTerm.Validator;
-using Model.Tables.Edu.CourseTerm;
-using Model.Tables.Edu.OrganizationStudyHour;
-using Model.Tables.Link;
+using Model.Edu.CourseTerm;
+using Model.Edu.OrganizationStudyHour;
+using Model.Link;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,7 +42,7 @@ namespace EduServices.CourseTerm.Service
         {
             if (addObject.ClassRoomId == null)
             {
-                addObject.ClassRoomId = _classRoomRepository.GetOnlineClassRoom(addObject.OrganizationId).Id;
+                addObject.ClassRoomId = _classRoomRepository.GetEntity(false, x => x.IsOnline == true && x.Branch.OrganizationId == addObject.OrganizationId).Id;
             }
             Result<CourseTermDetailDto> result = _validator.IsValid(addObject);
             if (result.IsOk)

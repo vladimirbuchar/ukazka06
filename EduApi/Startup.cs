@@ -3,7 +3,7 @@ using Core.Constants;
 using EduApi.Configuration.Hangfire;
 using EduApi.Configuration.Swagger;
 using EduServices;
-using EduServices.Jobs;
+using EduServices.HangfireJob;
 using Hangfire;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -87,7 +87,7 @@ namespace EduApi
             services.RegistrationRoute();
             services.RegistrationPermissions();
             services.RegistrationSetup();
-            services.RegisterJob();
+            services.RegisterHangfireJob();
             services
                 .AddMvc(options =>
                 {
@@ -217,7 +217,7 @@ namespace EduApi
             services.AddHangfireServer();
         }
 
-        private static bool IsOriginAllowed(string host)
+        private bool IsOriginAllowed(string host)
         {
             var corsOriginAllowed = new[] { "http://localhost:3000", "https://app.flexiblelms.com", "https://wwww.flexiblelms.com" };
             return corsOriginAllowed.Contains(host);

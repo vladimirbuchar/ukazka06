@@ -1,6 +1,6 @@
 ﻿using Core.Base.Convertor;
 using EduServices.SendMessage.Dto;
-using Model.Tables.Edu.SendMessage;
+using Model.Edu.SendMessage;
 
 namespace EduServices.SendMessage.Convertor
 {

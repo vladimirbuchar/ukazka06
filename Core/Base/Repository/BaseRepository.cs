@@ -45,7 +45,6 @@ namespace Core.Base.Repository
         where Model : TableModel
     {
         protected readonly EduDbContext _dbContext = dbContext;
-        protected string cacheName = string.Empty;
 
         /// <summary>
         /// save entity to database
@@ -191,9 +190,23 @@ namespace Core.Base.Repository
         /// <param name="deleted"></param>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        public virtual HashSet<Model> GetEntities(bool deleted, Expression<Func<Model, bool>> predicate = null)
+        public virtual HashSet<Model> GetEntities(bool deleted, Expression<Func<Model, bool>> predicate = null, Expression<Func<Model, object>> orderBy = null, Expression<Func<Model, object>> orderByDesc = null)
         {
-            return predicate != null ? [.. _dbContext.Set<Model>().Where(predicate).Where(x => x.IsDeleted == deleted)] : [.. _dbContext.Set<Model>().Where(x => x.IsDeleted == deleted)];
+            IQueryable<Model> query = _dbContext.Set<Model>();
+            if (predicate != null)
+            {
+                query = query.Where(predicate);
+            }
+            query = query.Where(x => x.IsDeleted == deleted);
+            if (orderBy != null)
+            {
+                query = query.OrderBy(orderBy);
+            }
+            else if (orderByDesc != null)
+            {
+                query = query.OrderByDescending(orderByDesc);
+            }
+            return [.. query];
         }
     }
 }

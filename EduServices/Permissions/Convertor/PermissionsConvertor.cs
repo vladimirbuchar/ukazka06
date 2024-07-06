@@ -1,5 +1,5 @@
 ﻿using EduServices.Permissions.Dto;
-using Model.Tables.System;
+using Model.System;
 using System.Collections.Generic;
 using System.Linq;
 

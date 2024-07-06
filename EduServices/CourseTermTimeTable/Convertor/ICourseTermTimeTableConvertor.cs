@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Core.Base.Convertor;
 using EduServices.CourseTermTimeTable.Dto;
-using Model.Tables.Edu.CourseTermDate;
+using Model.Edu.CourseTermDate;
 
 namespace EduServices.CourseTermTimeTable.Convertor
 {

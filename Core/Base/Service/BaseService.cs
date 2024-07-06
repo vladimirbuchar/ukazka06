@@ -7,10 +7,11 @@ using Core.Base.Validator;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Http;
 using Model;
-using Model.Tables.CodeBook;
+using Model.CodeBook;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace Core.Base.Service
 {
@@ -32,7 +33,7 @@ namespace Core.Base.Service
         where FileModel : FileRepositoryModel
     {
         protected readonly IFileUploadRepository<FileModel> _fileRepository = fileRepository;
-        private HashSet<CultureDbo> _culture { get; set; } = codeBookRepository.GetCodeBookItems();
+        private HashSet<CultureDbo> Culture { get; set; } = codeBookRepository.GetEntities(false);
 
         /// <summary>
         /// file upload 
@@ -43,7 +44,7 @@ namespace Core.Base.Service
         /// <param name="files"></param>
         /// <param name="model"></param>
         /// <param name="deleteFiles"></param>
-        public virtual Result FileUpload(Guid parentId, string culture, Guid userId, List<IFormFile> files, FileModel model, System.Linq.Expressions.Expression<Func<FileModel, bool>> deleteFiles = null)
+        public virtual Result FileUpload(Guid parentId, string culture, Guid userId, List<IFormFile> files, FileModel model, Expression<Func<FileModel, bool>> deleteFiles = null)
         {
             _fileRepository.CreateFileRepository(parentId);
             if (deleteFiles != null)
@@ -54,7 +55,7 @@ namespace Core.Base.Service
                     _fileRepository.DeleteEntity(item, userId);
                 }
             }
-            Guid cultureId = _culture.FirstOrDefault(x => x.SystemIdentificator == culture).Id;
+            Guid cultureId = Culture.FirstOrDefault(x => x.SystemIdentificator == culture).Id;
             model.CultureId = cultureId;
             foreach (IFormFile file in files)
             {
@@ -177,7 +178,7 @@ namespace Core.Base.Service
         /// </summary>
         /// <param name="predicate"></param>
         /// <param name="userId"></param>
-        public virtual Result MultipleDelete(System.Linq.Expressions.Expression<Func<Model, bool>> predicate, Guid userId)
+        public virtual Result MultipleDelete(Expression<Func<Model, bool>> predicate, Guid userId)
         {
             HashSet<Guid> ids = _repository.GetEntities(false, predicate).Select(x => x.Id).ToHashSet();
             foreach (Guid id in ids)
@@ -193,9 +194,18 @@ namespace Core.Base.Service
         /// <param name="deleted"></param>
         /// <param name="culture"></param>
         /// <returns></returns>
-        public virtual HashSet<ObjectĹist> GetList(System.Linq.Expressions.Expression<Func<Model, bool>> predicate = null, bool deleted = false, string culture = "")
+        public virtual HashSet<ObjectĹist> GetList(Expression<Func<Model, bool>> predicate = null, bool deleted = false, string culture = "")
         {
             return _convertor.ConvertToWebModel(_repository.GetEntities(deleted, predicate), culture);
+        }
+
+        public virtual HashSet<ObjectĹist> GetList(bool deleted = false, string culture = "")
+        {
+            return GetList(null, deleted, culture);
+        }
+        public virtual HashSet<ObjectĹist> GetList()
+        {
+            return GetList(null, false, string.Empty);
         }
         /// <summary>
         /// get object detail
@@ -213,7 +223,7 @@ namespace Core.Base.Service
         /// <param name="predicate"></param>
         /// <param name="culture"></param>
         /// <returns></returns>
-        public virtual Detail GetDetail(System.Linq.Expressions.Expression<Func<Model, bool>> predicate, string culture)
+        public virtual Detail GetDetail(Expression<Func<Model, bool>> predicate, string culture)
         {
             return _convertor.ConvertToWebModel(_repository.GetEntity(false, predicate), culture);
         }

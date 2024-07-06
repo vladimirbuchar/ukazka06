@@ -44,7 +44,7 @@ namespace EduApi.Controllers.ClientZone.Course
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<CourseListInOrganizationDto>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<CourseListDto>), 200)]
         [ProducesResponseType(typeof(void), 404)]
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]

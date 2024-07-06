@@ -6,9 +6,9 @@ using EduRepository.OrganizationSettingRepository;
 using EduServices.OrganizationSetting.Convertor;
 using EduServices.OrganizationSetting.Dto;
 using EduServices.OrganizationSetting.Validator;
-using Model.Tables.Edu.LicenseChange;
-using Model.Tables.Edu.Organization;
-using Model.Tables.Edu.OrganizationSetting;
+using Model.Edu.LicenseChange;
+using Model.Edu.Organization;
+using Model.Edu.OrganizationSetting;
 using System;
 
 namespace EduServices.OrganizationSetting.Service

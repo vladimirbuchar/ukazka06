@@ -5,7 +5,7 @@ using EduRepository.CourseStudentRepository;
 using EduRepository.CourseTermRepository;
 using EduRepository.StudentEvaluationRepository;
 using EduServices.StudentEvaluation.Dto;
-using Model.Tables.Edu.StudentEvaluation;
+using Model.Edu.StudentEvaluation;
 
 namespace EduServices.StudentEvaluation.Validator
 {
@@ -21,11 +21,11 @@ namespace EduServices.StudentEvaluation.Validator
             Result<StudentEvaluationDetailDto> validate = new();
             if (_courseStudentRepository.GetEntity(create.CourseStudentId) == null)
             {
-                validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.COURSE_STUDENT, GlobalValue.NOT_EXISTS));
+                validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.COURSE_STUDENT, GlobalValue.NOT_EXISTS));
             }
             if (_courseTermRepository.GetEntity(create.CourseTermId) == null)
             {
-                validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.COURSE_TERM, GlobalValue.NOT_EXISTS));
+                validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.COURSE_TERM, GlobalValue.NOT_EXISTS));
             }
             return validate;
         }

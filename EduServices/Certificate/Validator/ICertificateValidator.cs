@@ -1,7 +1,7 @@
 ﻿using Core.Base.Validator;
 using EduRepository.CertificateRepository;
 using EduServices.Certificate.Dto;
-using Model.Tables.Edu.Certificate;
+using Model.Edu.Certificate;
 
 namespace EduServices.Certificate.Validator
 {

@@ -4,7 +4,7 @@ using Core.DataTypes;
 using EduRepository.BranchRepository;
 using EduRepository.ClassRoomRepository;
 using EduServices.ClassRoom.Dto;
-using Model.Tables.Edu.ClassRoom;
+using Model.Edu.ClassRoom;
 
 namespace EduServices.ClassRoom.Validator
 {
@@ -17,11 +17,11 @@ namespace EduServices.ClassRoom.Validator
         public override Result<ClassRoomDetailDto> IsValid(ClassRoomCreateDto create)
         {
             Result<ClassRoomDetailDto> result = new();
-            IsValidString(create.Name, result, ErrorCategory.CLASS_ROOM, GlobalValue.STRING_IS_EMPTY);
-            IsValidPostiveNumber(create.MaxCapacity, result, ErrorCategory.CLASS_ROOM, Constants.CLASS_ROOM_MAX_CAPACITY_IS_LESS_THEN_ZERO);
+            IsValidString(create.Name, result, Category.CLASS_ROOM, GlobalValue.STRING_IS_EMPTY);
+            IsValidPostiveNumber(create.MaxCapacity, result, Category.CLASS_ROOM, Constants.CLASS_ROOM_MAX_CAPACITY_IS_LESS_THEN_ZERO);
             if (_branchRepository.GetEntity(create.BranchId) == null)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.BRANCH, GlobalValue.NOT_EXISTS));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.BRANCH, GlobalValue.NOT_EXISTS));
             }
             return result;
         }
@@ -29,8 +29,8 @@ namespace EduServices.ClassRoom.Validator
         public override Result<ClassRoomDetailDto> IsValid(ClassRoomUpdateDto update)
         {
             Result<ClassRoomDetailDto> result = new();
-            IsValidString(update.Name, result, ErrorCategory.CLASS_ROOM, GlobalValue.STRING_IS_EMPTY);
-            IsValidPostiveNumber(update.MaxCapacity, result, ErrorCategory.CLASS_ROOM, Constants.CLASS_ROOM_MAX_CAPACITY_IS_LESS_THEN_ZERO);
+            IsValidString(update.Name, result, Category.CLASS_ROOM, GlobalValue.STRING_IS_EMPTY);
+            IsValidPostiveNumber(update.MaxCapacity, result, Category.CLASS_ROOM, Constants.CLASS_ROOM_MAX_CAPACITY_IS_LESS_THEN_ZERO);
             return result;
         }
     }

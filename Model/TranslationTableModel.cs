@@ -1,5 +1,5 @@
 ﻿using System;
-using Model.Tables.CodeBook;
+using Model.CodeBook;
 
 namespace Model
 {

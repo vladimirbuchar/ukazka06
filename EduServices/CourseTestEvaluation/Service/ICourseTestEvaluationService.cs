@@ -1,6 +1,6 @@
 ﻿using Core.Base.Service;
 using EduServices.CourseTestEvaluation.Dto;
-using Model.Tables.Edu.CourseTestEvaluation;
+using Model.Edu.CourseTestEvaluation;
 
 namespace EduServices.CourseTestEvaluation.Service
 {

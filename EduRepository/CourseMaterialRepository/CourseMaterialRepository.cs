@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
-using Model.Tables.Edu.CourseMaterial;
+using Model.Edu.CourseMaterial;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +14,22 @@ namespace EduRepository.CourseMaterialRepository
     {
         public override CourseMaterialDbo GetEntity(Guid id)
         {
-            return _dbContext.Set<CourseMaterialDbo>().Include(x => x.CourseMaterialTranslation.Where(x => x.IsDeleted == false)).ThenInclude(x => x.Culture).FirstOrDefault(x => x.Id == id);
+            return _dbContext.Set<CourseMaterialDbo>()
+                .Include(x => x.CourseMaterialTranslation.Where(x => x.IsDeleted == false))
+                .ThenInclude(x => x.Culture)
+                .Include(x => x.CourseMaterialFileRepositories)
+                .FirstOrDefault(x => x.Id == id);
         }
 
-        public override HashSet<CourseMaterialDbo> GetEntities(bool deleted, Expression<Func<CourseMaterialDbo, bool>> predicate = null)
+        public override HashSet<CourseMaterialDbo> GetEntities(bool deleted, Expression<Func<CourseMaterialDbo, bool>> predicate = null, Expression<Func<CourseMaterialDbo, object>> orderBy = null, Expression<Func<CourseMaterialDbo, object>> orderByDesc = null)
         {
-            return [.. _dbContext.Set<CourseMaterialDbo>().Where(x => x.IsDeleted == deleted).Where(predicate).Include(x => x.CourseMaterialTranslation.Where(x => x.IsDeleted == false)).ThenInclude(x => x.Culture)];
+            return [.. _dbContext.Set<CourseMaterialDbo>()
+                .Include(x => x.CourseMaterialTranslation.Where(x => x.IsDeleted == false))
+                .ThenInclude(x => x.Culture)
+                .Where(predicate)
+                .Where(x => x.IsDeleted == deleted)
+                ]
+                ;
         }
 
         public override Guid GetOrganizationId(Guid objectId)
@@ -27,12 +37,5 @@ namespace EduRepository.CourseMaterialRepository
             return _dbContext.Set<CourseMaterialDbo>().FirstOrDefault(x => x.Id == objectId).OrganizationId;
         }
 
-        public HashSet<CourseMaterialFileRepositoryDbo> GetFiles(Guid id)
-        {
-            return
-            [
-                .. _dbContext.Set<CourseMaterialDbo>().Include(x => x.CourseMaterialFileRepositories.Where(x => x.IsDeleted == false)).ThenInclude(x => x.Culture).FirstOrDefault(x => x.Id == id).CourseMaterialFileRepositories
-            ];
-        }
     }
 }

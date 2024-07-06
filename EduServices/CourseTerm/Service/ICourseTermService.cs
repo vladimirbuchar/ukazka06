@@ -1,6 +1,6 @@
 ﻿using Core.Base.Service;
 using EduServices.CourseTerm.Dto;
-using Model.Tables.Edu.CourseTerm;
+using Model.Edu.CourseTerm;
 
 namespace EduServices.CourseTerm.Service
 {

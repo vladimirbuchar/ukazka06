@@ -2,7 +2,7 @@
 using EduRepository.UserCertificateRepository;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
-using Model.Tables.Edu.UserCertificate;
+using Model.Edu.UserCertificate;
 
 namespace EduRepository.UserInOrganizationRepository
 {

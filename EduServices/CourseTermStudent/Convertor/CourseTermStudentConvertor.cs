@@ -1,5 +1,5 @@
 ﻿using EduServices.CourseTermStudent.Dto;
-using Model.Tables.Link;
+using Model.Link;
 using System.Collections.Generic;
 using System.Linq;
 

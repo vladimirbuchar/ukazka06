@@ -3,7 +3,7 @@ using EduRepository.PermissionsRepository;
 using EduServices.Permissions.Convertor;
 using EduServices.Permissions.Dto;
 using EduServices.Permissions.Validator;
-using Model.Tables.System;
+using Model.System;
 
 namespace EduServices.Permissions.Service
 {
@@ -21,6 +21,5 @@ namespace EduServices.Permissions.Service
     {
 
     }
-
 }
 

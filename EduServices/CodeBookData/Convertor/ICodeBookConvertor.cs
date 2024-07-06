@@ -1,6 +1,6 @@
 ﻿using Core.Base.Convertor;
 using EduServices.CodeBookData.Dto;
-using Model.Tables.CodeBook;
+using Model.CodeBook;
 using System.Collections.Generic;
 
 namespace EduServices.CodeBookData.Convertor

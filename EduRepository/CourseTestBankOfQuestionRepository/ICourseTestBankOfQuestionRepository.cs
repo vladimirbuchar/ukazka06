@@ -1,5 +1,5 @@
 ﻿using Core.Base.Repository;
-using Model.Tables.Link;
+using Model.Link;
 
 namespace EduRepository.CourseTestBankOfQuestionRepository
 {

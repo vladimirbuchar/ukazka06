@@ -1,5 +1,5 @@
 ﻿using Core.Base.Repository;
-using Model.Tables.Edu.StudentTestSummaryAnswer;
+using Model.Edu.StudentTestSummaryAnswer;
 
 namespace EduRepository.StudentTestSummaryAnswerRepository
 {

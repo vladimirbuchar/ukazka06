@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
-using Core.Base.Convertor;
+﻿using Core.Base.Convertor;
 using EduServices.Organization.Dto;
+using EduServices.StudentEvaluation.Dto;
 using EduServices.UserProfile.Dto;
-using Model.Tables.Edu.UserCertificate;
-using Model.Tables.Link;
+using Model.Edu.StudentEvaluation;
+using Model.Edu.UserCertificate;
+using Model.Link;
+using System.Collections.Generic;
 
 namespace EduServices.UserProfile.Convertor
 {
@@ -13,5 +15,6 @@ namespace EduServices.UserProfile.Convertor
         HashSet<MyCourseListDto> ConvertToWebModel(HashSet<CourseStudentDbo> getStudentCourses, string culture);
         HashSet<MyCourseListDto> ConvertToWebModel(HashSet<CourseLectorDbo> getStudentCourses, string culture);
         HashSet<MyOrganizationListDto> ConvertToWebModel(HashSet<UserInOrganizationDbo> getMyOrganizations);
+        HashSet<MyEvaluationListDto> ConvertToWebModel(HashSet<StudentEvaluationDbo> getStudentEvaluation);
     }
 }

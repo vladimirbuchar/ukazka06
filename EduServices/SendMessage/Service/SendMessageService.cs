@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using Core.Base.Service;
+﻿using Core.Base.Service;
 using Core.Constants;
 using EduRepository.SendMessageRepository;
 using EduServices.SendMessage.Convertor;
 using EduServices.SendMessage.Dto;
 using EduServices.SendMessage.Validator;
-using Model.Tables.Edu.SendMessage;
+using Model.Edu.SendMessage;
+using System;
+using System.Collections.Generic;
 
 namespace EduServices.SendMessage.Service
 {

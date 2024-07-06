@@ -1,6 +1,6 @@
 ﻿using Core.Extension;
 using EduServices.OrganizationStudyHour.Dto;
-using Model.Tables.Edu.OrganizationStudyHour;
+using Model.Edu.OrganizationStudyHour;
 using System;
 using System.Collections.Generic;
 using System.Linq;

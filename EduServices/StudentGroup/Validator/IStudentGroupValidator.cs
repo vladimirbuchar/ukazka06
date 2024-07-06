@@ -1,7 +1,7 @@
 ﻿using Core.Base.Validator;
 using EduRepository.StudentGroupRepository;
 using EduServices.StudentGroup.Dto;
-using Model.Tables.Edu.StudentGroup;
+using Model.Edu.StudentGroup;
 
 namespace EduServices.StudentGroup.Validator
 {

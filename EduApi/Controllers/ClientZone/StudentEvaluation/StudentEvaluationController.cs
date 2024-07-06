@@ -80,22 +80,5 @@ namespace EduApi.Controllers.ClientZone.StudentEvaluation
             }
         }
 
-        [HttpGet]
-        [ProducesResponseType(typeof(HashSet<MyEvaluationListDto>), 200)]
-        [ProducesResponseType(typeof(void), 404)]
-        [ProducesResponseType(typeof(SystemError), 500)]
-        [ProducesResponseType(typeof(Result), 400)]
-        [ProducesResponseType(typeof(void), 403)]
-        public ActionResult GetMyEvaluation([FromQuery] Guid userId)
-        {
-            try
-            {
-                return SendResponse(_studentEvaluationService.GetMyEvaluation(GetLoggedUserId()));
-            }
-            catch (Exception e)
-            {
-                return SendSystemError(e);
-            }
-        }
     }
 }

@@ -5,8 +5,8 @@ using Core.DataTypes;
 using EduRepository.OrganizationCultureRepository;
 using EduRepository.OrganizationRepository;
 using EduServices.OrganizationCulture.Dto;
-using Model.Tables.CodeBook;
-using Model.Tables.Link;
+using Model.CodeBook;
+using Model.Link;
 
 namespace EduServices.OrganizationCulture.Validator
 {
@@ -22,11 +22,11 @@ namespace EduServices.OrganizationCulture.Validator
             Result<OrganizationCultureDetailDto> validate = new();
             if (_organizationRepository.GetEntity(create.OrganizationId) == null)
             {
-                validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.ORGANIZATION, GlobalValue.NOT_EXISTS));
+                validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.ORGANIZATION, GlobalValue.NOT_EXISTS));
             }
             if (_culture.GetEntity(create.CultureId) == null)
             {
-                validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.CULTURE, GlobalValue.NOT_EXISTS));
+                validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.CULTURE, GlobalValue.NOT_EXISTS));
             }
             return validate;
         }

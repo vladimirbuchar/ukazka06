@@ -1,5 +1,5 @@
 ﻿using Core.Base.Repository;
-using Model.Tables.Edu.Branch;
+using Model.Edu.Branch;
 
 namespace EduRepository.BranchRepository
 {

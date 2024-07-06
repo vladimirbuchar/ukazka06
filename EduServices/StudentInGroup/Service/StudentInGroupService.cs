@@ -17,11 +17,11 @@ using EduServices.StudentInGroup.Dto;
 using EduServices.StudentInGroup.Validator;
 using EduServices.SystemService.SendMailService;
 using Microsoft.Extensions.Configuration;
-using Model.Tables.CodeBook;
-using Model.Tables.Edu.Notification;
-using Model.Tables.Edu.Person;
-using Model.Tables.Edu.User;
-using Model.Tables.Link;
+using Model.CodeBook;
+using Model.Edu.Notification;
+using Model.Edu.Person;
+using Model.Edu.User;
+using Model.Link;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,7 +56,7 @@ namespace EduServices.StudentInGroup.Service
         private readonly IOrganizationSettingRepository _organizationSettingRepository = organizationSettingService;
         private readonly IUserRepository _userRepository = userRepository;
         private readonly INotificationRepository _notificationRepository = notificationRepository;
-        private readonly HashSet<NotificationTypeDbo> _notificationTypes = codeBookService.GetCodeBookItems();
+        private readonly HashSet<NotificationTypeDbo> _notificationTypes = codeBookService.GetEntities(false);
         private readonly IRoleRepository _roleRepository = roleRepository;
         private readonly IOrganizationRoleRepository _organizationRoleRepository = organizationRoleRepository;
         private readonly IStudentInGroupCourseTermRepository _studentInGroupCourseTermRepository = studentInGroupCourseTermRepository;
@@ -145,7 +145,7 @@ namespace EduServices.StudentInGroup.Service
             }
             else
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.ADD_STUDENT_TO_COURSE, GlobalValue.EMAIL_IS_NOT_VALID, email, 0));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.ADD_STUDENT_TO_COURSE, GlobalValue.EMAIL_IS_NOT_VALID, email, 0));
             }
             return result;
         }

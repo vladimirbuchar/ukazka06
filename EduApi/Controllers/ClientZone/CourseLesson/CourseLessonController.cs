@@ -6,6 +6,7 @@ using EduServices.OrganizationRole.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Model.Edu.CourseLesson;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -156,7 +157,7 @@ namespace EduApi.Controllers.ClientZone.CourseLesson
                     GetClientCulture(),
                     GetLoggedUserId(),
                     new List<IFormFile>() { file },
-                    new Model.Tables.Edu.CourseLesson.CourseLessonFileRepositoryDbo() { CourseLessonId = request.Id, },
+                    new CourseLessonFileRepositoryDbo() { CourseLessonId = request.Id, },
                     x => x.CourseLessonId == request.Id && x.Culture.SystemIdentificator == GetClientCulture()
                 ));
             }

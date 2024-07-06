@@ -5,8 +5,8 @@ using EduRepository.OrganizationRepository;
 using EduServices.Organization.Convertor;
 using EduServices.Organization.Dto;
 using EduServices.Organization.Validator;
-using Model.Tables.CodeBook;
-using Model.Tables.Edu.Organization;
+using Model.CodeBook;
+using Model.Edu.Organization;
 using System;
 
 namespace EduServices.Organization.Service

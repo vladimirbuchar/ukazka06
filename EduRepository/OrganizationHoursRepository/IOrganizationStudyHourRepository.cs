@@ -1,5 +1,5 @@
 ﻿using Core.Base.Repository;
-using Model.Tables.Edu.OrganizationStudyHour;
+using Model.Edu.OrganizationStudyHour;
 
 namespace EduRepository.OrganizationHoursRepository
 {

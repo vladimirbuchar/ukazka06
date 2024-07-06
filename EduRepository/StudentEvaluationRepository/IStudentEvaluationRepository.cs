@@ -1,5 +1,5 @@
 ﻿using Core.Base.Repository;
-using Model.Tables.Edu.StudentEvaluation;
+using Model.Edu.StudentEvaluation;
 
 namespace EduRepository.StudentEvaluationRepository
 {

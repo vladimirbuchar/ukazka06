@@ -6,6 +6,7 @@ using EduServices.OrganizationRole.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Model.Edu.Answer;
 using System;
 using System.Collections.Generic;
 
@@ -156,7 +157,7 @@ namespace EduApi.Controllers.ClientZone.Answer
                     GetLoggedUserId()
                     ,
                     new List<IFormFile>() { file },
-                    new Model.Tables.Edu.Answer.AnswerFileRepositoryDbo() { AnswerId = request.Id, },
+                    new AnswerFileRepositoryDbo() { AnswerId = request.Id, },
                     x => x.AnswerId == request.Id && x.Culture.SystemIdentificator == GetClientCulture()
                 ));
             }

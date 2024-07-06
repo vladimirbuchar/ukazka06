@@ -1,6 +1,6 @@
 ﻿using Core.Base.Convertor;
 using EduServices.ClassRoom.Dto;
-using Model.Tables.Edu.ClassRoom;
+using Model.Edu.ClassRoom;
 
 namespace EduServices.ClassRoom.Convertor
 {

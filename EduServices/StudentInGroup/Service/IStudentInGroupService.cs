@@ -1,6 +1,6 @@
 ﻿using Core.Base.Service;
 using EduServices.StudentInGroup.Dto;
-using Model.Tables.Link;
+using Model.Link;
 
 namespace EduServices.StudentInGroup.Service
 {

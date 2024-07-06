@@ -1,6 +1,6 @@
 ﻿using Core.Base.Service;
 using EduServices.Question.Dto;
-using Model.Tables.Edu.TestQuestion;
+using Model.Edu.Question;
 
 namespace EduServices.Question.Service
 {

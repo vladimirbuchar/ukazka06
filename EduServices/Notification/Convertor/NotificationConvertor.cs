@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using EduServices.Notification.Dto;
-using Model.Tables.Edu.Notification;
+using Model.Edu.Notification;
 
 namespace EduServices.Notification.Convertor
 {

@@ -6,6 +6,7 @@ using EduServices.OrganizationRole.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Model.Edu.CourseMaterial;
 using System;
 using System.Collections.Generic;
 
@@ -155,7 +156,7 @@ namespace EduApi.Controllers.ClientZone.CourseMaterial
                     GetClientCulture(),
                 GetLoggedUserId(),
                     new List<IFormFile>() { file },
-                    new Model.Tables.Edu.CourseMaterial.CourseMaterialFileRepositoryDbo() { CourseMaterialId = request.Id, }
+                    new CourseMaterialFileRepositoryDbo() { CourseMaterialId = request.Id, }
                 ));
             }
             catch (Exception e)

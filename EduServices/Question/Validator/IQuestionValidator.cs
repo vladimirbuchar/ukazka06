@@ -1,7 +1,7 @@
 ﻿using Core.Base.Validator;
 using EduRepository.QuestionRepository;
 using EduServices.Question.Dto;
-using Model.Tables.Edu.TestQuestion;
+using Model.Edu.Question;
 
 namespace EduServices.Question.Validator
 {

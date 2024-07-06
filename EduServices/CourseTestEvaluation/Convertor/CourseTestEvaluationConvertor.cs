@@ -1,5 +1,5 @@
 ﻿using EduServices.CourseTestEvaluation.Dto;
-using Model.Tables.Edu.CourseTestEvaluation;
+using Model.Edu.CourseTestEvaluation;
 using System.Collections.Generic;
 using System.Linq;
 

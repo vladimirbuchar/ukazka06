@@ -1,7 +1,7 @@
 ﻿using Core.Base.Service;
 using Core.DataTypes;
 using EduServices.Note.Dto;
-using Model.Tables.Edu.Note;
+using Model.Edu.Note;
 using System;
 
 namespace EduServices.Note.Service

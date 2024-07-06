@@ -4,7 +4,7 @@ using Core.DataTypes;
 using EduRepository.CertificateRepository;
 using EduRepository.OrganizationRepository;
 using EduServices.Certificate.Dto;
-using Model.Tables.Edu.Certificate;
+using Model.Edu.Certificate;
 
 namespace EduServices.Certificate.Validator
 {
@@ -19,18 +19,18 @@ namespace EduServices.Certificate.Validator
             Result<CertificateDetailDto> validate = new();
             if (_organizationRepository.GetEntity(create.OrganizationId) == null)
             {
-                validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.ORGANIZATION, GlobalValue.NOT_EXISTS));
+                validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.ORGANIZATION, GlobalValue.NOT_EXISTS));
             }
-            IsValidString(create.Name, validate, ErrorCategory.CERTIFICATE, GlobalValue.STRING_IS_EMPTY);
-            IsValidPostiveNumber(create.CertificateValidTo, validate, ErrorCategory.CERTIFICATE, Constants.CERTIFICATE_VALID_TO_IS_NOT_VALID);
+            IsValidString(create.Name, validate, Category.CERTIFICATE, GlobalValue.STRING_IS_EMPTY);
+            IsValidPostiveNumber(create.CertificateValidTo, validate, Category.CERTIFICATE, Constants.CERTIFICATE_VALID_TO_IS_NOT_VALID);
             return validate;
         }
 
         public override Result<CertificateDetailDto> IsValid(CertificateUpdateDto update)
         {
             Result<CertificateDetailDto> validate = new();
-            IsValidString(update.Name, validate, ErrorCategory.CERTIFICATE, GlobalValue.STRING_IS_EMPTY);
-            IsValidPostiveNumber(update.CertificateValidTo, validate, ErrorCategory.CERTIFICATE, Constants.CERTIFICATE_VALID_TO_IS_NOT_VALID);
+            IsValidString(update.Name, validate, Category.CERTIFICATE, GlobalValue.STRING_IS_EMPTY);
+            IsValidPostiveNumber(update.CertificateValidTo, validate, Category.CERTIFICATE, Constants.CERTIFICATE_VALID_TO_IS_NOT_VALID);
             return validate;
         }
     }

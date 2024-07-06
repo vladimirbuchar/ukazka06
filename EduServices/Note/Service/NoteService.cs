@@ -7,8 +7,8 @@ using EduServices.Note.Convertor;
 using EduServices.Note.Dto;
 using EduServices.Note.Validator;
 using EduServices.SystemService.FileUpload;
-using Model.Tables.CodeBook;
-using Model.Tables.Edu.Note;
+using Model.CodeBook;
+using Model.Edu.Note;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +24,7 @@ namespace EduServices.Note.Service
     ) : BaseService<INoteRepository, NoteDbo, INoteConvertor, INoteValidator, NoteCreateDto, NoteListDto, NoteDetailDto, NoteUpdateDto>(noteRepository, noteConvertor, validator), INoteService
     {
         private readonly IFileUploadService _fileUploadService = fileUploadService;
-        private readonly HashSet<NoteTypeDbo> _noteType = codeBookService.GetCodeBookItems();
+        private readonly HashSet<NoteTypeDbo> _noteType = codeBookService.GetEntities(false);
 
         public Result<NoteDetailDto> SaveTableAsNote(NoteCreateTableDto saveTableAsNoteDto, Guid userId, string culture)
         {

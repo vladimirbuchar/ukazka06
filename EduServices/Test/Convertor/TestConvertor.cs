@@ -1,6 +1,6 @@
 ﻿using EduServices.Test.Dto;
-using Model.Tables.Edu.CourseLesson;
-using Model.Tables.Edu.CourseTest;
+using Model.Edu.CourseLesson;
+using Model.Edu.CourseTest;
 using System.Linq;
 
 namespace EduServices.Test.Convertor

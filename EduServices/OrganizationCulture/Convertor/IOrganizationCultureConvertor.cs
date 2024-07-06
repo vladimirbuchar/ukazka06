@@ -1,6 +1,6 @@
 ﻿using Core.Base.Convertor;
 using EduServices.OrganizationCulture.Dto;
-using Model.Tables.Link;
+using Model.Link;
 
 namespace EduServices.OrganizationCulture.Convertor
 {

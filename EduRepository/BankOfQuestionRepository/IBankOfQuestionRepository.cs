@@ -1,5 +1,5 @@
 ﻿using Core.Base.Repository;
-using Model.Tables.Edu.BankOfQuestions;
+using Model.Edu.BankOfQuestions;
 
 namespace EduRepository.BankOfQuestionRepository
 {

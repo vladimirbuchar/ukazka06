@@ -2,8 +2,8 @@
 using EduRepository.OrganizationRoleRepository;
 using EduRepository.PermissionsRepository;
 using EduServices.OrganizationRole.Convertor;
-using Model.Tables.Edu.OrganizationRole;
-using Model.Tables.System;
+using Model.Edu.OrganizationRole;
+using Model.System;
 using System;
 using System.Collections.Generic;
 using System.Linq;

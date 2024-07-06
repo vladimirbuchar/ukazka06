@@ -1,7 +1,7 @@
 ﻿using Core.Base.Service;
 using Core.DataTypes;
 using EduServices.CourseLessonItem.Dto;
-using Model.Tables.Edu.CourseLessonItem;
+using Model.Edu.CourseLessonItem;
 using System;
 
 namespace EduServices.CourseLessonItem.Service

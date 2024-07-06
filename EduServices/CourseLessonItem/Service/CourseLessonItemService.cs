@@ -6,8 +6,8 @@ using EduRepository.CourseLessonItemRepository;
 using EduServices.CourseLessonItem.Convertor;
 using EduServices.CourseLessonItem.Dto;
 using EduServices.CourseLessonItem.Validator;
-using Model.Tables.CodeBook;
-using Model.Tables.Edu.CourseLessonItem;
+using Model.CodeBook;
+using Model.Edu.CourseLessonItem;
 using System;
 
 namespace EduServices.CourseLessonItem.Service

@@ -56,7 +56,7 @@ namespace EduApi.Controllers.Admin.Route
         {
             try
             {
-                return SendResponse(_routeService.GetList(null, request.IsDeleted, GetClientCulture()));
+                return SendResponse(_routeService.GetList(request.IsDeleted, GetClientCulture()));
             }
             catch (Exception e)
             {

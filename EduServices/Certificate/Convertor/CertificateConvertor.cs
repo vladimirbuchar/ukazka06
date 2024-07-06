@@ -1,7 +1,7 @@
 ﻿using Core.Base.Repository.CodeBookRepository;
 using EduServices.Certificate.Dto;
-using Model.Tables.CodeBook;
-using Model.Tables.Edu.Certificate;
+using Model.CodeBook;
+using Model.Edu.Certificate;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,7 +9,7 @@ namespace EduServices.Certificate.Convertor
 {
     public class CertificateConvertor(ICodeBookRepository<CultureDbo> codeBookService) : ICertificateConvertor
     {
-        private readonly HashSet<CultureDbo> _cultureList = codeBookService.GetCodeBookItems();
+        private readonly HashSet<CultureDbo> _cultureList = codeBookService.GetEntities(false);
 
         public CertificateDbo ConvertToBussinessEntity(CertificateCreateDto addCertificateDto, string culture)
         {

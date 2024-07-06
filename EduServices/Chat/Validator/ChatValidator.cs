@@ -5,7 +5,7 @@ using EduRepository.ChatRepository;
 using EduRepository.CourseTermRepository;
 using EduRepository.UserRepository;
 using EduServices.Chat.Dto;
-using Model.Tables.Edu.Chat;
+using Model.Edu.Chat;
 
 namespace EduServices.Chat.Validator
 {
@@ -19,14 +19,14 @@ namespace EduServices.Chat.Validator
         public override Result<ChatItemDetailDto> IsValid(ChatItemCreateDto create)
         {
             Result<ChatItemDetailDto> result = new();
-            IsValidString(create.Text, result, ErrorCategory.CHAT, GlobalValue.STRING_IS_EMPTY);
+            IsValidString(create.Text, result, Category.CHAT, GlobalValue.STRING_IS_EMPTY);
             if (_userRepository.GetEntity(create.UserId) == null)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.USER, GlobalValue.NOT_EXISTS));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.USER, GlobalValue.NOT_EXISTS));
             }
             if (_courseTermRepository.GetEntity(create.CourseTermId) == null)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.COURSE_TERM, GlobalValue.NOT_EXISTS));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.COURSE_TERM, GlobalValue.NOT_EXISTS));
             }
             return result;
         }
@@ -34,7 +34,7 @@ namespace EduServices.Chat.Validator
         public override Result<ChatItemDetailDto> IsValid(ChatItemUpdateDto update)
         {
             Result<ChatItemDetailDto> result = new();
-            IsValidString(update.Text, result, ErrorCategory.CHAT, GlobalValue.STRING_IS_EMPTY);
+            IsValidString(update.Text, result, Category.CHAT, GlobalValue.STRING_IS_EMPTY);
             return result;
         }
     }

@@ -1,7 +1,7 @@
 ﻿using Core.Base.Repository;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
-using Model.Tables.Edu.StudentEvaluation;
+using Model.Edu.StudentEvaluation;
 
 namespace EduRepository.StudentEvaluationRepository
 {

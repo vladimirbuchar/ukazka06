@@ -5,7 +5,7 @@ using EduRepository.BranchRepository;
 using EduServices.Branch.Convertor;
 using EduServices.Branch.Dto;
 using EduServices.Branch.Validator;
-using Model.Tables.Edu.Branch;
+using Model.Edu.Branch;
 using System;
 using System.Collections.Generic;
 
@@ -55,7 +55,7 @@ namespace EduServices.Branch.Service
             BranchDbo oldEntity = _repository.GetEntity(update.Id) ?? throw new KeyNotFoundException(update.Id.ToString());
             if (oldEntity.IsOnline)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.BRANCH, GlobalValue.CAN_NOT_EDIT));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.BRANCH, GlobalValue.CAN_NOT_EDIT));
                 return result;
             }
             result = _validator.IsValid(update);
@@ -82,7 +82,7 @@ namespace EduServices.Branch.Service
             if (branchDbo != null && (branchDbo.IsMainBranch || branchDbo.IsOnline))
             {
                 Result result = new();
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.BRANCH, GlobalValue.CAN_NOT_DELETE));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.BRANCH, GlobalValue.CAN_NOT_DELETE));
                 return result;
             }
             return base.DeleteObject(objectId, userId);

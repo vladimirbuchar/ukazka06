@@ -1,5 +1,5 @@
 ﻿using Core.Base.Repository;
-using Model.Tables.Edu.Certificate;
+using Model.Edu.Certificate;
 
 namespace EduRepository.CertificateRepository
 {

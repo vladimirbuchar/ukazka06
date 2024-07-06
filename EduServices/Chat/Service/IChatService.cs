@@ -1,6 +1,6 @@
 ﻿using Core.Base.Service;
 using EduServices.Chat.Dto;
-using Model.Tables.Edu.Chat;
+using Model.Edu.Chat;
 
 namespace EduServices.Chat.Service
 {

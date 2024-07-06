@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using Core;
-using Core.Base.Repository.CodeBookRepository;
+﻿using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Repository.FileRepository;
 using Core.Base.Service;
-using Core.DataTypes;
 using EduRepository.CourseMaterialRepository;
 using EduRepository.CourseRepository;
 using EduServices.CourseMaterial.Convertor;
 using EduServices.CourseMaterial.Dto;
 using EduServices.CourseMaterial.Validator;
-using Model.Tables.CodeBook;
-using Model.Tables.Edu.Course;
-using Model.Tables.Edu.CourseMaterial;
+using Model.CodeBook;
+using Model.Edu.CourseMaterial;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace EduServices.CourseMaterial.Service
 {
@@ -41,17 +39,13 @@ namespace EduServices.CourseMaterial.Service
 
         public HashSet<CourseMaterialFileListDto> GetFiles(Guid courseMaterialId)
         {
-            return _convertor.ConvertToWebModel(_repository.GetFiles(courseMaterialId));
+            return _convertor.ConvertToWebModel(_repository.GetEntity(courseMaterialId).CourseMaterialFileRepositories.ToHashSet());
         }
 
         public HashSet<CourseMaterialFileListDto> GetFilesStudent(Guid courseId)
         {
             Guid? courseMaterialId = _courseRepository.GetEntity(courseId).CourseMaterialId;
-            if (courseMaterialId != null)
-            {
-                return GetFiles(courseMaterialId.Value);
-            }
-            return null;
+            return courseMaterialId != null ? GetFiles(courseMaterialId.Value) : null;
         }
     }
 }

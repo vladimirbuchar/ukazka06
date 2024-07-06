@@ -3,7 +3,7 @@ using EduRepository.AttendanceStudentRepository;
 using EduServices.StudentAttendance.Convertor;
 using EduServices.StudentAttendance.Dto;
 using EduServices.StudentAttendance.Validator;
-using Model.Tables.Edu.AttendanceStudent;
+using Model.Edu.AttendanceStudent;
 
 namespace EduServices.StudentAttendance.Service
 {

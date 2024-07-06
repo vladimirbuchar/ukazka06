@@ -2,9 +2,8 @@
 using Core.Constants;
 using EduServices.Answer.Dto;
 using Microsoft.Extensions.Configuration;
-using Model.Tables.CodeBook;
-using Model.Tables.Edu.Answer;
-using Model.Tables.Edu.TestQuestion;
+using Model.CodeBook;
+using Model.Edu.Answer;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,7 +12,7 @@ namespace EduServices.Answer.Convertor
     public class AnswerConvertor(IConfiguration configuration, ICodeBookRepository<CultureDbo> codeBookService) : IAnswerConvertor
     {
         private readonly IConfiguration _configuration = configuration;
-        private readonly HashSet<CultureDbo> _cultureList = codeBookService.GetCodeBookItems();
+        private readonly HashSet<CultureDbo> _cultureList = codeBookService.GetEntities(false);
 
         public AnswerDbo ConvertToBussinessEntity(AnswerCreateDto addAnswerDto, string culture)
         {

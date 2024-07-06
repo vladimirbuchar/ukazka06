@@ -4,7 +4,7 @@ using Core.DataTypes;
 using EduRepository.BankOfQuestionRepository;
 using EduRepository.OrganizationRepository;
 using EduServices.BankOfQuestion.Dto;
-using Model.Tables.Edu.BankOfQuestions;
+using Model.Edu.BankOfQuestions;
 
 namespace EduServices.BankOfQuestion.Validator
 {
@@ -17,10 +17,10 @@ namespace EduServices.BankOfQuestion.Validator
         public override Result<BankOfQuestionDetailDto> IsValid(BankOfQuestionCreateDto create)
         {
             Result<BankOfQuestionDetailDto> result = new();
-            IsValidString(create.Name, result, ErrorCategory.BANK_OF_QUESTION, GlobalValue.STRING_IS_EMPTY);
+            IsValidString(create.Name, result, Category.BANK_OF_QUESTION, GlobalValue.STRING_IS_EMPTY);
             if (_organizationRepository.GetEntity(create.OrganizationId) == null)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.ORGANIZATION, GlobalValue.NOT_EXISTS));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.ORGANIZATION, GlobalValue.NOT_EXISTS));
             }
             return result;
         }
@@ -28,7 +28,7 @@ namespace EduServices.BankOfQuestion.Validator
         public override Result<BankOfQuestionDetailDto> IsValid(BankOfQuestionUpdateDto update)
         {
             Result<BankOfQuestionDetailDto> result = new();
-            IsValidString(update.Name, result, ErrorCategory.BANK_OF_QUESTION, GlobalValue.STRING_IS_EMPTY);
+            IsValidString(update.Name, result, Category.BANK_OF_QUESTION, GlobalValue.STRING_IS_EMPTY);
             return result;
         }
     }

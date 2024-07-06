@@ -1,7 +1,7 @@
 ﻿using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Service;
 using EduServices.Page.Dto;
-using Model.Tables.CodeBook;
+using Model.CodeBook;
 using System.Collections.Generic;
 using System.Linq;
 

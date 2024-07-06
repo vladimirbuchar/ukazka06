@@ -29,25 +29,24 @@ using EduServices.SystemService.FileUpload;
 using EduServices.SystemService.SendMailService;
 using Integration.PdfSharpIntegration;
 using Microsoft.Extensions.Configuration;
-using Model.Tables.CodeBook;
-using Model.Tables.Edu.Answer;
-using Model.Tables.Edu.Certificate;
-using Model.Tables.Edu.ClassRoom;
-using Model.Tables.Edu.Course;
-using Model.Tables.Edu.CourseLesson;
-using Model.Tables.Edu.CourseLessonItem;
-using Model.Tables.Edu.CourseTerm;
-using Model.Tables.Edu.CourseTest;
-using Model.Tables.Edu.Organization;
-using Model.Tables.Edu.OrganizationAddress;
-using Model.Tables.Edu.SendMessage;
-using Model.Tables.Edu.StudentTestSummary;
-using Model.Tables.Edu.StudentTestSummaryAnswer;
-using Model.Tables.Edu.StudentTestSummaryQuestion;
-using Model.Tables.Edu.TestQuestion;
-using Model.Tables.Edu.User;
-using Model.Tables.Edu.UserCertificate;
-using Model.Tables.Link;
+using Model.CodeBook;
+using Model.Edu.Answer;
+using Model.Edu.Certificate;
+using Model.Edu.Course;
+using Model.Edu.CourseLesson;
+using Model.Edu.CourseLessonItem;
+using Model.Edu.CourseTerm;
+using Model.Edu.CourseTest;
+using Model.Edu.Organization;
+using Model.Edu.OrganizationAddress;
+using Model.Edu.Question;
+using Model.Edu.SendMessage;
+using Model.Edu.StudentTestSummary;
+using Model.Edu.StudentTestSummaryAnswer;
+using Model.Edu.StudentTestSummaryQuestion;
+using Model.Edu.User;
+using Model.Edu.UserCertificate;
+using Model.Link;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -103,7 +102,7 @@ namespace EduServices.CourseStudy.Service
         private readonly IUserInOrganizationRepository _userInOrganizationRepository = userInOrganizationRepository;
         private readonly ICouseStudentMaterialRepository _couseStudentMaterialRepository = couseStudentMaterialRepository;
         private readonly ICourseStudentRepository _courseStudentRepository = courseStudentRepository;
-        private readonly HashSet<CountryDbo> _countries = codebookRepository.GetCodeBookItems();
+        private readonly HashSet<CountryDbo> _countries = codebookRepository.GetEntities(false);
         private readonly IUserCertificateRepository _userCertificateRepository = userCertificateRepository;
         private readonly IOrganizationRepository _organizationRepository = organizationRepository;
         private readonly ICourseRepository _courseRespository = courseRepository;
@@ -144,16 +143,14 @@ namespace EduServices.CourseStudy.Service
         {
             HashSet<CourseMenuItemDto> courseMenuItems = [];
             Guid materialId = _courseRespository.GetEntity(courseId).CourseMaterialId ?? Guid.Empty;
-            HashSet<CourseLessonDbo> getAllLessonInCourses = _courseLessonRepository.GetEntities(false, x => x.CourseMaterialId == materialId);
+            HashSet<CourseLessonDbo> getAllLessonInCourses = _courseLessonRepository.GetEntities(false, x => x.CourseMaterialId == materialId, x => x.Position);
             courseMenuItems = getAllLessonInCourses
-                .OrderBy(x => x.Position)
                 .Select(x => new CourseMenuItemDto()
                 {
                     Id = x.Id,
                     Name = x.CourseLessonTranslations.FindTranslation(culture).Name,
                     Items = _courseLessonItemRepository
-                        .GetEntities(false, x => x.CourseLessonId == x.Id)
-                        .OrderBy(z => z.Position)
+                        .GetEntities(false, x => x.CourseLessonId == x.Id, x => x.Position)
                         .Select(y => new CourseMenuSubItemDto()
                         {
                             Id = y.Id,
@@ -197,7 +194,7 @@ namespace EduServices.CourseStudy.Service
                     IsCourseEditor = false,
                     IsOrganizationAdministrator = false,
                     IsOrganizationOwner = false,
-                    IsLector = _courseLectorRepository.GetLectorCourse(userId).FirstOrDefault(x => x.Id == courseId) != null,
+                    IsLector = _courseLectorRepository.GetEntities(false, x => x.UserInOrganization.UserId == userId).FirstOrDefault(x => x.Id == courseId) != null,
                     IsStudent = _courseStudentRepository.GetStudentCourse(userId, false).FirstOrDefault(x => x.Id == courseId) != null
                 }
                 : new UserOrganizationRoleDetailDto()
@@ -206,14 +203,14 @@ namespace EduServices.CourseStudy.Service
                     IsCourseEditor = getAllUserInOrganizations.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.COURSE_EDITOR,
                     IsOrganizationAdministrator = getAllUserInOrganizations.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.ORGANIZATION_ADMINISTRATOR,
                     IsOrganizationOwner = getAllUserInOrganizations.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.ORGANIZATION_OWNER,
-                    IsLector = _courseLectorRepository.GetLectorCourse(userId).FirstOrDefault(x => x.Id == courseId) != null,
+                    IsLector = _courseLectorRepository.GetEntities(false, x => x.UserInOrganization.UserId == userId).FirstOrDefault(x => x.Id == courseId) != null,
                     IsStudent = _courseStudentRepository.GetStudentCourse(userId, false).FirstOrDefault(x => x.Id == courseId) != null
                 };
         }
 
         private GetUserCourseItemDto GetUserCourseItem(Guid courseId, Guid userId)
         {
-            CouseStudentMaterialDbo item = _couseStudentMaterialRepository.GetEntity(false, x => x.IsDeleted == false && x.CourseId == courseId && x.UserId == userId);
+            CouseStudentMaterialDbo item = _couseStudentMaterialRepository.GetEntity(false, x => x.CourseId == courseId && x.UserId == userId);
             if (item == null || item.CourseLessonItemId == Guid.Empty)
             {
                 CourseLessonDbo getAllLessonInCourse = _courseLessonRepository
@@ -444,7 +441,7 @@ namespace EduServices.CourseStudy.Service
 
         public HashSet<StudentTestListDto> GetStudentTest(Guid userId, string culture)
         {
-            return _convertor.ConvertToWebModel([.. _studentTestSummaryRepository.GetEntities(false, x => x.UserId == userId).OrderByDescending(x => x.Finish)], culture);
+            return _convertor.ConvertToWebModel([.. _studentTestSummaryRepository.GetEntities(false, x => x.UserId == userId, null, x => x.Finish)], culture);
         }
 
         public Guid StartTest(Guid courseLessonId, Guid userId, Guid courseId)
@@ -595,7 +592,7 @@ namespace EduServices.CourseStudy.Service
             {
                 IsCourseAdministrator = false,
                 IsCourseEditor = false,
-                IsLector = _courseLectorRepository.GetLectorCourse(userId).FirstOrDefault(x => x.Id == courseId) != null,
+                IsLector = _courseLectorRepository.GetEntities(false, x => x.UserInOrganization.UserId == userId).FirstOrDefault(x => x.Id == courseId) != null,
                 IsOrganizationAdministrator = false,
                 IsOrganizationOwner = false,
                 IsStudent = _courseStudentRepository.GetStudentCourse(userId, false).FirstOrDefault(x => x.Id == courseId) != null
@@ -724,9 +721,10 @@ namespace EduServices.CourseStudy.Service
             return new FinishCourseDto() { CertificatePdf = string.Format("{0}certificate/{1}.pdf", _configuration.GetSection(ConfigValue.FILE_SERVER_URL).Value, fileName), PdfCreated = pdfCreated };
         }
 
-        public void UpdateActualTable(ActualTableUpdateDto updateActualTableDto)
+        public Result UpdateActualTable(ActualTableUpdateDto updateActualTableDto)
         {
             _courseTableRepository.UpdateActualTable(updateActualTableDto.CourseTermId, updateActualTableDto.Img);
+            return new Result();
         }
 
         public Result<string> GetActualTable(Guid courseTermid)
@@ -736,7 +734,7 @@ namespace EduServices.CourseStudy.Service
 
         public HashSet<StudentTestResultListDto> GetAllStudentTestResult(Guid courseId, string culture)
         {
-            return _convertor.ConvertToWebModel2([.. _studentTestSummaryRepository.GetEntities(false, x => x.CourseId == courseId).OrderByDescending(x => x.Finish)], culture);
+            return _convertor.ConvertToWebModel2([.. _studentTestSummaryRepository.GetEntities(false, x => x.CourseId == courseId, null, x => x.Finish)], culture);
         }
 
         public ShowTestResultDto ShowStudentAnswer(Guid studentTestResultId)
@@ -809,11 +807,6 @@ namespace EduServices.CourseStudy.Service
                 _studentTestSummaryQuestionRepository.GetEntity(false, x => x.StudentTestSummaryId == studentTestResultId && x.IsAutomaticEvaluate == true) != null;
             _ = _studentTestSummaryRepository.UpdateEntity(entity, Guid.Empty);
             return new Result();
-        }
-
-        Result ICourseStudyService.UpdateActualTable(ActualTableUpdateDto updateActualTableDto)
-        {
-            throw new NotImplementedException();
         }
     }
 }

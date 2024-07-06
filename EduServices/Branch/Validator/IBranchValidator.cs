@@ -1,7 +1,7 @@
 ﻿using Core.Base.Validator;
 using EduRepository.BranchRepository;
 using EduServices.Branch.Dto;
-using Model.Tables.Edu.Branch;
+using Model.Edu.Branch;
 
 namespace EduServices.Branch.Validator
 {

@@ -1,12 +1,10 @@
 ﻿using Core.Base.Repository.CodeBookRepository;
 using EduServices.Course.Dto;
 using EduServices.CourseStudy.Dto;
-using Model.Tables.CodeBook;
-using Model.Tables.Edu.Branch;
-using Model.Tables.Edu.ClassRoom;
-using Model.Tables.Edu.Course;
-using Model.Tables.Edu.CourseLesson;
-using Model.Tables.Edu.StudentTestSummary;
+using Model.CodeBook;
+using Model.Edu.Course;
+using Model.Edu.CourseLesson;
+using Model.Edu.StudentTestSummary;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,9 +12,9 @@ namespace EduServices.Course.Convertor
 {
     public class CourseConvertor(ICodeBookRepository<CourseTypeDbo> courseType, ICodeBookRepository<CultureDbo> culture) : ICourseConvertor
     {
-        private readonly HashSet<CourseTypeDbo> _courseTypes = courseType.GetCodeBookItems();
+        private readonly HashSet<CourseTypeDbo> _courseTypes = courseType.GetEntities(false);
 
-        private readonly HashSet<CultureDbo> _cultureList = culture.GetCodeBookItems();
+        private readonly HashSet<CultureDbo> _cultureList = culture.GetEntities(false);
 
         public CourseDbo ConvertToBussinessEntity(CourseCreateDto addCourseDto, string culture)
         {
@@ -61,9 +59,9 @@ namespace EduServices.Course.Convertor
             return entity;
         }
 
-        public HashSet<CourseListInOrganizationDto> ConvertToWebModel(HashSet<CourseDbo> getAllCourseInOrganizations, string culture)
+        public HashSet<CourseListDto> ConvertToWebModel(HashSet<CourseDbo> getAllCourseInOrganizations, string culture)
         {
-            return getAllCourseInOrganizations.Select(item => new CourseListInOrganizationDto() { Id = item.Id, Name = item.CourseTranslations.FindTranslation(culture).Name, }).ToHashSet();
+            return getAllCourseInOrganizations.Select(item => new CourseListDto() { Id = item.Id, Name = item.CourseTranslations.FindTranslation(culture).Name, }).ToHashSet();
         }
 
         public CourseDetailDto ConvertToWebModel(CourseDbo getCourseDetail, string culture)

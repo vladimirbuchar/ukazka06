@@ -1,7 +1,7 @@
 ﻿using Core.Base.Validator;
 using EduRepository.CourseRepository;
 using EduServices.Course.Dto;
-using Model.Tables.Edu.Course;
+using Model.Edu.Course;
 
 namespace EduServices.Course.Validator
 {

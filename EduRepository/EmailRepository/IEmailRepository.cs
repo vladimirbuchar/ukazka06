@@ -1,5 +1,5 @@
 ﻿using Core.Base.Repository;
-using Model.Tables.Edu.SendEmail;
+using Model.Edu.SendEmail;
 
 namespace EduRepository.EmailRepository
 {

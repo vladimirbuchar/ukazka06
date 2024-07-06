@@ -5,7 +5,7 @@ using EduRepository.CourseMaterialRepository;
 using EduRepository.CourseTestEvaluationRepository;
 using EduRepository.TestRepository;
 using EduServices.CourseTestEvaluation.Dto;
-using Model.Tables.Edu.CourseTestEvaluation;
+using Model.Edu.CourseTestEvaluation;
 
 namespace EduServices.CourseTestEvaluation.Validator
 {
@@ -21,11 +21,11 @@ namespace EduServices.CourseTestEvaluation.Validator
             Result<CourseTestEvaluationDetailDto> result = new();
             if (_testRepository.GetEntity(create.TestId) == null)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.COURSE_TEST, GlobalValue.NOT_EXISTS));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.COURSE_TEST, GlobalValue.NOT_EXISTS));
             }
             if (_courseMaterialRepository.GetEntity(create.MaterialId) == null)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.COURSE_MATERIAL, GlobalValue.NOT_EXISTS));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.COURSE_MATERIAL, GlobalValue.NOT_EXISTS));
             }
             return result;
         }

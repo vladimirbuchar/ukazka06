@@ -1,7 +1,7 @@
 ﻿using Core.Base.Validator;
 using EduRepository.StudentEvaluationRepository;
 using EduServices.StudentEvaluation.Dto;
-using Model.Tables.Edu.StudentEvaluation;
+using Model.Edu.StudentEvaluation;
 
 namespace EduServices.StudentEvaluation.Validator
 {

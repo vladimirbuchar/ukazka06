@@ -1,7 +1,7 @@
 ﻿using Core.Base.Repository.CodeBookRepository;
 using EduServices.SendMessage.Dto;
-using Model.Tables.CodeBook;
-using Model.Tables.Edu.SendMessage;
+using Model.CodeBook;
+using Model.Edu.SendMessage;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,7 +9,7 @@ namespace EduServices.SendMessage.Convertor
 {
     public class SendMessageConvertor(ICodeBookRepository<CultureDbo> codeBookService) : ISendMessageConvertor
     {
-        private readonly HashSet<CultureDbo> _cultureList = codeBookService.GetCodeBookItems();
+        private readonly HashSet<CultureDbo> _cultureList = codeBookService.GetEntities(false);
 
         public HashSet<SendMessageListDto> ConvertToWebModel(HashSet<SendMessageDbo> getSendMessageInOrganizations, string culture)
         {

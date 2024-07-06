@@ -1,5 +1,5 @@
 ﻿using Core.Base.Repository;
-using Model.Tables.Edu.AttendanceStudent;
+using Model.Edu.AttendanceStudent;
 
 namespace EduRepository.AttendanceStudentRepository
 {

@@ -7,7 +7,6 @@ namespace Core.DataTypes
     {
         private readonly List<ValidationMessage> validationMessages;
         public List<ValidationMessage> Errors => [.. validationMessages.Where(x => x.Type is MessageType.ERROR or MessageType.SYSTEM_ERROR).OrderBy(x => x.Priority)];
-
         public bool IsError => Errors.Count > 0;
         public bool DataChanged { get; set; } = false;
         public bool IsOk => !IsError;

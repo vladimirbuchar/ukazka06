@@ -3,7 +3,7 @@ using EduRepository.ChatRepository;
 using EduServices.Chat.Convertor;
 using EduServices.Chat.Dto;
 using EduServices.Chat.Validator;
-using Model.Tables.Edu.Chat;
+using Model.Edu.Chat;
 
 namespace EduServices.Chat.Service
 {

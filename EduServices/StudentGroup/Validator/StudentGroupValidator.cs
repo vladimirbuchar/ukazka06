@@ -4,7 +4,7 @@ using Core.DataTypes;
 using EduRepository.OrganizationRepository;
 using EduRepository.StudentGroupRepository;
 using EduServices.StudentGroup.Dto;
-using Model.Tables.Edu.StudentGroup;
+using Model.Edu.StudentGroup;
 
 namespace EduServices.StudentGroup.Validator
 {
@@ -19,16 +19,16 @@ namespace EduServices.StudentGroup.Validator
             Result<StudentGroupDetailDto> result = new();
             if (_organizationRepository.GetEntity(create.OrganizationId) == null)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.ORGANIZATION, GlobalValue.NOT_EXISTS));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.ORGANIZATION, GlobalValue.NOT_EXISTS));
             }
-            IsValidString(create.Name, result, ErrorCategory.STUDENT_GROUP, GlobalValue.STRING_IS_EMPTY);
+            IsValidString(create.Name, result, Category.STUDENT_GROUP, GlobalValue.STRING_IS_EMPTY);
             return result;
         }
 
         public override Result<StudentGroupDetailDto> IsValid(StudentGroupUpdateDto update)
         {
             Result<StudentGroupDetailDto> result = new();
-            IsValidString(update.Name, result, ErrorCategory.STUDENT_GROUP, GlobalValue.STRING_IS_EMPTY);
+            IsValidString(update.Name, result, Category.STUDENT_GROUP, GlobalValue.STRING_IS_EMPTY);
             return result;
         }
     }

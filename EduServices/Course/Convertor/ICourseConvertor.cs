@@ -2,12 +2,12 @@
 using Core.Base.Convertor;
 using EduServices.Course.Dto;
 using EduServices.CourseStudy.Dto;
-using Model.Tables.Edu.Course;
-using Model.Tables.Edu.StudentTestSummary;
+using Model.Edu.Course;
+using Model.Edu.StudentTestSummary;
 
 namespace EduServices.Course.Convertor
 {
-    public interface ICourseConvertor : IBaseConvertor<CourseDbo, CourseCreateDto, CourseListInOrganizationDto, CourseDetailDto, CourseUpdateDto>
+    public interface ICourseConvertor : IBaseConvertor<CourseDbo, CourseCreateDto, CourseListDto, CourseDetailDto, CourseUpdateDto>
     {
         HashSet<StudentTestListDto> ConvertToWebModel(HashSet<StudentTestSummaryDbo> getStudentTests, string culture);
     }

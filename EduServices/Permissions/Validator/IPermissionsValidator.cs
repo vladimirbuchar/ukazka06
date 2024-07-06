@@ -1,7 +1,7 @@
 ﻿using Core.Base.Validator;
 using EduRepository.PermissionsRepository;
 using EduServices.Permissions.Dto;
-using Model.Tables.System;
+using Model.System;
 
 namespace EduServices.Permissions.Validator
 {

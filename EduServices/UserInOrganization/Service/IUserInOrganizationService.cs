@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Core.Base.Service;
 using EduServices.OrganizationRole.Dto;
 using EduServices.UserInOrganization.Dto;
-using Model.Tables.Link;
+using Model.Link;
 
 namespace EduServices.UserInOrganization.Service
 {

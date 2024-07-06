@@ -51,7 +51,6 @@ namespace EduApi.Controllers.ClientZone.Note
         {
             try
             {
-
                 return SendResponse(_noteService.GetList(x => x.UserId == GetLoggedUserId(), request.IsDeleted, GetClientCulture()));
             }
             catch (Exception e)

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
-using Model.Tables.Edu.OrganizationSetting;
+using Model.Edu.OrganizationSetting;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
@@ -13,7 +13,10 @@ namespace EduRepository.OrganizationSettingRepository
     {
         public override OrganizationSettingDbo GetEntity(bool deleted, Expression<Func<OrganizationSettingDbo, bool>> predicate = null)
         {
-            return _dbContext.Set<OrganizationSettingDbo>().Where(x => x.IsDeleted == deleted).Where(predicate).Include(x => x.Organization).FirstOrDefault();
+            return _dbContext.Set<OrganizationSettingDbo>()
+                .Include(x => x.Organization)
+                .Where(x => x.IsDeleted == deleted)
+                .FirstOrDefault(predicate);
         }
     }
 }

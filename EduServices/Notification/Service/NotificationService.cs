@@ -5,8 +5,8 @@ using EduRepository.NotificationRepository;
 using EduRepository.OrganizationRepository;
 using EduServices.Notification.Convertor;
 using EduServices.Notification.Dto;
-using Model.Tables.Edu.Notification;
-using Model.Tables.Edu.Organization;
+using Model.Edu.Notification;
+using Model.Edu.Organization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,8 +22,7 @@ namespace EduServices.Notification.Service
         public HashSet<MyNotificationListDto> GetMyNotification(Guid userId, bool onlyNew)
         {
             HashSet<NotificationDbo> notifications = [];
-            notifications = [.. _repository.GetEntities(false, x => x.UserId == userId)];
-            notifications = [.. notifications.OrderByDescending(x => x.AddDate)];
+            notifications = [.. _repository.GetEntities(false, x => x.UserId == userId, null, x => x.AddDate)];
             if (onlyNew)
             {
                 notifications = notifications.Where(x => x.IsNew).ToHashSet();

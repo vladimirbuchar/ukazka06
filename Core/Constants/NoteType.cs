@@ -2,7 +2,6 @@
 {
     public struct NoteType
     {
-        public const string NOTE_TYPE_TEXT = "NOTE_TYPE_TEXT";
         public const string NOTE_TYPE_DRAW = "NOTE_TYPE_DRAW";
     }
 }

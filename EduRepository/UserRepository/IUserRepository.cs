@@ -1,5 +1,5 @@
 ﻿using Core.Base.Repository;
-using Model.Tables.Edu.User;
+using Model.Edu.User;
 
 namespace EduRepository.UserRepository
 {

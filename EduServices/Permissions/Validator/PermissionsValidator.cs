@@ -3,7 +3,7 @@ using Core.Constants;
 using Core.DataTypes;
 using EduRepository.PermissionsRepository;
 using EduServices.Permissions.Dto;
-using Model.Tables.System;
+using Model.System;
 
 namespace EduServices.Permissions.Validator
 {
@@ -16,7 +16,7 @@ namespace EduServices.Permissions.Validator
             Result<PermissionsDetailDto> validate = new();
             if (_repository.GetEntity(false, x => x.RouteId == create.RouteId && create.OrganizationRoleId == x.OrganizationRoleId) != null)
             {
-                validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, ErrorCategory.PERMISSTIONS, GlobalValue.EXISTS));
+                validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.PERMISSTIONS, GlobalValue.EXISTS));
             }
             return validate;
         }

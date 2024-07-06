@@ -151,7 +151,9 @@ namespace EduApi.Controllers.ClientZone.ClassRoom
             try
             {
                 CheckOrganizationPermition(list.ParentId);
-                return SendResponse(_classRoomService.GetAllClassRoomInOrganization(list.ParentId, GetClientCulture()));
+                return SendResponse(_classRoomService.GetList(
+                    x => x.Branch.OrganizationId == list.ParentId, false
+                    , GetClientCulture()));
             }
             catch (Exception e)
             {

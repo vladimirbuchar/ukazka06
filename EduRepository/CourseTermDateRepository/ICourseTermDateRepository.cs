@@ -1,5 +1,5 @@
 ﻿using Core.Base.Repository;
-using Model.Tables.Edu.CourseTermDate;
+using Model.Edu.CourseTermDate;
 
 namespace EduRepository.CourseTermDateRepository
 {

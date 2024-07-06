@@ -1,7 +1,7 @@
 ﻿using Core.Base.Repository.CodeBookRepository;
 using EduServices.StudentGroup.Dto;
-using Model.Tables.CodeBook;
-using Model.Tables.Edu.StudentGroup;
+using Model.CodeBook;
+using Model.Edu.StudentGroup;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,7 +9,7 @@ namespace EduServices.StudentGroup.Convertor
 {
     public class StudentGroupConvertor(ICodeBookRepository<CultureDbo> codeBookService) : IStudentGroupConvertor
     {
-        private readonly HashSet<CultureDbo> _cultureList = codeBookService.GetCodeBookItems();
+        private readonly HashSet<CultureDbo> _cultureList = codeBookService.GetEntities(false);
 
         public HashSet<StudentGroupInOrganizationListDto> ConvertToWebModel(HashSet<StudentGroupDbo> getStudentGroupInOrganizations, string culture)
         {

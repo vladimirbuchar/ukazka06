@@ -1,6 +1,6 @@
 ﻿using Core.Base.Convertor;
 using EduServices.Permissions.Dto;
-using Model.Tables.System;
+using Model.System;
 
 namespace EduServices.Permissions.Convertor
 {

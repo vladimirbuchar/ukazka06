@@ -10,8 +10,9 @@ using EduRepository.UserRepository;
 using EduServices.Setup.Dto;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
-using Model.Tables.Edu.User;
-using Model.Tables.System;
+using Model.Edu.Person;
+using Model.Edu.User;
+using Model.System;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -49,7 +50,7 @@ namespace EduServices.Setup.Service
                 {
                     UserEmail = _configuration.GetSection(ConfigValue.SETUP).GetSection(ConfigValue.USER_NAME).Value,
                     UserPassword = _configuration.GetSection(ConfigValue.SETUP).GetSection(ConfigValue.USER_PASSWORD).Value.GetHashString(),
-                    Person = new Model.Tables.Edu.Person.PersonDbo()
+                    Person = new PersonDbo()
                     {
 
                     },
@@ -117,13 +118,7 @@ namespace EduServices.Setup.Service
         }
         public bool CheckUser(SetupLoginDto setupLogin)
         {
-            return _userRepository.GetEntity(false, x => x.UserEmail == setupLogin.UserEmail && x.UserPassword == setupLogin.Password.GetHashString() && x.IsActive == true && x.IsDeleted == false && x.AllowCLassicLogin == true)?.UserRole?.SystemIdentificator == UserRole.ADMINISTRATOR;
-        }
-        public class Permissions
-        {
-            public string Route { get; set; }
-            public List<string> Roles { get; set; }
-
+            return _userRepository.GetEntity(false, x => x.UserEmail == setupLogin.UserEmail && x.UserPassword == setupLogin.Password.GetHashString() && x.IsActive == true && x.AllowCLassicLogin == true)?.UserRole?.SystemIdentificator == UserRole.ADMINISTRATOR;
         }
 
     }

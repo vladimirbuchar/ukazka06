@@ -1,5 +1,5 @@
 ﻿using EduServices.StudentEvaluation.Dto;
-using Model.Tables.Edu.StudentEvaluation;
+using Model.Edu.StudentEvaluation;
 using System;
 using System.Collections.Generic;
 
@@ -17,10 +17,7 @@ namespace EduServices.StudentEvaluation.Convertor
             };
         }
 
-        public HashSet<MyEvaluationListDto> ConvertToWebModel(HashSet<StudentEvaluationDbo> getStudentEvaluation)
-        {
-            throw new NotImplementedException();
-        }
+
 
         public HashSet<StudentEvaluationListDto> ConvertToWebModel(HashSet<StudentEvaluationDbo> list, string culture)
         {

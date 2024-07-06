@@ -1,4 +1,4 @@
-﻿using Model.Tables.CodeBook;
+﻿using Model.CodeBook;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -10,6 +10,7 @@ namespace Model
         public string FileName { get; set; }
         [Column("OriginalFileName")]
         public string OriginalFileName { get; set; }
+        [Column("FileContent")]
         public byte[] FileContent { get; set; }
         public CultureDbo Culture { get; set; }
         public Guid CultureId { get; set; }

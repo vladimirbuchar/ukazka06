@@ -87,7 +87,7 @@ using EduServices.CourseTermTimeTable.Service;
 using EduServices.CourseTestEvaluation.Convertor;
 using EduServices.CourseTestEvaluation.Service;
 using EduServices.CourseTestEvaluation.Validator;
-using EduServices.Jobs;
+using EduServices.HangfireJob;
 using EduServices.Note.Convertor;
 using EduServices.Note.Service;
 using EduServices.Notification.Convertor;
@@ -187,7 +187,7 @@ namespace EduServices
             _ = service.AddScoped<IOrganizationStudyHourService, OrganizationStudyHourService>();
             _ = service.AddScoped<IOrganizationStudyHourConvertor, OrganizationStudyHourConvertor>();
             _ = service.AddScoped<IOrganizationStudyHourValidator, OrganizationStudyHourValidator>();
-            _ = service.AddScoped<IOrganizationStudyHourRepository, OrganizationHourRepository>();
+            _ = service.AddScoped<IOrganizationStudyHourRepository, OrganizationStudyHourRepository>();
         }
 
         public static void RegistrationCodeBook(this IServiceCollection service)
@@ -489,7 +489,7 @@ namespace EduServices
         {
             _ = service.AddScoped<ISetupService, SetupService>();
         }
-        public static void RegisterJob(this IServiceCollection service)
+        public static void RegisterHangfireJob(this IServiceCollection service)
         {
             _ = service.AddScoped<SendEmailJob>();
         }
