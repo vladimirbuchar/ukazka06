@@ -1,4 +1,7 @@
-﻿using Core.Base.Repository.CodeBookRepository;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Core.Base.Repository.CodeBookRepository;
 using Core.Constants;
 using Core.DataTypes;
 using Microsoft.Extensions.Configuration;
@@ -12,9 +15,6 @@ using Model.Edu.OrganizationSetting;
 using Model.Link;
 using Repository.OrganizationRoleRepository;
 using Services.Organization.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.Organization.Convertor
 {
@@ -23,7 +23,7 @@ namespace Services.Organization.Convertor
         ICodeBookRepository<LicenseDbo> licences,
         ICodeBookRepository<CountryDbo> countries,
         IOrganizationRoleRepository organizationRoleRepository
-        ) : IOrganizationConvertor
+    ) : IOrganizationConvertor
     {
         private readonly HashSet<LicenseDbo> _licences = licences.GetEntities(false);
         private readonly HashSet<CountryDbo> _countries = countries.GetEntities(false);
@@ -58,23 +58,17 @@ namespace Services.Organization.Convertor
                 [
                     new BankOfQuestionDbo()
                     {
-                        BankOfQuestionsTranslations =
-                        [
-                            new BankOfQuestionsTranslationDbo() { Name = Constants.DEFAULT_BANK_OF_QUESTION, CultureId = addOrganizationDto.DefaultCultureId, }
-                        ],
+                        BankOfQuestionsTranslations = [new BankOfQuestionsTranslationDbo() { Name = Constants.DEFAULT_BANK_OF_QUESTION, CultureId = addOrganizationDto.DefaultCultureId, }],
                         IsDefault = true
                     }
                 ],
-                OrganizationCultures =
-                [
-                    new OrganizationCultureDbo() { CultureId = addOrganizationDto.DefaultCultureId, IsDefault = true, }
-                ],
+                OrganizationCultures = [new OrganizationCultureDbo() { CultureId = addOrganizationDto.DefaultCultureId, IsDefault = true, }],
                 UserInOrganizations =
                 [
                     new UserInOrganizationDbo()
                     {
                         UserId = addOrganizationDto.UserId,
-                        OrganizationRoleId = _organizationRoleRepository.GetEntity(false,x => x.SystemIdentificator == Core.Constants.OrganizationRole.ORGANIZATION_OWNER).Id
+                        OrganizationRoleId = _organizationRoleRepository.GetEntity(false, x => x.SystemIdentificator == Core.Constants.OrganizationRole.ORGANIZATION_OWNER).Id
                     }
                 ],
                 Branch =
@@ -105,10 +99,7 @@ namespace Services.Organization.Convertor
                         [
                             new ClassRoomDbo()
                             {
-                                ClassRoomTranslations =
-                                [
-                                    new ClassRoomTranslationDbo() { Name = Constants.ONLINE_CLASSROOM, CultureId = addOrganizationDto.DefaultCultureId }
-                                ],
+                                ClassRoomTranslations = [new ClassRoomTranslationDbo() { Name = Constants.ONLINE_CLASSROOM, CultureId = addOrganizationDto.DefaultCultureId }],
                                 Floor = 0,
                                 IsOnline = true,
                                 MaxCapacity = 0
@@ -139,16 +130,18 @@ namespace Services.Organization.Convertor
                 OrganizationAddressDbo organizationAddress = entity.Addresses.FirstOrDefault(x => x.Id == address.Id);
                 if (organizationAddress == null)
                 {
-                    entity.Addresses.Add(new OrganizationAddressDbo()
-                    {
-                        AddressTypeId = address.AddressTypeId,
-                        City = address.City,
-                        CountryId = address.CountryId,
-                        HouseNumber = address.HouseNumber,
-                        Region = address.Region,
-                        Street = address.Street,
-                        ZipCode = address.ZipCode,
-                    });
+                    entity.Addresses.Add(
+                        new OrganizationAddressDbo()
+                        {
+                            AddressTypeId = address.AddressTypeId,
+                            City = address.City,
+                            CountryId = address.CountryId,
+                            HouseNumber = address.HouseNumber,
+                            Region = address.Region,
+                            Street = address.Street,
+                            ZipCode = address.ZipCode,
+                        }
+                    );
                 }
                 else
                 {

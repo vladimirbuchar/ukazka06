@@ -16,11 +16,7 @@ namespace EduApi.Controllers.ClientZone.Answer
     {
         private readonly IAnswerService _answerService;
 
-        public AnswerController(
-            IAnswerService answerService,
-            ILogger<AnswerController> logger,
-            IOrganizationRoleService organizationRoleService
-        )
+        public AnswerController(IAnswerService answerService, ILogger<AnswerController> logger, IOrganizationRoleService organizationRoleService)
             : base(logger, organizationRoleService)
         {
             this._answerService = answerService;
@@ -151,15 +147,16 @@ namespace EduApi.Controllers.ClientZone.Answer
             try
             {
                 CheckOrganizationPermition(_answerService.GetOrganizationIdByObjectId(request.Id));
-                return SendResponse(_answerService.FileUpload(
-                    request.Id,
-                    GetClientCulture(),
-                    GetLoggedUserId()
-                    ,
-                    new List<IFormFile>() { file },
-                    new AnswerFileRepositoryDbo() { AnswerId = request.Id, },
-                    x => x.AnswerId == request.Id && x.Culture.SystemIdentificator == GetClientCulture()
-                ));
+                return SendResponse(
+                    _answerService.FileUpload(
+                        request.Id,
+                        GetClientCulture(),
+                        GetLoggedUserId(),
+                        new List<IFormFile>() { file },
+                        new AnswerFileRepositoryDbo() { AnswerId = request.Id, },
+                        x => x.AnswerId == request.Id && x.Culture.SystemIdentificator == GetClientCulture()
+                    )
+                );
             }
             catch (Exception e)
             {

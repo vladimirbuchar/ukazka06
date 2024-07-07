@@ -4,8 +4,5 @@ using Services.Route.Dto;
 
 namespace Services.Route.Service
 {
-    public interface IRouteService : IBaseService<RouteDbo, RouteCreateDto, RouteListDto, RouteDetailDto, RouteUpdateDto>
-    {
-
-    }
+    public interface IRouteService : IBaseService<RouteDbo, RouteCreateDto, RouteListDto, RouteDetailDto, RouteUpdateDto> { }
 }

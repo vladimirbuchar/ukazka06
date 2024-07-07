@@ -1,12 +1,12 @@
-﻿using Core.Base.Repository;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using Core.Base.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
 using Model.Edu.Question;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 
 namespace Repository.QuestionRepository
 {
@@ -17,15 +17,20 @@ namespace Repository.QuestionRepository
             return _dbContext
                 .Set<QuestionDbo>()
                 .Include(x => x.TestQuestionTranslation.Where(x => x.IsDeleted == false))
-                    .ThenInclude(x => x.Culture)
+                .ThenInclude(x => x.Culture)
                 .Include(x => x.AnswerMode)
                 .Include(x => x.QuestionMode)
                 .Include(x => x.QuestionFileRepositories.Where(x => x.IsDeleted == false))
-                    .ThenInclude(x => x.Culture)
+                .ThenInclude(x => x.Culture)
                 .FirstOrDefault(x => x.Id == id);
         }
 
-        public override HashSet<QuestionDbo> GetEntities(bool deleted, Expression<Func<QuestionDbo, bool>> predicate = null, Expression<Func<QuestionDbo, object>> orderBy = null, Expression<Func<QuestionDbo, object>> orderByDesc = null)
+        public override HashSet<QuestionDbo> GetEntities(
+            bool deleted,
+            Expression<Func<QuestionDbo, bool>> predicate = null,
+            Expression<Func<QuestionDbo, object>> orderBy = null,
+            Expression<Func<QuestionDbo, object>> orderByDesc = null
+        )
         {
             return
             [
@@ -45,9 +50,7 @@ namespace Repository.QuestionRepository
 
         public override Guid GetOrganizationId(Guid objectId)
         {
-            return _dbContext.Set<QuestionDbo>()
-                .Include(x => x.BankOfQuestion)
-                .FirstOrDefault(x => x.Id == objectId).BankOfQuestion.OrganizationId;
+            return _dbContext.Set<QuestionDbo>().Include(x => x.BankOfQuestion).FirstOrDefault(x => x.Id == objectId).BankOfQuestion.OrganizationId;
         }
     }
 }

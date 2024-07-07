@@ -1,11 +1,11 @@
-﻿using Core.DataTypes;
+﻿using System;
+using System.Collections.Generic;
+using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.CodeBookData.Dto;
 using Services.CodeBookData.Service;
 using Services.OrganizationRole.Service;
-using System;
-using System.Collections.Generic;
 
 namespace EduApi.Controllers.ClientZone.CodeBook
 {
@@ -14,19 +14,14 @@ namespace EduApi.Controllers.ClientZone.CodeBook
     {
         private readonly ICodeBookService _codeBookService;
 
-        public CodeBookController(
-            ILogger<CodeBookController> logger,
-            ICodeBookService codeBookService,
-            IOrganizationRoleService organizationRoleService
-
-        )
+        public CodeBookController(ILogger<CodeBookController> logger, ICodeBookService codeBookService, IOrganizationRoleService organizationRoleService)
             : base(logger, organizationRoleService)
         {
             _codeBookService = codeBookService;
         }
 
         [HttpGet("{codeBookName}")]
-        [ProducesResponseType(typeof(IEnumerable<CodeBookItemListDto>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<CodeBookListDto>), 200)]
         [ProducesResponseType(typeof(void), 404)]
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]

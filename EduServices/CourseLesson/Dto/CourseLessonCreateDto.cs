@@ -1,6 +1,6 @@
-﻿using Core.Base.Dto;
+﻿using System;
+using Core.Base.Dto;
 using Core.Constants;
-using System;
 
 namespace Services.CourseLesson.Dto
 {
@@ -11,6 +11,4 @@ namespace Services.CourseLesson.Dto
         public Guid MaterialId { get; set; }
         public string Type { get; set; } = CourseLessonType.COURSE_ITEM;
     }
-
-
 }

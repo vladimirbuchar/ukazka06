@@ -1,11 +1,11 @@
-﻿using Core.Extension;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Core.Extension;
 using Model.Edu.Branch;
 using Model.Edu.ClassRoom;
 using Model.Edu.CourseTerm;
 using Services.CourseTerm.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.CourseTerm.Convertor
 {

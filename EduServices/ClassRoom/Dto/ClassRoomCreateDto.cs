@@ -1,6 +1,6 @@
-﻿using Core.Base.Dto;
-using System;
+﻿using System;
 using System.Text.Json.Serialization;
+using Core.Base.Dto;
 
 namespace Services.ClassRoom.Dto
 {
@@ -13,8 +13,5 @@ namespace Services.ClassRoom.Dto
 
         [JsonIgnore]
         public bool IsOnline { get; set; }
-
     }
 }
-
-

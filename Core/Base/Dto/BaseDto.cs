@@ -1,6 +1,4 @@
 ﻿namespace Core.Base.Dto
 {
-    public abstract class BaseDto
-    {
-    }
+    public abstract class BaseDto { }
 }

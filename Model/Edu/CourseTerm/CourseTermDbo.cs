@@ -1,4 +1,7 @@
-﻿using Model.CodeBook;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using Model.CodeBook;
 using Model.Edu.AttendanceStudent;
 using Model.Edu.Chat;
 using Model.Edu.ClassRoom;
@@ -7,9 +10,6 @@ using Model.Edu.CourseTermDate;
 using Model.Edu.Notification;
 using Model.Edu.OrganizationStudyHour;
 using Model.Link;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Model.Edu.CourseTerm
 {

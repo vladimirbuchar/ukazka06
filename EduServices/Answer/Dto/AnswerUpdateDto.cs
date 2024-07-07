@@ -1,5 +1,5 @@
-﻿using Core.Base.Dto;
-using System;
+﻿using System;
+using Core.Base.Dto;
 
 namespace Services.Answer.Dto
 {
@@ -8,6 +8,5 @@ namespace Services.Answer.Dto
         public Guid FileId { get; set; }
         public string AnswerText { get; set; }
         public bool IsTrueAnswer { get; set; }
-
     }
 }

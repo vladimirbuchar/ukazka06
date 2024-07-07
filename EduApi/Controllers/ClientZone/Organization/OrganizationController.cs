@@ -1,4 +1,6 @@
-﻿using Core.Base.Dto;
+﻿using System;
+using System.Collections.Generic;
+using Core.Base.Dto;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -7,8 +9,6 @@ using Model.Edu.Organization;
 using Services.Organization.Dto;
 using Services.Organization.Service;
 using Services.OrganizationRole.Service;
-using System;
-using System.Collections.Generic;
 
 namespace EduApi.Controllers.ClientZone.Organization
 {
@@ -17,11 +17,7 @@ namespace EduApi.Controllers.ClientZone.Organization
     {
         private readonly IOrganizationService _organizationService;
 
-        public OrganizationController(
-            ILogger<OrganizationController> logger,
-            IOrganizationService organizationService,
-            IOrganizationRoleService organizationRoleService
-        )
+        public OrganizationController(ILogger<OrganizationController> logger, IOrganizationService organizationService, IOrganizationRoleService organizationRoleService)
             : base(logger, organizationRoleService)
         {
             _organizationService = organizationService;
@@ -137,14 +133,16 @@ namespace EduApi.Controllers.ClientZone.Organization
             try
             {
                 CheckOrganizationPermition(request.Id);
-                return SendResponse(_organizationService.FileUpload(
-                    request.Id,
-                    GetClientCulture(),
-                    GetLoggedUserId(),
-                    new List<IFormFile>() { file },
-                    new OrganizationFileRepositoryDbo() { OrganizationId = request.Id, },
-                    x => x.OrganizationId == request.Id && x.Culture.SystemIdentificator == GetClientCulture()
-                ));
+                return SendResponse(
+                    _organizationService.FileUpload(
+                        request.Id,
+                        GetClientCulture(),
+                        GetLoggedUserId(),
+                        new List<IFormFile>() { file },
+                        new OrganizationFileRepositoryDbo() { OrganizationId = request.Id, },
+                        x => x.OrganizationId == request.Id && x.Culture.SystemIdentificator == GetClientCulture()
+                    )
+                );
             }
             catch (Exception e)
             {

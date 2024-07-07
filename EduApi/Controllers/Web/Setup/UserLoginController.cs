@@ -1,4 +1,6 @@
-﻿using Core.DataTypes;
+﻿using System;
+using System.Collections.Generic;
+using Core.DataTypes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -7,9 +9,6 @@ using Services.Permissions.Service;
 using Services.Route.Service;
 using Services.Setup.Dto;
 using Services.Setup.Service;
-using System;
-using System.Collections.Generic;
-
 
 namespace EduApi.Controllers.Web.UserLogin
 {
@@ -18,13 +17,16 @@ namespace EduApi.Controllers.Web.UserLogin
     {
         private readonly ISetupService _setupService;
 
-        public SetupController(ISetupService userService, ILogger<SetupController> logger, IPermissionsService permissionsService,
+        public SetupController(
+            ISetupService userService,
+            ILogger<SetupController> logger,
+            IPermissionsService permissionsService,
             IRouteService routeService,
-            IEnumerable<EndpointDataSource> endpointSources)
+            IEnumerable<EndpointDataSource> endpointSources
+        )
             : base(logger)
         {
             _setupService = userService;
-
         }
 
         [HttpPost]
@@ -65,6 +67,7 @@ namespace EduApi.Controllers.Web.UserLogin
                 return SendSystemError(e);
             }
         }
+
         [HttpPost]
         [ProducesResponseType(typeof(Result), 200)]
         [ProducesResponseType(typeof(void), 404)]
@@ -86,7 +89,5 @@ namespace EduApi.Controllers.Web.UserLogin
                 return SendSystemError(e);
             }
         }
-
-
     }
 }

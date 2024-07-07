@@ -1,6 +1,6 @@
-﻿using Core.Base.Repository;
+﻿using System;
+using Core.Base.Repository;
 using Model.Edu.CourseTable;
-using System;
 
 namespace Repository.CourseTableRepository
 {

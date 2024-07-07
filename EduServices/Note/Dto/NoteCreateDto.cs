@@ -1,5 +1,5 @@
-﻿using Core.Base.Dto;
-using System;
+﻿using System;
+using Core.Base.Dto;
 
 namespace Services.Note.Dto
 {
@@ -12,5 +12,4 @@ namespace Services.Note.Dto
         public Guid UserId { get; set; }
         public Guid FileName { get; set; }
     }
-
 }

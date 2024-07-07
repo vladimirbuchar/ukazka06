@@ -6,6 +6,5 @@ namespace Services.Setup.Service
     {
         public string Route { get; set; }
         public List<string> Roles { get; set; }
-
     }
 }

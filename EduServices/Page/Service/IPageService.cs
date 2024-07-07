@@ -1,6 +1,6 @@
-﻿using Core.Base.Service;
+﻿using System.Collections.Generic;
+using Core.Base.Service;
 using Services.Page.Dto;
-using System.Collections.Generic;
 
 namespace Services.Page.Service
 {

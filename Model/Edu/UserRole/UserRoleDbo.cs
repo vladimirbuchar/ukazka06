@@ -1,6 +1,6 @@
-﻿using Model.Edu.User;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using Model.Edu.User;
 
 namespace Model.Edu.UserRole
 {

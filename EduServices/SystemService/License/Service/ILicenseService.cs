@@ -2,8 +2,5 @@
 
 namespace Services.SystemService.License.Service
 {
-    public interface ILicenseService : IBaseService
-    {
-
-    }
+    public interface ILicenseService : IBaseService { }
 }

@@ -1,6 +1,5 @@
 ﻿namespace Core.Constants
 {
-
     public static class Constants
     {
         public const string ADD_MORE_STUDENTS_THAN_MAXIMUM = "ADD_MORE_STUDENTS_THAN_MAXIMUM";

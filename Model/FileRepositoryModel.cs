@@ -1,6 +1,6 @@
-﻿using Model.CodeBook;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using Model.CodeBook;
 
 namespace Model
 {
@@ -8,8 +8,10 @@ namespace Model
     {
         [Column("FileName")]
         public string FileName { get; set; }
+
         [Column("OriginalFileName")]
         public string OriginalFileName { get; set; }
+
         [Column("FileContent")]
         public byte[] FileContent { get; set; }
         public CultureDbo Culture { get; set; }

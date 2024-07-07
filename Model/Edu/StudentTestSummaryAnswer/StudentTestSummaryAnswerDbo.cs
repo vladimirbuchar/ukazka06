@@ -1,7 +1,7 @@
-﻿using Model.Edu.Answer;
-using Model.Edu.StudentTestSummaryQuestion;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using Model.Edu.Answer;
+using Model.Edu.StudentTestSummaryQuestion;
 
 namespace Model.Edu.StudentTestSummaryAnswer
 {

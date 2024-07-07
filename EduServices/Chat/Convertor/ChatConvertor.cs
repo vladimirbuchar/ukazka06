@@ -1,8 +1,8 @@
-﻿using Core.Extension;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Core.Extension;
 using Model.Edu.Chat;
 using Services.Chat.Dto;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.Chat.Convertor
 {

@@ -1,6 +1,6 @@
-﻿using Core.Base.Service;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Core.Base.Service;
 
 namespace Services.OrganizationRole.Service
 {

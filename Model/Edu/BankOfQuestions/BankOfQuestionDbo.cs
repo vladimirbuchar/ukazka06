@@ -1,8 +1,8 @@
-﻿using Model.Edu.Organization;
-using Model.Edu.Question;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using Model.Edu.Organization;
+using Model.Edu.Question;
 
 namespace Model.Edu.BankOfQuestions
 {

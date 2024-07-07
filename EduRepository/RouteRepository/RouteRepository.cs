@@ -5,8 +5,5 @@ using Model.System;
 
 namespace Repository.RouteRepository
 {
-    public class RouteRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<RouteDbo>(dbContext, memoryCache), IRouteRepository
-    {
-
-    }
+    public class RouteRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<RouteDbo>(dbContext, memoryCache), IRouteRepository { }
 }

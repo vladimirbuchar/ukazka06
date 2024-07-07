@@ -1,4 +1,6 @@
-﻿using Core.Base.Service;
+﻿using System;
+using System.Collections.Generic;
+using Core.Base.Service;
 using Core.Constants;
 using Core.DataTypes;
 using Model.Edu.Branch;
@@ -6,8 +8,6 @@ using Repository.BranchRepository;
 using Services.Branch.Convertor;
 using Services.Branch.Dto;
 using Services.Branch.Validator;
-using System;
-using System.Collections.Generic;
 
 namespace Services.Branch.Service
 {

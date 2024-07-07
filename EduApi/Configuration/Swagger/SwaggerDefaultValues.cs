@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc.ApiExplorer;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System.Linq;
 
 namespace EduApi.Configuration.Swagger
 {
@@ -26,8 +26,7 @@ namespace EduApi.Configuration.Swagger
 
             foreach (var parameter in operation.Parameters)
             {
-                var description = apiDescription.ParameterDescriptions
-                    .First(p => p.Name == parameter.Name);
+                var description = apiDescription.ParameterDescriptions.First(p => p.Name == parameter.Name);
 
                 parameter.Description ??= description.ModelMetadata.Description;
 

@@ -1,12 +1,12 @@
-﻿using Core.Base.Service;
+﻿using System;
+using System.Collections.Generic;
+using Core.Base.Service;
 using Core.Constants;
 using Model.Edu.SendMessage;
 using Repository.MessageRepository;
 using Services.Message.Convertor;
 using Services.Message.Dto;
 using Services.Message.Validator;
-using System;
-using System.Collections.Generic;
 
 namespace Services.Message.Service
 {

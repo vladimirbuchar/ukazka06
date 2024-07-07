@@ -1,6 +1,6 @@
-﻿using Core.Base.Dto;
-using System;
+﻿using System;
 using System.Text.Json.Serialization;
+using Core.Base.Dto;
 
 namespace Services.StudentInGroup.Dto
 {
@@ -12,11 +12,7 @@ namespace Services.StudentInGroup.Dto
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public Guid StudentGroupId { get; set; }
-
     }
 
-    public class StudentInGroupCreate
-    {
-
-    }
+    public class StudentInGroupCreate { }
 }

@@ -1,8 +1,8 @@
-﻿using Model.Edu.CourseTerm;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using Model.Edu.CourseTerm;
 using Model.Edu.CourseTermDate;
 using Model.Edu.OrganizationStudyHour;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Model.CodeBook
 {

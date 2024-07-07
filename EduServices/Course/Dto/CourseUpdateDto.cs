@@ -1,10 +1,8 @@
-﻿using Core.Base.Dto;
-using System;
+﻿using System;
+using Core.Base.Dto;
 
 namespace Services.Course.Dto
 {
-
-
     public class CourseUpdateDto : UpdateDto
     {
         public double Price { get; set; }
@@ -22,6 +20,5 @@ namespace Services.Course.Dto
         public bool SendEmail { get; set; }
         public Guid? EmailTemplateId { get; set; }
         public bool CourseWithLector { get; set; }
-
     }
 }

@@ -1,7 +1,7 @@
-﻿using Model.System;
-using Services.Route.Dto;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Model.System;
+using Services.Route.Dto;
 
 namespace Services.Route.Convertor
 {
@@ -9,10 +9,7 @@ namespace Services.Route.Convertor
     {
         public RouteDbo ConvertToBussinessEntity(RouteCreateDto addAnswerDto, string culture)
         {
-            return new RouteDbo()
-            {
-                Route = addAnswerDto.Route
-            };
+            return new RouteDbo() { Route = addAnswerDto.Route };
         }
 
         public RouteDbo ConvertToBussinessEntity(RouteUpdateDto updateAnswerDto, RouteDbo entity, string culture)
@@ -23,22 +20,12 @@ namespace Services.Route.Convertor
 
         public HashSet<RouteListDto> ConvertToWebModel(HashSet<RouteDbo> getAnswersInQuestions, string culture)
         {
-            return getAnswersInQuestions
-                .Select(item => new RouteListDto()
-                {
-                    Id = item.Id,
-                    Route = item.Route,
-                })
-                .ToHashSet();
+            return getAnswersInQuestions.Select(item => new RouteListDto() { Id = item.Id, Route = item.Route, }).ToHashSet();
         }
 
         public RouteDetailDto ConvertToWebModel(RouteDbo answerDetail, string culture)
         {
-            return new RouteDetailDto()
-            {
-                Id = answerDetail.Id,
-                Route = answerDetail.Route
-            };
+            return new RouteDetailDto() { Id = answerDetail.Id, Route = answerDetail.Route };
         }
     }
 }

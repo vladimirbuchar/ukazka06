@@ -2,9 +2,5 @@
 
 namespace Services.SystemService.License.Service
 {
-    public class LicenseService(
-    ) : BaseService(), ILicenseService
-    {
-
-    }
+    public class LicenseService() : BaseService(), ILicenseService { }
 }

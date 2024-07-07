@@ -1,5 +1,5 @@
-﻿using Core.Base.Dto;
-using System;
+﻿using System;
+using Core.Base.Dto;
 
 namespace Services.Certificate.Dto
 {
@@ -9,7 +9,5 @@ namespace Services.Certificate.Dto
         public string Html { get; set; }
         public int CertificateValidTo { get; set; }
         public Guid OrganizationId { get; set; }
-
     }
-
 }

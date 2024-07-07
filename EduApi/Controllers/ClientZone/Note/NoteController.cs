@@ -1,12 +1,12 @@
-﻿using Core.Base.Dto;
+﻿using System;
+using System.Collections.Generic;
+using Core.Base.Dto;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.Note.Dto;
 using Services.Note.Service;
 using Services.OrganizationRole.Service;
-using System;
-using System.Collections.Generic;
 
 namespace EduApi.Controllers.ClientZone.Note
 {
@@ -17,7 +17,6 @@ namespace EduApi.Controllers.ClientZone.Note
 
         public NoteController(INoteService noteService, ILogger<NoteController> logger, IOrganizationRoleService organizationRoleService)
             : base(logger, organizationRoleService)
-
         {
             _noteService = noteService;
         }
@@ -69,7 +68,6 @@ namespace EduApi.Controllers.ClientZone.Note
         {
             try
             {
-
                 return SendResponse(_noteService.GetDetail(request.Id, GetClientCulture()));
             }
             catch (Exception e)

@@ -1,11 +1,11 @@
-﻿using Model.CodeBook;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using Model.CodeBook;
 using Model.Edu.AttendanceStudent;
 using Model.Edu.ClassRoom;
 using Model.Edu.CourseTerm;
 using Model.Link;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Model.Edu.CourseTermDate
 {

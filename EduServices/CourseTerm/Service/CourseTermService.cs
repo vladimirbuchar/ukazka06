@@ -1,4 +1,7 @@
-﻿using Core.Base.Service;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Core.Base.Service;
 using Core.DataTypes;
 using Model.Edu.CourseTerm;
 using Model.Edu.OrganizationStudyHour;
@@ -11,9 +14,6 @@ using Repository.StudentInGroupCourseTerm;
 using Services.CourseTerm.Convertor;
 using Services.CourseTerm.Dto;
 using Services.CourseTerm.Validator;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.CourseTerm.Service
 {

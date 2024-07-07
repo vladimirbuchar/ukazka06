@@ -6,6 +6,5 @@ namespace Services.Permissions.Dto
     {
         public string Route { get; set; }
         public string OrganizationRole { get; set; }
-
     }
 }

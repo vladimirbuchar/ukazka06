@@ -1,24 +1,20 @@
-﻿using Core.Base.Dto;
+﻿using System;
+using System.Collections.Generic;
+using Core.Base.Dto;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.OrganizationRole.Service;
 using Services.Permissions.Dto;
 using Services.Permissions.Service;
-using System;
-using System.Collections.Generic;
 
 namespace EduApi.Controllers.Admin.Permissions
 {
     public class PermissionsController : BaseAdminController
     {
         private readonly IPermissionsService _permissionsService;
-        public PermissionsController(
-            IPermissionsService permissionsService,
-            ILogger<PermissionsController> logger,
-            IOrganizationRoleService organizationRoleService
 
-        )
+        public PermissionsController(IPermissionsService permissionsService, ILogger<PermissionsController> logger, IOrganizationRoleService organizationRoleService)
             : base(logger)
         {
             _permissionsService = permissionsService;
@@ -131,6 +127,5 @@ namespace EduApi.Controllers.Admin.Permissions
                 return SendSystemError(e);
             }
         }
-
     }
 }

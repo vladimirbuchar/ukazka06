@@ -1,6 +1,6 @@
-﻿using Core.Base.Dto;
+﻿using System;
+using Core.Base.Dto;
 using Core.Constants;
-using System;
 
 namespace Services.CourseTerm.Dto
 {

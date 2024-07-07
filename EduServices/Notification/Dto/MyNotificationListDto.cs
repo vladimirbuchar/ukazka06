@@ -1,6 +1,6 @@
-﻿using Core.Base.Dto;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Core.Base.Dto;
 
 namespace Services.Notification.Dto
 {

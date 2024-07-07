@@ -1,5 +1,5 @@
-﻿using Model.CodeBook;
-using System;
+﻿using System;
+using Model.CodeBook;
 
 namespace Model
 {

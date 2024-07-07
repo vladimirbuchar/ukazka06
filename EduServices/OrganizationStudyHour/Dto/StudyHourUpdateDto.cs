@@ -2,8 +2,6 @@
 
 namespace Services.OrganizationStudyHour.Dto
 {
-
-
     public class StudyHourUpdateDto : UpdateDto
     {
         public string ActiveFromId { get; set; }

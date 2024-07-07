@@ -1,6 +1,6 @@
-﻿using Core.DataTypes;
+﻿using System.Collections.Generic;
+using Core.DataTypes;
 using Core.Extension;
-using System.Collections.Generic;
 
 namespace Services.User.Dto
 {

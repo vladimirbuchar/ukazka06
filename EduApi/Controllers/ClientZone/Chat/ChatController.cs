@@ -1,4 +1,6 @@
-﻿using Core.Base.Dto;
+﻿using System;
+using System.Collections.Generic;
+using Core.Base.Dto;
 using Core.DataTypes;
 using EduApi.Controllers.ClientZone.Note;
 using Microsoft.AspNetCore.Mvc;
@@ -6,8 +8,6 @@ using Microsoft.Extensions.Logging;
 using Services.Chat.Dto;
 using Services.Chat.Service;
 using Services.OrganizationRole.Service;
-using System;
-using System.Collections.Generic;
 
 namespace EduApi.Controllers.ClientZone.Chat
 {

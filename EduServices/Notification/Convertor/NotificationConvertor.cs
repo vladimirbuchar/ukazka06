@@ -1,7 +1,7 @@
-﻿using Model.Edu.Notification;
-using Services.Notification.Dto;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Model.Edu.Notification;
+using Services.Notification.Dto;
 
 namespace Services.Notification.Convertor
 {

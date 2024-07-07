@@ -11,24 +11,13 @@ namespace EduApi.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn("SmtpServerPort", "Edu_OrganizationSetting");
-            migrationBuilder.AddColumn<int>(
-            name: "SmtpServerPort",
-            table: "Edu_OrganizationSetting",
-            type: "int",
-            nullable: false,
-            defaultValue: 0);
+            migrationBuilder.AddColumn<int>(name: "SmtpServerPort", table: "Edu_OrganizationSetting", type: "int", nullable: false, defaultValue: 0);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
-                name: "SmtpServerPort",
-                table: "Edu_OrganizationSetting",
-                type: "nvarchar(max)",
-                nullable: true,
-                oldClrType: typeof(int),
-                oldType: "int");
+            migrationBuilder.AlterColumn<string>(name: "SmtpServerPort", table: "Edu_OrganizationSetting", type: "nvarchar(max)", nullable: true, oldClrType: typeof(int), oldType: "int");
         }
     }
 }

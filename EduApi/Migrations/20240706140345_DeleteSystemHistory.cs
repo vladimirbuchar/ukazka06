@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -11,8 +11,7 @@ namespace EduApi.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "System_ObjectHistory");
+            migrationBuilder.DropTable(name: "System_ObjectHistory");
         }
 
         /// <inheritdoc />
@@ -43,24 +42,19 @@ namespace EduApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_System_ObjectHistory", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_System_ObjectHistory_Edu_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Edu_User",
-                        principalColumn: "Id");
-                });
+                    table.ForeignKey(name: "FK_System_ObjectHistory_Edu_User_UserId", column: x => x.UserId, principalTable: "Edu_User", principalColumn: "Id");
+                }
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_System_ObjectHistory_SystemIdentificator",
                 table: "System_ObjectHistory",
                 column: "SystemIdentificator",
                 unique: true,
-                filter: "[SystemIdentificator] IS NOT NULL");
+                filter: "[SystemIdentificator] IS NOT NULL"
+            );
 
-            migrationBuilder.CreateIndex(
-                name: "IX_System_ObjectHistory_UserId",
-                table: "System_ObjectHistory",
-                column: "UserId");
+            migrationBuilder.CreateIndex(name: "IX_System_ObjectHistory_UserId", table: "System_ObjectHistory", column: "UserId");
         }
     }
 }

@@ -1,12 +1,12 @@
-﻿using Core.Base.Repository;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using Core.Base.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
 using Model.Edu.CourseTerm;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 
 namespace Repository.CourseTermRepository
 {
@@ -14,34 +14,37 @@ namespace Repository.CourseTermRepository
     {
         public override Guid GetOrganizationId(Guid objectId)
         {
-            return _dbContext.Set<CourseTermDbo>()
-                .Include(x => x.Course)
-                .FirstOrDefault(x => x.Id == objectId).Course.OrganizationId;
+            return _dbContext.Set<CourseTermDbo>().Include(x => x.Course).FirstOrDefault(x => x.Id == objectId).Course.OrganizationId;
         }
 
         public override CourseTermDbo GetEntity(Guid id)
         {
-            return _dbContext.Set<CourseTermDbo>()
-                .Include(x => x.ClassRoom)
-                .FirstOrDefault(x => x.Id == id);
+            return _dbContext.Set<CourseTermDbo>().Include(x => x.ClassRoom).FirstOrDefault(x => x.Id == id);
         }
 
-        public override HashSet<CourseTermDbo> GetEntities(bool deleted, Expression<Func<CourseTermDbo, bool>> predicate = null, Expression<Func<CourseTermDbo, object>> orderBy = null, Expression<Func<CourseTermDbo, object>> orderByDesc = null)
+        public override HashSet<CourseTermDbo> GetEntities(
+            bool deleted,
+            Expression<Func<CourseTermDbo, bool>> predicate = null,
+            Expression<Func<CourseTermDbo, object>> orderBy = null,
+            Expression<Func<CourseTermDbo, object>> orderByDesc = null
+        )
         {
-            return [.. _dbContext
-                .Set<CourseTermDbo>()
-                .Include(x => x.ClassRoom)
-                .ThenInclude(x => x.ClassRoomTranslations.Where(x => x.IsDeleted == false))
-                .ThenInclude(x => x.Culture)
-                .Include(x => x.ClassRoom)
-                .ThenInclude(x => x.Branch)
-                .ThenInclude(x => x.BranchTranslations.Where(x => x.IsDeleted == false))
-                .ThenInclude(x => x.Culture)
-                .Include(x => x.TimeFrom)
-                .Include(x => x.TimeTo)
-                .Where(predicate)
-                .Where(x => x.IsDeleted == deleted)
-                ];
+            return
+            [
+                .. _dbContext
+                    .Set<CourseTermDbo>()
+                    .Include(x => x.ClassRoom)
+                    .ThenInclude(x => x.ClassRoomTranslations.Where(x => x.IsDeleted == false))
+                    .ThenInclude(x => x.Culture)
+                    .Include(x => x.ClassRoom)
+                    .ThenInclude(x => x.Branch)
+                    .ThenInclude(x => x.BranchTranslations.Where(x => x.IsDeleted == false))
+                    .ThenInclude(x => x.Culture)
+                    .Include(x => x.TimeFrom)
+                    .Include(x => x.TimeTo)
+                    .Where(predicate)
+                    .Where(x => x.IsDeleted == deleted)
+            ];
         }
     }
 }

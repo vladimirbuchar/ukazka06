@@ -9,6 +9,5 @@ namespace Services.OrganizationSetting.Convertor
         OrganizationSettingDetailDto ConvertToWebModel(OrganizationSettingDbo getOrganizationSetting);
         OrganizationSettingByUrlDto ConvertToWebModel2(OrganizationSettingDbo getOrganizationSetting);
         OrganizationSettingDbo ConvertToBussinessEntity(OrganizationSettingUpdateDto saveOrganizationSettingDto, OrganizationSettingDbo setting);
-
     }
 }

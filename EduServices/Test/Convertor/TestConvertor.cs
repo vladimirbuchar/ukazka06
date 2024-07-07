@@ -1,7 +1,7 @@
-﻿using Model.Edu.CourseLesson;
+﻿using System.Linq;
+using Model.Edu.CourseLesson;
 using Model.Edu.CourseTest;
 using Services.Test.Dto;
-using System.Linq;
 
 namespace Services.Test.Convertor
 {

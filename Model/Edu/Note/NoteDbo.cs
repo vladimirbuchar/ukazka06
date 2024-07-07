@@ -1,8 +1,8 @@
-﻿using Model.CodeBook;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+using Model.CodeBook;
 using Model.Edu.Course;
 using Model.Edu.User;
-using System;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Model.Edu.Note
 {

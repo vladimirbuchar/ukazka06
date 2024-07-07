@@ -1,9 +1,9 @@
-﻿using Core.Extension;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Core.Extension;
 using Model.Edu.ClassRoom;
 using Model.Edu.CourseTermDate;
 using Services.CourseTermTimeTable.Dto;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.CourseTermTimeTable.Convertor
 {

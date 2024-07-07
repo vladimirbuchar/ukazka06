@@ -1,5 +1,5 @@
-﻿using Core.Base.Dto;
-using System;
+﻿using System;
+using Core.Base.Dto;
 
 namespace Services.Chat.Dto
 {
@@ -10,6 +10,4 @@ namespace Services.Chat.Dto
         public Guid ParentId { get; set; }
         public string Text { get; set; }
     }
-
-
 }

@@ -1,7 +1,7 @@
-﻿using Core.Base.Repository;
-using Model.Link;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Core.Base.Repository;
+using Model.Link;
 
 namespace Repository.CourseStudentRepository
 {

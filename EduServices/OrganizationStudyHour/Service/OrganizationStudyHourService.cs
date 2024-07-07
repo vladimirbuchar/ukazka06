@@ -1,4 +1,8 @@
-﻿using Core.Base.Repository.CodeBookRepository;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Service;
 using Core.DataTypes;
 using Model.CodeBook;
@@ -7,10 +11,6 @@ using Repository.OrganizationHoursRepository;
 using Services.OrganizationStudyHour.Convertor;
 using Services.OrganizationStudyHour.Dto;
 using Services.OrganizationStudyHour.Validator;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 
 namespace Services.OrganizationStudyHour.Service
 {

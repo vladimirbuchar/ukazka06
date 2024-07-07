@@ -54,7 +54,6 @@ namespace Model
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             _ = optionsBuilder.EnableSensitiveDataLogging();
-            //_ = optionsBuilder.UseLazyLoadingProxies();
         }
 
         public EduDbContext() { }

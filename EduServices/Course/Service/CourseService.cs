@@ -8,11 +8,6 @@ using Services.Course.Validator;
 namespace Services.Course.Service
 {
     public class CourseService(ICourseRepository courseRepository, ICourseConvertor courseConvertor, ICourseValidator validator)
-        : BaseService<ICourseRepository, CourseDbo, ICourseConvertor, ICourseValidator, CourseCreateDto, CourseListDto, CourseDetailDto, CourseUpdateDto>(
-            courseRepository,
-            courseConvertor,
-            validator
-        ),
-            ICourseService
-    { }
+        : BaseService<ICourseRepository, CourseDbo, ICourseConvertor, ICourseValidator, CourseCreateDto, CourseListDto, CourseDetailDto, CourseUpdateDto>(courseRepository, courseConvertor, validator),
+            ICourseService { }
 }

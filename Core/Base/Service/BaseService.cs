@@ -1,4 +1,8 @@
-﻿using Core.Base.Convertor;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using Core.Base.Convertor;
 using Core.Base.Dto;
 using Core.Base.Repository;
 using Core.Base.Repository.CodeBookRepository;
@@ -8,10 +12,6 @@ using Core.DataTypes;
 using Microsoft.AspNetCore.Http;
 using Model;
 using Model.CodeBook;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 
 namespace Core.Base.Service
 {
@@ -36,7 +36,7 @@ namespace Core.Base.Service
         private HashSet<CultureDbo> Culture { get; set; } = codeBookRepository.GetEntities(false);
 
         /// <summary>
-        /// file upload 
+        /// file upload
         /// </summary>
         /// <param name="parentId"></param>
         /// <param name="culture"></param>
@@ -63,6 +63,7 @@ namespace Core.Base.Service
             }
             return new Result();
         }
+
         /// <summary>
         /// file delete
         /// </summary>
@@ -111,6 +112,7 @@ namespace Core.Base.Service
             }
             return result;
         }
+
         /// <summary>
         /// test that is object change
         /// </summary>
@@ -153,6 +155,7 @@ namespace Core.Base.Service
             }
             return result;
         }
+
         /// <summary>
         /// delete object
         /// </summary>
@@ -163,6 +166,7 @@ namespace Core.Base.Service
             _repository.DeleteEntity(objectId, userId);
             return new Result();
         }
+
         /// <summary>
         /// restore object
         /// </summary>
@@ -173,6 +177,7 @@ namespace Core.Base.Service
             _repository.RestoreEntity(objectId, userId);
             return new Result();
         }
+
         /// <summary>
         /// delete objects by condition
         /// </summary>
@@ -187,6 +192,7 @@ namespace Core.Base.Service
             }
             return new Result();
         }
+
         /// <summary>
         /// get object list
         /// </summary>
@@ -203,10 +209,12 @@ namespace Core.Base.Service
         {
             return GetList(null, deleted, culture);
         }
+
         public virtual HashSet<ObjectĹist> GetList()
         {
             return GetList(null, false, string.Empty);
         }
+
         /// <summary>
         /// get object detail
         /// </summary>
@@ -217,6 +225,7 @@ namespace Core.Base.Service
         {
             return _convertor.ConvertToWebModel(_repository.GetEntity(objectId), culture);
         }
+
         /// <summary>
         /// get object detail by condition
         /// </summary>
@@ -251,6 +260,7 @@ namespace Core.Base.Service
         where Model : TableModel
     {
         protected Repository _repository = repository;
+
         public override Guid GetOrganizationIdByObjectId(Guid objectId)
         {
             return _repository.GetOrganizationId(objectId);
@@ -266,6 +276,7 @@ namespace Core.Base.Service
     public abstract class BaseService : IBaseService
     {
         public BaseService() { }
+
         public virtual Guid GetOrganizationIdByObjectId(Guid objectId)
         {
             return Guid.Empty;

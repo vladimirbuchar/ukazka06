@@ -1,4 +1,5 @@
-﻿using Core.Base.Repository.CodeBookRepository;
+﻿using System.Collections.Generic;
+using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Validator;
 using Core.Constants;
 using Core.DataTypes;
@@ -7,7 +8,6 @@ using Model.Edu.Organization;
 using Repository.OrganizationRepository;
 using Repository.UserRepository;
 using Services.Organization.Dto;
-using System.Collections.Generic;
 
 namespace Services.Organization.Validator
 {
@@ -17,7 +17,7 @@ namespace Services.Organization.Validator
         IUserRepository userRepository,
         ICodeBookRepository<CountryDbo> country,
         ICodeBookRepository<CultureDbo> culture
-        ) : BaseValidator<OrganizationDbo, IOrganizationRepository, OrganizationCreateDto, OrganizationDetailDto, OrganizationUpdateDto>(repository), IOrganizationValidator
+    ) : BaseValidator<OrganizationDbo, IOrganizationRepository, OrganizationCreateDto, OrganizationDetailDto, OrganizationUpdateDto>(repository), IOrganizationValidator
     {
         private readonly ICodeBookRepository<CountryDbo> _country = country;
         private readonly ICodeBookRepository<AddressTypeDbo> _addressType = addressType;
@@ -59,7 +59,14 @@ namespace Services.Organization.Validator
                 foreach (Address address in addresses)
                 {
                     base.CodeBookValueExist(_country, x => x.Id == address.CountryId, result, AddressValidator.COUNTRY, AddressValidator.COUNTRY_NOT_EXIST, address.CountryId.ToString());
-                    base.CodeBookValueExist(_addressType, x => x.Id == address.AddressTypeId, result, AddressValidator.ADDRESS_TYPE, AddressValidator.ADDRESS_TYPE_NOT_EXIST, address.AddressTypeId.ToString());
+                    base.CodeBookValueExist(
+                        _addressType,
+                        x => x.Id == address.AddressTypeId,
+                        result,
+                        AddressValidator.ADDRESS_TYPE,
+                        AddressValidator.ADDRESS_TYPE_NOT_EXIST,
+                        address.AddressTypeId.ToString()
+                    );
                 }
             }
         }

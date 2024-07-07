@@ -1,4 +1,7 @@
-﻿using Core.Base.Repository.CodeBookRepository;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Repository.FileRepository;
 using Core.Base.Service;
 using Model.CodeBook;
@@ -8,9 +11,6 @@ using Repository.CourseRepository;
 using Services.CourseMaterial.Convertor;
 using Services.CourseMaterial.Dto;
 using Services.CourseMaterial.Validator;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.CourseMaterial.Service
 {

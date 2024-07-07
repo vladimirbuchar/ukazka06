@@ -1,8 +1,8 @@
-﻿using Core.Base.Service;
+﻿using System;
+using System.Collections.Generic;
+using Core.Base.Service;
 using Core.DataTypes;
 using Services.Notification.Dto;
-using System;
-using System.Collections.Generic;
 
 namespace Services.Notification.Service
 {

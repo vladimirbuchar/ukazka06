@@ -1,24 +1,21 @@
-﻿using Core.Base.Dto;
+﻿using System;
+using System.Collections.Generic;
+using Core.Base.Dto;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.OrganizationRole.Service;
 using Services.StudentInGroup.Dto;
 using Services.StudentInGroup.Service;
-using System;
-using System.Collections.Generic;
 
 namespace EduApi.Controllers.ClientZone.StudentInGroup;
+
 [ApiExplorerSettings(GroupName = "Organization")]
 public class StudentInGroupController : BaseClientZoneController
 {
     private readonly IStudentInGroupService _studentInGroupService;
 
-    public StudentInGroupController(
-        IStudentInGroupService studentInGroupService,
-        ILogger<StudentInGroupController> logger,
-        IOrganizationRoleService organizationRoleService
-    )
+    public StudentInGroupController(IStudentInGroupService studentInGroupService, ILogger<StudentInGroupController> logger, IOrganizationRoleService organizationRoleService)
         : base(logger, organizationRoleService)
     {
         _studentInGroupService = studentInGroupService;

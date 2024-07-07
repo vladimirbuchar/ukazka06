@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -11,8 +11,7 @@ namespace EduApi.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "SendEmailAttachmentDbo");
+            migrationBuilder.DropTable(name: "SendEmailAttachmentDbo");
 
             migrationBuilder.AlterColumn<string>(
                 name: "SystemIdentificator",
@@ -21,7 +20,8 @@ namespace EduApi.Migrations
                 nullable: true,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)",
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.CreateTable(
                 name: "Edu_SendEmailAttachment",
@@ -49,38 +49,36 @@ namespace EduApi.Migrations
                         column: x => x.SendEmailId,
                         principalTable: "Edu_SendEmail",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Edu_SendEmail_SystemIdentificator",
                 table: "Edu_SendEmail",
                 column: "SystemIdentificator",
                 unique: true,
-                filter: "[SystemIdentificator] IS NOT NULL");
+                filter: "[SystemIdentificator] IS NOT NULL"
+            );
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Edu_SendEmailAttachment_SendEmailId",
-                table: "Edu_SendEmailAttachment",
-                column: "SendEmailId");
+            migrationBuilder.CreateIndex(name: "IX_Edu_SendEmailAttachment_SendEmailId", table: "Edu_SendEmailAttachment", column: "SendEmailId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Edu_SendEmailAttachment_SystemIdentificator",
                 table: "Edu_SendEmailAttachment",
                 column: "SystemIdentificator",
                 unique: true,
-                filter: "[SystemIdentificator] IS NOT NULL");
+                filter: "[SystemIdentificator] IS NOT NULL"
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Edu_SendEmailAttachment");
+            migrationBuilder.DropTable(name: "Edu_SendEmailAttachment");
 
-            migrationBuilder.DropIndex(
-                name: "IX_Edu_SendEmail_SystemIdentificator",
-                table: "Edu_SendEmail");
+            migrationBuilder.DropIndex(name: "IX_Edu_SendEmail_SystemIdentificator", table: "Edu_SendEmail");
 
             migrationBuilder.AlterColumn<string>(
                 name: "SystemIdentificator",
@@ -89,7 +87,8 @@ namespace EduApi.Migrations
                 nullable: true,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(450)",
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.CreateTable(
                 name: "SendEmailAttachmentDbo",
@@ -117,13 +116,12 @@ namespace EduApi.Migrations
                         column: x => x.SendEmailId,
                         principalTable: "Edu_SendEmail",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
-            migrationBuilder.CreateIndex(
-                name: "IX_SendEmailAttachmentDbo_SendEmailId",
-                table: "SendEmailAttachmentDbo",
-                column: "SendEmailId");
+            migrationBuilder.CreateIndex(name: "IX_SendEmailAttachmentDbo_SendEmailId", table: "SendEmailAttachmentDbo", column: "SendEmailId");
         }
     }
 }

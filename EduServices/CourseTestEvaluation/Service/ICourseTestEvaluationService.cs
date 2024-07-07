@@ -5,6 +5,5 @@ using Services.CourseTestEvaluation.Dto;
 namespace Services.CourseTestEvaluation.Service
 {
     public interface ICourseTestEvaluationService
-        : IBaseService<CourseTestEvaluationDbo, CourseTestEvaluationCreateDto, CourseTestEvaluationListDto, CourseTestEvaluationDetailDto, CourseTestEvaluationUpdateDto>
-    { }
+        : IBaseService<CourseTestEvaluationDbo, CourseTestEvaluationCreateDto, CourseTestEvaluationListDto, CourseTestEvaluationDetailDto, CourseTestEvaluationUpdateDto> { }
 }

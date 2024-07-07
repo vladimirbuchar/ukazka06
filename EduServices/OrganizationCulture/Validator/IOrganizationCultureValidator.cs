@@ -6,6 +6,5 @@ using Services.OrganizationCulture.Dto;
 namespace Services.OrganizationCulture.Validator
 {
     public interface IOrganizationCultureValidator
-        : IBaseValidator<OrganizationCultureDbo, IOrganizationCultureRepository, OrganizationCultureCreateDto, OrganizationCultureDetailDto, OrganizationCultureUpdateDto>
-    { }
+        : IBaseValidator<OrganizationCultureDbo, IOrganizationCultureRepository, OrganizationCultureCreateDto, OrganizationCultureDetailDto, OrganizationCultureUpdateDto> { }
 }

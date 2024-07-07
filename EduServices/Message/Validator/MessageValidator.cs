@@ -1,4 +1,7 @@
-﻿using Core.Base.Repository.CodeBookRepository;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Validator;
 using Core.Constants;
 using Core.DataTypes;
@@ -8,9 +11,6 @@ using Model.Edu.SendMessage;
 using Repository.MessageRepository;
 using Repository.OrganizationRepository;
 using Services.Message.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.Message.Validator
 {

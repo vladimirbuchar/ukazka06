@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore;
+﻿using System;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Model;
-using System;
 
 namespace EduApi
 {
@@ -46,9 +46,6 @@ namespace EduApi
                         options.FileSizeLimit = 20 * 1024 * 1024; // The maximum log file size (20MB here)
                         options.RetainedFileCountLimit = 90;
                     })
-
-
-
                 )
                 .UseStartup<Startup>();
         }

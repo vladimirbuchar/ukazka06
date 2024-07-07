@@ -1,4 +1,8 @@
-﻿using Core.Base.Repository.CodeBookRepository;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Service;
 using Core.Constants;
 using Core.DataTypes;
@@ -22,10 +26,6 @@ using Services.SystemService.SendMailService;
 using Services.UserInOrganization.Convertor;
 using Services.UserInOrganization.Dto;
 using Services.UserInOrganization.Validator;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 
 namespace Services.UserInOrganization.Service
 {
@@ -98,14 +98,7 @@ namespace Services.UserInOrganization.Service
 
                         Dictionary<string, string> replaceData =
                             new() { { ConfigValue.ACTIVATION_LINK, string.Format("{0}/?id={1}", _configuration.GetSection(ConfigValue.CLIENT_URL_ACTIVATE).Value, user.Id) } };
-                        _sendMailService.AddEmailToQueue(
-                            EduEmail.REGISTRATION_USER,
-                            culture,
-                            new EmailAddress() { Email = email, Name = "" },
-                            replaceData,
-                            addObject.OrganizationId,
-                            ""
-                        );
+                        _sendMailService.AddEmailToQueue(EduEmail.REGISTRATION_USER, culture, new EmailAddress() { Email = email, Name = "" }, replaceData, addObject.OrganizationId, "");
                     }
                     foreach (Guid role in addObject.OrganizationRoleId)
                     {

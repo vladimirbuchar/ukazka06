@@ -1,6 +1,6 @@
-﻿using Core.Base.Dto;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Core.Base.Dto;
 
 namespace Services.User.Dto
 {
@@ -10,6 +10,7 @@ namespace Services.User.Dto
         {
             OrganizationRole = [];
         }
+
         public string UserEmail { get; set; }
         public string Token { get; set; }
         public bool? IsAvatarUrl { get; set; } = false;

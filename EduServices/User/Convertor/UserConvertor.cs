@@ -1,11 +1,11 @@
-﻿using Core.DataTypes;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Core.DataTypes;
 using Core.Extension;
 using Model.Edu.Person;
 using Model.Edu.PersonAddress;
 using Model.Edu.User;
 using Services.User.Dto;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.User.Convertor
 {
@@ -96,11 +96,11 @@ namespace Services.User.Convertor
         public HashSet<UserListDto> ConvertToWebModel(HashSet<UserDbo> list, string culture)
         {
             return list.Select(item => new UserListDto()
-            {
-                Id = item.Id,
-                PersonName = new PersonDto()
                 {
-                    Address = item
+                    Id = item.Id,
+                    PersonName = new PersonDto()
+                    {
+                        Address = item
                             .Person.PersonAddress.Select(x => new Address()
                             {
                                 Id = x.Id,
@@ -113,17 +113,17 @@ namespace Services.User.Convertor
                                 ZipCode = x.ZipCode,
                             })
                             .ToHashSet(),
-                    AvatarUrl =
+                        AvatarUrl =
                             item.Person.AvatarUrl == null
                                 ? string.Format("{0}{1}", item.Person.FirstName.FirstOrDefault(), item.Person.LastName.FirstOrDefault())
                                 : item.Person.AvatarUrl.IsValidUri()
                                     ? item.Person.AvatarUrl
                                     : string.Format("{0}{1}", item.Person.FirstName.FirstOrDefault(), item.Person.LastName.FirstOrDefault()),
-                    FirstName = item.Person.FirstName,
-                    LastName = item.Person.LastName,
-                    SecondName = item.Person.LastName,
-                }
-            })
+                        FirstName = item.Person.FirstName,
+                        LastName = item.Person.LastName,
+                        SecondName = item.Person.LastName,
+                    }
+                })
                 .ToHashSet();
         }
 

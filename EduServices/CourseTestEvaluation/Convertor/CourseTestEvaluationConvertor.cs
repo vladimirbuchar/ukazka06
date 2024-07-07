@@ -1,7 +1,7 @@
-﻿using Model.Edu.CourseTestEvaluation;
-using Services.CourseTestEvaluation.Dto;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Model.Edu.CourseTestEvaluation;
+using Services.CourseTestEvaluation.Dto;
 
 namespace Services.CourseTestEvaluation.Convertor
 {
@@ -29,12 +29,12 @@ namespace Services.CourseTestEvaluation.Convertor
         public HashSet<CourseTestEvaluationListDto> ConvertToWebModel(HashSet<CourseTestEvaluationDbo> list, string culture)
         {
             return list.Select(item => new CourseTestEvaluationListDto()
-            {
-                Evaluation = item.Evaluation,
-                PointFrom = item.PointFrom,
-                Id = item.Id,
-                PointTo = item.PointTo,
-            })
+                {
+                    Evaluation = item.Evaluation,
+                    PointFrom = item.PointFrom,
+                    Id = item.Id,
+                    PointTo = item.PointTo,
+                })
                 .ToHashSet();
         }
 

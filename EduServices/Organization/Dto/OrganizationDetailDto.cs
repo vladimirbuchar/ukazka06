@@ -1,7 +1,7 @@
-﻿using Core.Base.Dto;
-using Core.DataTypes;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Core.Base.Dto;
+using Core.DataTypes;
 
 namespace Services.Organization.Dto
 {

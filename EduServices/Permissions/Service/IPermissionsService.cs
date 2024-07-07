@@ -4,8 +4,5 @@ using Services.Permissions.Dto;
 
 namespace Services.Permissions.Service
 {
-    public interface IPermissionsService : IBaseService<PermissionsDbo, PermissionsCreateDto, PermissionsListDto, PermissionsDetailDto, PermissionsUpdateDto>
-    {
-
-    }
+    public interface IPermissionsService : IBaseService<PermissionsDbo, PermissionsCreateDto, PermissionsListDto, PermissionsDetailDto, PermissionsUpdateDto> { }
 }

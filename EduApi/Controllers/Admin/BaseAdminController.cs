@@ -10,9 +10,6 @@ namespace EduApi.Controllers.Admin
     public class BaseAdminController : BaseController
     {
         public BaseAdminController(ILogger<BaseAdminController> logger)
-            : base(logger)
-        {
-
-        }
+            : base(logger) { }
     }
 }

@@ -1,4 +1,7 @@
-﻿using Core.Base.Service;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Core.Base.Service;
 using Core.Constants;
 using Core.DataTypes;
 using Model.Edu.ClassRoom;
@@ -12,9 +15,6 @@ using Services.ClassRoom.Dto;
 using Services.ClassRoom.Validator;
 using Services.OrganizationStudyHour.Dto;
 using Services.User.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.ClassRoom.Service
 {
@@ -77,6 +77,7 @@ namespace Services.ClassRoom.Service
             }
             _ = timeTableItem.TimeTable.Add(timeTableDto);
         }
+
         public override Result DeleteObject(Guid objectId, Guid userId)
         {
             ClassRoomDbo classRoomDbo = _repository.GetEntity(objectId);

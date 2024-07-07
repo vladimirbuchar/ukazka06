@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -11,25 +11,15 @@ namespace EduApi.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "CreatePrivateCourse",
-                table: "Cb_License");
+            migrationBuilder.DropColumn(name: "CreatePrivateCourse", table: "Cb_License");
 
-            migrationBuilder.DropColumn(
-                name: "MaximumBranch",
-                table: "Cb_License");
+            migrationBuilder.DropColumn(name: "MaximumBranch", table: "Cb_License");
 
-            migrationBuilder.DropColumn(
-                name: "MaximumCourse",
-                table: "Cb_License");
+            migrationBuilder.DropColumn(name: "MaximumCourse", table: "Cb_License");
 
-            migrationBuilder.DropColumn(
-                name: "MaximumUser",
-                table: "Cb_License");
+            migrationBuilder.DropColumn(name: "MaximumUser", table: "Cb_License");
 
-            migrationBuilder.DropColumn(
-                name: "SendCourseInquiry",
-                table: "Cb_License");
+            migrationBuilder.DropColumn(name: "SendCourseInquiry", table: "Cb_License");
 
             migrationBuilder.CreateTable(
                 name: "Routes",
@@ -51,7 +41,8 @@ namespace EduApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Routes", x => x.Id);
-                });
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "Permissions",
@@ -79,83 +70,37 @@ namespace EduApi.Migrations
                         column: x => x.OrganizationRoleId,
                         principalTable: "Edu_OrganizationRole",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Permissions_Routes_RouteId",
-                        column: x => x.RouteId,
-                        principalTable: "Routes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                    table.ForeignKey(name: "FK_Permissions_Routes_RouteId", column: x => x.RouteId, principalTable: "Routes", principalColumn: "Id", onDelete: ReferentialAction.Cascade);
+                }
+            );
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Permissions_OrganizationRoleId",
-                table: "Permissions",
-                column: "OrganizationRoleId");
+            migrationBuilder.CreateIndex(name: "IX_Permissions_OrganizationRoleId", table: "Permissions", column: "OrganizationRoleId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Permissions_RouteId",
-                table: "Permissions",
-                column: "RouteId");
+            migrationBuilder.CreateIndex(name: "IX_Permissions_RouteId", table: "Permissions", column: "RouteId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Permissions_SystemIdentificator",
-                table: "Permissions",
-                column: "SystemIdentificator",
-                unique: true,
-                filter: "[SystemIdentificator] IS NOT NULL");
+            migrationBuilder.CreateIndex(name: "IX_Permissions_SystemIdentificator", table: "Permissions", column: "SystemIdentificator", unique: true, filter: "[SystemIdentificator] IS NOT NULL");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Routes_SystemIdentificator",
-                table: "Routes",
-                column: "SystemIdentificator",
-                unique: true,
-                filter: "[SystemIdentificator] IS NOT NULL");
+            migrationBuilder.CreateIndex(name: "IX_Routes_SystemIdentificator", table: "Routes", column: "SystemIdentificator", unique: true, filter: "[SystemIdentificator] IS NOT NULL");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Permissions");
+            migrationBuilder.DropTable(name: "Permissions");
 
-            migrationBuilder.DropTable(
-                name: "Routes");
+            migrationBuilder.DropTable(name: "Routes");
 
-            migrationBuilder.AddColumn<bool>(
-                name: "CreatePrivateCourse",
-                table: "Cb_License",
-                type: "bit",
-                nullable: false,
-                defaultValue: false);
+            migrationBuilder.AddColumn<bool>(name: "CreatePrivateCourse", table: "Cb_License", type: "bit", nullable: false, defaultValue: false);
 
-            migrationBuilder.AddColumn<int>(
-                name: "MaximumBranch",
-                table: "Cb_License",
-                type: "int",
-                nullable: false,
-                defaultValue: 0);
+            migrationBuilder.AddColumn<int>(name: "MaximumBranch", table: "Cb_License", type: "int", nullable: false, defaultValue: 0);
 
-            migrationBuilder.AddColumn<int>(
-                name: "MaximumCourse",
-                table: "Cb_License",
-                type: "int",
-                nullable: false,
-                defaultValue: 0);
+            migrationBuilder.AddColumn<int>(name: "MaximumCourse", table: "Cb_License", type: "int", nullable: false, defaultValue: 0);
 
-            migrationBuilder.AddColumn<int>(
-                name: "MaximumUser",
-                table: "Cb_License",
-                type: "int",
-                nullable: false,
-                defaultValue: 0);
+            migrationBuilder.AddColumn<int>(name: "MaximumUser", table: "Cb_License", type: "int", nullable: false, defaultValue: 0);
 
-            migrationBuilder.AddColumn<bool>(
-                name: "SendCourseInquiry",
-                table: "Cb_License",
-                type: "bit",
-                nullable: false,
-                defaultValue: false);
+            migrationBuilder.AddColumn<bool>(name: "SendCourseInquiry", table: "Cb_License", type: "bit", nullable: false, defaultValue: false);
         }
     }
 }

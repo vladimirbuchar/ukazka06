@@ -1,12 +1,12 @@
-﻿using Core.Base.Dto;
+﻿using System;
+using System.Collections.Generic;
+using Core.Base.Dto;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.BankOfQuestion.Dto;
 using Services.BankOfQuestion.Service;
 using Services.OrganizationRole.Service;
-using System;
-using System.Collections.Generic;
 
 namespace EduApi.Controllers.ClientZone.BankOfQuestion
 {
@@ -14,11 +14,7 @@ namespace EduApi.Controllers.ClientZone.BankOfQuestion
     {
         private readonly IBankOfQuestionService _bankOfQuestionService;
 
-        public BankOfQuestionController(
-            IBankOfQuestionService bankOfQuestionService,
-            ILogger<BankOfQuestionController> logger,
-            IOrganizationRoleService organizationRoleService
-        )
+        public BankOfQuestionController(IBankOfQuestionService bankOfQuestionService, ILogger<BankOfQuestionController> logger, IOrganizationRoleService organizationRoleService)
             : base(logger, organizationRoleService) => _bankOfQuestionService = bankOfQuestionService;
 
         [HttpPost]

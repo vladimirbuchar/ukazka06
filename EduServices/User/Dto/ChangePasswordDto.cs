@@ -1,6 +1,6 @@
-﻿using Core.Base.Dto;
-using System;
+﻿using System;
 using System.Text.Json.Serialization;
+using Core.Base.Dto;
 
 namespace Services.User.Dto
 {

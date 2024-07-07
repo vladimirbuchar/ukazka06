@@ -2,11 +2,8 @@
 
 namespace Services.StudentGroup.Dto
 {
-
-
     public class StudentGroupUpdateDto : UpdateDto
     {
-
         public string Name { get; set; }
     }
 }

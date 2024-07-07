@@ -1,12 +1,12 @@
-﻿using Core.Base.Dto;
+﻿using System;
+using System.Collections.Generic;
+using Core.Base.Dto;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.Course.Dto;
 using Services.Course.Service;
 using Services.OrganizationRole.Service;
-using System;
-using System.Collections.Generic;
 
 namespace EduApi.Controllers.ClientZone.Course
 {
@@ -14,11 +14,7 @@ namespace EduApi.Controllers.ClientZone.Course
     {
         private readonly ICourseService _courseService;
 
-        public CourseController(
-            ICourseService courseService,
-            ILogger<CourseController> logger,
-            IOrganizationRoleService organizationRoleService
-        )
+        public CourseController(ICourseService courseService, ILogger<CourseController> logger, IOrganizationRoleService organizationRoleService)
             : base(logger, organizationRoleService)
         {
             _courseService = courseService;

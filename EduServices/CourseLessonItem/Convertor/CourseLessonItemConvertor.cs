@@ -1,9 +1,9 @@
-﻿using Core.Base.Repository.CodeBookRepository;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Core.Base.Repository.CodeBookRepository;
 using Model.CodeBook;
 using Model.Edu.CourseLessonItem;
 using Services.CourseLessonItem.Dto;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.CourseLessonItem.Convertor
 {
@@ -61,12 +61,7 @@ namespace Services.CourseLessonItem.Convertor
             entity.Youtube = updateCourseLessonItemDto.Youtube;
             entity.CourseLessonItemTemplateId = updateCourseLessonItemDto.TemplateId;
             entity.CourseLessonItemTemplate = null;
-            entity.CourseLessonItemTranslations = entity.CourseLessonItemTranslations.PrepareTranslation(
-                updateCourseLessonItemDto.Name,
-                updateCourseLessonItemDto.Html,
-                culture,
-                _cultureList
-            );
+            entity.CourseLessonItemTranslations = entity.CourseLessonItemTranslations.PrepareTranslation(updateCourseLessonItemDto.Name, updateCourseLessonItemDto.Html, culture, _cultureList);
             return entity;
         }
     }

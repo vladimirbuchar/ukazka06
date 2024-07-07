@@ -1,8 +1,8 @@
-﻿using Hangfire.Dashboard;
-using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using Hangfire.Dashboard;
+using Microsoft.AspNetCore.Http;
 
 namespace EduApi.Configuration.Hangfire
 {
@@ -34,8 +34,7 @@ namespace EduApi.Configuration.Hangfire
 
             foreach (var user in _options.Users)
             {
-                if (string.Equals(username, user.Login, _options.LoginCaseSensitive ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase) &&
-                    string.Equals(password, user.PasswordClear))
+                if (string.Equals(username, user.Login, _options.LoginCaseSensitive ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase) && string.Equals(password, user.PasswordClear))
                 {
                     return true;
                 }

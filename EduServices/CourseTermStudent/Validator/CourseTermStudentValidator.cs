@@ -1,4 +1,5 @@
-﻿using Core.Base.Validator;
+﻿using System;
+using Core.Base.Validator;
 using Core.Constants;
 using Core.DataTypes;
 using Model.Edu.CourseTerm;
@@ -6,7 +7,6 @@ using Model.Link;
 using Repository.CourseStudentRepository;
 using Repository.CourseTermRepository;
 using Services.CourseTermStudent.Dto;
-using System;
 
 namespace Services.CourseTermStudent.Validator
 {

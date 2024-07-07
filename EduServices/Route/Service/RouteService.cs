@@ -7,18 +7,7 @@ using Services.Route.Validator;
 
 namespace Services.Route.Service
 {
-    public class RouteService(
-        IRouteRepository routeRepository,
-        IRouteConvertor routeConvertor,
-        IRouteValidator routeValidator
-    )
-        : BaseService<IRouteRepository, RouteDbo, IRouteConvertor, IRouteValidator, RouteCreateDto, RouteListDto, RouteDetailDto, RouteUpdateDto>(
-            routeRepository,
-            routeConvertor,
-            routeValidator
-        ),
-            IRouteService
-    {
-
-    }
+    public class RouteService(IRouteRepository routeRepository, IRouteConvertor routeConvertor, IRouteValidator routeValidator)
+        : BaseService<IRouteRepository, RouteDbo, IRouteConvertor, IRouteValidator, RouteCreateDto, RouteListDto, RouteDetailDto, RouteUpdateDto>(routeRepository, routeConvertor, routeValidator),
+            IRouteService { }
 }

@@ -1,7 +1,7 @@
-﻿using Core.Base.Service;
-using Core.DataTypes;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Core.Base.Service;
+using Core.DataTypes;
 
 namespace Services.SystemService.SendMailService
 {

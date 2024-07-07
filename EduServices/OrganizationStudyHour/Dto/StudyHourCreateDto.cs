@@ -1,5 +1,5 @@
-﻿using Core.Base.Dto;
-using System;
+﻿using System;
+using Core.Base.Dto;
 
 namespace Services.OrganizationStudyHour.Dto
 {
@@ -10,8 +10,5 @@ namespace Services.OrganizationStudyHour.Dto
         public string ActiveToId { get; set; }
         public int Position { get; set; }
         public int LessonLength { get; set; }
-
     }
-
-
 }

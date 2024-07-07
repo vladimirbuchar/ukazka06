@@ -1,6 +1,6 @@
-﻿using Core.Base.Dto;
+﻿using System.Collections.Generic;
+using Core.Base.Dto;
 using Model;
-using System.Collections.Generic;
 
 namespace Core.Base.Convertor
 {

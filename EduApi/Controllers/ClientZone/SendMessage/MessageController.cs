@@ -1,4 +1,6 @@
-﻿using Core.Base.Dto;
+﻿using System;
+using System.Collections.Generic;
+using Core.Base.Dto;
 using Core.Constants;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
@@ -6,8 +8,6 @@ using Microsoft.Extensions.Logging;
 using Services.Message.Dto;
 using Services.Message.Service;
 using Services.OrganizationRole.Service;
-using System;
-using System.Collections.Generic;
 
 namespace EduApi.Controllers.ClientZone.SendMessage
 {
@@ -16,11 +16,7 @@ namespace EduApi.Controllers.ClientZone.SendMessage
     {
         private readonly IMessageService _sendMessageService;
 
-        public MessageController(
-            IMessageService sendMessageService,
-            ILogger<MessageController> logger,
-            IOrganizationRoleService organizationRoleService
-        )
+        public MessageController(IMessageService sendMessageService, ILogger<MessageController> logger, IOrganizationRoleService organizationRoleService)
             : base(logger, organizationRoleService)
         {
             _sendMessageService = sendMessageService;

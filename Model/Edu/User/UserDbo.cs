@@ -1,4 +1,7 @@
-﻿using Model.Edu.Chat;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using Model.Edu.Chat;
 using Model.Edu.LinkLifeTime;
 using Model.Edu.Note;
 using Model.Edu.Notification;
@@ -6,9 +9,6 @@ using Model.Edu.Person;
 using Model.Edu.UserCertificate;
 using Model.Edu.UserRole;
 using Model.Link;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Model.Edu.User
 {
@@ -26,8 +26,10 @@ namespace Model.Edu.User
 
         [Column("GoogleId")]
         public virtual string GoogleId { get; set; }
+
         [Column("UserMustChangePassword")]
         public virtual bool UserMustChangePassword { get; set; }
+
         [Column("AllowCLassicLogin")]
         public virtual bool AllowCLassicLogin { get; set; } = true;
         public virtual PersonDbo Person { get; set; }

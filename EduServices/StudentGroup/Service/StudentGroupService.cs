@@ -18,6 +18,5 @@ namespace Services.StudentGroup.Service
             StudentGroupDetailDto,
             StudentGroupUpdateDto
         >(studentGroupRepository, studentGroupConvertor, validator),
-            IStudentGroupService
-    { }
+            IStudentGroupService { }
 }

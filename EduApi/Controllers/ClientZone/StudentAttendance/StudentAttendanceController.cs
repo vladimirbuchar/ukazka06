@@ -1,12 +1,12 @@
-﻿using Core.Base.Dto;
+﻿using System;
+using System.Collections.Generic;
+using Core.Base.Dto;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.OrganizationRole.Service;
 using Services.StudentAttendance.Dto;
 using Services.StudentAttendance.Service;
-using System;
-using System.Collections.Generic;
 
 namespace EduApi.Controllers.ClientZone.StudentAttendance
 {
@@ -15,11 +15,7 @@ namespace EduApi.Controllers.ClientZone.StudentAttendance
     {
         private readonly IStudentAttendanceService _studentAttendanceService;
 
-        public StudentAttendanceController(
-            IStudentAttendanceService studentAttendanceService,
-            ILogger<StudentAttendanceController> logger,
-            IOrganizationRoleService organizationRoleService
-        )
+        public StudentAttendanceController(IStudentAttendanceService studentAttendanceService, ILogger<StudentAttendanceController> logger, IOrganizationRoleService organizationRoleService)
             : base(logger, organizationRoleService)
         {
             _studentAttendanceService = studentAttendanceService;

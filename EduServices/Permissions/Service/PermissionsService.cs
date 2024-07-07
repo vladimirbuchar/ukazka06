@@ -7,19 +7,11 @@ using Services.Permissions.Validator;
 
 namespace Services.Permissions.Service
 {
-    public class PermissionsService(
-        IPermissionsRepository permissionsRepository,
-        IPermissionsConvertor permissionsConvertor,
-        IPermissionsValidator permissionsValidator
-    )
+    public class PermissionsService(IPermissionsRepository permissionsRepository, IPermissionsConvertor permissionsConvertor, IPermissionsValidator permissionsValidator)
         : BaseService<IPermissionsRepository, PermissionsDbo, IPermissionsConvertor, IPermissionsValidator, PermissionsCreateDto, PermissionsListDto, PermissionsDetailDto, PermissionsUpdateDto>(
             permissionsRepository,
             permissionsConvertor,
             permissionsValidator
         ),
-            IPermissionsService
-    {
-
-    }
+            IPermissionsService { }
 }
-

@@ -1,4 +1,7 @@
-﻿using Core.Base.Service;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Core.Base.Service;
 using Core.DataTypes;
 using Model.Edu.CourseTerm;
 using Model.Edu.CourseTermDate;
@@ -7,9 +10,6 @@ using Repository.CourseTermDateRepository;
 using Repository.CourseTermRepository;
 using Services.CourseTermTimeTable.Convertor;
 using Services.CourseTermTimeTable.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.CourseTermTimeTable.Service
 {

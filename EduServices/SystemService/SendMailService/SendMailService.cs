@@ -1,20 +1,19 @@
-﻿using Core.Base.Repository.CodeBookRepository;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Service;
 using Core.DataTypes;
 using Model.CodeBook;
 using Model.Edu.SendEmail;
 using Model.Edu.SendEmailAttachment;
 using Repository.SendEmailRepository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.SystemService.SendMailService
 {
-    public class SendMailService(
-        ISendEmailRepository emailRepository,
-        ICodeBookRepository<EduEmailDbo> codeBookRepository
-    ) : BaseService<ISendEmailRepository, SendEmailDbo>(emailRepository), ISendMailService
+    public class SendMailService(ISendEmailRepository emailRepository, ICodeBookRepository<EduEmailDbo> codeBookRepository)
+        : BaseService<ISendEmailRepository, SendEmailDbo>(emailRepository),
+            ISendMailService
     {
         private readonly ICodeBookRepository<EduEmailDbo> _email = codeBookRepository;
 

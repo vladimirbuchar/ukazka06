@@ -3,7 +3,5 @@ using Model.Link;
 
 namespace Repository.CourseLectorRepository
 {
-    public interface ICourseLectorRepository : IBaseRepository<CourseLectorDbo>
-    {
-    }
+    public interface ICourseLectorRepository : IBaseRepository<CourseLectorDbo> { }
 }

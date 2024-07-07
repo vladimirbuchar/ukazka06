@@ -1,4 +1,7 @@
-﻿using Core.Base.HangfireJob;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Core.Base.HangfireJob;
 using Core.DataTypes;
 using Integration.MailKitIntegration;
 using Microsoft.Extensions.DependencyInjection;
@@ -6,9 +9,6 @@ using Model.Edu.OrganizationSetting;
 using Model.Edu.SendEmail;
 using Repository.OrganizationSettingRepository;
 using Repository.SendEmailRepository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.HangfireJob
 {
@@ -50,22 +50,21 @@ namespace Services.HangfireJob
                     }
                     else
                     {
-                        Email email = new()
-                        {
-                            EmailBody = new EmailBody()
+                        Email email =
+                            new()
                             {
-                                HtmlBody = sendEmail.Body,
-                                IsHtml = true,
-                                PlainTextBody = sendEmail.PlainTextBody
-                            },
-                            To = new EmailAddress() { Email = sendEmail.EmailTo, Name = sendEmail.EmailToName },
-                            Subject = sendEmail.Subject,
-                            Attachment = sendEmail.SendEmailAttachments?.Select(x => x.Attachment).ToList(),
-                            Reply = sendEmail.Reply
-                        };
-                        _mailKitIntegration.SendEmail(
-                          email
-                        );
+                                EmailBody = new EmailBody()
+                                {
+                                    HtmlBody = sendEmail.Body,
+                                    IsHtml = true,
+                                    PlainTextBody = sendEmail.PlainTextBody
+                                },
+                                To = new EmailAddress() { Email = sendEmail.EmailTo, Name = sendEmail.EmailToName },
+                                Subject = sendEmail.Subject,
+                                Attachment = sendEmail.SendEmailAttachments?.Select(x => x.Attachment).ToList(),
+                                Reply = sendEmail.Reply
+                            };
+                        _mailKitIntegration.SendEmail(email);
                     }
                     sendEmail.IsSended = true;
                     sendEmail.IsError = false;
@@ -81,7 +80,6 @@ namespace Services.HangfireJob
                     _ = _repository.UpdateEntity(sendEmail, Guid.Empty);
                 }
             }
-
         }
     }
 }

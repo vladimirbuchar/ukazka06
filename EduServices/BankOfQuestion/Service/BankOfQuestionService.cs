@@ -1,4 +1,6 @@
-﻿using Core.Base.Service;
+﻿using System;
+using System.Collections.Generic;
+using Core.Base.Service;
 using Core.DataTypes;
 using Model.Edu.BankOfQuestions;
 using Model.Edu.Question;
@@ -7,8 +9,6 @@ using Repository.QuestionRepository;
 using Services.BankOfQuestion.Convertor;
 using Services.BankOfQuestion.Dto;
 using Services.BankOfQuestion.Validator;
-using System;
-using System.Collections.Generic;
 
 namespace Services.BankOfQuestion.Service
 {

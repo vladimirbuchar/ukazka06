@@ -1,9 +1,9 @@
-﻿using Core.Base.Repository.CodeBookRepository;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Core.Base.Repository.CodeBookRepository;
 using Model.CodeBook;
 using Model.Edu.SendMessage;
 using Services.Message.Dto;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.Message.Convertor
 {
@@ -37,23 +37,13 @@ namespace Services.Message.Convertor
                     Reply = addSendMessageDto.Reply,
                     SendMessageTypeId = addSendMessageDto.SendMessageTypeId
                 };
-            sendMessage.SendMessageTranslations = sendMessage.SendMessageTranslations.PrepareTranslation(
-                addSendMessageDto.Name,
-                addSendMessageDto.Html,
-                clientCulture,
-                _cultureList
-            );
+            sendMessage.SendMessageTranslations = sendMessage.SendMessageTranslations.PrepareTranslation(addSendMessageDto.Name, addSendMessageDto.Html, clientCulture, _cultureList);
             return sendMessage;
         }
 
         public MessageDbo ConvertToBussinessEntity(MessageUpdateDto updateSendMessageDto, MessageDbo entity, string culture)
         {
-            entity.SendMessageTranslations = entity.SendMessageTranslations.PrepareTranslation(
-                updateSendMessageDto.Name,
-                updateSendMessageDto.Html,
-                culture,
-                _cultureList
-            );
+            entity.SendMessageTranslations = entity.SendMessageTranslations.PrepareTranslation(updateSendMessageDto.Name, updateSendMessageDto.Html, culture, _cultureList);
             entity.Reply = updateSendMessageDto.Reply;
             entity.SendMessageTypeId = updateSendMessageDto.SendMessageTypeId;
             return entity;

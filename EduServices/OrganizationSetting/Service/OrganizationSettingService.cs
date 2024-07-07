@@ -1,4 +1,5 @@
-﻿using Core.Base.Service;
+﻿using System;
+using Core.Base.Service;
 using Core.DataTypes;
 using Model.Edu.LicenseChange;
 using Model.Edu.Organization;
@@ -9,7 +10,6 @@ using Repository.OrganizationSettingRepository;
 using Services.OrganizationSetting.Convertor;
 using Services.OrganizationSetting.Dto;
 using Services.OrganizationSetting.Validator;
-using System;
 
 namespace Services.OrganizationSetting.Service
 {

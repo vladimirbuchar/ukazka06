@@ -1,9 +1,9 @@
-﻿using Model.Edu.CourseLesson;
-using Model.Edu.CourseTestEvaluation;
-using Model.Link;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using Model.Edu.CourseLesson;
+using Model.Edu.CourseTestEvaluation;
+using Model.Link;
 
 namespace Model.Edu.CourseTest
 {

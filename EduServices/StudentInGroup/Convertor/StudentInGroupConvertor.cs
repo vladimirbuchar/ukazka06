@@ -1,6 +1,6 @@
-﻿using Model.Link;
+﻿using System.Collections.Generic;
+using Model.Link;
 using Services.StudentInGroup.Dto;
-using System.Collections.Generic;
 
 namespace Services.StudentInGroup.Convertor
 {

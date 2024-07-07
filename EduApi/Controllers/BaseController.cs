@@ -1,13 +1,13 @@
-﻿using Core.Constants;
+﻿using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using Core.Constants;
 using Core.DataTypes;
 using Core.Exceptions;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
 
 namespace EduApi.Controllers
 {
@@ -34,6 +34,7 @@ namespace EduApi.Controllers
                 _logger.LogError("Validation error", validate.Errors);
             }
         }
+
         protected bool IsLogged()
         {
             return GetLoggedUserId() != Guid.Empty;
@@ -104,10 +105,7 @@ namespace EduApi.Controllers
         protected ActionResult SendResponse(Result response)
         {
             LogValidate(response);
-            if (
-                response.IsError
-                && response.Contains(new ValidationMessage(MessageType.ERROR, SystemErrorItem.PERMITION_DENIED))
-            )
+            if (response.IsError && response.Contains(new ValidationMessage(MessageType.ERROR, SystemErrorItem.PERMITION_DENIED)))
             {
                 return StatusCode(403);
             }

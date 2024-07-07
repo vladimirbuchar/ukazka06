@@ -1,5 +1,5 @@
-﻿using Core.Base.Dto;
-using System;
+﻿using System;
+using Core.Base.Dto;
 
 namespace Services.CourseLessonItem.Dto
 {
@@ -10,7 +10,5 @@ namespace Services.CourseLessonItem.Dto
         public string Name { get; set; }
         public Guid TemplateId { get; set; }
         public string Youtube { get; set; }
-
     }
-
 }

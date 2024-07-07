@@ -1,4 +1,7 @@
-﻿using Core.Base.Repository.CodeBookRepository;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Validator;
 using Core.Constants;
 using Core.DataTypes;
@@ -7,9 +10,6 @@ using Model.Edu.CourseLessonItem;
 using Repository.CourseLessonItemRepository;
 using Repository.CourseLessonRepository;
 using Services.CourseLessonItem.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.CourseLessonItem.Validator
 {

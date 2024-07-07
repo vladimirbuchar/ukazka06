@@ -1,4 +1,8 @@
-﻿using Core.Base.Service;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using Core.Base.Service;
 using Core.Constants;
 using Core.DataTypes;
 using Core.Extension;
@@ -14,10 +18,6 @@ using Repository.RoleRepository;
 using Repository.RouteRepository;
 using Repository.UserRepository;
 using Services.Setup.Dto;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
 namespace Services.Setup.Service
 {
@@ -29,9 +29,7 @@ namespace Services.Setup.Service
         IOrganizationRoleRepository organizationRoleRepository,
         IPermissionsRepository permissionsRepository,
         IEnumerable<EndpointDataSource> endpointSources
-    )
-        : BaseService(),
-            ISetupService
+    ) : BaseService(), ISetupService
     {
         private readonly IUserRepository _userRepository = userRepository;
         private readonly IRoleRepository _roleRepository = roleRepository;
@@ -46,18 +44,17 @@ namespace Services.Setup.Service
             UserDbo admin = _userRepository.GetEntity(false, x => x.UserEmail == _configuration.GetSection(ConfigValue.SETUP).GetSection(ConfigValue.USER_NAME).Value);
             if (admin == null)
             {
-                _ = _userRepository.CreateEntity(new UserDbo()
-                {
-                    UserEmail = _configuration.GetSection(ConfigValue.SETUP).GetSection(ConfigValue.USER_NAME).Value,
-                    UserPassword = _configuration.GetSection(ConfigValue.SETUP).GetSection(ConfigValue.USER_PASSWORD).Value.GetHashString(),
-                    Person = new PersonDbo()
+                _ = _userRepository.CreateEntity(
+                    new UserDbo()
                     {
-
+                        UserEmail = _configuration.GetSection(ConfigValue.SETUP).GetSection(ConfigValue.USER_NAME).Value,
+                        UserPassword = _configuration.GetSection(ConfigValue.SETUP).GetSection(ConfigValue.USER_PASSWORD).Value.GetHashString(),
+                        Person = new PersonDbo() { },
+                        UserRoleId = _roleRepository.GetEntity(false, x => x.SystemIdentificator == UserRole.ADMINISTRATOR).Id,
+                        IsActive = true
                     },
-                    UserRoleId = _roleRepository.GetEntity(false, x => x.SystemIdentificator == UserRole.ADMINISTRATOR).Id,
-                    IsActive = true
-
-                }, Guid.Empty);
+                    Guid.Empty
+                );
             }
             return new Result();
         }
@@ -86,11 +83,7 @@ namespace Services.Setup.Service
                         if (routeId != null)
                         {
                             Guid roleId = _organizationRoleRepository.GetEntity(false, x => x.SystemIdentificator == role).Id;
-                            _ = _permissionsRepository.CreateEntity(new PermissionsDbo()
-                            {
-                                RouteId = routeId.Value,
-                                OrganizationRoleId = roleId
-                            }, Guid.Empty);
+                            _ = _permissionsRepository.CreateEntity(new PermissionsDbo() { RouteId = routeId.Value, OrganizationRoleId = roleId }, Guid.Empty);
                         }
                     }
                 }
@@ -100,27 +93,22 @@ namespace Services.Setup.Service
 
         public Result RegisterAllEndpoints()
         {
-            List<string> endpoints = _endpointSources
-               .SelectMany(es => es.Endpoints)
-               .OfType<RouteEndpoint>().Select(x => x.RoutePattern.RawText).ToList();
+            List<string> endpoints = _endpointSources.SelectMany(es => es.Endpoints).OfType<RouteEndpoint>().Select(x => x.RoutePattern.RawText).ToList();
             foreach (string endpoint in endpoints)
             {
                 if (_routeRepository.GetEntity(false, x => x.Route == endpoint) == null)
                 {
-                    _ = _routeRepository.CreateEntity(new RouteDbo()
-                    {
-                        Route = endpoint,
-                    }, Guid.Empty);
+                    _ = _routeRepository.CreateEntity(new RouteDbo() { Route = endpoint, }, Guid.Empty);
                 }
-
             }
             return new Result();
         }
+
         public bool CheckUser(SetupLoginDto setupLogin)
         {
-            return _userRepository.GetEntity(false, x => x.UserEmail == setupLogin.UserEmail && x.UserPassword == setupLogin.Password.GetHashString() && x.IsActive == true && x.AllowCLassicLogin == true)?.UserRole?.SystemIdentificator == UserRole.ADMINISTRATOR;
+            return _userRepository
+                    .GetEntity(false, x => x.UserEmail == setupLogin.UserEmail && x.UserPassword == setupLogin.Password.GetHashString() && x.IsActive == true && x.AllowCLassicLogin == true)
+                    ?.UserRole?.SystemIdentificator == UserRole.ADMINISTRATOR;
         }
-
     }
-
 }

@@ -13,6 +13,5 @@ namespace Services.Certificate.Service
             certificateConvertor,
             validator
         ),
-            ICertificateService
-    { }
+            ICertificateService { }
 }

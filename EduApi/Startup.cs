@@ -1,4 +1,8 @@
-﻿using Asp.Versioning;
+﻿using System;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
+using Asp.Versioning;
 using Core.Constants;
 using EduApi.Configuration.Hangfire;
 using EduApi.Configuration.Swagger;
@@ -17,10 +21,6 @@ using Microsoft.OpenApi.Models;
 using Model;
 using Services;
 using Services.HangfireJob;
-using System;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
 
 namespace EduApi
 {
@@ -109,7 +109,8 @@ namespace EduApi
 
             var key = Encoding.ASCII.GetBytes(Configuration.GetValue<string>("JWTKey"));
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
@@ -132,22 +133,25 @@ namespace EduApi
                 });
 
             services.AddAuthorization(options =>
-        {
-            options.AddPolicy("ClientPolicy", policy => policy.RequireClaim(ClaimTypes.Role, UserRole.REGISTERED_USER));
-            options.AddPolicy("AdminPolicy", policy => policy.RequireClaim(ClaimTypes.Role, UserRole.ADMINISTRATOR));
-        }); ;
+            {
+                options.AddPolicy("ClientPolicy", policy => policy.RequireClaim(ClaimTypes.Role, UserRole.REGISTERED_USER));
+                options.AddPolicy("AdminPolicy", policy => policy.RequireClaim(ClaimTypes.Role, UserRole.ADMINISTRATOR));
+            });
+            ;
 
             services.AddControllers();
-            services.AddApiVersioning(config =>
-            {
-                config.DefaultApiVersion = new ApiVersion(1, 0);
-                config.AssumeDefaultVersionWhenUnspecified = false;
-                config.ReportApiVersions = false;
-            }).AddApiExplorer(options =>
-            {
-                options.GroupNameFormat = "'v'VVV";
-                options.SubstituteApiVersionInUrl = true;
-            });
+            services
+                .AddApiVersioning(config =>
+                {
+                    config.DefaultApiVersion = new ApiVersion(1, 0);
+                    config.AssumeDefaultVersionWhenUnspecified = false;
+                    config.ReportApiVersions = false;
+                })
+                .AddApiExplorer(options =>
+                {
+                    options.GroupNameFormat = "'v'VVV";
+                    options.SubstituteApiVersionInUrl = true;
+                });
 
             services.AddSwaggerGen(c =>
             {
@@ -166,45 +170,48 @@ namespace EduApi
                 c.SwaggerDoc("ExternalStudyZone", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - external study zone", Version = "v1" });
                 c.SwaggerDoc("ExternalCodebook", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - external codebook", Version = "v1" });
 
-                c.DocInclusionPredicate((docName, apiDesc) =>
-                {
-                    var actionApiDescription = apiDesc.ActionDescriptor.EndpointMetadata.OfType<ApiExplorerSettingsAttribute>().FirstOrDefault();
-                    if (actionApiDescription == null)
+                c.DocInclusionPredicate(
+                    (docName, apiDesc) =>
                     {
-                        return false;
-                    }
+                        var actionApiDescription = apiDesc.ActionDescriptor.EndpointMetadata.OfType<ApiExplorerSettingsAttribute>().FirstOrDefault();
+                        if (actionApiDescription == null)
+                        {
+                            return false;
+                        }
 
-                    return actionApiDescription.GroupName == docName;
-                });
+                        return actionApiDescription.GroupName == docName;
+                    }
+                );
                 c.UseInlineDefinitionsForEnums();
 
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                    Name = "Authorization",
-                    Type = SecuritySchemeType.Http,
-                    Scheme = "Bearer",
-                    BearerFormat = "JWT",
-                    In = ParameterLocation.Header,
-                    Description = "Please enter JWT with Bearer into field"
-                });
-
-
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement {
-                {
-                    new OpenApiSecurityScheme {
-                        Reference = new OpenApiReference {
-                            Type = ReferenceType.SecurityScheme,
-                            Id = "Bearer"
-                        }
-                    },
-                    new string[] {}
+                c.AddSecurityDefinition(
+                    "Bearer",
+                    new OpenApiSecurityScheme
+                    {
+                        Name = "Authorization",
+                        Type = SecuritySchemeType.Http,
+                        Scheme = "Bearer",
+                        BearerFormat = "JWT",
+                        In = ParameterLocation.Header,
+                        Description = "Please enter JWT with Bearer into field"
                     }
+                );
 
-            });
+                c.AddSecurityRequirement(
+                    new OpenApiSecurityRequirement
+                    {
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
+                            },
+                            new string[] { }
+                        }
+                    }
+                );
                 c.OperationFilter<SwaggerDefaultValues>();
                 c.OperationFilter<AddRequiredHeaderParameter>();
                 c.DocumentFilter<RemoveAuthorizationFilter>();
-
             });
 
             services.AddHangfire(opt =>
@@ -231,14 +238,12 @@ namespace EduApi
             app.UseAuthentication();
             app.UseAuthorization();
 
-
             // AFAIK in netcoreapp2.2 this was not required
             // to use CORS with attributes.
             // This is now required, as otherwise a runtime exception is thrown
             // UseCors applies a global CORS policy, when no policy name is given
             // the default CORS policy is applied
             app.UseCors();
-
 
             if (env.IsDevelopment())
             {
@@ -274,26 +279,30 @@ namespace EduApi
                 c.RoutePrefix = "swagger";
             });
 
-            app.UseHangfireDashboard("/hangfire", new DashboardOptions
-            {
-                Authorization = new[]
-            {
-                    new BasicAuthAuthorizationFilter(new BasicAuthAuthorizationFilterOptions
+            app.UseHangfireDashboard(
+                "/hangfire",
+                new DashboardOptions
+                {
+                    Authorization = new[]
                     {
-                        SslRedirect = false,
-                        RequireSsl = false,
-                        LoginCaseSensitive = true,
-                        Users = new[]
-                    {
-                            new BasicAuthAuthorizationUser
+                        new BasicAuthAuthorizationFilter(
+                            new BasicAuthAuthorizationFilterOptions
                             {
-                                Login = Configuration.GetSection("Hangfire").GetValue<string>("userName"),
-                                PasswordClear = Configuration.GetSection("Hangfire").GetValue<string>("userPassword")
+                                SslRedirect = false,
+                                RequireSsl = false,
+                                LoginCaseSensitive = true,
+                                Users = new[]
+                                {
+                                    new BasicAuthAuthorizationUser
+                                    {
+                                        Login = Configuration.GetSection("Hangfire").GetValue<string>("userName"),
+                                        PasswordClear = Configuration.GetSection("Hangfire").GetValue<string>("userPassword")
+                                    }
+                                }
                             }
-                        }
-                    })
+                        )
+                    }
                 }
-            }
             );
             var serviceScopeFactory = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>();
             var jobActivator = new ScopedJobActivator(serviceScopeFactory);

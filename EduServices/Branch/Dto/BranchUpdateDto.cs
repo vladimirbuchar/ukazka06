@@ -1,15 +1,8 @@
-﻿using Core.Base.Dto;
-using System;
+﻿using System;
+using Core.Base.Dto;
 
 namespace Services.Branch.Dto
 {
-    public class BranchChangeMainBranchDto : BaseDto
-    {
-        public Guid OrganizationId { get; set; }
-        public Guid BranchId { get; set; }
-
-    }
-
     public class BranchUpdateDto : UpdateDto
     {
         public Guid? CountryId { get; set; } = Guid.Empty;
@@ -24,7 +17,5 @@ namespace Services.Branch.Dto
         public string Name { get; set; }
         public string Description { get; set; }
         public bool IsMainBranch { get; set; } = false;
-
     }
-
 }

@@ -1,8 +1,8 @@
-﻿using Model.Edu.Course;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+using Model.Edu.Course;
 using Model.Edu.CourseLessonItem;
 using Model.Edu.User;
-using System;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Model.Link
 {

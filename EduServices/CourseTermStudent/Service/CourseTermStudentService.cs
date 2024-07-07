@@ -1,4 +1,7 @@
-﻿using Core.Base.Repository.CodeBookRepository;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Service;
 using Core.Constants;
 using Core.DataTypes;
@@ -20,9 +23,6 @@ using Services.CourseTermStudent.Convertor;
 using Services.CourseTermStudent.Dto;
 using Services.CourseTermStudent.Validator;
 using Services.SystemService.SendMailService;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.CourseTermStudent.Service
 {
@@ -82,7 +82,7 @@ namespace Services.CourseTermStudent.Service
                                 UserPassword = defaultPassword,
                                 Person = new PersonDbo() { FirstName = addObject.FirstName, LastName = addObject.LastName }
                             },
-                           userId
+                            userId
                         );
 
                         _ = _userInOrganizationRepository.CreateEntity(
@@ -107,14 +107,7 @@ namespace Services.CourseTermStudent.Service
                         );
                         Dictionary<string, string> replaceData =
                             new() { { ConfigValue.ACTIVATION_LINK, string.Format("{0}/?id={1}", _configuration.GetSection(ConfigValue.CLIENT_URL_ACTIVATE).Value, user.Id) } };
-                        _sendMailService.AddEmailToQueue(
-                            EduEmail.REGISTRATION_USER,
-                            culture,
-                            new EmailAddress() { Email = email, Name = "" },
-                            replaceData,
-                            addObject.OrganizationId,
-                            ""
-                        );
+                        _sendMailService.AddEmailToQueue(EduEmail.REGISTRATION_USER, culture, new EmailAddress() { Email = email, Name = "" }, replaceData, addObject.OrganizationId, "");
                     }
                     if (_repository.GetStudentCourse(user.Id, false).FirstOrDefault(x => x.CourseTermId == addObject.CourseTermId) == null)
                     {

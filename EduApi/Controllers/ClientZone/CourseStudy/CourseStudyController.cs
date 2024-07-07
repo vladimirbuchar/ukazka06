@@ -1,4 +1,6 @@
-﻿using Core.Base.Dto;
+﻿using System;
+using System.Collections.Generic;
+using Core.Base.Dto;
 using Core.DataTypes;
 using EduApi.Controllers.ClientZone.Course;
 using Microsoft.AspNetCore.Mvc;
@@ -6,8 +8,6 @@ using Microsoft.Extensions.Logging;
 using Services.CourseStudy.Dto;
 using Services.CourseStudy.Service;
 using Services.OrganizationRole.Service;
-using System;
-using System.Collections.Generic;
 
 namespace EduApi.Controllers.ClientZone.CourseStudy
 {
@@ -16,11 +16,7 @@ namespace EduApi.Controllers.ClientZone.CourseStudy
     {
         private readonly ICourseStudyService _courseStudyService;
 
-        public CourseStudyController(
-            ICourseStudyService courseService,
-            ILogger<CourseController> logger,
-            IOrganizationRoleService organizationRoleService
-        )
+        public CourseStudyController(ICourseStudyService courseService, ILogger<CourseController> logger, IOrganizationRoleService organizationRoleService)
             : base(logger, organizationRoleService)
         {
             _courseStudyService = courseService;
@@ -72,7 +68,6 @@ namespace EduApi.Controllers.ClientZone.CourseStudy
         {
             try
             {
-
                 return SendResponse(_courseStudyService.CourseMaterialBrowse(courseId, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)

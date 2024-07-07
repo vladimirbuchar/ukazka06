@@ -1,11 +1,11 @@
-﻿using Core.Base.Dto;
+﻿using System;
+using Core.Base.Dto;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.OrganizationCulture.Dto;
 using Services.OrganizationCulture.Service;
 using Services.OrganizationRole.Service;
-using System;
 
 namespace EduApi.Controllers.ClientZone.OrganizationCulture
 {
@@ -14,11 +14,7 @@ namespace EduApi.Controllers.ClientZone.OrganizationCulture
     {
         private readonly IOrganizationCultureService _organizationSettingService;
 
-        public OrganizationCultureController(
-            ILogger<OrganizationCultureController> logger,
-            IOrganizationCultureService organizationSettingService,
-            IOrganizationRoleService organizationRoleService
-        )
+        public OrganizationCultureController(ILogger<OrganizationCultureController> logger, IOrganizationCultureService organizationSettingService, IOrganizationRoleService organizationRoleService)
             : base(logger, organizationRoleService)
         {
             _organizationSettingService = organizationSettingService;

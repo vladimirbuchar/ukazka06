@@ -1,9 +1,9 @@
-﻿using Core.Base.Repository.CodeBookRepository;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Core.Base.Repository.CodeBookRepository;
 using Model.CodeBook;
 using Model.Edu.Certificate;
 using Services.Certificate.Dto;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.Certificate.Convertor
 {
@@ -14,23 +14,13 @@ namespace Services.Certificate.Convertor
         public CertificateDbo ConvertToBussinessEntity(CertificateCreateDto addCertificateDto, string culture)
         {
             CertificateDbo certificate = new() { OrganizationId = addCertificateDto.OrganizationId, CertificateValidTo = addCertificateDto.CertificateValidTo };
-            certificate.CertificateTranslations = certificate.CertificateTranslations.PrepareTranslation(
-                addCertificateDto.Name,
-                addCertificateDto.Html,
-                culture,
-                _cultureList
-            );
+            certificate.CertificateTranslations = certificate.CertificateTranslations.PrepareTranslation(addCertificateDto.Name, addCertificateDto.Html, culture, _cultureList);
             return certificate;
         }
 
         public CertificateDbo ConvertToBussinessEntity(CertificateUpdateDto updateCertificateDto, CertificateDbo entity, string culture)
         {
-            entity.CertificateTranslations = entity.CertificateTranslations.PrepareTranslation(
-                updateCertificateDto.Name,
-                updateCertificateDto.Html,
-                culture,
-                _cultureList
-            );
+            entity.CertificateTranslations = entity.CertificateTranslations.PrepareTranslation(updateCertificateDto.Name, updateCertificateDto.Html, culture, _cultureList);
             entity.CertificateValidTo = updateCertificateDto.CertificateValidTo;
             return entity;
         }

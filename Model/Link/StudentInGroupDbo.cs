@@ -1,6 +1,6 @@
-﻿using Model.Edu.StudentGroup;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using Model.Edu.StudentGroup;
 
 namespace Model.Link
 {

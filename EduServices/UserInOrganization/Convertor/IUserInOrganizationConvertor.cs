@@ -1,8 +1,8 @@
-﻿using Core.Base.Convertor;
+﻿using System.Collections.Generic;
+using Core.Base.Convertor;
 using Model.Edu.OrganizationRole;
 using Model.Link;
 using Services.UserInOrganization.Dto;
-using System.Collections.Generic;
 
 namespace Services.UserInOrganization.Convertor
 {

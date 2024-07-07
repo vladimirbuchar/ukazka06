@@ -1,8 +1,8 @@
-﻿using Core.Base.Dto;
+﻿using System;
+using System.Collections.Generic;
+using Core.Base.Dto;
 using Core.Constants;
 using Services.CourseLesson.Dto;
-using System;
-using System.Collections.Generic;
 
 namespace Services.Test.Dto
 {
@@ -22,8 +22,5 @@ namespace Services.Test.Dto
         public int MaxRepetition { get; set; }
     }
 
-    public class CourseTestCreate
-    {
-
-    }
+    public class CourseTestCreate { }
 }

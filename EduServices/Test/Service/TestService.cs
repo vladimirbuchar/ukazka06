@@ -1,4 +1,6 @@
-﻿using Core.Base.Service;
+﻿using System;
+using System.Linq;
+using Core.Base.Service;
 using Core.DataTypes;
 using Model.Edu.CourseLesson;
 using Model.Edu.CourseTest;
@@ -11,8 +13,6 @@ using Services.CourseLesson.Dto;
 using Services.CourseLesson.Validator;
 using Services.Test.Convertor;
 using Services.Test.Dto;
-using System;
-using System.Linq;
 
 namespace Services.Test.Service
 {
@@ -30,32 +30,30 @@ namespace Services.Test.Service
         private readonly ICourseLessonConvertor _courseLessonConvertor = courseLessonConvertor;
         private readonly ICourseLessonRepository _courseLessonRepository = courseLessonRepository;
 
-
         public Result<CourseTestDetailDto> AddCourseTest(CourseTestCreateDto addCourseTestDto, string culture)
         {
-            Result result = _courseLessonValidator.IsValid(new CourseLessonCreateDto()
-            {
-                Description = addCourseTestDto.CourseLesson.Description,
-                MaterialId = addCourseTestDto.CourseLesson
-            .MaterialId,
-                Name = addCourseTestDto.CourseLesson
-            .Name,
-                Type = addCourseTestDto.CourseLesson.Type
-            });
+            Result result = _courseLessonValidator.IsValid(
+                new CourseLessonCreateDto()
+                {
+                    Description = addCourseTestDto.CourseLesson.Description,
+                    MaterialId = addCourseTestDto.CourseLesson.MaterialId,
+                    Name = addCourseTestDto.CourseLesson.Name,
+                    Type = addCourseTestDto.CourseLesson.Type
+                }
+            );
             if (result.IsOk)
             {
                 CourseLessonDbo courseLesson = _courseLessonRepository.CreateEntity(
-                    _courseLessonConvertor.ConvertToBussinessEntity(new CourseLessonCreateDto()
-                    {
-                        Description = addCourseTestDto.CourseLesson.Description,
-                        MaterialId = addCourseTestDto.CourseLesson
-                    .MaterialId,
-                        Name = addCourseTestDto.CourseLesson
-                    .Name,
-                        Type
-                     = addCourseTestDto.CourseLesson
-                    .Type
-                    }, culture),
+                    _courseLessonConvertor.ConvertToBussinessEntity(
+                        new CourseLessonCreateDto()
+                        {
+                            Description = addCourseTestDto.CourseLesson.Description,
+                            MaterialId = addCourseTestDto.CourseLesson.MaterialId,
+                            Name = addCourseTestDto.CourseLesson.Name,
+                            Type = addCourseTestDto.CourseLesson.Type
+                        },
+                        culture
+                    ),
                     Guid.Empty
                 );
                 CourseTestDbo test = _convertor.ConvertToBussinessEntity(addCourseTestDto);
@@ -82,12 +80,14 @@ namespace Services.Test.Service
 
         public Result<CourseTestDetailDto> UpdateCourseTest(CourseTestUpdateDto updateCourseTestDto, string culture)
         {
-            Result result = _courseLessonValidator.IsValid(new CourseLessonUpdateDto()
-            {
-                Name = updateCourseTestDto.CourseLessonUpdate.Name,
-                Description = updateCourseTestDto.CourseLessonUpdate.Description,
-                Id = updateCourseTestDto.CourseLessonUpdate.Id
-            });
+            Result result = _courseLessonValidator.IsValid(
+                new CourseLessonUpdateDto()
+                {
+                    Name = updateCourseTestDto.CourseLessonUpdate.Name,
+                    Description = updateCourseTestDto.CourseLessonUpdate.Description,
+                    Id = updateCourseTestDto.CourseLessonUpdate.Id
+                }
+            );
             if (result.IsOk)
             {
                 CourseLessonDbo courseLesson = _courseLessonRepository.GetEntity(updateCourseTestDto.Id);
@@ -99,7 +99,8 @@ namespace Services.Test.Service
                             Id = updateCourseTestDto.CourseLessonUpdate.Id,
                             Name = updateCourseTestDto.CourseLessonUpdate.Name
                         },
-                        courseLesson, culture
+                        courseLesson,
+                        culture
                     ),
                     Guid.Empty
                 );

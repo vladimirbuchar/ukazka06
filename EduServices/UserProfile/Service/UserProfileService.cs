@@ -1,4 +1,7 @@
-﻿using Core.Base.Service;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Core.Base.Service;
 using Model.Edu.AttendanceStudent;
 using Model.Edu.Course;
 using Model.Edu.OrganizationStudyHour;
@@ -17,9 +20,6 @@ using Services.StudentEvaluation.Dto;
 using Services.User.Dto;
 using Services.UserProfile.Convertor;
 using Services.UserProfile.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.UserProfile.Service
 {
@@ -71,7 +71,12 @@ namespace Services.UserProfile.Service
         public List<MyTimeTableListDto> GetMyTimeTable(Guid userId, string culture)
         {
             List<MyTimeTableListDto> getUserDetailDtos = [];
-            HashSet<UserInOrganizationDbo> organizations = _userInOrganizationRepository.GetEntities(false, x => x.UserId == userId && (x.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.STUDENT || x.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.LECTOR));
+            HashSet<UserInOrganizationDbo> organizations = _userInOrganizationRepository.GetEntities(
+                false,
+                x =>
+                    x.UserId == userId
+                    && (x.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.STUDENT || x.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.LECTOR)
+            );
             HashSet<CourseStudentDbo> myCourse = _courseStudentRepository.GetStudentCourse(userId, true);
             HashSet<CourseLectorDbo> myCourseLector = _courseLectorRepository.GetEntities(false, x => x.UserInOrganization.UserId == userId);
 
@@ -251,6 +256,7 @@ namespace Services.UserProfile.Service
         {
             return _convertor.ConvertToWebModel(_userInOrganizationRepository.GetEntities(false, x => x.UserId == userId));
         }
+
         public HashSet<MyEvaluationListDto> GetMyEvaluation(Guid id)
         {
             return _convertor.ConvertToWebModel(_studentEvaluationRepository.GetEntities(false, x => x.CourseStudent.UserInOrganization.UserId == id));

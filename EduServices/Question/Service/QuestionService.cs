@@ -24,6 +24,5 @@ namespace Services.Question.Service
             fileRepository,
             codeBookRepository
         ),
-            IQuestionService
-    { }
+            IQuestionService { }
 }

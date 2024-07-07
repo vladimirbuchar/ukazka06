@@ -1,12 +1,12 @@
-﻿using Core.Base.Dto;
+﻿using System;
+using System.Collections.Generic;
+using Core.Base.Dto;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.Certificate.Dto;
 using Services.Certificate.Service;
 using Services.OrganizationRole.Service;
-using System;
-using System.Collections.Generic;
 
 namespace EduApi.Controllers.ClientZone.Certificate
 {
@@ -15,11 +15,7 @@ namespace EduApi.Controllers.ClientZone.Certificate
     {
         private readonly ICertificateService _certificateService;
 
-        public CertificateController(
-            ICertificateService certificateService,
-            ILogger<CertificateController> logger,
-            IOrganizationRoleService organizationRoleService
-        )
+        public CertificateController(ICertificateService certificateService, ILogger<CertificateController> logger, IOrganizationRoleService organizationRoleService)
             : base(logger, organizationRoleService)
         {
             _certificateService = certificateService;

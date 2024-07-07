@@ -1,6 +1,6 @@
-﻿using Core.Base.Dto;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Core.Base.Dto;
 
 namespace Services.UserInOrganization.Dto
 {
@@ -9,8 +9,5 @@ namespace Services.UserInOrganization.Dto
         public List<string> UserEmails { get; set; }
         public Guid OrganizationId { get; set; }
         public List<Guid> OrganizationRoleId { get; set; }
-
     }
-
-
 }

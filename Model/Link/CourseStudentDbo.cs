@@ -1,8 +1,8 @@
-﻿using Model.Edu.AttendanceStudent;
-using Model.Edu.CourseTerm;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using Model.Edu.AttendanceStudent;
+using Model.Edu.CourseTerm;
 
 namespace Model.Link
 {

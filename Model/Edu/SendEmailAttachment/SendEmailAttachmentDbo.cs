@@ -1,6 +1,6 @@
-﻿using Model.Edu.SendEmail;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using Model.Edu.SendEmail;
 
 namespace Model.Edu.SendEmailAttachment
 {
@@ -9,6 +9,7 @@ namespace Model.Edu.SendEmailAttachment
     {
         public virtual Guid SendEmailId { get; set; }
         public virtual SendEmailDbo SendEmail { get; set; }
+
         [Column("Attachment")]
         public virtual string Attachment { get; set; }
     }

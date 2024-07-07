@@ -7,6 +7,5 @@ namespace Services.StudentInGroup.Validator
 {
     public class StudentInGroupValidator(IStudentInGroupRepository repository)
         : BaseValidator<StudentInGroupDbo, IStudentInGroupRepository, StudentInGroupCreateDto, StudentInGroupDetailDto>(repository),
-            IStudentInGroupValidator
-    { }
+            IStudentInGroupValidator { }
 }

@@ -1,5 +1,5 @@
-﻿using Model.Edu.OrganizationRole;
-using System;
+﻿using System;
+using Model.Edu.OrganizationRole;
 
 namespace Model.System
 {

@@ -1,4 +1,7 @@
-﻿using Model.CodeBook;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using Model.CodeBook;
 using Model.Edu.Certificate;
 using Model.Edu.CourseMaterial;
 using Model.Edu.CourseTerm;
@@ -6,9 +9,6 @@ using Model.Edu.Note;
 using Model.Edu.Organization;
 using Model.Edu.SendMessage;
 using Model.Link;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Model.Edu.Course
 {

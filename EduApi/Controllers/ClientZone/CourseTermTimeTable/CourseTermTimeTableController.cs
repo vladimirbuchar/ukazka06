@@ -1,4 +1,5 @@
-﻿using Core.Base.Dto;
+﻿using System;
+using Core.Base.Dto;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -6,7 +7,6 @@ using Services.CourseTerm.Dto;
 using Services.CourseTermTimeTable.Dto;
 using Services.CourseTermTimeTable.Service;
 using Services.OrganizationRole.Service;
-using System;
 
 namespace EduApi.Controllers.ClientZone.CourseTermTimeTable
 {
@@ -14,11 +14,7 @@ namespace EduApi.Controllers.ClientZone.CourseTermTimeTable
     {
         private readonly ICourseTermTimeTableService _courseTermTimeTableService;
 
-        public CourseTermTimeTableController(
-            ICourseTermTimeTableService courseTermTimeTableService,
-            ILogger<CourseTermTimeTableController> logger,
-            IOrganizationRoleService organizationRoleService
-        )
+        public CourseTermTimeTableController(ICourseTermTimeTableService courseTermTimeTableService, ILogger<CourseTermTimeTableController> logger, IOrganizationRoleService organizationRoleService)
             : base(logger, organizationRoleService)
         {
             _courseTermTimeTableService = courseTermTimeTableService;

@@ -4,8 +4,5 @@ using Services.StudentEvaluation.Dto;
 
 namespace Services.StudentEvaluation.Service
 {
-    public interface IStudentEvaluationService : IBaseService<StudentEvaluationDbo, StudentEvaluationCreateDto, StudentEvaluationListDto, StudentEvaluationDetailDto>
-    {
-
-    }
+    public interface IStudentEvaluationService : IBaseService<StudentEvaluationDbo, StudentEvaluationCreateDto, StudentEvaluationListDto, StudentEvaluationDetailDto> { }
 }

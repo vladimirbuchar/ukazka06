@@ -17,8 +17,5 @@ namespace Services.StudentEvaluation.Service
             StudentEvaluationListDto,
             StudentEvaluationDetailDto
         >(courseTermRepository, courseTermConvertor, validator),
-            IStudentEvaluationService
-    {
-
-    }
+            IStudentEvaluationService { }
 }

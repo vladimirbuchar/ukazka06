@@ -1,12 +1,12 @@
-﻿using Core.Base.Repository.CodeBookRepository;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Core.Base.Repository.CodeBookRepository;
 using Model.CodeBook;
 using Model.Edu.Course;
 using Model.Edu.CourseLesson;
 using Model.Edu.StudentTestSummary;
 using Services.Course.Dto;
 using Services.CourseStudy.Dto;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.Course.Convertor
 {

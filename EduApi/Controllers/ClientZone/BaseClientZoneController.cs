@@ -1,14 +1,14 @@
-﻿using Core.Constants;
+﻿using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using Core.Constants;
 using Core.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Services.OrganizationRole.Service;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 
 namespace EduApi.Controllers.ClientZone
 {
@@ -18,6 +18,7 @@ namespace EduApi.Controllers.ClientZone
     public class BaseClientZoneController : BaseController
     {
         private readonly IOrganizationRoleService _organizationRoleService;
+
         public BaseClientZoneController(ILogger<BaseClientZoneController> logger, IOrganizationRoleService organizationRoleService)
             : base(logger)
         {
@@ -46,7 +47,10 @@ namespace EduApi.Controllers.ClientZone
         /// <param name="operationType"></param>
         protected void CheckOrganizationPermition(Guid organizationId)
         {
-            if (_organizationRoleService != null && !_organizationRoleService.CheckPermition(GetLoggedUserId(), organizationId, Request.Path, GetUserRoleInOrganization().GetValueOrDefault(organizationId)))
+            if (
+                _organizationRoleService != null
+                && !_organizationRoleService.CheckPermition(GetLoggedUserId(), organizationId, Request.Path, GetUserRoleInOrganization().GetValueOrDefault(organizationId))
+            )
             {
                 throw new PermitionDeniedException();
             }

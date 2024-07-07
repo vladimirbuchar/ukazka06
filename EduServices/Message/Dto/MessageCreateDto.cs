@@ -1,5 +1,5 @@
-﻿using Core.Base.Dto;
-using System;
+﻿using System;
+using Core.Base.Dto;
 
 namespace Services.Message.Dto
 {
@@ -11,6 +11,4 @@ namespace Services.Message.Dto
         public Guid SendMessageTypeId { get; set; }
         public string Reply { get; set; }
     }
-
-
 }

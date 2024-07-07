@@ -1,7 +1,7 @@
-﻿using Core.Base.Dto;
+﻿using System.Collections.Generic;
+using Core.Base.Dto;
 using Core.Constants;
 using Core.Extension;
-using System.Collections.Generic;
 
 namespace Services.CourseStudy.Dto
 {

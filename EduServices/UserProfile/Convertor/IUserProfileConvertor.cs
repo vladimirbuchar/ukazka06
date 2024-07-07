@@ -1,11 +1,11 @@
-﻿using Core.Base.Convertor;
+﻿using System.Collections.Generic;
+using Core.Base.Convertor;
 using Model.Edu.StudentEvaluation;
 using Model.Edu.UserCertificate;
 using Model.Link;
 using Services.Organization.Dto;
 using Services.StudentEvaluation.Dto;
 using Services.UserProfile.Dto;
-using System.Collections.Generic;
 
 namespace Services.UserProfile.Convertor
 {

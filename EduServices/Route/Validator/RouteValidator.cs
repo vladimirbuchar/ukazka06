@@ -5,9 +5,5 @@ using Services.Route.Dto;
 
 namespace Services.Route.Validator
 {
-    public class RouteValidator(IRouteRepository repository)
-        : BaseValidator<RouteDbo, IRouteRepository, RouteCreateDto, RouteDetailDto, RouteUpdateDto>(repository),
-            IRouteValidator
-    {
-    }
+    public class RouteValidator(IRouteRepository repository) : BaseValidator<RouteDbo, IRouteRepository, RouteCreateDto, RouteDetailDto, RouteUpdateDto>(repository), IRouteValidator { }
 }

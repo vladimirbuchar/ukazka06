@@ -1,11 +1,11 @@
-﻿using Core.Base.Service;
+﻿using System.Collections.Generic;
+using Core.Base.Service;
 using Services.CodeBookData.Dto;
-using System.Collections.Generic;
 
 namespace Services.CodeBookData.Service
 {
     public interface ICodeBookService : IBaseService
     {
-        HashSet<CodeBookItemListDto> GetCodeBookItems(string codeBookName, bool isLogged);
+        HashSet<CodeBookListDto> GetCodeBookItems(string codeBookName, bool isLogged);
     }
 }

@@ -1,7 +1,7 @@
-﻿using Model.Link;
-using Services.OrganizationCulture.Dto;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Model.Link;
+using Services.OrganizationCulture.Dto;
 
 namespace Services.OrganizationCulture.Convertor
 {
@@ -28,12 +28,12 @@ namespace Services.OrganizationCulture.Convertor
         public HashSet<OrganizationCultureListDto> ConvertToWebModel(HashSet<OrganizationCultureDbo> list, string culture)
         {
             return list.Select(item => new OrganizationCultureListDto()
-            {
-                Id = item.Id,
-                IsDefault = item.IsDefault,
-                Name = item.Culture.Name,
-                CultureId = item.CultureId
-            })
+                {
+                    Id = item.Id,
+                    IsDefault = item.IsDefault,
+                    Name = item.Culture.Name,
+                    CultureId = item.CultureId
+                })
                 .ToHashSet();
         }
 

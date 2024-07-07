@@ -1,10 +1,10 @@
-﻿using Core.Base.Repository.CodeBookRepository;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Core.Base.Repository.CodeBookRepository;
 using Model.CodeBook;
 using Model.Edu.BankOfQuestions;
 using Model.Edu.Question;
 using Services.Question.Dto;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.Question.Convertor
 {

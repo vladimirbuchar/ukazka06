@@ -1,8 +1,8 @@
-﻿using Core.Base.Service;
+﻿using System;
+using Core.Base.Service;
 using Core.DataTypes;
 using Model.Edu.User;
 using Services.User.Dto;
-using System;
 
 namespace Services.User.Service
 {

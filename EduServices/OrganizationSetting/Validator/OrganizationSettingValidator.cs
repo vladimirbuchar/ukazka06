@@ -1,4 +1,6 @@
-﻿using Core.Base.Repository.CodeBookRepository;
+﻿using System;
+using System.Collections.Generic;
+using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Validator;
 using Core.Constants;
 using Core.DataTypes;
@@ -11,8 +13,6 @@ using Repository.OrganizationSettingRepository;
 using Repository.UserRepository;
 using Services.Organization.Dto;
 using Services.OrganizationSetting.Dto;
-using System;
-using System.Collections.Generic;
 
 namespace Services.OrganizationSetting.Validator
 {
@@ -96,7 +96,14 @@ namespace Services.OrganizationSetting.Validator
                 foreach (Address address in addresses)
                 {
                     base.CodeBookValueExist(_country, x => x.Id == address.CountryId, result, AddressValidator.COUNTRY, AddressValidator.COUNTRY_NOT_EXIST, address.CountryId.ToString());
-                    base.CodeBookValueExist(_addressType, x => x.Id == address.AddressTypeId, result, AddressValidator.ADDRESS_TYPE, AddressValidator.ADDRESS_TYPE_NOT_EXIST, address.AddressTypeId.ToString());
+                    base.CodeBookValueExist(
+                        _addressType,
+                        x => x.Id == address.AddressTypeId,
+                        result,
+                        AddressValidator.ADDRESS_TYPE,
+                        AddressValidator.ADDRESS_TYPE_NOT_EXIST,
+                        address.AddressTypeId.ToString()
+                    );
                 }
             }
         }

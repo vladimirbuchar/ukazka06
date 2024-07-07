@@ -1,7 +1,4 @@
 ﻿namespace Core.Base.Dto
 {
-    public class CreateDto : BaseDto
-    {
-
-    }
+    public class CreateDto : BaseDto { }
 }

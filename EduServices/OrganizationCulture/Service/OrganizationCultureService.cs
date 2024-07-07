@@ -1,4 +1,5 @@
-﻿using Core.Base.Service;
+﻿using System;
+using Core.Base.Service;
 using Core.Constants;
 using Core.DataTypes;
 using Model.Link;
@@ -6,7 +7,6 @@ using Repository.OrganizationCultureRepository;
 using Services.OrganizationCulture.Convertor;
 using Services.OrganizationCulture.Dto;
 using Services.OrganizationCulture.Validator;
-using System;
 
 namespace Services.OrganizationCulture.Service
 {
@@ -35,6 +35,7 @@ namespace Services.OrganizationCulture.Service
             _repository.DeleteEntity(organizationCulture, userId);
             return new Result();
         }
+
         public override Result<OrganizationCultureDetailDto> UpdateObject(OrganizationCultureUpdateDto update, Guid userId, string culture, Result<OrganizationCultureDetailDto> result = null)
         {
             result = _validator.IsValid(update);
@@ -50,6 +51,5 @@ namespace Services.OrganizationCulture.Service
             }
             return result;
         }
-
     }
 }

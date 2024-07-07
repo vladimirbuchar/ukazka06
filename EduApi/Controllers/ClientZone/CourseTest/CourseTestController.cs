@@ -1,11 +1,11 @@
-﻿using Core.Base.Dto;
+﻿using System;
+using Core.Base.Dto;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.OrganizationRole.Service;
 using Services.Test.Dto;
 using Services.Test.Service;
-using System;
 
 namespace EduApi.Controllers.ClientZone.CourseTest
 {
@@ -13,11 +13,7 @@ namespace EduApi.Controllers.ClientZone.CourseTest
     {
         private readonly ITestService _testService;
 
-        public CourseTestController(
-            ILogger<CourseTestController> logger,
-            ITestService testService,
-            IOrganizationRoleService organizationRoleService
-        )
+        public CourseTestController(ILogger<CourseTestController> logger, ITestService testService, IOrganizationRoleService organizationRoleService)
             : base(logger, organizationRoleService)
         {
             _testService = testService;

@@ -1,10 +1,10 @@
-﻿using Model.CodeBook;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using Model.CodeBook;
 using Model.Edu.Question;
 using Model.Edu.StudentTestSummary;
 using Model.Edu.StudentTestSummaryAnswer;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Model.Edu.StudentTestSummaryQuestion
 {

@@ -1,5 +1,5 @@
-﻿using Core.Base.Dto;
-using System;
+﻿using System;
+using Core.Base.Dto;
 
 namespace Services.Course.Dto
 {
@@ -22,6 +22,4 @@ namespace Services.Course.Dto
         public bool CourseWithLector { get; set; }
         public Guid OrganizationId { get; set; }
     }
-
-
 }

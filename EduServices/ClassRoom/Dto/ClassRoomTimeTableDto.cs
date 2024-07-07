@@ -1,7 +1,7 @@
-﻿using Core.Base.Dto;
+﻿using System.Collections.Generic;
+using Core.Base.Dto;
 using Services.OrganizationStudyHour.Dto;
 using Services.User.Dto;
-using System.Collections.Generic;
 
 namespace Services.ClassRoom.Dto
 {

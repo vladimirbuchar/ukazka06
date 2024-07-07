@@ -1,12 +1,12 @@
-﻿using Core.Base.Repository;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using Core.Base.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
 using Model.Edu.CourseLessonItem;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 
 namespace Repository.CourseLessonItemRepository
 {
@@ -22,15 +22,22 @@ namespace Repository.CourseLessonItemRepository
                 .FirstOrDefault(x => x.Id == id);
         }
 
-        public override HashSet<CourseLessonItemDbo> GetEntities(bool deleted, Expression<Func<CourseLessonItemDbo, bool>> predicate = null, Expression<Func<CourseLessonItemDbo, object>> orderBy = null, Expression<Func<CourseLessonItemDbo, object>> orderByDesc = null)
+        public override HashSet<CourseLessonItemDbo> GetEntities(
+            bool deleted,
+            Expression<Func<CourseLessonItemDbo, bool>> predicate = null,
+            Expression<Func<CourseLessonItemDbo, object>> orderBy = null,
+            Expression<Func<CourseLessonItemDbo, object>> orderByDesc = null
+        )
         {
-            return [.. _dbContext.Set<CourseLessonItemDbo>()
-                .Include(x => x.CourseLessonItemTranslations.Where(x => x.IsDeleted == false))
-                .ThenInclude(x => x.Culture)
-                .Where(predicate)
-                .Where(x => x.IsDeleted == deleted)
-
-                ];
+            return
+            [
+                .. _dbContext
+                    .Set<CourseLessonItemDbo>()
+                    .Include(x => x.CourseLessonItemTranslations.Where(x => x.IsDeleted == false))
+                    .ThenInclude(x => x.Culture)
+                    .Where(predicate)
+                    .Where(x => x.IsDeleted == deleted)
+            ];
             ;
         }
 
@@ -40,7 +47,8 @@ namespace Repository.CourseLessonItemRepository
                 .Set<CourseLessonItemDbo>()
                 .Include(x => x.CourseLesson)
                 .ThenInclude(x => x.CourseMaterial)
-                .FirstOrDefault(x => x.Id == objectId).CourseLesson.CourseMaterial.OrganizationId;
+                .FirstOrDefault(x => x.Id == objectId)
+                .CourseLesson.CourseMaterial.OrganizationId;
         }
     }
 }

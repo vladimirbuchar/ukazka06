@@ -1,9 +1,9 @@
-﻿using Model.Edu.OrganizationRole;
-using Model.Link;
-using Services.UserInOrganization.Dto;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Model.Edu.OrganizationRole;
+using Model.Link;
+using Services.UserInOrganization.Dto;
 
 namespace Services.UserInOrganization.Convertor
 {

@@ -1,12 +1,12 @@
-﻿using Core.Base.Dto;
+﻿using System;
+using System.Collections.Generic;
+using Core.Base.Dto;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.Branch.Dto;
 using Services.Branch.Service;
 using Services.OrganizationRole.Service;
-using System;
-using System.Collections.Generic;
 
 namespace EduApi.Controllers.ClientZone.Branch
 {
@@ -15,11 +15,7 @@ namespace EduApi.Controllers.ClientZone.Branch
     {
         private readonly IBranchService _branchService;
 
-        public BranchController(
-            ILogger<BranchController> logger,
-            IBranchService branchService,
-            IOrganizationRoleService organizationRoleService
-        )
+        public BranchController(ILogger<BranchController> logger, IBranchService branchService, IOrganizationRoleService organizationRoleService)
             : base(logger, organizationRoleService)
         {
             _branchService = branchService;

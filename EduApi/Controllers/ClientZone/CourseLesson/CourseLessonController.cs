@@ -1,4 +1,7 @@
-﻿using Core.Base.Dto;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Core.Base.Dto;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -7,9 +10,6 @@ using Model.Edu.CourseLesson;
 using Services.CourseLesson.Dto;
 using Services.CourseLesson.Service;
 using Services.OrganizationRole.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace EduApi.Controllers.ClientZone.CourseLesson
 {
@@ -17,11 +17,7 @@ namespace EduApi.Controllers.ClientZone.CourseLesson
     {
         private readonly ICourseLessonService _courseLessonService;
 
-        public CourseLessonController(
-            ILogger<CourseLessonController> logger,
-            ICourseLessonService courseLessonService,
-            IOrganizationRoleService organizationRoleService
-        )
+        public CourseLessonController(ILogger<CourseLessonController> logger, ICourseLessonService courseLessonService, IOrganizationRoleService organizationRoleService)
             : base(logger, organizationRoleService)
         {
             _courseLessonService = courseLessonService;
@@ -152,14 +148,16 @@ namespace EduApi.Controllers.ClientZone.CourseLesson
             try
             {
                 CheckOrganizationPermition(_courseLessonService.GetOrganizationIdByObjectId(request.Id));
-                return SendResponse(_courseLessonService.FileUpload(
-                    request.Id,
-                    GetClientCulture(),
-                    GetLoggedUserId(),
-                    new List<IFormFile>() { file },
-                    new CourseLessonFileRepositoryDbo() { CourseLessonId = request.Id, },
-                    x => x.CourseLessonId == request.Id && x.Culture.SystemIdentificator == GetClientCulture()
-                ));
+                return SendResponse(
+                    _courseLessonService.FileUpload(
+                        request.Id,
+                        GetClientCulture(),
+                        GetLoggedUserId(),
+                        new List<IFormFile>() { file },
+                        new CourseLessonFileRepositoryDbo() { CourseLessonId = request.Id, },
+                        x => x.CourseLessonId == request.Id && x.Culture.SystemIdentificator == GetClientCulture()
+                    )
+                );
             }
             catch (Exception e)
             {

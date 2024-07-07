@@ -17,6 +17,5 @@ namespace Services.StudentAttendance.Service
             StudentAttendanceListDto,
             StudentAttendanceDetailDto
         >(repository, convertor, validator),
-            IStudentAttendanceService
-    { }
+            IStudentAttendanceService { }
 }

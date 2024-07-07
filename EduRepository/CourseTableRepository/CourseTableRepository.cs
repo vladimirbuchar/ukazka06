@@ -1,8 +1,8 @@
-﻿using Core.Base.Repository;
+﻿using System;
+using Core.Base.Repository;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
 using Model.Edu.CourseTable;
-using System;
 
 namespace Repository.CourseTableRepository
 {

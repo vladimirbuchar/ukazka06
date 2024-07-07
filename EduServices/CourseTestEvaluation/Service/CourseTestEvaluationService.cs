@@ -18,6 +18,5 @@ namespace Services.CourseTestEvaluation.Service
             CourseTestEvaluationDetailDto,
             CourseTestEvaluationUpdateDto
         >(testRepository, testConvertor, validator),
-            ICourseTestEvaluationService
-    { }
+            ICourseTestEvaluationService { }
 }

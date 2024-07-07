@@ -6,6 +6,5 @@ using Services.UserInOrganization.Dto;
 namespace Services.UserInOrganization.Validator
 {
     public interface IUserInOrganizationValidator
-        : IBaseValidator<UserInOrganizationDbo, IUserInOrganizationRepository, UserInOrganizationCreateDto, UserInOrganizationDetailDto, UserInOrganizationUpdateDto>
-    { }
+        : IBaseValidator<UserInOrganizationDbo, IUserInOrganizationRepository, UserInOrganizationCreateDto, UserInOrganizationDetailDto, UserInOrganizationUpdateDto> { }
 }

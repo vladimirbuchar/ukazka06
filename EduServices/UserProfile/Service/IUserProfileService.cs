@@ -1,10 +1,10 @@
-﻿using Core.Base.Service;
+﻿using System;
+using System.Collections.Generic;
+using Core.Base.Service;
 using Services.Organization.Dto;
 using Services.StudentEvaluation.Dto;
 using Services.User.Dto;
 using Services.UserProfile.Dto;
-using System;
-using System.Collections.Generic;
 
 namespace Services.UserProfile.Service
 {

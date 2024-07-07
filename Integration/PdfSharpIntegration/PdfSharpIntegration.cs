@@ -4,10 +4,7 @@ namespace Integration.PdfSharpIntegration
 {
     public class PdfSharpIntegration : IPdfSharpIntegration
     {
-        public PdfSharpIntegration()
-        {
-
-        }
+        public PdfSharpIntegration() { }
 
         public Guid HtmlToPdfFile(string html)
         {

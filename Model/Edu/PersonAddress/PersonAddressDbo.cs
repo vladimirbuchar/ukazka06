@@ -1,7 +1,7 @@
-﻿using Model.CodeBook;
-using Model.Edu.Person;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using Model.CodeBook;
+using Model.Edu.Person;
 
 namespace Model.Edu.PersonAddress
 {

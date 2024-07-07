@@ -1,5 +1,5 @@
-﻿using Core.Base.Service;
-using System;
+﻿using System;
+using Core.Base.Service;
 
 namespace Services.SystemService.FileUpload
 {

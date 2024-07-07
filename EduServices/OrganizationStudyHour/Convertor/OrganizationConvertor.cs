@@ -1,9 +1,9 @@
-﻿using Core.Extension;
-using Model.Edu.OrganizationStudyHour;
-using Services.OrganizationStudyHour.Dto;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Core.Extension;
+using Model.Edu.OrganizationStudyHour;
+using Services.OrganizationStudyHour.Dto;
 
 namespace Services.OrganizationStudyHour.Convertor
 {
@@ -57,14 +57,14 @@ namespace Services.OrganizationStudyHour.Convertor
         public HashSet<StudyHourListDto> ConvertToWebModel(HashSet<OrganizationStudyHourDbo> list, string culture)
         {
             return list.Select(x => new StudyHourListDto()
-            {
-                Position = x.Position,
-                ActiveFrom = x.ActiveFrom.Value,
-                ActiveFromId = x.ActiveFromId,
-                ActiveTo = x.ActiveTo.Value,
-                ActiveToId = x.ActiveToId,
-                Id = x.Id
-            })
+                {
+                    Position = x.Position,
+                    ActiveFrom = x.ActiveFrom.Value,
+                    ActiveFromId = x.ActiveFromId,
+                    ActiveTo = x.ActiveTo.Value,
+                    ActiveToId = x.ActiveToId,
+                    Id = x.Id
+                })
                 .ToHashSet();
         }
 

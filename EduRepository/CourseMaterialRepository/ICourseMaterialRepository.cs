@@ -3,7 +3,5 @@ using Model.Edu.CourseMaterial;
 
 namespace Repository.CourseMaterialRepository
 {
-    public interface ICourseMaterialRepository : IBaseRepository<CourseMaterialDbo>
-    {
-    }
+    public interface ICourseMaterialRepository : IBaseRepository<CourseMaterialDbo> { }
 }

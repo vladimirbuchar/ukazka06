@@ -1,5 +1,5 @@
-﻿using Core.Base.Dto;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Core.Base.Dto;
 
 namespace Services.CourseStudy.Dto
 {

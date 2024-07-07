@@ -1,9 +1,9 @@
-﻿using Core.Base.Service;
+﻿using System;
+using System.Collections.Generic;
+using Core.Base.Service;
 using Core.DataTypes;
 using Services.CourseStudy.Dto;
 using Services.OrganizationRole.Dto;
-using System;
-using System.Collections.Generic;
 
 namespace Services.CourseStudy.Service
 {

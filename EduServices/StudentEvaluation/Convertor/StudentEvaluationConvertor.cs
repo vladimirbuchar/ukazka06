@@ -1,7 +1,7 @@
-﻿using Model.Edu.StudentEvaluation;
-using Services.StudentEvaluation.Dto;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Model.Edu.StudentEvaluation;
+using Services.StudentEvaluation.Dto;
 
 namespace Services.StudentEvaluation.Convertor
 {
@@ -16,8 +16,6 @@ namespace Services.StudentEvaluation.Convertor
                 CourseTermId = create.CourseTermId
             };
         }
-
-
 
         public HashSet<StudentEvaluationListDto> ConvertToWebModel(HashSet<StudentEvaluationDbo> list, string culture)
         {

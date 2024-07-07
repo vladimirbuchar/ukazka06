@@ -1,10 +1,10 @@
-﻿using Core.Base.Repository;
+﻿using System;
+using System.Linq;
+using Core.Base.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
 using Model.Edu.Organization;
-using System;
-using System.Linq;
 
 namespace Repository.OrganizationRepository
 {
@@ -12,7 +12,8 @@ namespace Repository.OrganizationRepository
     {
         public override OrganizationDbo GetEntity(Guid id)
         {
-            return _dbContext.Set<OrganizationDbo>()
+            return _dbContext
+                .Set<OrganizationDbo>()
                 .Include(x => x.Addresses.Where(x => x.IsDeleted == false))
                 .Include(x => x.OrganizationTranslations.Where(x => x.IsDeleted == false))
                 .Include(x => x.OrganizationFileRepositories.Where(x => x.IsDeleted == false))

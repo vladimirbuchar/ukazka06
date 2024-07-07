@@ -10,6 +10,7 @@ namespace Core.DataTypes
         public bool IsError => Errors.Count > 0;
         public bool DataChanged { get; set; } = false;
         public bool IsOk => !IsError;
+
         public Result()
         {
             validationMessages = [];

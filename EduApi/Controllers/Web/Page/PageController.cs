@@ -1,4 +1,6 @@
-﻿using Core.DataTypes;
+﻿using System;
+using System.Collections.Generic;
+using Core.DataTypes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -9,9 +11,6 @@ using Services.OrganizationSetting.Dto;
 using Services.OrganizationSetting.Service;
 using Services.Page.Dto;
 using Services.Page.Service;
-using System;
-using System.Collections.Generic;
-
 
 namespace EduApi.Controllers.Web.Page
 {

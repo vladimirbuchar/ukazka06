@@ -1,7 +1,7 @@
-﻿using Model.Link;
-using Model.System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using Model.Link;
+using Model.System;
 
 namespace Model.Edu.OrganizationRole
 {

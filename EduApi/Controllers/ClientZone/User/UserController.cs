@@ -1,11 +1,11 @@
-﻿using Core.Base.Dto;
+﻿using System;
+using Core.Base.Dto;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.OrganizationRole.Service;
 using Services.User.Dto;
 using Services.User.Service;
-using System;
 
 namespace EduApi.Controllers.ClientZone.User
 {

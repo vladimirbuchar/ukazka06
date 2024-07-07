@@ -3,8 +3,5 @@ using Model.Edu.User;
 
 namespace Repository.UserRepository
 {
-    public interface IUserRepository : IBaseRepository<UserDbo>
-    {
-
-    }
+    public interface IUserRepository : IBaseRepository<UserDbo> { }
 }

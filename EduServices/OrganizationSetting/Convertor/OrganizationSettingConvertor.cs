@@ -52,8 +52,6 @@ namespace Services.OrganizationSetting.Convertor
             };
         }
 
-
-
         public OrganizationSettingByUrlDto ConvertToWebModel2(OrganizationSettingDbo getOrganizationSetting)
         {
             return new OrganizationSettingByUrlDto()

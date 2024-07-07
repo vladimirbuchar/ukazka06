@@ -1,12 +1,12 @@
-﻿using Core.Base.Repository;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using Core.Base.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
 using Model.Edu.Course;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 
 namespace Repository.CourseRepository
 {
@@ -14,19 +14,17 @@ namespace Repository.CourseRepository
     {
         public override CourseDbo GetEntity(Guid id)
         {
-            return _dbContext.Set<CourseDbo>()
-                .Include(x => x.CourseTranslations.Where(x => x.IsDeleted == false))
-                .ThenInclude(x => x.Culture)
-                .FirstOrDefault(x => x.Id == id);
+            return _dbContext.Set<CourseDbo>().Include(x => x.CourseTranslations.Where(x => x.IsDeleted == false)).ThenInclude(x => x.Culture).FirstOrDefault(x => x.Id == id);
         }
 
-        public override HashSet<CourseDbo> GetEntities(bool deleted, Expression<Func<CourseDbo, bool>> predicate = null, Expression<Func<CourseDbo, object>> orderBy = null, Expression<Func<CourseDbo, object>> orderByDesc = null)
+        public override HashSet<CourseDbo> GetEntities(
+            bool deleted,
+            Expression<Func<CourseDbo, bool>> predicate = null,
+            Expression<Func<CourseDbo, object>> orderBy = null,
+            Expression<Func<CourseDbo, object>> orderByDesc = null
+        )
         {
-            return [.. _dbContext.Set<CourseDbo>()
-                .Include(x => x.CourseTranslations.Where(x => x.IsDeleted == false))
-                .ThenInclude(x => x.Culture)
-                .Where(predicate)
-                .Where(x => x.IsDeleted == deleted)];
+            return [.. _dbContext.Set<CourseDbo>().Include(x => x.CourseTranslations.Where(x => x.IsDeleted == false)).ThenInclude(x => x.Culture).Where(predicate).Where(x => x.IsDeleted == deleted)];
         }
 
         public override Guid GetOrganizationId(Guid objectId)

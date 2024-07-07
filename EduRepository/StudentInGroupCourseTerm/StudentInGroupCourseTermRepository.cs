@@ -7,6 +7,5 @@ namespace Repository.StudentInGroupCourseTerm
 {
     public class StudentInGroupCourseTermRepository(EduDbContext dbContext, IMemoryCache memoryCache)
         : BaseRepository<StudentInGroupCourseTermDbo>(dbContext, memoryCache),
-            IStudentInGroupCourseTermRepository
-    { }
+            IStudentInGroupCourseTermRepository { }
 }

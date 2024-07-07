@@ -1,11 +1,11 @@
-﻿using Core.DataTypes;
+﻿using System;
+using System.Collections.Generic;
+using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.Notification.Dto;
 using Services.Notification.Service;
 using Services.OrganizationRole.Service;
-using System;
-using System.Collections.Generic;
 
 namespace EduApi.Controllers.ClientZone.Notification
 {
@@ -14,11 +14,7 @@ namespace EduApi.Controllers.ClientZone.Notification
     {
         private readonly INotificationService _notificationService;
 
-        public NotificationController(
-            INotificationService notificationService,
-            ILogger<NotificationController> logger,
-            IOrganizationRoleService organizationRoleService
-        )
+        public NotificationController(INotificationService notificationService, ILogger<NotificationController> logger, IOrganizationRoleService organizationRoleService)
             : base(logger, organizationRoleService)
         {
             _notificationService = notificationService;
@@ -66,7 +62,7 @@ namespace EduApi.Controllers.ClientZone.Notification
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult SetIsNewNotificationToFalse(SetIsNewNotificationToFalseDto setIsNewNotificationToFalseDto)
+        public ActionResult SetIsNewNotificationToFalse()
         {
             try
             {

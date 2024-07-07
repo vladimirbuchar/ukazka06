@@ -1,4 +1,7 @@
-﻿using Core.Base.Service;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Core.Base.Service;
 using Core.Constants;
 using Core.DataTypes;
 using Model.Edu.Notification;
@@ -7,9 +10,6 @@ using Repository.NotificationRepository;
 using Repository.OrganizationRepository;
 using Services.Notification.Convertor;
 using Services.Notification.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.Notification.Service
 {

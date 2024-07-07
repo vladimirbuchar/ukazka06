@@ -1,9 +1,9 @@
-﻿using Core.Constants;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Core.Constants;
 using Microsoft.Extensions.Configuration;
 using Model.Edu.Note;
 using Services.Note.Dto;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.Note.Convertor
 {

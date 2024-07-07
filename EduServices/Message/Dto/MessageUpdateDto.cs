@@ -1,9 +1,8 @@
-﻿using Core.Base.Dto;
-using System;
+﻿using System;
+using Core.Base.Dto;
 
 namespace Services.Message.Dto
 {
-
     public class MessageUpdateDto : UpdateDto
     {
         public string Name { get; set; }

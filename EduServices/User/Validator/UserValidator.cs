@@ -1,4 +1,7 @@
-﻿using Core.Base.Repository.CodeBookRepository;
+﻿using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Validator;
 using Core.Constants;
 using Core.DataTypes;
@@ -10,9 +13,6 @@ using Repository.LinkLifeTimeRepository;
 using Repository.UserRepository;
 using Services.User.Dto;
 using Services.User.Validator;
-using System;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
 
 namespace EduServices.User.Validator
 {
@@ -155,7 +155,6 @@ namespace EduServices.User.Validator
             IsValidPassword(changePassword.NewUserPassword, changePassword.NewUserPassword2, validate);
             return validate;
         }
-
 
         [GeneratedRegex(@"[0-9]+")]
         private static partial Regex NumberRegex();

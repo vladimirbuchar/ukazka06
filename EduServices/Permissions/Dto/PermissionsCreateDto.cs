@@ -1,5 +1,5 @@
-﻿using Core.Base.Dto;
-using System;
+﻿using System;
+using Core.Base.Dto;
 
 namespace Services.Permissions.Dto
 {
@@ -7,7 +7,5 @@ namespace Services.Permissions.Dto
     {
         public Guid RouteId { get; set; }
         public Guid OrganizationRoleId { get; set; }
-
-
     }
 }

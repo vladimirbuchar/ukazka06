@@ -8,6 +8,4 @@ namespace Services.Certificate.Dto
         public string Html { get; set; }
         public int CertificateValidTo { get; set; }
     }
-
-
 }

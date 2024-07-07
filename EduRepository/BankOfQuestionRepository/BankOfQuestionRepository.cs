@@ -1,12 +1,12 @@
-﻿using Core.Base.Repository;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using Core.Base.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
 using Model.Edu.BankOfQuestions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 
 namespace Repository.BankOfQuestionRepository
 {
@@ -14,20 +14,25 @@ namespace Repository.BankOfQuestionRepository
     {
         public override BankOfQuestionDbo GetEntity(Guid id)
         {
-            return _dbContext.Set<BankOfQuestionDbo>()
-                .Include(x => x.BankOfQuestionsTranslations.Where(x => x.IsDeleted == false))
-                .ThenInclude(x => x.Culture)
-                .FirstOrDefault(x => x.Id == id);
+            return _dbContext.Set<BankOfQuestionDbo>().Include(x => x.BankOfQuestionsTranslations.Where(x => x.IsDeleted == false)).ThenInclude(x => x.Culture).FirstOrDefault(x => x.Id == id);
         }
 
-        public override HashSet<BankOfQuestionDbo> GetEntities(bool deleted, Expression<Func<BankOfQuestionDbo, bool>> predicate = null, Expression<Func<BankOfQuestionDbo, object>> orderBy = null, Expression<Func<BankOfQuestionDbo, object>> orderByDesc = null)
+        public override HashSet<BankOfQuestionDbo> GetEntities(
+            bool deleted,
+            Expression<Func<BankOfQuestionDbo, bool>> predicate = null,
+            Expression<Func<BankOfQuestionDbo, object>> orderBy = null,
+            Expression<Func<BankOfQuestionDbo, object>> orderByDesc = null
+        )
         {
-            return [.. _dbContext.Set<BankOfQuestionDbo>()
-                .Include(x => x.BankOfQuestionsTranslations.Where(x => x.IsDeleted == false))
-                .ThenInclude(x => x.Culture)
-                .Where(predicate)
-                .Where(x => x.IsDeleted == deleted)
-                ];
+            return
+            [
+                .. _dbContext
+                    .Set<BankOfQuestionDbo>()
+                    .Include(x => x.BankOfQuestionsTranslations.Where(x => x.IsDeleted == false))
+                    .ThenInclude(x => x.Culture)
+                    .Where(predicate)
+                    .Where(x => x.IsDeleted == deleted)
+            ];
         }
 
         public override Guid GetOrganizationId(Guid objectId)

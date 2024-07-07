@@ -61,7 +61,14 @@ namespace Core.DataTypes
 
         private void SetPriority(MessageType group, int priority)
         {
-            Priority = priority == -1 ? group == MessageType.SYSTEM_ERROR ? 0 : group == MessageType.ERROR ? 1 : 99999 : priority;
+            Priority =
+                priority == -1
+                    ? group == MessageType.SYSTEM_ERROR
+                        ? 0
+                        : group == MessageType.ERROR
+                            ? 1
+                            : 99999
+                    : priority;
         }
     }
 }

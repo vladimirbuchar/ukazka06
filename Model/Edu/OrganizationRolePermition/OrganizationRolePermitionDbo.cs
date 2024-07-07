@@ -1,6 +1,6 @@
-﻿using Model.Edu.OrganizationRole;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using Model.Edu.OrganizationRole;
 
 namespace Model.Edu.OrganizationRolePermition
 {

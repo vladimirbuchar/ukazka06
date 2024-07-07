@@ -1,7 +1,7 @@
-﻿using Model.System;
-using Services.Permissions.Dto;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Model.System;
+using Services.Permissions.Dto;
 
 namespace Services.Permissions.Convertor
 {
@@ -16,21 +16,18 @@ namespace Services.Permissions.Convertor
 
         public PermissionsDbo ConvertToBussinessEntity(PermissionsCreateDto create, string culture)
         {
-            return new PermissionsDbo()
-            {
-                RouteId = create.RouteId,
-                OrganizationRoleId = create.OrganizationRoleId
-            };
+            return new PermissionsDbo() { RouteId = create.RouteId, OrganizationRoleId = create.OrganizationRoleId };
         }
 
         public HashSet<PermissionsListDto> ConvertToWebModel(HashSet<PermissionsDbo> list, string culture)
         {
             return list.Select(x => new PermissionsListDto()
-            {
-                Id = x.Id,
-                OrganizationRole = x.OrganizationRole.SystemIdentificator,
-                Route = x.Route.Route
-            }).ToHashSet();
+                {
+                    Id = x.Id,
+                    OrganizationRole = x.OrganizationRole.SystemIdentificator,
+                    Route = x.Route.Route
+                })
+                .ToHashSet();
         }
 
         public PermissionsDetailDto ConvertToWebModel(PermissionsDbo detail, string culture)

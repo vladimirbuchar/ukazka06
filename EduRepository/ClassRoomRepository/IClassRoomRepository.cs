@@ -3,8 +3,5 @@ using Model.Edu.ClassRoom;
 
 namespace Repository.ClassRoomRepository
 {
-    public interface IClassRoomRepository : IBaseRepository<ClassRoomDbo>
-    {
-
-    }
+    public interface IClassRoomRepository : IBaseRepository<ClassRoomDbo> { }
 }

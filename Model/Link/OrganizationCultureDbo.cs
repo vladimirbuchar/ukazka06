@@ -1,7 +1,7 @@
-﻿using Model.CodeBook;
-using Model.Edu.Organization;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using Model.CodeBook;
+using Model.Edu.Organization;
 
 namespace Model.Link
 {
@@ -12,6 +12,7 @@ namespace Model.Link
         public virtual Guid OrganizationId { get; set; }
         public virtual CultureDbo Culture { get; set; }
         public virtual Guid CultureId { get; set; }
+
         [Column("IsDefault")]
         public virtual bool IsDefault { get; set; }
     }

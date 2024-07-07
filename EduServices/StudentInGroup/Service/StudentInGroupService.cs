@@ -1,4 +1,7 @@
-﻿using Core.Base.Repository.CodeBookRepository;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Service;
 using Core.Constants;
 using Core.DataTypes;
@@ -22,9 +25,6 @@ using Services.StudentInGroup.Convertor;
 using Services.StudentInGroup.Dto;
 using Services.StudentInGroup.Validator;
 using Services.SystemService.SendMailService;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.StudentInGroup.Service
 {
@@ -119,10 +119,7 @@ namespace Services.StudentInGroup.Service
                 _ = _repository.CreateEntity(
                     new StudentInGroupDbo()
                     {
-                        UserInOrganizationId = _userInOrganizationRepository
-                            .GetEntities(false, x => x.OrganizationId == addObject.OrganizationId)
-                            .FirstOrDefault(x => x.User.UserEmail == email)
-                            .Id,
+                        UserInOrganizationId = _userInOrganizationRepository.GetEntities(false, x => x.OrganizationId == addObject.OrganizationId).FirstOrDefault(x => x.User.UserEmail == email).Id,
                         StudentGroupId = addObject.StudentGroupId
                     },
                     Guid.Empty

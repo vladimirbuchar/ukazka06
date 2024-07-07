@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System;
+using Microsoft.AspNetCore.Http;
 using Model;
-using System;
 
 namespace Core.Base.Repository.FileRepository
 {

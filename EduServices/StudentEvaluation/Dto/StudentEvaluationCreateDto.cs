@@ -1,5 +1,5 @@
-﻿using Core.Base.Dto;
-using System;
+﻿using System;
+using Core.Base.Dto;
 
 namespace Services.StudentEvaluation.Dto
 {
@@ -8,6 +8,5 @@ namespace Services.StudentEvaluation.Dto
         public string Evaluation { get; set; }
         public Guid CourseStudentId { get; set; }
         public Guid CourseTermId { get; set; }
-
     }
 }

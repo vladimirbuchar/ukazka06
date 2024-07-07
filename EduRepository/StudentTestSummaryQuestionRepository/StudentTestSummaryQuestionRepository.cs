@@ -7,8 +7,5 @@ namespace Repository.StudentTestSummaryQuestionRepository
 {
     public class StudentTestSummaryQuestionRepository(EduDbContext dbContext, IMemoryCache memoryCache)
         : BaseRepository<StudentTestSummaryQuestionDbo>(dbContext, memoryCache),
-            IStudentTestSummaryQuestionRepository
-    {
-
-    }
+            IStudentTestSummaryQuestionRepository { }
 }

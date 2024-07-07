@@ -1,9 +1,9 @@
-﻿using Core.Base.Repository.CodeBookRepository;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Core.Base.Repository.CodeBookRepository;
 using Model.CodeBook;
 using Model.Edu.ClassRoom;
 using Services.ClassRoom.Dto;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.ClassRoom.Convertor
 {

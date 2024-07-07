@@ -7,6 +7,5 @@ namespace Core.Base.HangfireJob
         protected IServiceScope _scope = serviceScopeFactory.CreateScope();
 
         public abstract void Execute();
-
     }
 }

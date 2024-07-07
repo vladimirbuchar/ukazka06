@@ -1,4 +1,7 @@
-﻿using Model.CodeBook;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using Model.CodeBook;
 using Model.Edu.BankOfQuestions;
 using Model.Edu.Branch;
 using Model.Edu.Certificate;
@@ -13,9 +16,6 @@ using Model.Edu.SendEmail;
 using Model.Edu.SendMessage;
 using Model.Edu.StudentGroup;
 using Model.Link;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Model.Edu.Organization
 {
@@ -30,6 +30,7 @@ namespace Model.Edu.Organization
 
         [Column("WWW")]
         public virtual string WWW { get; set; }
+
         [Column("Name")]
         public virtual string Name { get; set; }
         public virtual LicenseDbo License { get; set; }

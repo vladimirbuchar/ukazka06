@@ -1,8 +1,8 @@
-﻿using Core.Base.Service;
+﻿using System;
+using Core.Base.Service;
 using Core.DataTypes;
 using Model.Edu.CourseLessonItem;
 using Services.CourseLessonItem.Dto;
-using System;
 
 namespace Services.CourseLessonItem.Service
 {

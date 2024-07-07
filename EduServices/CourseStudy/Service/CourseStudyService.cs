@@ -1,4 +1,7 @@
-﻿using Core.Base.Repository.CodeBookRepository;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Service;
 using Core.Constants;
 using Core.DataTypes;
@@ -47,9 +50,6 @@ using Services.CourseStudy.Dto;
 using Services.OrganizationRole.Dto;
 using Services.SystemService.FileUpload;
 using Services.SystemService.SendMailService;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.CourseStudy.Service
 {
@@ -429,7 +429,7 @@ namespace Services.CourseStudy.Service
                                         answer?.AnswerFileRepository.FindTranslation(culture).FileName
                                     )
                                 },
-                             userId
+                                userId
                             )
                             .Id;
                     }
@@ -803,8 +803,7 @@ namespace Services.CourseStudy.Service
 
             entity.Score = score;
             entity.IsSucess = testComleted;
-            entity.IsAutomaticEvaluate =
-                _studentTestSummaryQuestionRepository.GetEntity(false, x => x.StudentTestSummaryId == studentTestResultId && x.IsAutomaticEvaluate == true) != null;
+            entity.IsAutomaticEvaluate = _studentTestSummaryQuestionRepository.GetEntity(false, x => x.StudentTestSummaryId == studentTestResultId && x.IsAutomaticEvaluate == true) != null;
             _ = _studentTestSummaryRepository.UpdateEntity(entity, Guid.Empty);
             return new Result();
         }

@@ -1,6 +1,6 @@
-﻿using Core.Base.Dto;
+﻿using System.Collections.Generic;
+using Core.Base.Dto;
 using Services.OrganizationStudyHour.Dto;
-using System.Collections.Generic;
 
 namespace Services.User.Dto
 {

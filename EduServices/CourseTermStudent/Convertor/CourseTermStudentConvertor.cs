@@ -1,7 +1,7 @@
-﻿using Model.Link;
-using Services.CourseTermStudent.Dto;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Model.Link;
+using Services.CourseTermStudent.Dto;
 
 namespace Services.CourseTermStudent.Convertor
 {
@@ -15,15 +15,15 @@ namespace Services.CourseTermStudent.Convertor
         public HashSet<CourseTermStudentListDto> ConvertToWebModel(HashSet<CourseStudentDbo> list, string culture)
         {
             return list.Select(item => new CourseTermStudentListDto()
-            {
-                FirstName = item.UserInOrganization.User.Person.FirstName,
-                Id = item.Id,
-                LastName = item.UserInOrganization.User.Person.LastName,
-                SecondName = item.UserInOrganization.User.Person.SecondName,
-                StudentId = item.UserInOrganizationId,
-                Email = item.UserInOrganization.User.UserEmail,
-                CourseFinish = item.CourseFinish
-            })
+                {
+                    FirstName = item.UserInOrganization.User.Person.FirstName,
+                    Id = item.Id,
+                    LastName = item.UserInOrganization.User.Person.LastName,
+                    SecondName = item.UserInOrganization.User.Person.SecondName,
+                    StudentId = item.UserInOrganizationId,
+                    Email = item.UserInOrganization.User.UserEmail,
+                    CourseFinish = item.CourseFinish
+                })
                 .ToHashSet();
         }
 

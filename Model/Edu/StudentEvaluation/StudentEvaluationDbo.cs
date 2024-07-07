@@ -1,7 +1,7 @@
-﻿using Model.Edu.CourseTerm;
-using Model.Link;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using Model.Edu.CourseTerm;
+using Model.Link;
 
 namespace Model.Edu.StudentEvaluation
 {

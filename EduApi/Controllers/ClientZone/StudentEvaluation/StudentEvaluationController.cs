@@ -1,12 +1,12 @@
-﻿using Core.Base.Dto;
+﻿using System;
+using System.Collections.Generic;
+using Core.Base.Dto;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.OrganizationRole.Service;
 using Services.StudentEvaluation.Dto;
 using Services.StudentEvaluation.Service;
-using System;
-using System.Collections.Generic;
 
 namespace EduApi.Controllers.ClientZone.StudentEvaluation
 {
@@ -15,11 +15,7 @@ namespace EduApi.Controllers.ClientZone.StudentEvaluation
     {
         private readonly IStudentEvaluationService _studentEvaluationService;
 
-        public StudentEvaluationController(
-            IStudentEvaluationService studentEvaluationService,
-            ILogger<StudentEvaluationController> logger,
-            IOrganizationRoleService organizationRoleService
-        )
+        public StudentEvaluationController(IStudentEvaluationService studentEvaluationService, ILogger<StudentEvaluationController> logger, IOrganizationRoleService organizationRoleService)
             : base(logger, organizationRoleService)
         {
             _studentEvaluationService = studentEvaluationService;
@@ -35,7 +31,6 @@ namespace EduApi.Controllers.ClientZone.StudentEvaluation
         {
             try
             {
-
                 return SendResponse(_studentEvaluationService.AddObject(addStudentEvaluationDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
@@ -79,6 +74,5 @@ namespace EduApi.Controllers.ClientZone.StudentEvaluation
                 return SendSystemError(e);
             }
         }
-
     }
 }

@@ -1,4 +1,5 @@
-﻿using Core.Base.Repository.CodeBookRepository;
+﻿using System;
+using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Validator;
 using Core.Constants;
 using Core.DataTypes;
@@ -8,7 +9,6 @@ using Model.Edu.OrganizationStudyHour;
 using Repository.OrganizationHoursRepository;
 using Repository.OrganizationRepository;
 using Services.OrganizationStudyHour.Dto;
-using System;
 
 namespace Services.OrganizationStudyHour.Validator
 {

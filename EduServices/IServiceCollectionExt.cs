@@ -469,8 +469,8 @@ namespace Services
         {
             _ = service.AddScoped<IUserProfileService, UserProfileService>();
             _ = service.AddScoped<IUserProfileConvertor, UserProfileConvertor>();
-
         }
+
         public static void RegistrationRoute(this IServiceCollection service)
         {
             _ = service.AddScoped<IRouteRepository, RouteRepository>();
@@ -486,10 +486,12 @@ namespace Services
             _ = service.AddScoped<IPermissionsConvertor, PermissionsConvertor>();
             _ = service.AddScoped<IPermissionsValidator, PermissionsValidator>();
         }
+
         public static void RegistrationSetup(this IServiceCollection service)
         {
             _ = service.AddScoped<ISetupService, SetupService>();
         }
+
         public static void RegisterHangfireJob(this IServiceCollection service)
         {
             _ = service.AddScoped<SendEmailJob>();

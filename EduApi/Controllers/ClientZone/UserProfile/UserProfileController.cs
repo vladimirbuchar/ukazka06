@@ -1,4 +1,6 @@
-﻿using Core.DataTypes;
+﻿using System;
+using System.Collections.Generic;
+using Core.DataTypes;
 using EduApi.Controllers.ClientZone.Certificate;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -8,8 +10,6 @@ using Services.StudentEvaluation.Dto;
 using Services.User.Dto;
 using Services.UserProfile.Dto;
 using Services.UserProfile.Service;
-using System;
-using System.Collections.Generic;
 
 namespace EduApi.Controllers.ClientZone.UserProfile
 {
@@ -18,11 +18,7 @@ namespace EduApi.Controllers.ClientZone.UserProfile
     {
         private readonly IUserProfileService _userProfileService;
 
-        public UserProfileController(
-            IUserProfileService userProfileService,
-            ILogger<CertificateController> logger,
-            IOrganizationRoleService organizationRoleService
-        )
+        public UserProfileController(IUserProfileService userProfileService, ILogger<CertificateController> logger, IOrganizationRoleService organizationRoleService)
             : base(logger, organizationRoleService)
         {
             _userProfileService = userProfileService;
@@ -74,7 +70,6 @@ namespace EduApi.Controllers.ClientZone.UserProfile
         {
             try
             {
-
                 return SendResponse(_userProfileService.GetMyTimeTable(GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
@@ -93,7 +88,6 @@ namespace EduApi.Controllers.ClientZone.UserProfile
         {
             try
             {
-
                 return SendResponse(_userProfileService.GetMyAttendance(GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
@@ -137,6 +131,7 @@ namespace EduApi.Controllers.ClientZone.UserProfile
                 return SendSystemError(e);
             }
         }
+
         [HttpGet]
         [ProducesResponseType(typeof(HashSet<MyEvaluationListDto>), 200)]
         [ProducesResponseType(typeof(void), 404)]

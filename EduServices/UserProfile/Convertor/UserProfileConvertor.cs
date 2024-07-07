@@ -1,4 +1,6 @@
-﻿using Core.Constants;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Core.Constants;
 using Microsoft.Extensions.Configuration;
 using Model.Edu.Branch;
 using Model.Edu.ClassRoom;
@@ -9,8 +11,6 @@ using Services.Organization.Dto;
 using Services.StudentEvaluation.Dto;
 using Services.UserInOrganization.Dto;
 using Services.UserProfile.Dto;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.UserProfile.Convertor
 {
@@ -134,10 +134,7 @@ namespace Services.UserProfile.Convertor
 
         public HashSet<MyEvaluationListDto> ConvertToWebModel(HashSet<StudentEvaluationDbo> getStudentEvaluation)
         {
-            return getStudentEvaluation.Select(x => new MyEvaluationListDto()
-            {
-
-            }).ToHashSet();
+            return getStudentEvaluation.Select(x => new MyEvaluationListDto() { }).ToHashSet();
         }
     }
 }

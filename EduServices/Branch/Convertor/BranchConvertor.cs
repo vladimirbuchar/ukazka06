@@ -1,9 +1,9 @@
-﻿using Core.Base.Repository.CodeBookRepository;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Core.Base.Repository.CodeBookRepository;
 using Model.CodeBook;
 using Model.Edu.Branch;
 using Services.Branch.Dto;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.Branch.Convertor
 {
@@ -13,21 +13,22 @@ namespace Services.Branch.Convertor
 
         public BranchDbo ConvertToBussinessEntity(BranchCreateDto addBranchDto, string culture)
         {
-            BranchDbo branch = new()
-            {
-                City = addBranchDto?.City,
-                Region = addBranchDto?.Region,
-                CountryId = addBranchDto?.CountryId,
-                HouseNumber = addBranchDto?.HouseNumber,
-                Street = addBranchDto?.Street,
-                ZipCode = addBranchDto?.ZipCode,
-                Email = addBranchDto.Email,
-                WWW = addBranchDto.WWW,
-                PhoneNumber = addBranchDto.PhoneNumber,
-                OrganizationId = addBranchDto.OrganizationId,
-                IsMainBranch = addBranchDto.IsMainBranch,
-                IsOnline = addBranchDto.IsOnline,
-            };
+            BranchDbo branch =
+                new()
+                {
+                    City = addBranchDto?.City,
+                    Region = addBranchDto?.Region,
+                    CountryId = addBranchDto?.CountryId,
+                    HouseNumber = addBranchDto?.HouseNumber,
+                    Street = addBranchDto?.Street,
+                    ZipCode = addBranchDto?.ZipCode,
+                    Email = addBranchDto.Email,
+                    WWW = addBranchDto.WWW,
+                    PhoneNumber = addBranchDto.PhoneNumber,
+                    OrganizationId = addBranchDto.OrganizationId,
+                    IsMainBranch = addBranchDto.IsMainBranch,
+                    IsOnline = addBranchDto.IsOnline,
+                };
             branch.BranchTranslations = branch.BranchTranslations.PrepareTranslation(addBranchDto.Name, addBranchDto.Description, culture, _cultureList);
             return branch;
         }

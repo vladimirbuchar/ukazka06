@@ -1,4 +1,7 @@
-﻿using Core.Base.Dto;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Core.Base.Dto;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -7,9 +10,6 @@ using Model.Edu.CourseLessonItem;
 using Services.CourseLessonItem.Dto;
 using Services.CourseLessonItem.Service;
 using Services.OrganizationRole.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace EduApi.Controllers.ClientZone.CourseLessonItem
 {
@@ -17,11 +17,7 @@ namespace EduApi.Controllers.ClientZone.CourseLessonItem
     {
         private readonly ICourseLessonItemService _courseLessonItemService;
 
-        public CourseLessonItemController(
-            ILogger<CourseLessonItemController> logger,
-            ICourseLessonItemService courseLessonItemSerice,
-            IOrganizationRoleService organizationRoleService
-        )
+        public CourseLessonItemController(ILogger<CourseLessonItemController> logger, ICourseLessonItemService courseLessonItemSerice, IOrganizationRoleService organizationRoleService)
             : base(logger, organizationRoleService)
         {
             _courseLessonItemService = courseLessonItemSerice;
@@ -138,13 +134,15 @@ namespace EduApi.Controllers.ClientZone.CourseLessonItem
             try
             {
                 CheckOrganizationPermition(_courseLessonItemService.GetOrganizationIdByObjectId(request.Id));
-                return SendResponse(_courseLessonItemService.FileUpload(
-                    request.Id,
-                    GetClientCulture(),
-                    GetLoggedUserId(),
-                    new List<IFormFile>() { file },
-                    new CourseLessonItemFileRepositoryDbo() { CourseLessonItemId = request.Id, }
-                ));
+                return SendResponse(
+                    _courseLessonItemService.FileUpload(
+                        request.Id,
+                        GetClientCulture(),
+                        GetLoggedUserId(),
+                        new List<IFormFile>() { file },
+                        new CourseLessonItemFileRepositoryDbo() { CourseLessonItemId = request.Id, }
+                    )
+                );
             }
             catch (Exception e)
             {

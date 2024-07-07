@@ -7,6 +7,5 @@ namespace Services.UserInOrganization.Validator
 {
     public class UserInOrganizationValidator(IUserInOrganizationRepository repository)
         : BaseValidator<UserInOrganizationDbo, IUserInOrganizationRepository, UserInOrganizationCreateDto, UserInOrganizationDetailDto, UserInOrganizationUpdateDto>(repository),
-            IUserInOrganizationValidator
-    { }
+            IUserInOrganizationValidator { }
 }

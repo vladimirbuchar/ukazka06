@@ -1,9 +1,9 @@
-﻿using Core.Base.Repository.CodeBookRepository;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Core.Base.Repository.CodeBookRepository;
 using Model.CodeBook;
 using Model.Edu.BankOfQuestions;
 using Services.BankOfQuestion.Dto;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.BankOfQuestion.Convertor
 {
@@ -14,11 +14,7 @@ namespace Services.BankOfQuestion.Convertor
         public BankOfQuestionDbo ConvertToBussinessEntity(BankOfQuestionCreateDto addBankOfQuestionDto, string culture)
         {
             BankOfQuestionDbo bankOfQuestion = new() { OrganizationId = addBankOfQuestionDto.OrganizationId, IsDefault = false };
-            bankOfQuestion.BankOfQuestionsTranslations = bankOfQuestion.BankOfQuestionsTranslations.PrepareTranslation(
-                addBankOfQuestionDto.Name,
-                culture,
-                _cultureList
-            );
+            bankOfQuestion.BankOfQuestionsTranslations = bankOfQuestion.BankOfQuestionsTranslations.PrepareTranslation(addBankOfQuestionDto.Name, culture, _cultureList);
             return bankOfQuestion;
         }
 

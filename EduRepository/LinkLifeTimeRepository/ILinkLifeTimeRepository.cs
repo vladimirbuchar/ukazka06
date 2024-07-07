@@ -3,8 +3,5 @@ using Model.Edu.LinkLifeTime;
 
 namespace Repository.LinkLifeTimeRepository
 {
-    public interface ILinkLifeTimeRepository : IBaseRepository<LinkLifeTimeDbo>
-    {
-
-    }
+    public interface ILinkLifeTimeRepository : IBaseRepository<LinkLifeTimeDbo> { }
 }

@@ -1,6 +1,7 @@
-﻿using Core.Base.Dto;
+﻿using System;
+using System.Collections.Generic;
+using Core.Base.Dto;
 using Core.DataTypes;
-
 //using EduServices.Answer.Permission;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,8 +10,6 @@ using Model.Edu.Question;
 using Services.OrganizationRole.Service;
 using Services.Question.Dto;
 using Services.Question.Service;
-using System;
-using System.Collections.Generic;
 
 namespace EduApi.Controllers.ClientZone.Question
 {
@@ -18,11 +17,7 @@ namespace EduApi.Controllers.ClientZone.Question
     {
         private readonly IQuestionService _questionService;
 
-        public QuestionController(
-            IQuestionService questionService,
-            ILogger<QuestionController> logger,
-            IOrganizationRoleService organizationRoleService
-        )
+        public QuestionController(IQuestionService questionService, ILogger<QuestionController> logger, IOrganizationRoleService organizationRoleService)
             : base(logger, organizationRoleService)
         {
             _questionService = questionService;
@@ -153,14 +148,16 @@ namespace EduApi.Controllers.ClientZone.Question
             try
             {
                 CheckOrganizationPermition(_questionService.GetOrganizationIdByObjectId(request.Id));
-                return SendResponse(_questionService.FileUpload(
-                    request.Id,
-                    GetClientCulture(),
-                    GetLoggedUserId(),
-                    new List<IFormFile>() { file },
-                    new QuestionFileRepositoryDbo() { QuestionId = request.Id, },
-                    x => x.QuestionId == request.Id && x.Culture.SystemIdentificator == GetClientCulture()
-                ));
+                return SendResponse(
+                    _questionService.FileUpload(
+                        request.Id,
+                        GetClientCulture(),
+                        GetLoggedUserId(),
+                        new List<IFormFile>() { file },
+                        new QuestionFileRepositoryDbo() { QuestionId = request.Id, },
+                        x => x.QuestionId == request.Id && x.Culture.SystemIdentificator == GetClientCulture()
+                    )
+                );
             }
             catch (Exception e)
             {

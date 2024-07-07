@@ -1,9 +1,9 @@
-﻿using Core.Base.Repository.CodeBookRepository;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Service;
 using Model.CodeBook;
 using Services.Page.Dto;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.Page.Service
 {

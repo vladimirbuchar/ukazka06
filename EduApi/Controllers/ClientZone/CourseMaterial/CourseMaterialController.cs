@@ -1,4 +1,6 @@
-﻿using Core.Base.Dto;
+﻿using System;
+using System.Collections.Generic;
+using Core.Base.Dto;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -7,8 +9,6 @@ using Model.Edu.CourseMaterial;
 using Services.CourseMaterial.Dto;
 using Services.CourseMaterial.Service;
 using Services.OrganizationRole.Service;
-using System;
-using System.Collections.Generic;
 
 namespace EduApi.Controllers.ClientZone.CourseMaterial
 {
@@ -16,11 +16,7 @@ namespace EduApi.Controllers.ClientZone.CourseMaterial
     {
         private readonly ICourseMaterialService _courseMaterialService;
 
-        public CourseMaterialController(
-            ICourseMaterialService courseMaterialService,
-            ILogger<CourseMaterialController> logger,
-            IOrganizationRoleService organizationRoleService
-        )
+        public CourseMaterialController(ICourseMaterialService courseMaterialService, ILogger<CourseMaterialController> logger, IOrganizationRoleService organizationRoleService)
             : base(logger, organizationRoleService)
         {
             _courseMaterialService = courseMaterialService;
@@ -151,13 +147,15 @@ namespace EduApi.Controllers.ClientZone.CourseMaterial
             try
             {
                 CheckOrganizationPermition(_courseMaterialService.GetOrganizationIdByObjectId(request.Id));
-                return SendResponse(_courseMaterialService.FileUpload(
-                    request.Id,
-                    GetClientCulture(),
-                GetLoggedUserId(),
-                    new List<IFormFile>() { file },
-                    new CourseMaterialFileRepositoryDbo() { CourseMaterialId = request.Id, }
-                ));
+                return SendResponse(
+                    _courseMaterialService.FileUpload(
+                        request.Id,
+                        GetClientCulture(),
+                        GetLoggedUserId(),
+                        new List<IFormFile>() { file },
+                        new CourseMaterialFileRepositoryDbo() { CourseMaterialId = request.Id, }
+                    )
+                );
             }
             catch (Exception e)
             {

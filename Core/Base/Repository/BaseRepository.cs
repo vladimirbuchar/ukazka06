@@ -1,10 +1,10 @@
-﻿using Microsoft.Extensions.Caching.Memory;
-using Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
+using Microsoft.Extensions.Caching.Memory;
+using Model;
 
 namespace Core.Base.Repository
 {
@@ -80,8 +80,9 @@ namespace Core.Base.Repository
             _dbContext.ChangeTracker.Clear();
             return obj;
         }
+
         /// <summary>
-        /// delete entity 
+        /// delete entity
         /// </summary>
         /// <param name="guid"></param>
         /// <param name="userId"></param>
@@ -91,6 +92,7 @@ namespace Core.Base.Repository
             Model entity = GetEntityWithoutInclude(guid) ?? throw new KeyNotFoundException(guid.ToString());
             DeleteEntity(entity, userId);
         }
+
         /// <summary>
         /// restore entity
         /// </summary>
@@ -107,6 +109,7 @@ namespace Core.Base.Repository
             _ = _dbContext.SaveChanges();
             _dbContext.ChangeTracker.Clear();
         }
+
         /// <summary>
         /// get organzation by object id
         /// </summary>
@@ -116,6 +119,7 @@ namespace Core.Base.Repository
         {
             return Guid.Empty;
         }
+
         /// <summary>
         /// delete entity
         /// </summary>
@@ -134,6 +138,7 @@ namespace Core.Base.Repository
             _ = _dbContext.SaveChanges();
             _dbContext.ChangeTracker.Clear();
         }
+
         /// <summary>
         /// create entity
         /// </summary>
@@ -144,6 +149,7 @@ namespace Core.Base.Repository
         {
             return SaveEntity(entity, userId);
         }
+
         /// <summary>
         /// update entity
         /// </summary>
@@ -154,6 +160,7 @@ namespace Core.Base.Repository
         {
             return SaveEntity(entity, userId);
         }
+
         /// <summary>
         /// get entity
         /// </summary>
@@ -164,6 +171,7 @@ namespace Core.Base.Repository
             IQueryable<Model> query = _dbContext.Set<Model>();
             return query.FirstOrDefault(x => x.Id == id);
         }
+
         /// <summary>
         /// get entity without include
         /// </summary>
@@ -173,6 +181,7 @@ namespace Core.Base.Repository
         {
             return _dbContext.Set<Model>().FirstOrDefault(x => x.Id == id);
         }
+
         /// <summary>
         /// get entity with condition
         /// </summary>
@@ -184,13 +193,19 @@ namespace Core.Base.Repository
             IQueryable<Model> query = _dbContext.Set<Model>();
             return query.Where(x => x.IsDeleted == deleted).FirstOrDefault(predicate);
         }
+
         /// <summary>
         /// get entity list
         /// </summary>
         /// <param name="deleted"></param>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        public virtual HashSet<Model> GetEntities(bool deleted, Expression<Func<Model, bool>> predicate = null, Expression<Func<Model, object>> orderBy = null, Expression<Func<Model, object>> orderByDesc = null)
+        public virtual HashSet<Model> GetEntities(
+            bool deleted,
+            Expression<Func<Model, bool>> predicate = null,
+            Expression<Func<Model, object>> orderBy = null,
+            Expression<Func<Model, object>> orderByDesc = null
+        )
         {
             IQueryable<Model> query = _dbContext.Set<Model>();
             if (predicate != null)

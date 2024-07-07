@@ -1,7 +1,7 @@
-﻿using Core.Base.Service;
+﻿using System;
+using Core.Base.Service;
 using Model.Edu.Organization;
 using Services.Organization.Dto;
-using System;
 
 namespace Services.Organization.Service
 {

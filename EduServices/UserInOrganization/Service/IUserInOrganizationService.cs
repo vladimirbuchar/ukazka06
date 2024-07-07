@@ -1,9 +1,9 @@
-﻿using Core.Base.Service;
+﻿using System;
+using System.Collections.Generic;
+using Core.Base.Service;
 using Model.Link;
 using Services.OrganizationRole.Dto;
 using Services.UserInOrganization.Dto;
-using System;
-using System.Collections.Generic;
 
 namespace Services.UserInOrganization.Service
 {

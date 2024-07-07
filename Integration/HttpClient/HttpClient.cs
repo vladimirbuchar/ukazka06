@@ -1,9 +1,9 @@
-﻿using Core.Extension;
-using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Extension;
+using Newtonsoft.Json;
 
 namespace Integration.HttpClient
 {

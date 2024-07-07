@@ -1,11 +1,11 @@
-﻿using Core.Constants;
+﻿using System;
+using System.IO;
+using Core.Constants;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Model;
-using System;
-using System.IO;
 
 namespace Core.Base.Repository.FileRepository
 {
@@ -13,6 +13,7 @@ namespace Core.Base.Repository.FileRepository
         where Model : FileRepositoryModel
     {
         private readonly string _fileRepositoryPath;
+
         public FileUploadRepository(IWebHostEnvironment hostingEnvironment, EduDbContext dbContext, IMemoryCache memoryCache, IConfiguration configuration)
             : base(dbContext, memoryCache)
         {
@@ -21,6 +22,7 @@ namespace Core.Base.Repository.FileRepository
             string parent = Directory.GetParent(projectRootPath).FullName;
             _fileRepositoryPath = string.Format("{0}{1}", parent, configuration.GetSection(ConfigValue.FILE_REPOSITORY).Value);
         }
+
         /// <summary>
         /// create file repository
         /// </summary>
@@ -33,6 +35,7 @@ namespace Core.Base.Repository.FileRepository
                 _ = Directory.CreateDirectory(path);
             }
         }
+
         /// <summary>
         /// file upload
         /// </summary>

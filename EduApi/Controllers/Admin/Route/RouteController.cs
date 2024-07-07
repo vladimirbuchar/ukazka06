@@ -1,4 +1,6 @@
-﻿using Core.Base.Dto;
+﻿using System;
+using System.Collections.Generic;
+using Core.Base.Dto;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -6,8 +8,6 @@ using Microsoft.Extensions.Logging;
 using Services.OrganizationRole.Service;
 using Services.Route.Dto;
 using Services.Route.Service;
-using System;
-using System.Collections.Generic;
 
 namespace EduApi.Controllers.Admin.Route
 {
@@ -16,12 +16,7 @@ namespace EduApi.Controllers.Admin.Route
         private readonly IRouteService _routeService;
         private readonly IEnumerable<EndpointDataSource> _endpointSources;
 
-        public RouteController(
-            IRouteService routeService,
-            ILogger<RouteController> logger,
-            IOrganizationRoleService organizationRoleService,
-            IEnumerable<EndpointDataSource> endpointSources
-        )
+        public RouteController(IRouteService routeService, ILogger<RouteController> logger, IOrganizationRoleService organizationRoleService, IEnumerable<EndpointDataSource> endpointSources)
             : base(logger)
         {
             _routeService = routeService;
@@ -135,9 +130,5 @@ namespace EduApi.Controllers.Admin.Route
                 return SendSystemError(e);
             }
         }
-
-
-
-
     }
 }

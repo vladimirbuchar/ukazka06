@@ -1,6 +1,6 @@
-﻿using Core.Base.Dto;
-using System;
+﻿using System;
 using System.Text.Json.Serialization;
+using Core.Base.Dto;
 
 namespace Services.Branch.Dto
 {
@@ -22,7 +22,5 @@ namespace Services.Branch.Dto
         [JsonIgnore]
         public bool IsOnline { get; set; } = false;
         public Guid OrganizationId { get; set; }
-
     }
-
 }

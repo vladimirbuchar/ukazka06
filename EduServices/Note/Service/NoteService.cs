@@ -1,4 +1,7 @@
-﻿using Core.Base.Repository.CodeBookRepository;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Service;
 using Core.Constants;
 using Core.DataTypes;
@@ -9,9 +12,6 @@ using Services.Note.Convertor;
 using Services.Note.Dto;
 using Services.Note.Validator;
 using Services.SystemService.FileUpload;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.Note.Service
 {

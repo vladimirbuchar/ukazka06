@@ -1,4 +1,7 @@
-﻿using Core.Base.Repository.CodeBookRepository;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Repository.FileRepository;
 using Core.Base.Service;
 using Core.Constants;
@@ -10,9 +13,6 @@ using Repository.CourseLessonRepository;
 using Services.CourseLesson.Convertor;
 using Services.CourseLesson.Dto;
 using Services.CourseLesson.Validator;
-using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
 
 namespace Services.CourseLesson.Service
 {

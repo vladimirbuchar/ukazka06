@@ -1,8 +1,8 @@
-﻿using Core.Base.Service;
+﻿using System;
+using Core.Base.Service;
 using Core.DataTypes;
 using Model.Edu.Note;
 using Services.Note.Dto;
-using System;
 
 namespace Services.Note.Service
 {

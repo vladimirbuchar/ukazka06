@@ -1,4 +1,6 @@
-﻿using Core.Base.Repository.CodeBookRepository;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Validator;
 using Core.Constants;
 using Core.DataTypes;
@@ -8,8 +10,6 @@ using Model.Edu.Question;
 using Repository.AnswerRepository;
 using Repository.QuestionRepository;
 using Services.Answer.Dto;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.Answer.Validator
 {

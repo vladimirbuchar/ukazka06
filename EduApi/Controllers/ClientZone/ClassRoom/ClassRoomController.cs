@@ -1,12 +1,12 @@
-﻿using Core.Base.Dto;
+﻿using System;
+using System.Collections.Generic;
+using Core.Base.Dto;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.ClassRoom.Dto;
 using Services.ClassRoom.Service;
 using Services.OrganizationRole.Service;
-using System;
-using System.Collections.Generic;
 
 namespace EduApi.Controllers.ClientZone.ClassRoom
 {
@@ -15,11 +15,7 @@ namespace EduApi.Controllers.ClientZone.ClassRoom
     {
         private readonly IClassRoomService _classRoomService;
 
-        public ClassRoomController(
-            ILogger<ClassRoomController> logger,
-            IClassRoomService classRoomService,
-            IOrganizationRoleService organizationRoleService
-        )
+        public ClassRoomController(ILogger<ClassRoomController> logger, IClassRoomService classRoomService, IOrganizationRoleService organizationRoleService)
             : base(logger, organizationRoleService)
         {
             _classRoomService = classRoomService;
@@ -113,7 +109,6 @@ namespace EduApi.Controllers.ClientZone.ClassRoom
             {
                 CheckOrganizationPermition(_classRoomService.GetOrganizationIdByObjectId(request.Id));
                 return SendResponse(_classRoomService.DeleteObject(request.Id, GetLoggedUserId()));
-
             }
             catch (Exception e)
             {
@@ -151,9 +146,7 @@ namespace EduApi.Controllers.ClientZone.ClassRoom
             try
             {
                 CheckOrganizationPermition(list.ParentId);
-                return SendResponse(_classRoomService.GetList(
-                    x => x.Branch.OrganizationId == list.ParentId, false
-                    , GetClientCulture()));
+                return SendResponse(_classRoomService.GetList(x => x.Branch.OrganizationId == list.ParentId, false, GetClientCulture()));
             }
             catch (Exception e)
             {

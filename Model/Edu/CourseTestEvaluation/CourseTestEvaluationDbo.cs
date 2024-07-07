@@ -1,6 +1,6 @@
-﻿using Model.Edu.CourseTest;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using Model.Edu.CourseTest;
 
 namespace Model.Edu.CourseTestEvaluation
 {
@@ -9,8 +9,10 @@ namespace Model.Edu.CourseTestEvaluation
     {
         [Column("PointFrom")]
         public virtual int? PointFrom { get; set; }
+
         [Column("PointTo")]
         public virtual int? PointTo { get; set; }
+
         [Column("Evaluation")]
         public string Evaluation { get; set; }
         public virtual CourseTestDbo CourseTest { get; set; }

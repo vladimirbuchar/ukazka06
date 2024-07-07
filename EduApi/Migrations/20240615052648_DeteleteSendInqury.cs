@@ -10,20 +10,13 @@ namespace EduApi.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "CanSendCourseInquiry",
-                table: "Edu_Organization");
+            migrationBuilder.DropColumn(name: "CanSendCourseInquiry", table: "Edu_Organization");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<bool>(
-                name: "CanSendCourseInquiry",
-                table: "Edu_Organization",
-                type: "bit",
-                nullable: false,
-                defaultValue: false);
+            migrationBuilder.AddColumn<bool>(name: "CanSendCourseInquiry", table: "Edu_Organization", type: "bit", nullable: false, defaultValue: false);
         }
     }
 }

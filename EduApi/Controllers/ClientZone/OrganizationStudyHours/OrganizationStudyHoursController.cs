@@ -1,4 +1,6 @@
-﻿using Core.Base.Dto;
+﻿using System;
+using System.Collections.Generic;
+using Core.Base.Dto;
 using Core.DataTypes;
 using EduApi.Controllers.ClientZone.Organization;
 using Microsoft.AspNetCore.Mvc;
@@ -6,8 +8,6 @@ using Microsoft.Extensions.Logging;
 using Services.OrganizationRole.Service;
 using Services.OrganizationStudyHour.Dto;
 using Services.OrganizationStudyHour.Service;
-using System;
-using System.Collections.Generic;
 
 namespace EduApi.Controllers.ClientZone.OrganizationStudyHours
 {
@@ -16,11 +16,7 @@ namespace EduApi.Controllers.ClientZone.OrganizationStudyHours
     {
         private readonly IOrganizationStudyHourService _organizationService;
 
-        public OrganizationStudyHoursController(
-            ILogger<OrganizationController> logger,
-            IOrganizationStudyHourService organizationService,
-            IOrganizationRoleService organizationRoleService
-        )
+        public OrganizationStudyHoursController(ILogger<OrganizationController> logger, IOrganizationStudyHourService organizationService, IOrganizationRoleService organizationRoleService)
             : base(logger, organizationRoleService)
         {
             _organizationService = organizationService;

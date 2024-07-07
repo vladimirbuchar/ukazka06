@@ -1,7 +1,7 @@
-﻿using Core.Base.Service;
+﻿using System;
+using Core.Base.Service;
 using Core.DataTypes;
 using Services.OrganizationSetting.Dto;
-using System;
 
 namespace Services.OrganizationSetting.Service
 {

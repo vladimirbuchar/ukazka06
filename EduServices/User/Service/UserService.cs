@@ -1,4 +1,10 @@
-﻿using Core.Base.Service;
+﻿using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
+using Core.Base.Service;
 using Core.Constants;
 using Core.DataTypes;
 using Core.Extension;
@@ -20,12 +26,6 @@ using Services.SystemService.SendMailService;
 using Services.User.Convertor;
 using Services.User.Dto;
 using Services.User.Validator;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
 
 namespace Services.User.Service
 {
@@ -61,7 +61,6 @@ namespace Services.User.Service
                 _organizationValidator.ValidateUser = false;
                 Result<OrganizationDetailDto> resultOrganization = _organizationValidator.IsValid(org);
                 result.AddResultStatus(resultOrganization.Errors);
-
             }
             if (result.IsOk)
             {
@@ -82,14 +81,7 @@ namespace Services.User.Service
                     Guid id = _linkLifeTimeRepository.CreateEntity(new LinkLifeTimeDbo() { UserId = entity.Id, EndTime = DateTime.Now.AddMinutes(30) }, Guid.Empty).Id;
                     Dictionary<string, string> replaceData =
                         new() { { ConfigValue.ACTIVATION_LINK, string.Format("{0}/?id={1}", _configuration.GetSection(ConfigValue.CLIENT_URL_ACTIVATE).Value, id) } };
-                    _sendMailService.AddEmailToQueue(
-                        EduEmail.REGISTRATION_USER,
-                        culture,
-                        new EmailAddress() { Email = addObject.UserEmail, Name = addObject.Person.FullName },
-                        replaceData,
-                        null,
-                        ""
-                    );
+                    _sendMailService.AddEmailToQueue(EduEmail.REGISTRATION_USER, culture, new EmailAddress() { Email = addObject.UserEmail, Name = addObject.Person.FullName }, replaceData, null, "");
                 }
                 else
                 {
@@ -111,10 +103,7 @@ namespace Services.User.Service
             SymmetricSecurityKey signingKey = new(key);
             SigningCredentials signingCredentials = new(signingKey, SecurityAlgorithms.HmacSha256Signature);
 
-            JwtHeader header = new(signingCredentials)
-            {
-                ["kid"] = _configuration.GetValue<string>("JWTKid")
-            };
+            JwtHeader header = new(signingCredentials) { ["kid"] = _configuration.GetValue<string>("JWTKid") };
 
             Claim[] claims =
             [
@@ -122,29 +111,33 @@ namespace Services.User.Service
                 new Claim(ClaimTypes.Role, user.UserRole),
                 new Claim(ClaimTypes.Email, user.UserEmail),
                 new Claim(ClaimTypes.Name, user.FullName),
-                new Claim(Constants.USER_ORGANIZATION_ROLE,JsonConvert.SerializeObject(user.OrganizationRole))
+                new Claim(Constants.USER_ORGANIZATION_ROLE, JsonConvert.SerializeObject(user.OrganizationRole))
             ];
 
-            JwtPayload payload = new(
-                issuer: _configuration.GetValue<string>("JWTIssuer"),
-                audience: _configuration.GetValue<string>("JWTAudience"),
-                claims: claims,
-                notBefore: DateTime.UtcNow,
-                expires: DateTime.UtcNow.AddHours(1)
-            );
+            JwtPayload payload =
+                new(
+                    issuer: _configuration.GetValue<string>("JWTIssuer"),
+                    audience: _configuration.GetValue<string>("JWTAudience"),
+                    claims: claims,
+                    notBefore: DateTime.UtcNow,
+                    expires: DateTime.UtcNow.AddHours(1)
+                );
 
             JwtSecurityToken token = new(header, payload);
             return tokenHandler.WriteToken(token);
         }
 
-
         public string RefreshToken(Guid userId)
         {
             return GenerateJWTToken(_convertor.ConvertToWebModel(_repository.GetEntity(userId)));
         }
+
         public UserTokenDto LoginUser(LoginUserDto loginData)
         {
-            UserDbo loginUser = _repository.GetEntity(false, x => x.UserEmail == loginData.UserEmail && x.UserPassword == loginData.UserPassword.GetHashString() && x.IsActive == true && x.AllowCLassicLogin == true);
+            UserDbo loginUser = _repository.GetEntity(
+                false,
+                x => x.UserEmail == loginData.UserEmail && x.UserPassword == loginData.UserPassword.GetHashString() && x.IsActive == true && x.AllowCLassicLogin == true
+            );
             if (loginUser != null)
             {
                 if (loginData.OrganizationId != null && _userInOrganizationRepository.GetEntity(false, x => x.UserId == loginUser.Id && x.OrganizationId == loginData.OrganizationId) == null)
@@ -334,7 +327,10 @@ namespace Services.User.Service
 
         public UserTokenDto LoginUser(LoginUserAdminDto loginData)
         {
-            UserDbo loginUser = _repository.GetEntity(false, x => x.UserEmail == loginData.UserEmail && x.UserPassword == loginData.UserPassword.GetHashString() && x.IsActive == true && x.AllowCLassicLogin == true);
+            UserDbo loginUser = _repository.GetEntity(
+                false,
+                x => x.UserEmail == loginData.UserEmail && x.UserPassword == loginData.UserPassword.GetHashString() && x.IsActive == true && x.AllowCLassicLogin == true
+            );
             if (loginUser != null)
             {
                 UserTokenDto user = _convertor.ConvertToWebModel(loginUser);
@@ -347,6 +343,7 @@ namespace Services.User.Service
             }
             return null;
         }
+
         public override Result DeleteObject(Guid objectId, Guid userId)
         {
             if (_userInOrganizationRepository.GetEntity(false, x => x.UserId == objectId && x.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.ORGANIZATION_OWNER) == null)
@@ -357,9 +354,5 @@ namespace Services.User.Service
             result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.USER, MessageItem.CAN_NOT_DELETE));
             return result;
         }
-
-
-
-
     }
 }

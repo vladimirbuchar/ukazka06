@@ -1,11 +1,10 @@
-﻿using Core.DataTypes;
+﻿using System;
+using Core.DataTypes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.User.Dto;
 using Services.User.Service;
-using System;
-
 
 namespace EduApi.Controllers.Web.UserLogin
 {

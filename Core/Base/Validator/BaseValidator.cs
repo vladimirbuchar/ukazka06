@@ -1,9 +1,9 @@
-﻿using Core.Base.Dto;
+﻿using System;
+using Core.Base.Dto;
 using Core.Base.Repository;
 using Core.DataTypes;
 using Core.Extension;
 using Model;
-using System;
 
 namespace Core.Base.Validator
 {
@@ -64,6 +64,7 @@ namespace Core.Base.Validator
                 result.AddResultStatus(new ValidationMessage(MessageType.ERROR, category, item));
             }
         }
+
         /// <summary>
         /// check is valid email
         /// </summary>
@@ -82,6 +83,7 @@ namespace Core.Base.Validator
                 }
             }
         }
+
         /// <summary>
         /// check is valid URL
         /// </summary>
@@ -99,6 +101,7 @@ namespace Core.Base.Validator
                 }
             }
         }
+
         /// <summary>
         /// check is valid phone number
         /// </summary>
@@ -116,8 +119,9 @@ namespace Core.Base.Validator
                 }
             }
         }
+
         /// <summary>
-        /// check is valid string 
+        /// check is valid string
         /// </summary>
         /// <param name="text"></param>
         /// <param name="result"></param>
@@ -131,6 +135,7 @@ namespace Core.Base.Validator
                 IsValidString(text, result, category, item);
             }
         }
+
         /// <summary>
         /// check is positive number
         /// </summary>
@@ -145,6 +150,7 @@ namespace Core.Base.Validator
                 result.AddResultStatus(new ValidationMessage(MessageType.ERROR, category, item, number.ToString()));
             }
         }
+
         /// <summary>
         /// check is positive number
         /// </summary>
@@ -160,6 +166,7 @@ namespace Core.Base.Validator
                 result.AddResultStatus(new ValidationMessage(MessageType.ERROR, category, item, number.ToString()));
             }
         }
+
         /// <summary>
         /// check is item exist
         /// </summary>
@@ -179,6 +186,7 @@ namespace Core.Base.Validator
                 result.AddResultStatus(new ValidationMessage(MessageType.ERROR, category, item, value));
             }
         }
+
         /// <summary>
         /// check is code book value exist
         /// </summary>

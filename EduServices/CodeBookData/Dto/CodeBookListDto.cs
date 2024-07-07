@@ -2,7 +2,7 @@
 
 namespace Services.CodeBookData.Dto
 {
-    public class CodeBookItemListDto : ListDto
+    public class CodeBookListDto : ListDto
     {
         public string Name { get; set; }
         public bool IsDefault { get; set; }

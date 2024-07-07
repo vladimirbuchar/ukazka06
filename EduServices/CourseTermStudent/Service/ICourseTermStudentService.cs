@@ -1,8 +1,8 @@
-﻿using Core.Base.Service;
+﻿using System;
+using System.Collections.Generic;
+using Core.Base.Service;
 using Model.Link;
 using Services.CourseTermStudent.Dto;
-using System;
-using System.Collections.Generic;
 
 namespace Services.CourseTermStudent.Service
 {

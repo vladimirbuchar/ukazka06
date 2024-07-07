@@ -1,6 +1,6 @@
-﻿using Hangfire;
+﻿using System;
+using Hangfire;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace EduApi
 {

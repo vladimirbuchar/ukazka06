@@ -1,6 +1,6 @@
-﻿using Core.Base.Dto;
+﻿using System;
+using Core.Base.Dto;
 using Core.Extension;
-using System;
 
 namespace Services.CourseStudy.Dto
 {

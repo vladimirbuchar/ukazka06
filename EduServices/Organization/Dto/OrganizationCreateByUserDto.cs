@@ -1,7 +1,7 @@
-﻿using Core.Base.Dto;
-using Core.DataTypes;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Core.Base.Dto;
+using Core.DataTypes;
 
 namespace Services.Organization.Dto
 {
@@ -14,5 +14,4 @@ namespace Services.Organization.Dto
         public string Name { get; set; }
         public Guid DefaultCultureId { get; set; }
     }
-
 }

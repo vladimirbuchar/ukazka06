@@ -1,4 +1,5 @@
-﻿using Core.Base.Repository.CodeBookRepository;
+﻿using System;
+using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Repository.FileRepository;
 using Core.Base.Service;
 using Core.DataTypes;
@@ -8,7 +9,6 @@ using Repository.CourseLessonItemRepository;
 using Services.CourseLessonItem.Convertor;
 using Services.CourseLessonItem.Dto;
 using Services.CourseLessonItem.Validator;
-using System;
 
 namespace Services.CourseLessonItem.Service
 {

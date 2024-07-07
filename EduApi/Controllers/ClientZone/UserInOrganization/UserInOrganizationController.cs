@@ -1,4 +1,6 @@
-﻿using Core.Base.Dto;
+﻿using System;
+using System.Collections.Generic;
+using Core.Base.Dto;
 using Core.Constants;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
@@ -8,8 +10,6 @@ using Services.OrganizationRole.Dto;
 using Services.OrganizationRole.Service;
 using Services.UserInOrganization.Dto;
 using Services.UserInOrganization.Service;
-using System;
-using System.Collections.Generic;
 
 namespace EduApi.Controllers.ClientZone.UserInOrganization
 {
@@ -116,10 +116,12 @@ namespace EduApi.Controllers.ClientZone.UserInOrganization
             try
             {
                 CheckOrganizationPermition(organizationId);
-                return SendResponse(_userInOrganizationService.MultipleDelete(
-                    x => x.UserId == userId && x.OrganizationId == organizationId && x.SystemIdentificator != OrganizationRole.ORGANIZATION_OWNER,
-                    GetLoggedUserId()
-                ));
+                return SendResponse(
+                    _userInOrganizationService.MultipleDelete(
+                        x => x.UserId == userId && x.OrganizationId == organizationId && x.SystemIdentificator != OrganizationRole.ORGANIZATION_OWNER,
+                        GetLoggedUserId()
+                    )
+                );
             }
             catch (Exception e)
             {
@@ -137,8 +139,6 @@ namespace EduApi.Controllers.ClientZone.UserInOrganization
         {
             try
             {
-
-
                 if (type == "courseBrowse")
                 {
                     return SendResponse(_userInOrganizationService.CanCourseBrowse(objectId, GetLoggedUserId()));

@@ -1,7 +1,7 @@
-﻿using Core.Base.Dto;
-using Services.Organization.Dto;
-using System;
+﻿using System;
 using System.Text.Json.Serialization;
+using Core.Base.Dto;
+using Services.Organization.Dto;
 
 namespace Services.User.Dto
 {
@@ -11,6 +11,7 @@ namespace Services.User.Dto
         {
             Organization = new OrganizationCreateDto();
         }
+
         public string UserPassword { get; set; }
         public string UserPassword2 { get; set; }
         public string UserEmail { get; set; }
