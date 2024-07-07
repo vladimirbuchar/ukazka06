@@ -1,8 +1,8 @@
 ﻿using Core.Base.Service;
-using EduServices.CourseTerm.Dto;
 using Model.Edu.CourseTerm;
+using Services.CourseTerm.Dto;
 
-namespace EduServices.CourseTerm.Service
+namespace Services.CourseTerm.Service
 {
     public interface ICourseTermService : IBaseService<CourseTermDbo, CourseTermCreateDto, CourseTermListDto, CourseTermDetailDto, CourseTermUpdateDto> { }
 }

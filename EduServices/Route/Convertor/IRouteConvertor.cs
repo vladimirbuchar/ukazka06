@@ -1,8 +1,8 @@
 ﻿using Core.Base.Convertor;
-using EduServices.Route.Dto;
 using Model.System;
+using Services.Route.Dto;
 
-namespace EduServices.Route.Convertor
+namespace Services.Route.Convertor
 {
     public interface IRouteConvertor : IBaseConvertor<RouteDbo, RouteCreateDto, RouteListDto, RouteDetailDto, RouteUpdateDto> { }
 }

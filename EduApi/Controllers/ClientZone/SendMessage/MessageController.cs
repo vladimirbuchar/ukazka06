@@ -1,24 +1,24 @@
 ﻿using Core.Base.Dto;
 using Core.Constants;
 using Core.DataTypes;
-using EduServices.OrganizationRole.Service;
-using EduServices.SendMessage.Dto;
-using EduServices.SendMessage.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Services.Message.Dto;
+using Services.Message.Service;
+using Services.OrganizationRole.Service;
 using System;
 using System.Collections.Generic;
 
 namespace EduApi.Controllers.ClientZone.SendMessage
 {
     [ApiExplorerSettings(GroupName = "Organization")]
-    public class SendMessageController : BaseClientZoneController
+    public class MessageController : BaseClientZoneController
     {
-        private readonly ISendMessageService _sendMessageService;
+        private readonly IMessageService _sendMessageService;
 
-        public SendMessageController(
-            ISendMessageService sendMessageService,
-            ILogger<SendMessageController> logger,
+        public MessageController(
+            IMessageService sendMessageService,
+            ILogger<MessageController> logger,
             IOrganizationRoleService organizationRoleService
         )
             : base(logger, organizationRoleService)
@@ -32,7 +32,7 @@ namespace EduApi.Controllers.ClientZone.SendMessage
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Create(SendMessageCreateDto addSendMessageDto)
+        public ActionResult Create(MessageCreateDto addSendMessageDto)
         {
             try
             {
@@ -46,7 +46,7 @@ namespace EduApi.Controllers.ClientZone.SendMessage
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<SendMessageListDto>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<MessageListDto>), 200)]
         [ProducesResponseType(typeof(void), 404)]
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
@@ -65,7 +65,7 @@ namespace EduApi.Controllers.ClientZone.SendMessage
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(SendMessageDetailDto), 200)]
+        [ProducesResponseType(typeof(MessageDetailDto), 200)]
         [ProducesResponseType(typeof(void), 404)]
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
@@ -89,7 +89,7 @@ namespace EduApi.Controllers.ClientZone.SendMessage
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Update(SendMessageUpdateDto updateSendMessageDto)
+        public ActionResult Update(MessageUpdateDto updateSendMessageDto)
         {
             try
             {
@@ -141,7 +141,7 @@ namespace EduApi.Controllers.ClientZone.SendMessage
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<SendMessageListDto>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<MessageListDto>), 200)]
         [ProducesResponseType(typeof(void), 404)]
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]

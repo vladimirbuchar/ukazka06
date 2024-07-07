@@ -1,6 +1,6 @@
 ﻿using Core.Base.Dto;
 
-namespace EduServices.BankOfQuestion.Dto
+namespace Services.BankOfQuestion.Dto
 {
     public class BankOfQuestionUpdateDto : UpdateDto
     {

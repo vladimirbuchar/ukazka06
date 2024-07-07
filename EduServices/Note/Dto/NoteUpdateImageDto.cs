@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EduServices.Note.Dto
+namespace Services.Note.Dto
 {
     public class NoteUpdateImageDto : NoteUpdateDto
     {

@@ -1,10 +1,11 @@
 ﻿using Core.Base.Validator;
-using EduRepository.CourseTestEvaluationRepository;
-using EduServices.CourseTestEvaluation.Dto;
 using Model.Edu.CourseTestEvaluation;
+using Repository.CourseTestEvaluationRepository;
+using Services.CourseTestEvaluation.Dto;
 
-namespace EduServices.CourseTestEvaluation.Validator
+namespace Services.CourseTestEvaluation.Validator
 {
     public interface ICourseTestEvaluationValidator
-        : IBaseValidator<CourseTestEvaluationDbo, ICourseTestEvaluationRepository, CourseTestEvaluationCreateDto, CourseTestEvaluationDetailDto, CourseTestEvaluationUpdateDto> { }
+        : IBaseValidator<CourseTestEvaluationDbo, ICourseTestEvaluationRepository, CourseTestEvaluationCreateDto, CourseTestEvaluationDetailDto, CourseTestEvaluationUpdateDto>
+    { }
 }

@@ -1,7 +1,7 @@
 ﻿using Core.Base.Dto;
 using System;
 
-namespace EduServices.Certificate.Dto
+namespace Services.Certificate.Dto
 {
     public class CertificateCreateDto : CreateDto
     {

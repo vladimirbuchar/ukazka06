@@ -1,6 +1,6 @@
 ﻿using Core.Base.Service;
 
-namespace EduServices.SystemService.License.Service
+namespace Services.SystemService.License.Service
 {
     public class LicenseService(
     ) : BaseService(), ILicenseService

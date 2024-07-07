@@ -1,11 +1,11 @@
 ﻿using Core.Base.Dto;
 using Core.DataTypes;
 using EduApi.Controllers.ClientZone.Organization;
-using EduServices.OrganizationRole.Service;
-using EduServices.OrganizationStudyHour.Dto;
-using EduServices.OrganizationStudyHour.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Services.OrganizationRole.Service;
+using Services.OrganizationStudyHour.Dto;
+using Services.OrganizationStudyHour.Service;
 using System;
 using System.Collections.Generic;
 

@@ -1,8 +1,8 @@
 ﻿using Core.Base.Convertor;
-using EduServices.StudentInGroup.Dto;
 using Model.Link;
+using Services.StudentInGroup.Dto;
 
-namespace EduServices.StudentInGroup.Convertor
+namespace Services.StudentInGroup.Convertor
 {
     public interface IStudentInGroupConvertor : IBaseConvertor<StudentInGroupDbo, StudentInGroupCreateDto, StudentInGroupListDto, StudentInGroupDetailDto> { }
 }

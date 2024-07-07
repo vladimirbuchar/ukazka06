@@ -1,8 +1,8 @@
 ﻿using Core.Base.Convertor;
-using EduServices.Test.Dto;
 using Model.Edu.CourseTest;
+using Services.Test.Dto;
 
-namespace EduServices.Test.Convertor
+namespace Services.Test.Convertor
 {
     public interface ITestConvertor : IBaseConvertor
     {

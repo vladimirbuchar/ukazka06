@@ -1,8 +1,8 @@
 ﻿using Core.Base.Convertor;
-using EduServices.Chat.Dto;
 using Model.Edu.Chat;
+using Services.Chat.Dto;
 
-namespace EduServices.Chat.Convertor
+namespace Services.Chat.Convertor
 {
     public interface IChatConvertor : IBaseConvertor<ChatDbo, ChatItemCreateDto, ChatItemListDto, ChatItemDetailDto, ChatItemUpdateDto> { }
 }

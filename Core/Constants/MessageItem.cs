@@ -1,6 +1,6 @@
 ﻿namespace Core.Constants
 {
-    public struct GlobalValue
+    public struct MessageItem
     {
         public const string IS_NOT_VALID_URI = "IS_NOT_VALID_URI";
         public const string IS_NOT_VALID_PHONE_NUMBER = "IS_NOT_VALID_PHONE_NUMBER";

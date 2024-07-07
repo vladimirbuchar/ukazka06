@@ -1,6 +1,6 @@
 ﻿using Core.Base.Dto;
 
-namespace EduServices.ClassRoom.Dto
+namespace Services.ClassRoom.Dto
 {
     public class ClassRoomUpdateDto : UpdateDto
     {

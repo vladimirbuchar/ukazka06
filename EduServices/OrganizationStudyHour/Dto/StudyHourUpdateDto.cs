@@ -1,6 +1,6 @@
 ﻿using Core.Base.Dto;
 
-namespace EduServices.OrganizationStudyHour.Dto
+namespace Services.OrganizationStudyHour.Dto
 {
 
 

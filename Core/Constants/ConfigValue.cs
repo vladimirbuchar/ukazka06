@@ -12,7 +12,6 @@
         public const string FILE_REPOSITORY = "FileRepository";
         public const string NOTE = "note";
         public const string TEST = "test";
-        public const string CERTIFICATE = "certificate";
         public const string MAIL = "Mail";
         public const string SMTP_SERVER = "SmtpServer";
         public const string EMAIL_USER = "EmailUser";

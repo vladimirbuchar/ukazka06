@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.Json.Serialization;
 
-namespace EduServices.Organization.Dto
+namespace Services.Organization.Dto
 {
     public class OrganizationCreateDto : OrganizationCreateByUserDto
     {

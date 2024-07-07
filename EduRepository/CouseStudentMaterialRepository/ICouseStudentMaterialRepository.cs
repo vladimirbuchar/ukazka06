@@ -1,7 +1,7 @@
 ﻿using Core.Base.Repository;
 using Model.Link;
 
-namespace EduRepository.CouseStudentMaterialRepository
+namespace Repository.CouseStudentMaterialRepository
 {
     public interface ICouseStudentMaterialRepository : IBaseRepository<CouseStudentMaterialDbo> { }
 }

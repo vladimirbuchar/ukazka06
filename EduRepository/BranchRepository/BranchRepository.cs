@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace EduRepository.BranchRepository
+namespace Repository.BranchRepository
 {
     public class BranchRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<BranchDbo>(dbContext, memoryCache), IBranchRepository
     {

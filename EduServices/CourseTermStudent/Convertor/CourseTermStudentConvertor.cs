@@ -1,9 +1,9 @@
-﻿using EduServices.CourseTermStudent.Dto;
-using Model.Link;
+﻿using Model.Link;
+using Services.CourseTermStudent.Dto;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.CourseTermStudent.Convertor
+namespace Services.CourseTermStudent.Convertor
 {
     public class CourseTermStudentConvertor : ICourseTermStudentConvertor
     {

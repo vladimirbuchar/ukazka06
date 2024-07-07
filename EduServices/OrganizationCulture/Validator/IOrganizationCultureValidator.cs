@@ -1,10 +1,11 @@
 ﻿using Core.Base.Validator;
-using EduRepository.OrganizationCultureRepository;
-using EduServices.OrganizationCulture.Dto;
 using Model.Link;
+using Repository.OrganizationCultureRepository;
+using Services.OrganizationCulture.Dto;
 
-namespace EduServices.OrganizationCulture.Validator
+namespace Services.OrganizationCulture.Validator
 {
     public interface IOrganizationCultureValidator
-        : IBaseValidator<OrganizationCultureDbo, IOrganizationCultureRepository, OrganizationCultureCreateDto, OrganizationCultureDetailDto, OrganizationCultureUpdateDto> { }
+        : IBaseValidator<OrganizationCultureDbo, IOrganizationCultureRepository, OrganizationCultureCreateDto, OrganizationCultureDetailDto, OrganizationCultureUpdateDto>
+    { }
 }

@@ -1,6 +1,6 @@
 ﻿using Core.Base.Dto;
 
-namespace EduServices.Permissions.Dto
+namespace Services.Permissions.Dto
 {
     public class PermissionsDetailDto : DetailDto
     {

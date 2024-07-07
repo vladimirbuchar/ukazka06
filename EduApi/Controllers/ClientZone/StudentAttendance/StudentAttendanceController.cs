@@ -1,10 +1,10 @@
 ﻿using Core.Base.Dto;
 using Core.DataTypes;
-using EduServices.OrganizationRole.Service;
-using EduServices.StudentAttendance.Dto;
-using EduServices.StudentAttendance.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Services.OrganizationRole.Service;
+using Services.StudentAttendance.Dto;
+using Services.StudentAttendance.Service;
 using System;
 using System.Collections.Generic;
 

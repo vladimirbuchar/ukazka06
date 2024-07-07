@@ -1,9 +1,9 @@
 ﻿using Core.Base.Validator;
-using EduRepository.StudentEvaluationRepository;
-using EduServices.StudentEvaluation.Dto;
 using Model.Edu.StudentEvaluation;
+using Repository.StudentEvaluationRepository;
+using Services.StudentEvaluation.Dto;
 
-namespace EduServices.StudentEvaluation.Validator
+namespace Services.StudentEvaluation.Validator
 {
     public interface IStudentEvaluationValidator : IBaseValidator<StudentEvaluationDbo, IStudentEvaluationRepository, StudentEvaluationCreateDto, StudentEvaluationDetailDto> { }
 }

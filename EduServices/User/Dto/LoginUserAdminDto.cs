@@ -1,7 +1,7 @@
 ﻿using Core.Base.Dto;
 using System.ComponentModel.DataAnnotations;
 
-namespace EduServices.User.Dto
+namespace Services.User.Dto
 {
     public class LoginUserAdminDto : BaseDto
     {

@@ -1,18 +1,18 @@
 ﻿using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Repository.FileRepository;
 using Core.Base.Service;
-using EduRepository.CourseMaterialRepository;
-using EduRepository.CourseRepository;
-using EduServices.CourseMaterial.Convertor;
-using EduServices.CourseMaterial.Dto;
-using EduServices.CourseMaterial.Validator;
 using Model.CodeBook;
 using Model.Edu.CourseMaterial;
+using Repository.CourseMaterialRepository;
+using Repository.CourseRepository;
+using Services.CourseMaterial.Convertor;
+using Services.CourseMaterial.Dto;
+using Services.CourseMaterial.Validator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.CourseMaterial.Service
+namespace Services.CourseMaterial.Service
 {
     public class CourseMaterialService(
         ICourseRepository courseRepository,

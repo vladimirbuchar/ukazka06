@@ -1,7 +1,7 @@
 ﻿using Core.Base.Dto;
 using System;
 
-namespace EduServices.Permissions.Dto
+namespace Services.Permissions.Dto
 {
     public class PermissionsCreateDto : CreateDto
     {

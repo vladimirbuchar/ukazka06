@@ -1,10 +1,10 @@
 ﻿using Core.Base.Dto;
 using Core.DataTypes;
-using EduServices.OrganizationCulture.Dto;
-using EduServices.OrganizationCulture.Service;
-using EduServices.OrganizationRole.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Services.OrganizationCulture.Dto;
+using Services.OrganizationCulture.Service;
+using Services.OrganizationRole.Service;
 using System;
 
 namespace EduApi.Controllers.ClientZone.OrganizationCulture

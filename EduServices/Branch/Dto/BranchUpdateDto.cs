@@ -1,7 +1,7 @@
 ﻿using Core.Base.Dto;
 using System;
 
-namespace EduServices.Branch.Dto
+namespace Services.Branch.Dto
 {
     public class BranchChangeMainBranchDto : BaseDto
     {

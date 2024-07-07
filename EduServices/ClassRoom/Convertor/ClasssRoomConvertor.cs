@@ -1,11 +1,11 @@
 ﻿using Core.Base.Repository.CodeBookRepository;
-using EduServices.ClassRoom.Dto;
 using Model.CodeBook;
 using Model.Edu.ClassRoom;
+using Services.ClassRoom.Dto;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.ClassRoom.Convertor
+namespace Services.ClassRoom.Convertor
 {
     public class ClasssRoomConvertor(ICodeBookRepository<CultureDbo> codeBookService) : IClassRoomConvertor
     {

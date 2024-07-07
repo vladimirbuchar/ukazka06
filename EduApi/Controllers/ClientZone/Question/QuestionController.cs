@@ -2,13 +2,13 @@
 using Core.DataTypes;
 
 //using EduServices.Answer.Permission;
-using EduServices.OrganizationRole.Service;
-using EduServices.Question.Dto;
-using EduServices.Question.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Model.Edu.Question;
+using Services.OrganizationRole.Service;
+using Services.Question.Dto;
+using Services.Question.Service;
 using System;
 using System.Collections.Generic;
 

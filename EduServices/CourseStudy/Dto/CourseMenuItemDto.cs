@@ -3,7 +3,7 @@ using Core.Constants;
 using Core.Extension;
 using System.Collections.Generic;
 
-namespace EduServices.CourseStudy.Dto
+namespace Services.CourseStudy.Dto
 {
     public class CourseMenuItemDto : ListDto
     {

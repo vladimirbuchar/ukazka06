@@ -1,9 +1,9 @@
 ﻿using Core.Base.Validator;
-using EduRepository.StudentGroupRepository;
-using EduServices.StudentGroup.Dto;
 using Model.Edu.StudentGroup;
+using Repository.StudentGroupRepository;
+using Services.StudentGroup.Dto;
 
-namespace EduServices.StudentGroup.Validator
+namespace Services.StudentGroup.Validator
 {
     public interface IStudentGroupValidator : IBaseValidator<StudentGroupDbo, IStudentGroupRepository, StudentGroupCreateDto, StudentGroupDetailDto, StudentGroupUpdateDto> { }
 }

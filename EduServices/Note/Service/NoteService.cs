@@ -2,18 +2,18 @@
 using Core.Base.Service;
 using Core.Constants;
 using Core.DataTypes;
-using EduRepository.NoteRepository;
-using EduServices.Note.Convertor;
-using EduServices.Note.Dto;
-using EduServices.Note.Validator;
-using EduServices.SystemService.FileUpload;
 using Model.CodeBook;
 using Model.Edu.Note;
+using Repository.NoteRepository;
+using Services.Note.Convertor;
+using Services.Note.Dto;
+using Services.Note.Validator;
+using Services.SystemService.FileUpload;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.Note.Service
+namespace Services.Note.Service
 {
     public class NoteService(
         INoteRepository noteRepository,

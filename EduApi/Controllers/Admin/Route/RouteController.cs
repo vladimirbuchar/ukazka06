@@ -1,11 +1,11 @@
 ﻿using Core.Base.Dto;
 using Core.DataTypes;
-using EduServices.OrganizationRole.Service;
-using EduServices.Route.Dto;
-using EduServices.Route.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
+using Services.OrganizationRole.Service;
+using Services.Route.Dto;
+using Services.Route.Service;
 using System;
 using System.Collections.Generic;
 

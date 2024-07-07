@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using Core.DataTypes;
+﻿using Core.DataTypes;
 using Core.Extension;
+using System.Collections.Generic;
 
-namespace EduServices.User.Dto
+namespace Services.User.Dto
 {
     public class PersonDto
     {

@@ -1,11 +1,11 @@
 ﻿using Core.Base.Repository.CodeBookRepository;
-using EduServices.BankOfQuestion.Dto;
 using Model.CodeBook;
 using Model.Edu.BankOfQuestions;
+using Services.BankOfQuestion.Dto;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.BankOfQuestion.Convertor
+namespace Services.BankOfQuestion.Convertor
 {
     public class BankOfQuestionConvertor(ICodeBookRepository<CultureDbo> codeBookService) : IBankOfQuestionConvertor
     {

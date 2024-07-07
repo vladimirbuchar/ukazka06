@@ -1,10 +1,10 @@
 ﻿using Core.Base.Service;
 using Core.DataTypes;
-using EduServices.Notification.Dto;
+using Services.Notification.Dto;
 using System;
 using System.Collections.Generic;
 
-namespace EduServices.Notification.Service
+namespace Services.Notification.Service
 {
     public interface INotificationService : IBaseService
     {

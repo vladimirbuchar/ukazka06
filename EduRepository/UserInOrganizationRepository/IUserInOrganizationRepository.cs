@@ -1,7 +1,7 @@
 ﻿using Core.Base.Repository;
 using Model.Link;
 
-namespace EduRepository.UserInOrganizationRepository
+namespace Repository.UserInOrganizationRepository
 {
     public interface IUserInOrganizationRepository : IBaseRepository<UserInOrganizationDbo> { }
 }

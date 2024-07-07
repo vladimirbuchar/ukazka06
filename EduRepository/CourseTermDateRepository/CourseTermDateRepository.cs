@@ -3,7 +3,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Model;
 using Model.Edu.CourseTermDate;
 
-namespace EduRepository.CourseTermDateRepository
+namespace Repository.CourseTermDateRepository
 {
     public class CourseTermDateRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<CourseTermDateDbo>(dbContext, memoryCache), ICourseTermDateRepository
     {

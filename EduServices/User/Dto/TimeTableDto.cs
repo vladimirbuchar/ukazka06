@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
+using System.Collections.Generic;
 
-namespace EduServices.User.Dto
+namespace Services.User.Dto
 {
     public class TimeTableDto : ListDto
     {

@@ -1,7 +1,7 @@
 ﻿using Core.Base.Dto;
 using System;
 
-namespace EduServices.Question.Dto
+namespace Services.Question.Dto
 {
 
     public class QuestionUpdateDto : UpdateDto

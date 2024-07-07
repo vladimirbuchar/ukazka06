@@ -1,9 +1,9 @@
 ﻿using Core.Base.Dto;
 using System;
 
-namespace EduServices.SendMessage.Dto
+namespace Services.Message.Dto
 {
-    public class SendMessageCreateDto : CreateDto
+    public class MessageCreateDto : CreateDto
     {
         public Guid OrganizationId { get; set; }
         public string Name { get; set; }

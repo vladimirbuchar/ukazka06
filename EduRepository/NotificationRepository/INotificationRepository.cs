@@ -1,7 +1,7 @@
 ﻿using Core.Base.Repository;
 using Model.Edu.Notification;
 
-namespace EduRepository.NotificationRepository
+namespace Repository.NotificationRepository
 {
     public interface INotificationRepository : IBaseRepository<NotificationDbo> { }
 }

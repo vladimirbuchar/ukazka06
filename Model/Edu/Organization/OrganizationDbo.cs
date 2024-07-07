@@ -44,7 +44,7 @@ namespace Model.Edu.Organization
         public virtual ICollection<NotificationDbo> Notifications { get; set; }
         public virtual ICollection<CertificateDbo> Certificates { get; set; }
         public virtual ICollection<OrganizationStudyHourDbo> OrganizationStudyHours { get; set; }
-        public virtual ICollection<SendMessageDbo> SendMessages { get; set; }
+        public virtual ICollection<MessageDbo> SendMessages { get; set; }
         public virtual ICollection<StudentGroupDbo> StudentGroups { get; set; }
         public virtual ICollection<CourseMaterialDbo> CourseMaterials { get; set; }
         public virtual ICollection<UserInOrganizationDbo> UserInOrganizations { get; set; }

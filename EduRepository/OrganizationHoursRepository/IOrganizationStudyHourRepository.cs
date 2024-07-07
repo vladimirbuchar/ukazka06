@@ -1,7 +1,7 @@
 ﻿using Core.Base.Repository;
 using Model.Edu.OrganizationStudyHour;
 
-namespace EduRepository.OrganizationHoursRepository
+namespace Repository.OrganizationHoursRepository
 {
     public interface IOrganizationStudyHourRepository : IBaseRepository<OrganizationStudyHourDbo> { }
 }

@@ -2,24 +2,24 @@
 using Core.Constants;
 using Core.DataTypes;
 using Core.Extension;
-using EduRepository.OrganizationRoleRepository;
-using EduRepository.PermissionsRepository;
-using EduRepository.RoleRepository;
-using EduRepository.RouteRepository;
-using EduRepository.UserRepository;
-using EduServices.Setup.Dto;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Model.Edu.Person;
 using Model.Edu.User;
 using Model.System;
 using Newtonsoft.Json;
+using Repository.OrganizationRoleRepository;
+using Repository.PermissionsRepository;
+using Repository.RoleRepository;
+using Repository.RouteRepository;
+using Repository.UserRepository;
+using Services.Setup.Dto;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace EduServices.Setup.Service
+namespace Services.Setup.Service
 {
     public class SetupService(
         IUserRepository userRepository,

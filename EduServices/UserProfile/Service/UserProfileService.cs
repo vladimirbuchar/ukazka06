@@ -1,27 +1,27 @@
 ﻿using Core.Base.Service;
-using EduRepository.AttendanceStudentRepository;
-using EduRepository.CourseLectorRepository;
-using EduRepository.CourseRepository;
-using EduRepository.CourseStudentRepository;
-using EduRepository.OrganizationHoursRepository;
-using EduRepository.StudentEvaluationRepository;
-using EduRepository.UserCertificateRepository;
-using EduRepository.UserInOrganizationRepository;
-using EduServices.Organization.Dto;
-using EduServices.OrganizationStudyHour.Dto;
-using EduServices.StudentEvaluation.Dto;
-using EduServices.User.Dto;
-using EduServices.UserProfile.Convertor;
-using EduServices.UserProfile.Dto;
 using Model.Edu.AttendanceStudent;
 using Model.Edu.Course;
 using Model.Edu.OrganizationStudyHour;
 using Model.Link;
+using Repository.AttendanceStudentRepository;
+using Repository.CourseLectorRepository;
+using Repository.CourseRepository;
+using Repository.CourseStudentRepository;
+using Repository.OrganizationHoursRepository;
+using Repository.StudentEvaluationRepository;
+using Repository.UserCertificateRepository;
+using Repository.UserInOrganizationRepository;
+using Services.Organization.Dto;
+using Services.OrganizationStudyHour.Dto;
+using Services.StudentEvaluation.Dto;
+using Services.User.Dto;
+using Services.UserProfile.Convertor;
+using Services.UserProfile.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.UserProfile.Service
+namespace Services.UserProfile.Service
 {
     public class UserProfileService(
         IUserProfileConvertor convertor,

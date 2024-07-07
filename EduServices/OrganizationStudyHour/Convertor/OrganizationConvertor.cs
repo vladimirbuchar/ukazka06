@@ -1,11 +1,11 @@
 ﻿using Core.Extension;
-using EduServices.OrganizationStudyHour.Dto;
 using Model.Edu.OrganizationStudyHour;
+using Services.OrganizationStudyHour.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.OrganizationStudyHour.Convertor
+namespace Services.OrganizationStudyHour.Convertor
 {
     public class OrganizationStudyHourConvertor : IOrganizationStudyHourConvertor
     {

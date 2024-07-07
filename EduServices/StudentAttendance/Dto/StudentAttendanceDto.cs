@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EduServices.StudentAttendance.Dto
+namespace Services.StudentAttendance.Dto
 {
     public class StudentAttendanceDto
     {

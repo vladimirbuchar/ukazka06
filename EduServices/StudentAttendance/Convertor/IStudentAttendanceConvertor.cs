@@ -1,8 +1,8 @@
 ﻿using Core.Base.Convertor;
-using EduServices.StudentAttendance.Dto;
 using Model.Edu.AttendanceStudent;
+using Services.StudentAttendance.Dto;
 
-namespace EduServices.StudentAttendance.Convertor
+namespace Services.StudentAttendance.Convertor
 {
     public interface IStudentAttendanceConvertor : IBaseConvertor<AttendanceStudentDbo, StudentAttendanceCreateDto, StudentAttendanceListDto, StudentAttendanceDetailDto> { }
 }

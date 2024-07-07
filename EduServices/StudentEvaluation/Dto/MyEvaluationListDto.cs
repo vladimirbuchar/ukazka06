@@ -1,7 +1,7 @@
-﻿using System;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
+using System;
 
-namespace EduServices.StudentEvaluation.Dto
+namespace Services.StudentEvaluation.Dto
 {
     public class MyEvaluationListDto : ListDto
     {

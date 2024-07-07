@@ -1,10 +1,10 @@
 ﻿using Core.Base.Dto;
 using Core.DataTypes;
-using EduServices.OrganizationRole.Service;
-using EduServices.User.Dto;
-using EduServices.User.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Services.OrganizationRole.Service;
+using Services.User.Dto;
+using Services.User.Service;
 using System;
 
 namespace EduApi.Controllers.ClientZone.User

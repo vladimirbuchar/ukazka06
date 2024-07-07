@@ -1,9 +1,9 @@
 ﻿using Core.Base.Service;
 using Core.DataTypes;
-using EduServices.OrganizationSetting.Dto;
+using Services.OrganizationSetting.Dto;
 using System;
 
-namespace EduServices.OrganizationSetting.Service
+namespace Services.OrganizationSetting.Service
 {
     public interface IOrganizationSettingService : IBaseService
     {

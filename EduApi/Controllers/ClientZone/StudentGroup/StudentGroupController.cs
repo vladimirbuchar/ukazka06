@@ -1,11 +1,11 @@
 ﻿using Core.Base.Dto;
 using Core.DataTypes;
 using EduApi.Controllers.ClientZone.StudentInGroup;
-using EduServices.OrganizationRole.Service;
-using EduServices.StudentGroup.Dto;
-using EduServices.StudentGroup.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Services.OrganizationRole.Service;
+using Services.StudentGroup.Dto;
+using Services.StudentGroup.Service;
 using System;
 using System.Collections.Generic;
 

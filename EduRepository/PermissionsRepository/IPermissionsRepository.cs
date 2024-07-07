@@ -1,7 +1,7 @@
 ﻿using Core.Base.Repository;
 using Model.System;
 
-namespace EduRepository.PermissionsRepository
+namespace Repository.PermissionsRepository
 {
     public interface IPermissionsRepository : IBaseRepository<PermissionsDbo> { }
 }

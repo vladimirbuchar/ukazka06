@@ -1,10 +1,10 @@
 ﻿using Core.Base.Dto;
 using Core.DataTypes;
-using EduServices.OrganizationRole.Service;
-using EduServices.Test.Dto;
-using EduServices.Test.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Services.OrganizationRole.Service;
+using Services.Test.Dto;
+using Services.Test.Service;
 using System;
 
 namespace EduApi.Controllers.ClientZone.CourseTest
@@ -53,7 +53,7 @@ namespace EduApi.Controllers.ClientZone.CourseTest
             try
             {
                 CheckOrganizationPermition(_testService.GetOrganizationIdByObjectId(request.Id));
-                return SendResponse(_testService.GetCourseTestDetail(request.Id));
+                return SendResponse(_testService.GetCourseTestDetail(request.Id, GetClientCulture()));
             }
             catch (Exception e)
             {

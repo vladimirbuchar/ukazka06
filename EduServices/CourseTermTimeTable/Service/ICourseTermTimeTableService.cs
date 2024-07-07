@@ -1,10 +1,10 @@
 ﻿using Core.Base.Service;
 using Core.DataTypes;
-using EduServices.CourseTermTimeTable.Dto;
+using Services.CourseTermTimeTable.Dto;
 using System;
 using System.Collections.Generic;
 
-namespace EduServices.CourseTermTimeTable.Service
+namespace Services.CourseTermTimeTable.Service
 {
     public interface ICourseTermTimeTableService : IBaseService
     {

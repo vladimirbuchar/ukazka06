@@ -1,9 +1,9 @@
 ﻿using Core.Base.Service;
-using EduServices.ClassRoom.Dto;
 using Model.Edu.ClassRoom;
+using Services.ClassRoom.Dto;
 using System;
 
-namespace EduServices.ClassRoom.Service
+namespace Services.ClassRoom.Service
 {
     public interface IClassRoomService : IBaseService<ClassRoomDbo, ClassRoomCreateDto, ClassRoomListDto, ClassRoomDetailDto, ClassRoomUpdateDto>
     {

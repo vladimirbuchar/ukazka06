@@ -2,15 +2,15 @@
 using Core.Base.Repository.FileRepository;
 using Core.Base.Service;
 using Core.DataTypes;
-using EduRepository.CourseLessonItemRepository;
-using EduServices.CourseLessonItem.Convertor;
-using EduServices.CourseLessonItem.Dto;
-using EduServices.CourseLessonItem.Validator;
 using Model.CodeBook;
 using Model.Edu.CourseLessonItem;
+using Repository.CourseLessonItemRepository;
+using Services.CourseLessonItem.Convertor;
+using Services.CourseLessonItem.Dto;
+using Services.CourseLessonItem.Validator;
 using System;
 
-namespace EduServices.CourseLessonItem.Service
+namespace Services.CourseLessonItem.Service
 {
     public class CourseLessonItemService(
         ICourseLessonItemRepository courseLessonItemRepository,

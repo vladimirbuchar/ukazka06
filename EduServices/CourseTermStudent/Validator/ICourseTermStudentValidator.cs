@@ -1,9 +1,9 @@
 ﻿using Core.Base.Validator;
-using EduRepository.CourseStudentRepository;
-using EduServices.CourseTermStudent.Dto;
 using Model.Link;
+using Repository.CourseStudentRepository;
+using Services.CourseTermStudent.Dto;
 
-namespace EduServices.CourseTermStudent.Validator
+namespace Services.CourseTermStudent.Validator
 {
     public interface ICourseTermStudentValidator : IBaseValidator<CourseStudentDbo, ICourseStudentRepository, CourseTermStudentCreateDto, CourseTermStudentDetailDto> { }
 }

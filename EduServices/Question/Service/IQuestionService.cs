@@ -1,8 +1,8 @@
 ﻿using Core.Base.Service;
-using EduServices.Question.Dto;
 using Model.Edu.Question;
+using Services.Question.Dto;
 
-namespace EduServices.Question.Service
+namespace Services.Question.Service
 {
     public interface IQuestionService : IBaseService<QuestionDbo, QuestionCreateDto, QuestionListDto, QuestionDetailDto, QuestionUpdateDto, QuestionFileRepositoryDbo> { }
 }

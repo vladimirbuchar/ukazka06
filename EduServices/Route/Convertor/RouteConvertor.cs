@@ -1,9 +1,9 @@
-﻿using EduServices.Route.Dto;
-using Model.System;
+﻿using Model.System;
+using Services.Route.Dto;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.Route.Convertor
+namespace Services.Route.Convertor
 {
     public class RouteConvertor() : IRouteConvertor
     {

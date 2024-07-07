@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Model.CodeBook;
+using System.Collections.Generic;
 using System.Linq;
-using Model.CodeBook;
 
 namespace Model.Edu.BankOfQuestions
 {

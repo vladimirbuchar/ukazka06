@@ -1,13 +1,13 @@
 ﻿using Core.DataTypes;
 using Core.Extension;
-using EduServices.User.Dto;
 using Model.Edu.Person;
 using Model.Edu.PersonAddress;
 using Model.Edu.User;
+using Services.User.Dto;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.User.Convertor
+namespace Services.User.Convertor
 {
     public class UserConvertor : IUserConvertor
     {

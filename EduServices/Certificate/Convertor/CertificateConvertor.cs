@@ -1,11 +1,11 @@
 ﻿using Core.Base.Repository.CodeBookRepository;
-using EduServices.Certificate.Dto;
 using Model.CodeBook;
 using Model.Edu.Certificate;
+using Services.Certificate.Dto;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.Certificate.Convertor
+namespace Services.Certificate.Convertor
 {
     public class CertificateConvertor(ICodeBookRepository<CultureDbo> codeBookService) : ICertificateConvertor
     {

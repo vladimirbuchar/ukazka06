@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace EduRepository.CertificateRepository
+namespace Repository.CertificateRepository
 {
     public class CertificateRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<CertificateDbo>(dbContext, memoryCache), ICertificateRepository
     {

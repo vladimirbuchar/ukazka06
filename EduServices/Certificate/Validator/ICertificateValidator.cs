@@ -1,9 +1,9 @@
 ﻿using Core.Base.Validator;
-using EduRepository.CertificateRepository;
-using EduServices.Certificate.Dto;
 using Model.Edu.Certificate;
+using Repository.CertificateRepository;
+using Services.Certificate.Dto;
 
-namespace EduServices.Certificate.Validator
+namespace Services.Certificate.Validator
 {
     public interface ICertificateValidator : IBaseValidator<CertificateDbo, ICertificateRepository, CertificateCreateDto, CertificateDetailDto, CertificateUpdateDto> { }
 }

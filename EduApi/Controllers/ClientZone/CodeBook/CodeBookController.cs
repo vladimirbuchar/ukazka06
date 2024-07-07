@@ -1,9 +1,9 @@
 ﻿using Core.DataTypes;
-using EduServices.CodeBookData.Dto;
-using EduServices.CodeBookData.Service;
-using EduServices.OrganizationRole.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Services.CodeBookData.Dto;
+using Services.CodeBookData.Service;
+using Services.OrganizationRole.Service;
 using System;
 using System.Collections.Generic;
 
@@ -34,7 +34,7 @@ namespace EduApi.Controllers.ClientZone.CodeBook
         {
             try
             {
-                return SendResponse(_codeBookService.GetCodeBookItems(codeBookName));
+                return SendResponse(_codeBookService.GetCodeBookItems(codeBookName, IsLogged()));
             }
             catch (Exception ex)
             {

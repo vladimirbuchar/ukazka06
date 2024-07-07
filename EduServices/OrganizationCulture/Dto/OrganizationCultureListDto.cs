@@ -1,7 +1,7 @@
-﻿using System;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
+using System;
 
-namespace EduServices.OrganizationCulture.Dto
+namespace Services.OrganizationCulture.Dto
 {
     public class OrganizationCultureListDto : ListDto
     {

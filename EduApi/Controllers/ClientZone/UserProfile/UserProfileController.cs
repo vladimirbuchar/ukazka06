@@ -1,13 +1,13 @@
 ﻿using Core.DataTypes;
 using EduApi.Controllers.ClientZone.Certificate;
-using EduServices.Organization.Dto;
-using EduServices.OrganizationRole.Service;
-using EduServices.StudentEvaluation.Dto;
-using EduServices.User.Dto;
-using EduServices.UserProfile.Dto;
-using EduServices.UserProfile.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Services.Organization.Dto;
+using Services.OrganizationRole.Service;
+using Services.StudentEvaluation.Dto;
+using Services.User.Dto;
+using Services.UserProfile.Dto;
+using Services.UserProfile.Service;
 using System;
 using System.Collections.Generic;
 

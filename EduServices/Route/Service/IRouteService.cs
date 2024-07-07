@@ -1,8 +1,8 @@
 ﻿using Core.Base.Service;
-using EduServices.Route.Dto;
 using Model.System;
+using Services.Route.Dto;
 
-namespace EduServices.Route.Service
+namespace Services.Route.Service
 {
     public interface IRouteService : IBaseService<RouteDbo, RouteCreateDto, RouteListDto, RouteDetailDto, RouteUpdateDto>
     {

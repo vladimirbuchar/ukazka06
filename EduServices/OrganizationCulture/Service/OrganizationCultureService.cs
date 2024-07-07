@@ -1,14 +1,14 @@
 ﻿using Core.Base.Service;
 using Core.Constants;
 using Core.DataTypes;
-using EduRepository.OrganizationCultureRepository;
-using EduServices.OrganizationCulture.Convertor;
-using EduServices.OrganizationCulture.Dto;
-using EduServices.OrganizationCulture.Validator;
 using Model.Link;
+using Repository.OrganizationCultureRepository;
+using Services.OrganizationCulture.Convertor;
+using Services.OrganizationCulture.Dto;
+using Services.OrganizationCulture.Validator;
 using System;
 
-namespace EduServices.OrganizationCulture.Service
+namespace Services.OrganizationCulture.Service
 {
     public class OrganizationCultureService(IOrganizationCultureRepository organizationRepository, IOrganizationCultureConvertor organizationSettingConvertor, IOrganizationCultureValidator validator)
         : BaseService<
@@ -29,7 +29,7 @@ namespace EduServices.OrganizationCulture.Service
             if (organizationCulture.IsDefault == true)
             {
                 Result result = new();
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.ORGANIZATION_CULTURE, Constants.CAN_NOT_DELETE_DEFAULT_CULTURE));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.ORGANIZATION_CULTURE, Constants.CAN_NOT_DELETE_DEFAULT_CULTURE));
                 return result;
             }
             _repository.DeleteEntity(organizationCulture, userId);

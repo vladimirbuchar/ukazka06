@@ -1,13 +1,13 @@
 ﻿using Core.Base.Validator;
 using Core.Constants;
 using Core.DataTypes;
-using EduRepository.CourseMaterialRepository;
-using EduRepository.CourseTestEvaluationRepository;
-using EduRepository.TestRepository;
-using EduServices.CourseTestEvaluation.Dto;
 using Model.Edu.CourseTestEvaluation;
+using Repository.CourseMaterialRepository;
+using Repository.CourseTestEvaluationRepository;
+using Repository.TestRepository;
+using Services.CourseTestEvaluation.Dto;
 
-namespace EduServices.CourseTestEvaluation.Validator
+namespace Services.CourseTestEvaluation.Validator
 {
     public class CourseTestEvaluationValidator(ICourseTestEvaluationRepository repository, ITestRepository testRepository, ICourseMaterialRepository courseMaterialRepository)
         : BaseValidator<CourseTestEvaluationDbo, ICourseTestEvaluationRepository, CourseTestEvaluationCreateDto, CourseTestEvaluationDetailDto, CourseTestEvaluationUpdateDto>(repository),
@@ -21,11 +21,11 @@ namespace EduServices.CourseTestEvaluation.Validator
             Result<CourseTestEvaluationDetailDto> result = new();
             if (_testRepository.GetEntity(create.TestId) == null)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.COURSE_TEST, GlobalValue.NOT_EXISTS));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.COURSE_TEST, MessageItem.NOT_EXISTS));
             }
             if (_courseMaterialRepository.GetEntity(create.MaterialId) == null)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.COURSE_MATERIAL, GlobalValue.NOT_EXISTS));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.COURSE_MATERIAL, MessageItem.NOT_EXISTS));
             }
             return result;
         }

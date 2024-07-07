@@ -1,15 +1,15 @@
 ﻿using Core.Base.Service;
 using Core.Constants;
 using Core.DataTypes;
-using EduRepository.BranchRepository;
-using EduServices.Branch.Convertor;
-using EduServices.Branch.Dto;
-using EduServices.Branch.Validator;
 using Model.Edu.Branch;
+using Repository.BranchRepository;
+using Services.Branch.Convertor;
+using Services.Branch.Dto;
+using Services.Branch.Validator;
 using System;
 using System.Collections.Generic;
 
-namespace EduServices.Branch.Service
+namespace Services.Branch.Service
 {
     public class BranchService(IBranchRepository repository, IBranchConvertor convertor, IBranchValidator validator)
         : BaseService<IBranchRepository, BranchDbo, IBranchConvertor, IBranchValidator, BranchCreateDto, BranchListDto, BranchDetailDto, BranchUpdateDto>(repository, convertor, validator),
@@ -55,7 +55,7 @@ namespace EduServices.Branch.Service
             BranchDbo oldEntity = _repository.GetEntity(update.Id) ?? throw new KeyNotFoundException(update.Id.ToString());
             if (oldEntity.IsOnline)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.BRANCH, GlobalValue.CAN_NOT_EDIT));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.BRANCH, MessageItem.CAN_NOT_EDIT));
                 return result;
             }
             result = _validator.IsValid(update);
@@ -82,7 +82,7 @@ namespace EduServices.Branch.Service
             if (branchDbo != null && (branchDbo.IsMainBranch || branchDbo.IsOnline))
             {
                 Result result = new();
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.BRANCH, GlobalValue.CAN_NOT_DELETE));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.BRANCH, MessageItem.CAN_NOT_DELETE));
                 return result;
             }
             return base.DeleteObject(objectId, userId);

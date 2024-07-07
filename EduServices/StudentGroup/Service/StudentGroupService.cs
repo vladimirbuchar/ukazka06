@@ -1,11 +1,11 @@
 ﻿using Core.Base.Service;
-using EduRepository.StudentGroupRepository;
-using EduServices.StudentGroup.Convertor;
-using EduServices.StudentGroup.Dto;
-using EduServices.StudentGroup.Validator;
 using Model.Edu.StudentGroup;
+using Repository.StudentGroupRepository;
+using Services.StudentGroup.Convertor;
+using Services.StudentGroup.Dto;
+using Services.StudentGroup.Validator;
 
-namespace EduServices.StudentGroup.Service
+namespace Services.StudentGroup.Service
 {
     public class StudentGroupService(IStudentGroupValidator validator, IStudentGroupRepository studentGroupRepository, IStudentGroupConvertor studentGroupConvertor)
         : BaseService<
@@ -18,5 +18,6 @@ namespace EduServices.StudentGroup.Service
             StudentGroupDetailDto,
             StudentGroupUpdateDto
         >(studentGroupRepository, studentGroupConvertor, validator),
-            IStudentGroupService { }
+            IStudentGroupService
+    { }
 }

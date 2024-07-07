@@ -1,11 +1,11 @@
 ﻿using Core.Base.Service;
 using Core.DataTypes;
-using EduServices.CourseStudy.Dto;
-using EduServices.OrganizationRole.Dto;
+using Services.CourseStudy.Dto;
+using Services.OrganizationRole.Dto;
 using System;
 using System.Collections.Generic;
 
-namespace EduServices.CourseStudy.Service
+namespace Services.CourseStudy.Service
 {
     public interface ICourseStudyService : IBaseService
     {

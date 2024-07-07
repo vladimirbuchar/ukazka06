@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace EduServices.CourseStudy.Dto
+namespace Services.CourseStudy.Dto
 {
     public class CourseLessonStudyDto
     {

@@ -2,7 +2,7 @@
 using System;
 using System.Text.Json.Serialization;
 
-namespace EduServices.User.Dto
+namespace Services.User.Dto
 {
     public class SetPasswordDto : BaseDto
     {

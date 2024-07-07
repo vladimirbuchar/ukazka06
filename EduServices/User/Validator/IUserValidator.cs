@@ -1,10 +1,10 @@
 ﻿using Core.Base.Validator;
 using Core.DataTypes;
-using EduRepository.UserRepository;
-using EduServices.User.Dto;
 using Model.Edu.User;
+using Repository.UserRepository;
+using Services.User.Dto;
 
-namespace EduServices.User.Validator
+namespace Services.User.Validator
 {
     public interface IUserValidator : IBaseValidator<UserDbo, IUserRepository, UserCreateDto, UserDetailDto, UserUpdateDto>
     {

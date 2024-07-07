@@ -1,9 +1,9 @@
 ﻿using Core.Base.Service;
 using Core.DataTypes;
-using EduServices.Test.Dto;
+using Services.Test.Dto;
 using System;
 
-namespace EduServices.Test.Service
+namespace Services.Test.Service
 {
     public interface ITestService : IBaseService
     {

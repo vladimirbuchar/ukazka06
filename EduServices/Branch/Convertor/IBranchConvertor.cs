@@ -1,8 +1,8 @@
 ﻿using Core.Base.Convertor;
-using EduServices.Branch.Dto;
 using Model.Edu.Branch;
+using Services.Branch.Dto;
 
-namespace EduServices.Branch.Convertor
+namespace Services.Branch.Convertor
 {
     public interface IBranchConvertor : IBaseConvertor<BranchDbo, BranchCreateDto, BranchListDto, BranchDetailDto, BranchUpdateDto> { }
 }

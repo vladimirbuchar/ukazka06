@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using Core.Base.Service;
-using EduServices.Page.Dto;
+﻿using Core.Base.Service;
+using Services.Page.Dto;
+using System.Collections.Generic;
 
-namespace EduServices.Page.Service
+namespace Services.Page.Service
 {
     public interface IPageService : IBaseService
     {

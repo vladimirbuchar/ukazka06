@@ -1,7 +1,7 @@
 ﻿using Core.Base.Repository;
 using Model.Edu.StudentEvaluation;
 
-namespace EduRepository.StudentEvaluationRepository
+namespace Repository.StudentEvaluationRepository
 {
     public interface IStudentEvaluationRepository : IBaseRepository<StudentEvaluationDbo> { }
 }

@@ -1,14 +1,14 @@
 ﻿using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Repository.FileRepository;
 using Core.Base.Service;
-using EduRepository.AnswerRepository;
-using EduServices.Answer.Convertor;
-using EduServices.Answer.Dto;
-using EduServices.Answer.Validator;
 using Model.CodeBook;
 using Model.Edu.Answer;
+using Repository.AnswerRepository;
+using Services.Answer.Convertor;
+using Services.Answer.Dto;
+using Services.Answer.Validator;
 
-namespace EduServices.Answer.Service
+namespace Services.Answer.Service
 {
     public class AnswerService(
         IAnswerRepository answerRepository,

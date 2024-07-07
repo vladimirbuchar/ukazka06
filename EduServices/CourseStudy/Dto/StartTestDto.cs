@@ -1,7 +1,7 @@
 ﻿using Core.Base.Dto;
 using System;
 
-namespace EduServices.CourseStudy.Dto
+namespace Services.CourseStudy.Dto
 {
     public class StartTestDto : ListDto
     {

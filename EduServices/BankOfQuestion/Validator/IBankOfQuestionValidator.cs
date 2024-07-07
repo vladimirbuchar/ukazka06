@@ -1,9 +1,9 @@
 ﻿using Core.Base.Validator;
-using EduRepository.BankOfQuestionRepository;
-using EduServices.BankOfQuestion.Dto;
 using Model.Edu.BankOfQuestions;
+using Repository.BankOfQuestionRepository;
+using Services.BankOfQuestion.Dto;
 
-namespace EduServices.BankOfQuestion.Validator
+namespace Services.BankOfQuestion.Validator
 {
     public interface IBankOfQuestionValidator : IBaseValidator<BankOfQuestionDbo, IBankOfQuestionRepository, BankOfQuestionCreateDto, BankOfQuestionDetailDto, BankOfQuestionUpdateDto> { }
 }

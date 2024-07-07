@@ -3,18 +3,18 @@ using Core.Base.Repository.FileRepository;
 using Core.Base.Service;
 using Core.Constants;
 using Core.DataTypes;
-using EduRepository.CourseLessonRepository;
-using EduServices.CourseLesson.Convertor;
-using EduServices.CourseLesson.Dto;
-using EduServices.CourseLesson.Validator;
 using Microsoft.AspNetCore.Http;
 using Model.CodeBook;
 using Model.Edu.CourseLesson;
+using Repository.CourseLessonRepository;
+using Services.CourseLesson.Convertor;
+using Services.CourseLesson.Dto;
+using Services.CourseLesson.Validator;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace EduServices.CourseLesson.Service
+namespace Services.CourseLesson.Service
 {
     public class CourseLessonService(
         ICourseLessonRepository courseLessonRepository,

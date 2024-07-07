@@ -7,7 +7,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace EduRepository.OrganizationSettingRepository
+namespace Repository.OrganizationSettingRepository
 {
     public class OrganizationSettingRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<OrganizationSettingDbo>(dbContext, memoryCache), IOrganizationSettingRepository
     {

@@ -3,30 +3,30 @@ using Core.Base.Service;
 using Core.Constants;
 using Core.DataTypes;
 using Core.Extension;
-using EduRepository.CourseStudentRepository;
-using EduRepository.NotificationRepository;
-using EduRepository.OrganizationRoleRepository;
-using EduRepository.OrganizationSettingRepository;
-using EduRepository.RoleRepository;
-using EduRepository.StudentInGroupCourseTerm;
-using EduRepository.StudentInGroupRepository;
-using EduRepository.UserInOrganizationRepository;
-using EduRepository.UserRepository;
-using EduServices.StudentInGroup.Convertor;
-using EduServices.StudentInGroup.Dto;
-using EduServices.StudentInGroup.Validator;
-using EduServices.SystemService.SendMailService;
 using Microsoft.Extensions.Configuration;
 using Model.CodeBook;
 using Model.Edu.Notification;
 using Model.Edu.Person;
 using Model.Edu.User;
 using Model.Link;
+using Repository.CourseStudentRepository;
+using Repository.NotificationRepository;
+using Repository.OrganizationRoleRepository;
+using Repository.OrganizationSettingRepository;
+using Repository.RoleRepository;
+using Repository.StudentInGroupCourseTerm;
+using Repository.StudentInGroupRepository;
+using Repository.UserInOrganizationRepository;
+using Repository.UserRepository;
+using Services.StudentInGroup.Convertor;
+using Services.StudentInGroup.Dto;
+using Services.StudentInGroup.Validator;
+using Services.SystemService.SendMailService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.StudentInGroup.Service
+namespace Services.StudentInGroup.Service
 {
     public class StudentInGroupService(
         ICourseStudentRepository courseStudentRepository,
@@ -145,7 +145,7 @@ namespace EduServices.StudentInGroup.Service
             }
             else
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.ADD_STUDENT_TO_COURSE, GlobalValue.EMAIL_IS_NOT_VALID, email, 0));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.ADD_STUDENT_TO_COURSE, MessageItem.EMAIL_IS_NOT_VALID, email, 0));
             }
             return result;
         }

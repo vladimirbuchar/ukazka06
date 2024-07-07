@@ -1,11 +1,11 @@
 ﻿using Core.Base.Repository.CodeBookRepository;
-using EduServices.Branch.Dto;
 using Model.CodeBook;
 using Model.Edu.Branch;
+using Services.Branch.Dto;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.Branch.Convertor
+namespace Services.Branch.Convertor
 {
     public class BranchConvertor(ICodeBookRepository<CultureDbo> codeBookService) : IBranchConvertor
     {

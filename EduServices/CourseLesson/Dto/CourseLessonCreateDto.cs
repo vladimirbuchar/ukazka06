@@ -2,7 +2,7 @@
 using Core.Constants;
 using System;
 
-namespace EduServices.CourseLesson.Dto
+namespace Services.CourseLesson.Dto
 {
     public class CourseLessonCreateDto : CreateDto
     {

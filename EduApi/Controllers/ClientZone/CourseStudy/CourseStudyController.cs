@@ -1,11 +1,11 @@
 ﻿using Core.Base.Dto;
 using Core.DataTypes;
 using EduApi.Controllers.ClientZone.Course;
-using EduServices.CourseStudy.Dto;
-using EduServices.CourseStudy.Service;
-using EduServices.OrganizationRole.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Services.CourseStudy.Dto;
+using Services.CourseStudy.Service;
+using Services.OrganizationRole.Service;
 using System;
 using System.Collections.Generic;
 

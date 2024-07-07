@@ -1,8 +1,8 @@
 ﻿using Core.Base.Service;
-using EduServices.StudentAttendance.Dto;
 using Model.Edu.AttendanceStudent;
+using Services.StudentAttendance.Dto;
 
-namespace EduServices.StudentAttendance.Service
+namespace Services.StudentAttendance.Service
 {
     public interface IStudentAttendanceService : IBaseService<AttendanceStudentDbo, StudentAttendanceCreateDto, StudentAttendanceListDto, StudentAttendanceDetailDto> { }
 }

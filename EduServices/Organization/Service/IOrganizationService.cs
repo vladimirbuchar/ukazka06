@@ -1,9 +1,9 @@
-﻿using System;
-using Core.Base.Service;
-using EduServices.Organization.Dto;
+﻿using Core.Base.Service;
 using Model.Edu.Organization;
+using Services.Organization.Dto;
+using System;
 
-namespace EduServices.Organization.Service
+namespace Services.Organization.Service
 {
     public interface IOrganizationService : IBaseService<OrganizationDbo, OrganizationCreateDto, OrganizationListDto, OrganizationDetailDto, OrganizationUpdateDto, OrganizationFileRepositoryDbo>
     {

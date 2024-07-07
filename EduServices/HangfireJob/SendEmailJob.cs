@@ -1,25 +1,25 @@
 ﻿using Core.Base.HangfireJob;
 using Core.DataTypes;
-using EduRepository.EmailRepository;
-using EduRepository.OrganizationSettingRepository;
 using Integration.MailKitIntegration;
 using Microsoft.Extensions.DependencyInjection;
 using Model.Edu.OrganizationSetting;
 using Model.Edu.SendEmail;
+using Repository.OrganizationSettingRepository;
+using Repository.SendEmailRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.HangfireJob
+namespace Services.HangfireJob
 {
     public class SendEmailJob(IServiceScopeFactory serviceScopeFactory) : Hangfire(serviceScopeFactory)
     {
         public override void Execute()
         {
-            IEmailRepository _repository = _scope.ServiceProvider.GetRequiredService<IEmailRepository>();
+            ISendEmailRepository _repository = _scope.ServiceProvider.GetRequiredService<ISendEmailRepository>();
             IOrganizationSettingRepository _organizationSettingRepository = _scope.ServiceProvider.GetRequiredService<IOrganizationSettingRepository>();
             IMailKitIntegration _mailKitIntegration = _scope.ServiceProvider.GetRequiredService<IMailKitIntegration>();
-            HashSet<SendEmailDbo> sendEmails = _repository.GetEntities(false, x => x.IsSended == false);
+            HashSet<SendEmailDbo> sendEmails = _repository.GetEntities(false, x => x.IsSended == false && x.IsError == false);
             foreach (SendEmailDbo sendEmail in sendEmails)
             {
                 try
@@ -68,11 +68,17 @@ namespace EduServices.HangfireJob
                         );
                     }
                     sendEmail.IsSended = true;
-                    _ = _repository.UpdateEntity(sendEmail, Guid.Empty);
+                    sendEmail.IsError = false;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    //  logger.LogError("Email", ex);
+                    sendEmail.IsSended = false;
+                    sendEmail.IsError = true;
+                    sendEmail.ErrorMessage = ex.Message;
+                }
+                finally
+                {
+                    _ = _repository.UpdateEntity(sendEmail, Guid.Empty);
                 }
             }
 

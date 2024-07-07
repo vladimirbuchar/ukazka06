@@ -1,6 +1,6 @@
 ﻿using Core.Base.Dto;
 
-namespace EduServices.OrganizationCulture.Dto
+namespace Services.OrganizationCulture.Dto
 {
     public class OrganizationCultureDetailDto : DetailDto
     {

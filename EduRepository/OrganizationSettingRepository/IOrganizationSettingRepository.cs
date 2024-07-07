@@ -1,7 +1,7 @@
 ﻿using Core.Base.Repository;
 using Model.Edu.OrganizationSetting;
 
-namespace EduRepository.OrganizationSettingRepository
+namespace Repository.OrganizationSettingRepository
 {
     public interface IOrganizationSettingRepository : IBaseRepository<OrganizationSettingDbo> { }
 }

@@ -1,8 +1,8 @@
 ﻿using Core.Base.Convertor;
-using EduServices.BankOfQuestion.Dto;
 using Model.Edu.BankOfQuestions;
+using Services.BankOfQuestion.Dto;
 
-namespace EduServices.BankOfQuestion.Convertor
+namespace Services.BankOfQuestion.Convertor
 {
     public interface IBankOfQuestionConvertor : IBaseConvertor<BankOfQuestionDbo, BankOfQuestionCreateDto, BankOfQuestionListDto, BankOfQuestionDetailDto, BankOfQuestionUpdateDto> { }
 }

@@ -1,11 +1,11 @@
 ﻿using Core.Base.Validator;
 using Core.Constants;
 using Core.DataTypes;
-using EduRepository.PermissionsRepository;
-using EduServices.Permissions.Dto;
 using Model.System;
+using Repository.PermissionsRepository;
+using Services.Permissions.Dto;
 
-namespace EduServices.Permissions.Validator
+namespace Services.Permissions.Validator
 {
     public class PermissionsValidator(IPermissionsRepository repository)
         : BaseValidator<PermissionsDbo, IPermissionsRepository, PermissionsCreateDto, PermissionsDetailDto, PermissionsUpdateDto>(repository),
@@ -16,7 +16,7 @@ namespace EduServices.Permissions.Validator
             Result<PermissionsDetailDto> validate = new();
             if (_repository.GetEntity(false, x => x.RouteId == create.RouteId && create.OrganizationRoleId == x.OrganizationRoleId) != null)
             {
-                validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.PERMISSTIONS, GlobalValue.EXISTS));
+                validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.PERMISSTIONS, MessageItem.EXISTS));
             }
             return validate;
         }

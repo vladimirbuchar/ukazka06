@@ -19,6 +19,8 @@ namespace Model.Edu.SendEmail
         public string EmailToName { get; set; }
         public bool IsSended { get; set; } = false;
         public string Reply { get; set; }
+        public bool IsError { get; set; } = false;
+        public string ErrorMessage { get; set; }
         public virtual Guid? OrganizationId { get; set; }
         public virtual OrganizationDbo Organization { get; set; }
         public virtual ICollection<SendEmailAttachmentDbo> SendEmailAttachments { get; set; }

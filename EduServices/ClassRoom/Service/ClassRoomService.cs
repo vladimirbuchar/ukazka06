@@ -1,22 +1,22 @@
 ﻿using Core.Base.Service;
 using Core.Constants;
 using Core.DataTypes;
-using EduRepository.ClassRoomRepository;
-using EduRepository.OrganizationHoursRepository;
-using EduServices.ClassRoom.Convertor;
-using EduServices.ClassRoom.Dto;
-using EduServices.ClassRoom.Validator;
-using EduServices.OrganizationStudyHour.Dto;
-using EduServices.User.Dto;
 using Model.Edu.ClassRoom;
 using Model.Edu.Course;
 using Model.Edu.CourseTermDate;
 using Model.Edu.OrganizationStudyHour;
+using Repository.ClassRoomRepository;
+using Repository.OrganizationHoursRepository;
+using Services.ClassRoom.Convertor;
+using Services.ClassRoom.Dto;
+using Services.ClassRoom.Validator;
+using Services.OrganizationStudyHour.Dto;
+using Services.User.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.ClassRoom.Service
+namespace Services.ClassRoom.Service
 {
     public class ClassRoomService(
         IOrganizationStudyHourRepository organizationStudyHourRepository,
@@ -36,7 +36,7 @@ namespace EduServices.ClassRoom.Service
         public ClassRoomTimeTableDto GetClassRoomTimeTable(Guid classRoomId, Guid organizationId, string culture)
         {
             ClassRoomTimeTableDto getClassRoomTimeTableDtos = new();
-            HashSet<CourseTermDateDbo> getClassRoomTimeTables = _repository.GetEntity(false, x => x.Id == classRoomId).CourseTermDates.ToHashSet();
+            HashSet<CourseTermDateDbo> getClassRoomTimeTables = [.. _repository.GetEntity(false, x => x.Id == classRoomId).CourseTermDates];
             HashSet<OrganizationStudyHourDbo> getStudyHours = [.. _organizationStudyHourRepository.GetEntities(false, x => x.OrganizationId == organizationId, x => x.Position)];
             getClassRoomTimeTableDtos.StudyHours = getStudyHours
                 .Select(x => new StudyHourListDto()
@@ -83,7 +83,7 @@ namespace EduServices.ClassRoom.Service
             if (classRoomDbo != null && classRoomDbo.IsOnline)
             {
                 Result result = new();
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.CLASS_ROOM, GlobalValue.CAN_NOT_DELETE));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.CLASS_ROOM, MessageItem.CAN_NOT_DELETE));
                 return result;
             }
             return base.DeleteObject(objectId, userId);

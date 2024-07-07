@@ -1,10 +1,10 @@
 ﻿using Core.Base.Dto;
 using System;
 
-namespace EduServices.SendMessage.Dto
+namespace Services.Message.Dto
 {
 
-    public class SendMessageUpdateDto : UpdateDto
+    public class MessageUpdateDto : UpdateDto
     {
         public string Name { get; set; }
         public string Html { get; set; }

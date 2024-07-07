@@ -1,9 +1,9 @@
 ﻿using Core.Base.Dto;
-using EduServices.UserInOrganization.Dto;
+using Services.UserInOrganization.Dto;
 using System;
 using System.Collections.Generic;
 
-namespace EduServices.Organization.Dto
+namespace Services.Organization.Dto
 {
     public class MyOrganizationListDto : BaseDto
     {

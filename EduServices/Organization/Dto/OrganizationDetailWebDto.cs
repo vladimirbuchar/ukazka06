@@ -1,6 +1,6 @@
 ﻿using Core.Base.Dto;
 
-namespace EduServices.Organization.Dto
+namespace Services.Organization.Dto
 {
     public class OrganizationDetailWebDto : ListDto
     {

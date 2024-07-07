@@ -1,11 +1,11 @@
 ﻿using Core.Base.Repository.CodeBookRepository;
-using EduServices.CourseLesson.Dto;
 using Model.CodeBook;
 using Model.Edu.CourseLesson;
+using Services.CourseLesson.Dto;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.CourseLesson.Convertor
+namespace Services.CourseLesson.Convertor
 {
     public class CourseLessonConvertor(ICodeBookRepository<CultureDbo> codeBookService) : ICourseLessonConvertor
     {

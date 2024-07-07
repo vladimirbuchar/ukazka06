@@ -1,6 +1,6 @@
 ﻿using Core.Base.Dto;
 
-namespace EduServices.SystemService.License.Dto
+namespace Services.SystemService.License.Dto
 {
     public class LicenseDetailDto : ListDto
     {

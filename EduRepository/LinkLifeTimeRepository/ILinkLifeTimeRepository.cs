@@ -1,7 +1,7 @@
 ﻿using Core.Base.Repository;
 using Model.Edu.LinkLifeTime;
 
-namespace EduRepository.LinkLifeTimeRepository
+namespace Repository.LinkLifeTimeRepository
 {
     public interface ILinkLifeTimeRepository : IBaseRepository<LinkLifeTimeDbo>
     {

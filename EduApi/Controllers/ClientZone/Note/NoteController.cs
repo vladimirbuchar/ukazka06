@@ -1,10 +1,10 @@
 ﻿using Core.Base.Dto;
 using Core.DataTypes;
-using EduServices.Note.Dto;
-using EduServices.Note.Service;
-using EduServices.OrganizationRole.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Services.Note.Dto;
+using Services.Note.Service;
+using Services.OrganizationRole.Service;
 using System;
 using System.Collections.Generic;
 

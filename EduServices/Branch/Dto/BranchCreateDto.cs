@@ -2,7 +2,7 @@
 using System;
 using System.Text.Json.Serialization;
 
-namespace EduServices.Branch.Dto
+namespace Services.Branch.Dto
 {
     public class BranchCreateDto : CreateDto
     {

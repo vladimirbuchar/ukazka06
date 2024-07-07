@@ -1,9 +1,9 @@
-﻿using EduServices.Test.Dto;
-using Model.Edu.CourseLesson;
+﻿using Model.Edu.CourseLesson;
 using Model.Edu.CourseTest;
+using Services.Test.Dto;
 using System.Linq;
 
-namespace EduServices.Test.Convertor
+namespace Services.Test.Convertor
 {
     public class TestConvertor() : ITestConvertor
     {

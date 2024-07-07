@@ -1,10 +1,10 @@
 ﻿using Core.Base.Service;
 using Core.DataTypes;
-using EduServices.Branch.Dto;
 using Model.Edu.Branch;
+using Services.Branch.Dto;
 using System;
 
-namespace EduServices.Branch.Service
+namespace Services.Branch.Service
 {
     public interface IBranchService : IBaseService<BranchDbo, BranchCreateDto, BranchListDto, BranchDetailDto, BranchUpdateDto>
     {

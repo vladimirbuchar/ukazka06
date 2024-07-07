@@ -1,6 +1,6 @@
 ﻿using Core.Base.Dto;
 
-namespace EduServices.Course.Dto
+namespace Services.Course.Dto
 {
     public class CourseListDto : ListDto
     {

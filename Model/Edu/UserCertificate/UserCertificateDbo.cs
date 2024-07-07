@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Model.Edu.User;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
-using Model.Edu.User;
 
 namespace Model.Edu.UserCertificate
 {

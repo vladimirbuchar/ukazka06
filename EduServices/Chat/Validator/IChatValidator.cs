@@ -1,9 +1,9 @@
 ﻿using Core.Base.Validator;
-using EduRepository.ChatRepository;
-using EduServices.Chat.Dto;
 using Model.Edu.Chat;
+using Repository.ChatRepository;
+using Services.Chat.Dto;
 
-namespace EduServices.Chat.Validator
+namespace Services.Chat.Validator
 {
     public interface IChatValidator : IBaseValidator<ChatDbo, IChatRepository, ChatItemCreateDto, ChatItemDetailDto, ChatItemUpdateDto> { }
 }

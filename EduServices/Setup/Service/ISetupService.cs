@@ -1,8 +1,8 @@
 ﻿using Core.Base.Service;
 using Core.DataTypes;
-using EduServices.Setup.Dto;
+using Services.Setup.Dto;
 
-namespace EduServices.Setup.Service
+namespace Services.Setup.Service
 {
     public interface ISetupService : IBaseService
     {

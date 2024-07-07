@@ -1,14 +1,14 @@
 ﻿using Core.Base.Service;
-using EduRepository.OrganizationRoleRepository;
-using EduRepository.PermissionsRepository;
-using EduServices.OrganizationRole.Convertor;
 using Model.Edu.OrganizationRole;
 using Model.System;
+using Repository.OrganizationRoleRepository;
+using Repository.PermissionsRepository;
+using Services.OrganizationRole.Convertor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.OrganizationRole.Service
+namespace Services.OrganizationRole.Service
 {
     public class OrganizationRoleService(
         IOrganizationRoleRepository organizationRoleRepository,

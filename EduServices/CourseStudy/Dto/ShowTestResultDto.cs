@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Core.Base.Dto;
+using System;
 using System.Collections.Generic;
-using Core.Base.Dto;
 
-namespace EduServices.CourseStudy.Dto
+namespace Services.CourseStudy.Dto
 {
     public class ShowTestResultDto : ListDto
     {

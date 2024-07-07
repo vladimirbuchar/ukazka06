@@ -1,6 +1,6 @@
 ﻿namespace Core.Constants
 {
-    public struct Category
+    public struct MessageCategory
     {
         public const string USER = "USER";
         public const string ORGANIZATION = "ORGANIZATION";

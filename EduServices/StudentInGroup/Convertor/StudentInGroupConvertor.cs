@@ -1,8 +1,8 @@
-﻿using EduServices.StudentInGroup.Dto;
-using Model.Link;
+﻿using Model.Link;
+using Services.StudentInGroup.Dto;
 using System.Collections.Generic;
 
-namespace EduServices.StudentInGroup.Convertor
+namespace Services.StudentInGroup.Convertor
 {
     public class StudentInGroupConvertor : IStudentInGroupConvertor
     {

@@ -1,10 +1,10 @@
 ﻿using Core.Base.Dto;
 using Core.DataTypes;
-using EduServices.OrganizationRole.Service;
-using EduServices.StudentEvaluation.Dto;
-using EduServices.StudentEvaluation.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Services.OrganizationRole.Service;
+using Services.StudentEvaluation.Dto;
+using Services.StudentEvaluation.Service;
 using System;
 using System.Collections.Generic;
 

@@ -1,10 +1,10 @@
 ﻿using Core.Base.Service;
 using Core.DataTypes;
-using EduServices.CourseLesson.Dto;
 using Model.Edu.CourseLesson;
+using Services.CourseLesson.Dto;
 using System;
 
-namespace EduServices.CourseLesson.Service
+namespace Services.CourseLesson.Service
 {
     public interface ICourseLessonService : IBaseService<CourseLessonDbo, CourseLessonCreateDto, CourseLessonListDto, CourseLessonDetailDto, CourseLessonUpdateDto, CourseLessonFileRepositoryDbo>
     {

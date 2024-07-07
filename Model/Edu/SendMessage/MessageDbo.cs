@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Model.CodeBook;
+using Model.Edu.Organization;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using Model.CodeBook;
-using Model.Edu.Organization;
 
 namespace Model.Edu.SendMessage
 {
     [Table("Edu_SendMessage")]
-    public class SendMessageDbo : TableModel
+    public class MessageDbo : TableModel
     {
         [Column("Reply")]
         public virtual string Reply { get; set; }

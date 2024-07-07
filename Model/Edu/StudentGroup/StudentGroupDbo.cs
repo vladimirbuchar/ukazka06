@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Model.Edu.Organization;
+using Model.Link;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using Model.Edu.Organization;
-using Model.Link;
 
 namespace Model.Edu.StudentGroup
 {

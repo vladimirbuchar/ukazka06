@@ -1,24 +1,24 @@
 ﻿using Core.Base.Repository.CodeBookRepository;
-using EduServices.SendMessage.Dto;
 using Model.CodeBook;
 using Model.Edu.SendMessage;
+using Services.Message.Dto;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.SendMessage.Convertor
+namespace Services.Message.Convertor
 {
-    public class SendMessageConvertor(ICodeBookRepository<CultureDbo> codeBookService) : ISendMessageConvertor
+    public class MessageConvertor(ICodeBookRepository<CultureDbo> codeBookService) : IMessageConvertor
     {
         private readonly HashSet<CultureDbo> _cultureList = codeBookService.GetEntities(false);
 
-        public HashSet<SendMessageListDto> ConvertToWebModel(HashSet<SendMessageDbo> getSendMessageInOrganizations, string culture)
+        public HashSet<MessageListDto> ConvertToWebModel(HashSet<MessageDbo> getSendMessageInOrganizations, string culture)
         {
-            return getSendMessageInOrganizations.Select(x => new SendMessageListDto() { Id = x.Id, Name = x.SendMessageTranslations.FindTranslation(culture)?.Subject }).ToHashSet();
+            return getSendMessageInOrganizations.Select(x => new MessageListDto() { Id = x.Id, Name = x.SendMessageTranslations.FindTranslation(culture)?.Subject }).ToHashSet();
         }
 
-        public SendMessageDetailDto ConvertToWebModel(SendMessageDbo getSendMessageDetail, string culture)
+        public MessageDetailDto ConvertToWebModel(MessageDbo getSendMessageDetail, string culture)
         {
-            return new SendMessageDetailDto()
+            return new MessageDetailDto()
             {
                 Html = getSendMessageDetail.SendMessageTranslations.FindTranslation(culture).Html,
                 Id = getSendMessageDetail.Id,
@@ -28,9 +28,9 @@ namespace EduServices.SendMessage.Convertor
             };
         }
 
-        public SendMessageDbo ConvertToBussinessEntity(SendMessageCreateDto addSendMessageDto, string clientCulture)
+        public MessageDbo ConvertToBussinessEntity(MessageCreateDto addSendMessageDto, string clientCulture)
         {
-            SendMessageDbo sendMessage =
+            MessageDbo sendMessage =
                 new()
                 {
                     OrganizationId = addSendMessageDto.OrganizationId,
@@ -46,7 +46,7 @@ namespace EduServices.SendMessage.Convertor
             return sendMessage;
         }
 
-        public SendMessageDbo ConvertToBussinessEntity(SendMessageUpdateDto updateSendMessageDto, SendMessageDbo entity, string culture)
+        public MessageDbo ConvertToBussinessEntity(MessageUpdateDto updateSendMessageDto, MessageDbo entity, string culture)
         {
             entity.SendMessageTranslations = entity.SendMessageTranslations.PrepareTranslation(
                 updateSendMessageDto.Name,

@@ -1,6 +1,6 @@
 ﻿using Core.Base.Dto;
 
-namespace EduServices.OrganizationRole.Dto
+namespace Services.OrganizationRole.Dto
 {
     public class UserOrganizationRoleDetailDto : ListDto
     {

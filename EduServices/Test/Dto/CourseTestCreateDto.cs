@@ -1,10 +1,10 @@
 ﻿using Core.Base.Dto;
 using Core.Constants;
-using EduServices.CourseLesson.Dto;
+using Services.CourseLesson.Dto;
 using System;
 using System.Collections.Generic;
 
-namespace EduServices.Test.Dto
+namespace Services.Test.Dto
 {
     public class CourseTestCreateDto : CreateDto
     {

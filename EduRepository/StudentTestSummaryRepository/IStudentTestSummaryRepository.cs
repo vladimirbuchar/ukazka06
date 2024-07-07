@@ -1,7 +1,7 @@
 ﻿using Core.Base.Repository;
 using Model.Edu.StudentTestSummary;
 
-namespace EduRepository.StudentTestSummaryRepository
+namespace Repository.StudentTestSummaryRepository
 {
     public interface IStudentTestSummaryRepository : IBaseRepository<StudentTestSummaryDbo> { }
 }

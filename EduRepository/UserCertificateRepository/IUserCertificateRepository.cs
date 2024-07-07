@@ -1,7 +1,7 @@
 ﻿using Core.Base.Repository;
 using Model.Edu.UserCertificate;
 
-namespace EduRepository.UserCertificateRepository
+namespace Repository.UserCertificateRepository
 {
     public interface IUserCertificateRepository : IBaseRepository<UserCertificateDbo> { }
 }

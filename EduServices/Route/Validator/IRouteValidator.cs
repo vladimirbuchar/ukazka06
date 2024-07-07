@@ -1,9 +1,9 @@
 ﻿using Core.Base.Validator;
-using EduRepository.RouteRepository;
-using EduServices.Route.Dto;
 using Model.System;
+using Repository.RouteRepository;
+using Services.Route.Dto;
 
-namespace EduServices.Route.Validator
+namespace Services.Route.Validator
 {
     public interface IRouteValidator : IBaseValidator<RouteDbo, IRouteRepository, RouteCreateDto, RouteDetailDto, RouteUpdateDto> { }
 }

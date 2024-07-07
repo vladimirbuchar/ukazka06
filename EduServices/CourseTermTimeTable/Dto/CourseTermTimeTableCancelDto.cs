@@ -1,7 +1,7 @@
 ﻿using Core.Base.Dto;
 using System;
 
-namespace EduServices.CourseTermTimeTable.Dto
+namespace Services.CourseTermTimeTable.Dto
 {
     public class CourseTermTimeTableCancelDto : DeleteDto
     {

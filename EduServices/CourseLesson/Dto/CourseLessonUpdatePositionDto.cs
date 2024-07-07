@@ -1,7 +1,7 @@
 ﻿using Core.Base.Dto;
 using System.Collections.Generic;
 
-namespace EduServices.CourseLesson.Dto
+namespace Services.CourseLesson.Dto
 {
     public class CourseLessonUpdatePositionDto : BaseDto
     {

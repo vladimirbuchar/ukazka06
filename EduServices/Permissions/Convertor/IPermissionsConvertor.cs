@@ -1,8 +1,8 @@
 ﻿using Core.Base.Convertor;
-using EduServices.Permissions.Dto;
 using Model.System;
+using Services.Permissions.Dto;
 
-namespace EduServices.Permissions.Convertor
+namespace Services.Permissions.Convertor
 {
     public interface IPermissionsConvertor : IBaseConvertor<PermissionsDbo, PermissionsCreateDto, PermissionsListDto, PermissionsDetailDto, PermissionsUpdateDto> { }
 }

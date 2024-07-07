@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using Core.Base.Service;
-using EduServices.OrganizationRole.Dto;
-using EduServices.UserInOrganization.Dto;
+﻿using Core.Base.Service;
 using Model.Link;
+using Services.OrganizationRole.Dto;
+using Services.UserInOrganization.Dto;
+using System;
+using System.Collections.Generic;
 
-namespace EduServices.UserInOrganization.Service
+namespace Services.UserInOrganization.Service
 {
     public interface IUserInOrganizationService : IBaseService<UserInOrganizationDbo, UserInOrganizationCreateDto, UserInOrganizationListDto, UserInOrganizationDetailDto, UserInOrganizationUpdateDto>
     {

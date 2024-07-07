@@ -2,7 +2,7 @@
 using System;
 using System.Text.Json.Serialization;
 
-namespace EduServices.ClassRoom.Dto
+namespace Services.ClassRoom.Dto
 {
     public class ClassRoomCreateDto : CreateDto
     {

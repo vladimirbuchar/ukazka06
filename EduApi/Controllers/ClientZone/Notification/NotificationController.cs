@@ -1,9 +1,9 @@
 ﻿using Core.DataTypes;
-using EduServices.Notification.Dto;
-using EduServices.Notification.Service;
-using EduServices.OrganizationRole.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Services.Notification.Dto;
+using Services.Notification.Service;
+using Services.OrganizationRole.Service;
 using System;
 using System.Collections.Generic;
 

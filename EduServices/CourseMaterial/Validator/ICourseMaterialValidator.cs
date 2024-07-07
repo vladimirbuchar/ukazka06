@@ -1,9 +1,9 @@
 ﻿using Core.Base.Validator;
-using EduRepository.CourseMaterialRepository;
-using EduServices.CourseMaterial.Dto;
 using Model.Edu.CourseMaterial;
+using Repository.CourseMaterialRepository;
+using Services.CourseMaterial.Dto;
 
-namespace EduServices.CourseMaterial.Validator
+namespace Services.CourseMaterial.Validator
 {
     public interface ICourseMaterialValidator : IBaseValidator<CourseMaterialDbo, ICourseMaterialRepository, CourseMaterialCreateDto, CourseMaterialDetailDto, CourseMaterialUpdateDto> { }
 }

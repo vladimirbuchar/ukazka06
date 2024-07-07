@@ -8,21 +8,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace EduRepository.SendMessageRepository
+namespace Repository.MessageRepository
 {
-    public class SendMessageRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<SendMessageDbo>(dbContext, memoryCache), ISendMessageRepository
+    public class MessageRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<MessageDbo>(dbContext, memoryCache), IMessageRepository
     {
-        public override SendMessageDbo GetEntity(Guid id)
+        public override MessageDbo GetEntity(Guid id)
         {
-            return _dbContext.Set<SendMessageDbo>()
+            return _dbContext.Set<MessageDbo>()
                 .Include(x => x.SendMessageTranslations.Where(x => x.IsDeleted == false))
                 .ThenInclude(x => x.Culture)
                 .FirstOrDefault(x => x.Id == id);
         }
 
-        public override HashSet<SendMessageDbo> GetEntities(bool deleted, Expression<Func<SendMessageDbo, bool>> predicate = null, Expression<Func<SendMessageDbo, object>> orderBy = null, Expression<Func<SendMessageDbo, object>> orderByDesc = null)
+        public override HashSet<MessageDbo> GetEntities(bool deleted, Expression<Func<MessageDbo, bool>> predicate = null, Expression<Func<MessageDbo, object>> orderBy = null, Expression<Func<MessageDbo, object>> orderByDesc = null)
         {
-            return [.. _dbContext.Set<SendMessageDbo>()
+            return [.. _dbContext.Set<MessageDbo>()
                 .Include(x => x.SendMessageTranslations.Where(x => x.IsDeleted == false))
                 .ThenInclude(x => x.Culture)
                 .Where(predicate)
@@ -32,7 +32,7 @@ namespace EduRepository.SendMessageRepository
 
         public override Guid GetOrganizationId(Guid objectId)
         {
-            return _dbContext.Set<SendMessageDbo>()
+            return _dbContext.Set<MessageDbo>()
                 .FirstOrDefault(x => x.Id == objectId).OrganizationId;
         }
     }

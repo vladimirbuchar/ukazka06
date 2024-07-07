@@ -1,7 +1,7 @@
 ﻿using Core.Base.Dto;
 using System;
 
-namespace EduServices.Note.Dto
+namespace Services.Note.Dto
 {
     public class NoteCreateTableDto : ListDto
     {

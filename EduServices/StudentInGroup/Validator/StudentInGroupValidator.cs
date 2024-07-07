@@ -1,11 +1,12 @@
 ﻿using Core.Base.Validator;
-using EduRepository.StudentInGroupRepository;
-using EduServices.StudentInGroup.Dto;
 using Model.Link;
+using Repository.StudentInGroupRepository;
+using Services.StudentInGroup.Dto;
 
-namespace EduServices.StudentInGroup.Validator
+namespace Services.StudentInGroup.Validator
 {
     public class StudentInGroupValidator(IStudentInGroupRepository repository)
         : BaseValidator<StudentInGroupDbo, IStudentInGroupRepository, StudentInGroupCreateDto, StudentInGroupDetailDto>(repository),
-            IStudentInGroupValidator { }
+            IStudentInGroupValidator
+    { }
 }

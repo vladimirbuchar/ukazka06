@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using Model.Edu.Organization;
+﻿using Model.Edu.Organization;
 using Model.Edu.OrganizationRole;
 using Model.Edu.User;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Model.Link
 {

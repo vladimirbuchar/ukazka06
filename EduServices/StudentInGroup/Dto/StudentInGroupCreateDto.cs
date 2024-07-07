@@ -2,7 +2,7 @@
 using System;
 using System.Text.Json.Serialization;
 
-namespace EduServices.StudentInGroup.Dto
+namespace Services.StudentInGroup.Dto
 {
     public class StudentInGroupCreateDto : CreateDto
     {

@@ -1,14 +1,14 @@
 ﻿using Core.Base.Validator;
 using Core.Constants;
 using Core.DataTypes;
-using EduRepository.CourseStudentRepository;
-using EduRepository.CourseTermRepository;
-using EduServices.CourseTermStudent.Dto;
 using Model.Edu.CourseTerm;
 using Model.Link;
+using Repository.CourseStudentRepository;
+using Repository.CourseTermRepository;
+using Services.CourseTermStudent.Dto;
 using System;
 
-namespace EduServices.CourseTermStudent.Validator
+namespace Services.CourseTermStudent.Validator
 {
     public class CourseTermStudentValidator(ICourseStudentRepository repository, ICourseTermRepository courseTermRepository)
         : BaseValidator<CourseStudentDbo, ICourseStudentRepository, CourseTermStudentCreateDto, CourseTermStudentDetailDto>(repository),
@@ -31,7 +31,7 @@ namespace EduServices.CourseTermStudent.Validator
             {
                 if (maximumStudent < _repository.GetEntities(false, x => x.CourseTermId == termId).Count + 1)
                 {
-                    result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.COURSE, Constants.ADD_MORE_STUDENTS_THAN_MAXIMUM));
+                    result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.COURSE, Constants.ADD_MORE_STUDENTS_THAN_MAXIMUM));
                 }
             }
         }

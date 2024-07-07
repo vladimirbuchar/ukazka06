@@ -3,30 +3,6 @@ using Core.Base.Service;
 using Core.Constants;
 using Core.DataTypes;
 using Core.Extension;
-using EduRepository.CertificateRepository;
-using EduRepository.CourseLectorRepository;
-using EduRepository.CourseLessonItemRepository;
-using EduRepository.CourseLessonRepository;
-using EduRepository.CourseRepository;
-using EduRepository.CourseStudentRepository;
-using EduRepository.CourseTableRepository;
-using EduRepository.CourseTermRepository;
-using EduRepository.CouseStudentMaterialRepository;
-using EduRepository.OrganizationRepository;
-using EduRepository.QuestionRepository;
-using EduRepository.SendMessageRepository;
-using EduRepository.StudentTestSummaryAnswerRepository;
-using EduRepository.StudentTestSummaryQuestionRepository;
-using EduRepository.StudentTestSummaryRepository;
-using EduRepository.TestRepository;
-using EduRepository.UserCertificateRepository;
-using EduRepository.UserInOrganizationRepository;
-using EduRepository.UserRepository;
-using EduServices.CourseStudy.Convertor;
-using EduServices.CourseStudy.Dto;
-using EduServices.OrganizationRole.Dto;
-using EduServices.SystemService.FileUpload;
-using EduServices.SystemService.SendMailService;
 using Integration.PdfSharpIntegration;
 using Microsoft.Extensions.Configuration;
 using Model.CodeBook;
@@ -47,11 +23,35 @@ using Model.Edu.StudentTestSummaryQuestion;
 using Model.Edu.User;
 using Model.Edu.UserCertificate;
 using Model.Link;
+using Repository.CertificateRepository;
+using Repository.CourseLectorRepository;
+using Repository.CourseLessonItemRepository;
+using Repository.CourseLessonRepository;
+using Repository.CourseRepository;
+using Repository.CourseStudentRepository;
+using Repository.CourseTableRepository;
+using Repository.CourseTermRepository;
+using Repository.CouseStudentMaterialRepository;
+using Repository.MessageRepository;
+using Repository.OrganizationRepository;
+using Repository.QuestionRepository;
+using Repository.StudentTestSummaryAnswerRepository;
+using Repository.StudentTestSummaryQuestionRepository;
+using Repository.StudentTestSummaryRepository;
+using Repository.TestRepository;
+using Repository.UserCertificateRepository;
+using Repository.UserInOrganizationRepository;
+using Repository.UserRepository;
+using Services.CourseStudy.Convertor;
+using Services.CourseStudy.Dto;
+using Services.OrganizationRole.Dto;
+using Services.SystemService.FileUpload;
+using Services.SystemService.SendMailService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.CourseStudy.Service
+namespace Services.CourseStudy.Service
 {
     public class CourseStudyService(
         ITestRepository testRepository,
@@ -71,7 +71,7 @@ namespace EduServices.CourseStudy.Service
         IStudentTestSummaryAnswerRepository studentTestSummaryAnswerRepository,
         IQuestionRepository questionRepository,
         ICourseLectorRepository courseLectorRepository,
-        ISendMessageRepository sendMessageRepository,
+        IMessageRepository sendMessageRepository,
         IOrganizationRepository organizationRepository,
         ICourseTermRepository courseTermRepository,
         ICodeBookRepository<CountryDbo> codebookRepository,
@@ -93,7 +93,7 @@ namespace EduServices.CourseStudy.Service
         private readonly IConfiguration _configuration = configuration;
         private readonly ICertificateRepository _certificateRepository = certificateRepository;
         private readonly IPdfSharpIntegration _pdfSharpIntegration = pdfSharpIntegration;
-        private readonly ISendMessageRepository _sendMessageRepository = sendMessageRepository;
+        private readonly IMessageRepository _sendMessageRepository = sendMessageRepository;
         private readonly string _fileRepositoryPath = string.Format("{0}{1}/", configuration.GetSection(ConfigValue.FILE_SERVER_URL).Value, ConfigValue.CERTIFICATE_PATH);
         private readonly ICourseTermRepository _courseTermRepository = courseTermRepository;
         private readonly ICourseTableRepository _courseTableRepository = courseTableRepository;
@@ -696,7 +696,7 @@ namespace EduServices.CourseStudy.Service
                 pdfCreated = true;
                 if (getCourseDetail.SendEmail)
                 {
-                    SendMessageDbo getSendMessageDetail = _sendMessageRepository.GetEntity(getCourseDetail.SendMessageId ?? Guid.Empty);
+                    MessageDbo getSendMessageDetail = _sendMessageRepository.GetEntity(getCourseDetail.SendMessageId ?? Guid.Empty);
                     UserDbo getUserDetail = _userRepository.GetEntity(userId);
                     List<string> attachment = [string.Format("{0}{1}.pdf", _fileRepositoryPath, fileName)];
                     _sendMailService.AddEmailToQueue(

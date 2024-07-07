@@ -1,18 +1,18 @@
 ﻿using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Service;
 using Core.DataTypes;
-using EduRepository.OrganizationHoursRepository;
-using EduServices.OrganizationStudyHour.Convertor;
-using EduServices.OrganizationStudyHour.Dto;
-using EduServices.OrganizationStudyHour.Validator;
 using Model.CodeBook;
 using Model.Edu.OrganizationStudyHour;
+using Repository.OrganizationHoursRepository;
+using Services.OrganizationStudyHour.Convertor;
+using Services.OrganizationStudyHour.Dto;
+using Services.OrganizationStudyHour.Validator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace EduServices.OrganizationStudyHour.Service
+namespace Services.OrganizationStudyHour.Service
 {
     public class OrganizationStudyHourService(
         IOrganizationStudyHourRepository organizationStudyHoursRepository,
@@ -55,7 +55,7 @@ namespace EduServices.OrganizationStudyHour.Service
                 TimeTableDbo timeTable = _timeTables.FirstOrDefault(x => x.Id == addStudyHours.ActiveFromId);
                 if (timeTable != null)
                 {
-                    addStudyHours.ActiveToId = _timeTables.FirstOrDefault(x => x.Priority == timeTable.Priority + (addObject.LessonLength / 5)).Id;
+                    addStudyHours.ActiveToId = _timeTables.FirstOrDefault(x => x.Priority == timeTable.Priority + addObject.LessonLength / 5).Id;
                 }
             }
             Result<StudyHourDetailDto> result = new() { Data = _convertor.ConvertToWebModel(_repository.CreateEntity(addStudyHours, userId), culture) };

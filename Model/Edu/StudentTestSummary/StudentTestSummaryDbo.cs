@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using Model.Edu.Course;
+﻿using Model.Edu.Course;
 using Model.Edu.CourseTest;
 using Model.Edu.StudentTestSummaryQuestion;
 using Model.Edu.User;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Model.Edu.StudentTestSummary
 {

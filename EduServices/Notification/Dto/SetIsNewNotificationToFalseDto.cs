@@ -1,6 +1,6 @@
 ﻿using Core.Base.Dto;
 
-namespace EduServices.Notification.Dto
+namespace Services.Notification.Dto
 {
     public class SetIsNewNotificationToFalseDto : BaseDto
     {

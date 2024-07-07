@@ -1,10 +1,10 @@
 ﻿using Core.Constants;
 using Core.Exceptions;
-using EduServices.OrganizationRole.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Services.OrganizationRole.Service;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;

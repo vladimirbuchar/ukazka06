@@ -1,8 +1,8 @@
 ﻿using Core.Base.Service;
-using EduServices.Chat.Dto;
 using Model.Edu.Chat;
+using Services.Chat.Dto;
 
-namespace EduServices.Chat.Service
+namespace Services.Chat.Service
 {
     public interface IChatService : IBaseService<ChatDbo, ChatItemCreateDto, ChatItemListDto, ChatItemDetailDto, ChatItemUpdateDto> { }
 }

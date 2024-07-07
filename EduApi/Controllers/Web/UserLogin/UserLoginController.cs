@@ -1,9 +1,9 @@
 ﻿using Core.DataTypes;
-using EduServices.User.Dto;
-using EduServices.User.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Services.User.Dto;
+using Services.User.Service;
 using System;
 
 

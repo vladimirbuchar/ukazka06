@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Model.Edu.Organization;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using Model.Edu.Organization;
 
 namespace Model.Edu.Certificate
 {

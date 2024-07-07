@@ -4,7 +4,7 @@ using Model;
 using Model.Edu.CourseTable;
 using System;
 
-namespace EduRepository.CourseTableRepository
+namespace Repository.CourseTableRepository
 {
     public class CourseTableRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<CourseTableDbo>(dbContext, memoryCache), ICourseTableRepository
     {

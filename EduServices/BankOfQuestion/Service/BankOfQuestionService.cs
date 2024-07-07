@@ -1,16 +1,16 @@
 ﻿using Core.Base.Service;
 using Core.DataTypes;
-using EduRepository.BankOfQuestionRepository;
-using EduRepository.QuestionRepository;
-using EduServices.BankOfQuestion.Convertor;
-using EduServices.BankOfQuestion.Dto;
-using EduServices.BankOfQuestion.Validator;
 using Model.Edu.BankOfQuestions;
 using Model.Edu.Question;
+using Repository.BankOfQuestionRepository;
+using Repository.QuestionRepository;
+using Services.BankOfQuestion.Convertor;
+using Services.BankOfQuestion.Dto;
+using Services.BankOfQuestion.Validator;
 using System;
 using System.Collections.Generic;
 
-namespace EduServices.BankOfQuestion.Service
+namespace Services.BankOfQuestion.Service
 {
     public class BankOfQuestionService(
         IBankOfQuestionRepository bankOfQuestionRepository,

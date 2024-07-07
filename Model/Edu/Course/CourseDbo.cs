@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using Model.CodeBook;
+﻿using Model.CodeBook;
 using Model.Edu.Certificate;
 using Model.Edu.CourseMaterial;
 using Model.Edu.CourseTerm;
@@ -9,6 +6,9 @@ using Model.Edu.Note;
 using Model.Edu.Organization;
 using Model.Edu.SendMessage;
 using Model.Link;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Model.Edu.Course
 {
@@ -46,7 +46,7 @@ namespace Model.Edu.Course
         public virtual Guid? CertificateId { get; set; }
         public virtual CourseMaterialDbo CourseMaterial { get; set; }
         public virtual Guid? CourseMaterialId { get; set; }
-        public virtual SendMessageDbo SendMessage { get; set; }
+        public virtual MessageDbo SendMessage { get; set; }
         public virtual Guid? SendMessageId { get; set; }
         public virtual Guid OrganizationId { get; set; }
         public virtual OrganizationDbo Organization { get; set; }

@@ -2,13 +2,13 @@
 using Core.Base.Validator;
 using Core.Constants;
 using Core.DataTypes;
-using EduRepository.OrganizationCultureRepository;
-using EduRepository.OrganizationRepository;
-using EduServices.OrganizationCulture.Dto;
 using Model.CodeBook;
 using Model.Link;
+using Repository.OrganizationCultureRepository;
+using Repository.OrganizationRepository;
+using Services.OrganizationCulture.Dto;
 
-namespace EduServices.OrganizationCulture.Validator
+namespace Services.OrganizationCulture.Validator
 {
     public class OrganizationCultureValidator(IOrganizationCultureRepository repository, IOrganizationRepository organizationRepository, ICodeBookRepository<CultureDbo> culture)
         : BaseValidator<OrganizationCultureDbo, IOrganizationCultureRepository, OrganizationCultureCreateDto, OrganizationCultureDetailDto, OrganizationCultureUpdateDto>(repository),
@@ -22,11 +22,11 @@ namespace EduServices.OrganizationCulture.Validator
             Result<OrganizationCultureDetailDto> validate = new();
             if (_organizationRepository.GetEntity(create.OrganizationId) == null)
             {
-                validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.ORGANIZATION, GlobalValue.NOT_EXISTS));
+                validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.ORGANIZATION, MessageItem.NOT_EXISTS));
             }
             if (_culture.GetEntity(create.CultureId) == null)
             {
-                validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.CULTURE, GlobalValue.NOT_EXISTS));
+                validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.CULTURE, MessageItem.NOT_EXISTS));
             }
             return validate;
         }

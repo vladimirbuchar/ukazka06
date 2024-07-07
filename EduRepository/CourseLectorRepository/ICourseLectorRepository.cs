@@ -1,7 +1,7 @@
 ﻿using Core.Base.Repository;
 using Model.Link;
 
-namespace EduRepository.CourseLectorRepository
+namespace Repository.CourseLectorRepository
 {
     public interface ICourseLectorRepository : IBaseRepository<CourseLectorDbo>
     {

@@ -1,7 +1,7 @@
 ﻿using Core.Base.Dto;
 using System;
 
-namespace EduServices.OrganizationSetting.Dto
+namespace Services.OrganizationSetting.Dto
 {
     public class OrganizationSettingDetailDto : ListDto
     {

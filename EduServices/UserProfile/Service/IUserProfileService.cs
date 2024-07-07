@@ -1,12 +1,12 @@
 ﻿using Core.Base.Service;
-using EduServices.Organization.Dto;
-using EduServices.StudentEvaluation.Dto;
-using EduServices.User.Dto;
-using EduServices.UserProfile.Dto;
+using Services.Organization.Dto;
+using Services.StudentEvaluation.Dto;
+using Services.User.Dto;
+using Services.UserProfile.Dto;
 using System;
 using System.Collections.Generic;
 
-namespace EduServices.UserProfile.Service
+namespace Services.UserProfile.Service
 {
     public interface IUserProfileService : IBaseService
     {

@@ -1,10 +1,10 @@
 ﻿using Core.Base.Dto;
 using Core.DataTypes;
-using EduServices.Certificate.Dto;
-using EduServices.Certificate.Service;
-using EduServices.OrganizationRole.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Services.Certificate.Dto;
+using Services.Certificate.Service;
+using Services.OrganizationRole.Service;
 using System;
 using System.Collections.Generic;
 

@@ -1,12 +1,12 @@
 ﻿using Core.DataTypes;
-using EduServices.Permissions.Service;
-using EduServices.Route.Service;
-using EduServices.Setup.Dto;
-using EduServices.Setup.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
+using Services.Permissions.Service;
+using Services.Route.Service;
+using Services.Setup.Dto;
+using Services.Setup.Service;
 using System;
 using System.Collections.Generic;
 

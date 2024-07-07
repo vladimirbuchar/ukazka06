@@ -1,28 +1,21 @@
 ﻿using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Service;
 using Core.DataTypes;
-using EduRepository.EmailRepository;
-using EduRepository.OrganizationSettingRepository;
-using Integration.MailKitIntegration;
 using Model.CodeBook;
-using Model.Edu.OrganizationSetting;
 using Model.Edu.SendEmail;
 using Model.Edu.SendEmailAttachment;
+using Repository.SendEmailRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.SystemService.SendMailService
+namespace Services.SystemService.SendMailService
 {
     public class SendMailService(
-        IOrganizationSettingRepository organizationSettingRepository,
-        IMailKitIntegration mailKitIntegration,
-        IEmailRepository emailRepository,
+        ISendEmailRepository emailRepository,
         ICodeBookRepository<EduEmailDbo> codeBookRepository
-    ) : BaseService<IEmailRepository, SendEmailDbo>(emailRepository), ISendMailService
+    ) : BaseService<ISendEmailRepository, SendEmailDbo>(emailRepository), ISendMailService
     {
-        private readonly IMailKitIntegration _mailKitIntegration = mailKitIntegration;
-        private readonly IOrganizationSettingRepository _organizationSettingRepository = organizationSettingRepository;
         private readonly ICodeBookRepository<EduEmailDbo> _email = codeBookRepository;
 
         public void AddEmailToQueue(string subject, string html, List<string> attachment, EmailAddress emailAddressTo, Guid organizationId, string reply)
@@ -71,58 +64,6 @@ namespace EduServices.SystemService.SendMailService
                     },
                     Guid.Empty
                 );
-            }
-        }
-
-        public void SendEmail()
-        {
-            HashSet<SendEmailDbo> sendEmails = _repository.GetEntities(false, x => x.IsSended == false);
-            foreach (SendEmailDbo sendEmail in sendEmails)
-            {
-                OrganizationSettingDbo getOrganizationSetting = _organizationSettingRepository.GetEntity(false, x => x.OrganizationId == sendEmail.OrganizationId);
-                if (getOrganizationSetting != null && getOrganizationSetting.UseCustomSmtpServer)
-                {
-                    _mailKitIntegration.SendEmail(
-                        new Email()
-                        {
-                            EmailBody = new EmailBody()
-                            {
-                                HtmlBody = sendEmail.Body,
-                                IsHtml = true,
-                                PlainTextBody = sendEmail.PlainTextBody,
-                            },
-                            To = new EmailAddress() { Name = sendEmail.EmailToName, Email = sendEmail.EmailTo, },
-                            Subject = sendEmail.Subject,
-                            Attachment = sendEmail.SendEmailAttachments.Select(x => x.Attachment).ToList(),
-                            From = new EmailAddress() { Email = sendEmail.EmailFrom, Name = sendEmail.EmailFromName },
-                            Reply = sendEmail.Reply
-                        },
-                        getOrganizationSetting.SmtpServerUrl,
-                        Convert.ToInt32(getOrganizationSetting.SmtpServerPort),
-                        getOrganizationSetting.SmtpServerUserName,
-                        getOrganizationSetting.SmtpServerPassword
-                    );
-                }
-                else
-                {
-                    _mailKitIntegration.SendEmail(
-                        new Email()
-                        {
-                            EmailBody = new EmailBody()
-                            {
-                                HtmlBody = sendEmail.Body,
-                                IsHtml = true,
-                                PlainTextBody = sendEmail.PlainTextBody
-                            },
-                            To = new EmailAddress() { Email = sendEmail.EmailTo, Name = sendEmail.EmailToName },
-                            Subject = sendEmail.Subject,
-                            Attachment = sendEmail.SendEmailAttachments.Select(x => x.Attachment).ToList(),
-                            Reply = sendEmail.Reply
-                        }
-                    );
-                }
-                sendEmail.IsSended = true;
-                _ = _repository.UpdateEntity(sendEmail, Guid.Empty);
             }
         }
     }

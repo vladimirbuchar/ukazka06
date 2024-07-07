@@ -1,8 +1,8 @@
 ﻿using Core.Base.Service;
-using EduServices.Answer.Dto;
 using Model.Edu.Answer;
+using Services.Answer.Dto;
 
-namespace EduServices.Answer.Service
+namespace Services.Answer.Service
 {
     public interface IAnswerService : IBaseService<AnswerDbo, AnswerCreateDto, AnswerListDto, AnswerDetailDto, AnswerUpdateDto, AnswerFileRepositoryDbo> { }
 }

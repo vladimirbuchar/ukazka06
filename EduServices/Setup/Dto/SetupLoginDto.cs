@@ -1,7 +1,7 @@
 ﻿using Core.Base.Dto;
 using System.ComponentModel.DataAnnotations;
 
-namespace EduServices.Setup.Dto
+namespace Services.Setup.Dto
 {
     public class SetupLoginDto : BaseDto
     {

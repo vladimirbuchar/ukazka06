@@ -1,9 +1,9 @@
-﻿using EduServices.CourseTestEvaluation.Dto;
-using Model.Edu.CourseTestEvaluation;
+﻿using Model.Edu.CourseTestEvaluation;
+using Services.CourseTestEvaluation.Dto;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.CourseTestEvaluation.Convertor
+namespace Services.CourseTestEvaluation.Convertor
 {
     public class CourseTestEvaluationConvertor() : ICourseTestEvaluationConvertor
     {

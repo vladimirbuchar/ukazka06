@@ -1,8 +1,8 @@
 ﻿using Core.Base.Convertor;
-using EduServices.User.Dto;
 using Model.Edu.User;
+using Services.User.Dto;
 
-namespace EduServices.User.Convertor
+namespace Services.User.Convertor
 {
     public interface IUserConvertor : IBaseConvertor<UserDbo, UserCreateDto, UserListDto, UserDetailDto, UserUpdateDto>
     {

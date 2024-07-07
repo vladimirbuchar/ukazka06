@@ -1,7 +1,7 @@
-﻿using System;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
+using System;
 
-namespace EduServices.CourseMaterial.Dto
+namespace Services.CourseMaterial.Dto
 {
     public class CourseMaterialFileListDto : ListDto
     {

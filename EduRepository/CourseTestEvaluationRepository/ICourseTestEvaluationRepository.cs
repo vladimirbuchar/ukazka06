@@ -1,7 +1,7 @@
 ﻿using Core.Base.Repository;
 using Model.Edu.CourseTestEvaluation;
 
-namespace EduRepository.CourseTestEvaluationRepository
+namespace Repository.CourseTestEvaluationRepository
 {
     public interface ICourseTestEvaluationRepository : IBaseRepository<CourseTestEvaluationDbo> { }
 }

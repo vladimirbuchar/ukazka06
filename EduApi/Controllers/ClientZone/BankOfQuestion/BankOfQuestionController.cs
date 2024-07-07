@@ -1,10 +1,10 @@
 ﻿using Core.Base.Dto;
 using Core.DataTypes;
-using EduServices.BankOfQuestion.Dto;
-using EduServices.BankOfQuestion.Service;
-using EduServices.OrganizationRole.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Services.BankOfQuestion.Dto;
+using Services.BankOfQuestion.Service;
+using Services.OrganizationRole.Service;
 using System;
 using System.Collections.Generic;
 

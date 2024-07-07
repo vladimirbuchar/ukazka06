@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
 using Core.Extension;
+using System;
+using System.Collections.Generic;
 
-namespace EduServices.Chat.Dto
+namespace Services.Chat.Dto
 {
     public class ChatItemDetailDto : DetailDto
     {

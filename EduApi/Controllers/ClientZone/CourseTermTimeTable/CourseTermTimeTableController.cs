@@ -1,11 +1,11 @@
 ﻿using Core.Base.Dto;
 using Core.DataTypes;
-using EduServices.CourseTerm.Dto;
-using EduServices.CourseTermTimeTable.Dto;
-using EduServices.CourseTermTimeTable.Service;
-using EduServices.OrganizationRole.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Services.CourseTerm.Dto;
+using Services.CourseTermTimeTable.Dto;
+using Services.CourseTermTimeTable.Service;
+using Services.OrganizationRole.Service;
 using System;
 
 namespace EduApi.Controllers.ClientZone.CourseTermTimeTable

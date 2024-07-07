@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace EduServices.UserInOrganization.Dto
+namespace Services.UserInOrganization.Dto
 {
     public class UserInOrganizationCreateDto : CreateDto
     {

@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Core.Base.Dto;
+using System;
 using System.Collections.Generic;
-using Core.Base.Dto;
 
-namespace EduServices.UserInOrganization.Dto
+namespace Services.UserInOrganization.Dto
 {
     public class UserInOrganizationListDto : ListDto
     {

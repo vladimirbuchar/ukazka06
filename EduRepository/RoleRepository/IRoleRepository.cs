@@ -1,7 +1,7 @@
 ﻿using Core.Base.Repository;
 using Model.Edu.UserRole;
 
-namespace EduRepository.RoleRepository
+namespace Repository.RoleRepository
 {
     public interface IRoleRepository : IBaseRepository<UserRoleDbo> { }
 }

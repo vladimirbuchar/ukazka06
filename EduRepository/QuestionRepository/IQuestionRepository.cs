@@ -1,7 +1,7 @@
 ﻿using Core.Base.Repository;
 using Model.Edu.Question;
 
-namespace EduRepository.QuestionRepository
+namespace Repository.QuestionRepository
 {
     public interface IQuestionRepository : IBaseRepository<QuestionDbo> { }
 }

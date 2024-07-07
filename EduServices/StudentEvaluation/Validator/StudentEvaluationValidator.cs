@@ -1,13 +1,13 @@
 ﻿using Core.Base.Validator;
 using Core.Constants;
 using Core.DataTypes;
-using EduRepository.CourseStudentRepository;
-using EduRepository.CourseTermRepository;
-using EduRepository.StudentEvaluationRepository;
-using EduServices.StudentEvaluation.Dto;
 using Model.Edu.StudentEvaluation;
+using Repository.CourseStudentRepository;
+using Repository.CourseTermRepository;
+using Repository.StudentEvaluationRepository;
+using Services.StudentEvaluation.Dto;
 
-namespace EduServices.StudentEvaluation.Validator
+namespace Services.StudentEvaluation.Validator
 {
     public class StudentEvaluationValidator(IStudentEvaluationRepository repository, ICourseStudentRepository courseStudentRepository, ICourseTermRepository courseTermRepository)
         : BaseValidator<StudentEvaluationDbo, IStudentEvaluationRepository, StudentEvaluationCreateDto, StudentEvaluationDetailDto>(repository),
@@ -21,11 +21,11 @@ namespace EduServices.StudentEvaluation.Validator
             Result<StudentEvaluationDetailDto> validate = new();
             if (_courseStudentRepository.GetEntity(create.CourseStudentId) == null)
             {
-                validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.COURSE_STUDENT, GlobalValue.NOT_EXISTS));
+                validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.COURSE_STUDENT, MessageItem.NOT_EXISTS));
             }
             if (_courseTermRepository.GetEntity(create.CourseTermId) == null)
             {
-                validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.COURSE_TERM, GlobalValue.NOT_EXISTS));
+                validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.COURSE_TERM, MessageItem.NOT_EXISTS));
             }
             return validate;
         }

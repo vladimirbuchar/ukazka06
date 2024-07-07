@@ -7,7 +7,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace EduRepository.TestRepository
+namespace Repository.TestRepository
 {
     public class TestRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<CourseTestDbo>(dbContext, memoryCache), ITestRepository
     {

@@ -1,7 +1,7 @@
 ﻿using Core.Base.Repository;
 using Model.Edu.ClassRoom;
 
-namespace EduRepository.ClassRoomRepository
+namespace Repository.ClassRoomRepository
 {
     public interface IClassRoomRepository : IBaseRepository<ClassRoomDbo>
     {

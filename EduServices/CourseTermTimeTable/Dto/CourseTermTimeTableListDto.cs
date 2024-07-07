@@ -1,7 +1,7 @@
-﻿using System;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
+using System;
 
-namespace EduServices.CourseTermTimeTable.Dto
+namespace Services.CourseTermTimeTable.Dto
 {
     public class CourseTermTimeTableListDto : ListDto
     {

@@ -1,8 +1,8 @@
 ﻿using Core.Base.Service;
-using EduServices.Certificate.Dto;
 using Model.Edu.Certificate;
+using Services.Certificate.Dto;
 
-namespace EduServices.Certificate.Service
+namespace Services.Certificate.Service
 {
     public interface ICertificateService : IBaseService<CertificateDbo, CertificateCreateDto, CertificateListDto, CertificateDetailDto, CertificateUpdateDto> { }
 }

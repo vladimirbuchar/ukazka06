@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace EduRepository.PermissionsRepository
+namespace Repository.PermissionsRepository
 {
     public class PermissionsRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<PermissionsDbo>(dbContext, memoryCache), IPermissionsRepository
     {

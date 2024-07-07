@@ -2,7 +2,7 @@
 using Model.Edu.CourseTable;
 using System;
 
-namespace EduRepository.CourseTableRepository
+namespace Repository.CourseTableRepository
 {
     public interface ICourseTableRepository : IBaseRepository<CourseTableDbo>
     {

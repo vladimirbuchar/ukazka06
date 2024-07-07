@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using Model.Edu.Branch;
+﻿using Model.Edu.Branch;
 using Model.Edu.PersonAddress;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Model.CodeBook
 {

@@ -1,8 +1,8 @@
 ﻿using Core.Base.Service;
-using EduServices.BankOfQuestion.Dto;
 using Model.Edu.BankOfQuestions;
+using Services.BankOfQuestion.Dto;
 
-namespace EduServices.BankOfQuestion.Service
+namespace Services.BankOfQuestion.Service
 {
     public interface IBankOfQuestionService : IBaseService<BankOfQuestionDbo, BankOfQuestionCreateDto, BankOfQuestionListDto, BankOfQuestionDetailDto, BankOfQuestionUpdateDto> { }
 }

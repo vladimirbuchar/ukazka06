@@ -1,7 +1,7 @@
 ﻿using Core.Base.Repository;
 using Model.Edu.Answer;
 
-namespace EduRepository.AnswerRepository
+namespace Repository.AnswerRepository
 {
     public interface IAnswerRepository : IBaseRepository<AnswerDbo> { }
 }

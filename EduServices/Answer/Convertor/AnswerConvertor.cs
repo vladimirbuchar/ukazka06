@@ -1,13 +1,13 @@
 ﻿using Core.Base.Repository.CodeBookRepository;
 using Core.Constants;
-using EduServices.Answer.Dto;
 using Microsoft.Extensions.Configuration;
 using Model.CodeBook;
 using Model.Edu.Answer;
+using Services.Answer.Dto;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.Answer.Convertor
+namespace Services.Answer.Convertor
 {
     public class AnswerConvertor(IConfiguration configuration, ICodeBookRepository<CultureDbo> codeBookService) : IAnswerConvertor
     {

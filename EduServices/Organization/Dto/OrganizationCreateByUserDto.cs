@@ -3,7 +3,7 @@ using Core.DataTypes;
 using System;
 using System.Collections.Generic;
 
-namespace EduServices.Organization.Dto
+namespace Services.Organization.Dto
 {
     public class OrganizationCreateByUserDto : CreateDto
     {

@@ -1,11 +1,11 @@
 ﻿using Core.Base.Repository.CodeBookRepository;
-using EduServices.StudentGroup.Dto;
 using Model.CodeBook;
 using Model.Edu.StudentGroup;
+using Services.StudentGroup.Dto;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.StudentGroup.Convertor
+namespace Services.StudentGroup.Convertor
 {
     public class StudentGroupConvertor(ICodeBookRepository<CultureDbo> codeBookService) : IStudentGroupConvertor
     {

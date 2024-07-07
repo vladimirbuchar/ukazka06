@@ -3,9 +3,10 @@ using Microsoft.Extensions.Caching.Memory;
 using Model;
 using Model.Link;
 
-namespace EduRepository.StudentInGroupCourseTerm
+namespace Repository.StudentInGroupCourseTerm
 {
     public class StudentInGroupCourseTermRepository(EduDbContext dbContext, IMemoryCache memoryCache)
         : BaseRepository<StudentInGroupCourseTermDbo>(dbContext, memoryCache),
-            IStudentInGroupCourseTermRepository { }
+            IStudentInGroupCourseTermRepository
+    { }
 }

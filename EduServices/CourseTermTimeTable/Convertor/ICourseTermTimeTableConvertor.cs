@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using Core.Base.Convertor;
-using EduServices.CourseTermTimeTable.Dto;
+﻿using Core.Base.Convertor;
 using Model.Edu.CourseTermDate;
+using Services.CourseTermTimeTable.Dto;
+using System.Collections.Generic;
 
-namespace EduServices.CourseTermTimeTable.Convertor
+namespace Services.CourseTermTimeTable.Convertor
 {
     public interface ICourseTermTimeTableConvertor : IBaseConvertor
     {

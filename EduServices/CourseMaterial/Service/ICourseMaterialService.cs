@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using Core.Base.Service;
-using EduServices.CourseMaterial.Dto;
+﻿using Core.Base.Service;
 using Model.Edu.CourseMaterial;
+using Services.CourseMaterial.Dto;
+using System;
+using System.Collections.Generic;
 
-namespace EduServices.CourseMaterial.Service
+namespace Services.CourseMaterial.Service
 {
     public interface ICourseMaterialService
         : IBaseService<CourseMaterialDbo, CourseMaterialCreateDto, CourseMaterialListDto, CourseMaterialDetailDto, CourseMaterialUpdateDto, CourseMaterialFileRepositoryDbo>

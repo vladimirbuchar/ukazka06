@@ -6,7 +6,7 @@ using Model.Edu.LinkLifeTime;
 using System;
 using System.Linq;
 
-namespace EduRepository.LinkLifeTimeRepository
+namespace Repository.LinkLifeTimeRepository
 {
     public class LinkLifeTimeRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<LinkLifeTimeDbo>(dbContext, memoryCache), ILinkLifeTimeRepository
     {

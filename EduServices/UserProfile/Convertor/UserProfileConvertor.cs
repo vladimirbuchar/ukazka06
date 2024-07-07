@@ -1,18 +1,18 @@
 ﻿using Core.Constants;
-using EduServices.Organization.Dto;
-using EduServices.StudentEvaluation.Dto;
-using EduServices.UserInOrganization.Dto;
-using EduServices.UserProfile.Dto;
 using Microsoft.Extensions.Configuration;
 using Model.Edu.Branch;
 using Model.Edu.ClassRoom;
 using Model.Edu.StudentEvaluation;
 using Model.Edu.UserCertificate;
 using Model.Link;
+using Services.Organization.Dto;
+using Services.StudentEvaluation.Dto;
+using Services.UserInOrganization.Dto;
+using Services.UserProfile.Dto;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.UserProfile.Convertor
+namespace Services.UserProfile.Convertor
 {
     public class UserProfileConvertor(IConfiguration configuration) : IUserProfileConvertor
     {

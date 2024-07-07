@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace EduServices.CourseTerm.Dto
+namespace Services.CourseTerm.Dto
 {
     public class CourseTermUpdateDto : UpdateDto
     {

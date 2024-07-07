@@ -1,7 +1,7 @@
 ﻿using Core.Base.Dto;
 using System;
 
-namespace EduServices.BankOfQuestion.Dto
+namespace Services.BankOfQuestion.Dto
 {
     public class BankOfQuestionCreateDto : CreateDto
     {

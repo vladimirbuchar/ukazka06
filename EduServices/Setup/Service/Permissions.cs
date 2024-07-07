@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace EduServices.Setup.Service
+namespace Services.Setup.Service
 {
     public class Permissions
     {

@@ -2,17 +2,17 @@
 using Core.Base.Validator;
 using Core.Constants;
 using Core.DataTypes;
-using EduRepository.ClassRoomRepository;
-using EduRepository.CourseTermRepository;
-using EduServices.CourseTerm.Dto;
 using Model.CodeBook;
 using Model.Edu.ClassRoom;
 using Model.Edu.CourseTerm;
+using Repository.ClassRoomRepository;
+using Repository.CourseTermRepository;
+using Services.CourseTerm.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.CourseTerm.Validator
+namespace Services.CourseTerm.Validator
 {
     public class CourseTermValidator(ICourseTermRepository repository, ICodeBookRepository<TimeTableDbo> codeBookRepository, IClassRoomRepository classRoomRepository)
         : BaseValidator<CourseTermDbo, ICourseTermRepository, CourseTermCreateDto, CourseTermDetailDto, CourseTermUpdateDto>(repository),
@@ -31,7 +31,7 @@ namespace EduServices.CourseTerm.Validator
             int priorityTo = _timeTables.FirstOrDefault(x => x.Id == create.TimeToId).Priority;
             if (priorityTo < priorityFrom)
             {
-                validation.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.COURSE_TERM, Constants.END_TIME_IS_LESS_THAN_START_TIME));
+                validation.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.COURSE_TERM, Constants.END_TIME_IS_LESS_THAN_START_TIME));
             }
             return validation;
         }
@@ -46,7 +46,7 @@ namespace EduServices.CourseTerm.Validator
             int priorityTo = _timeTables.FirstOrDefault(x => x.Id == update.TimeToId).Priority;
             if (priorityTo < priorityFrom)
             {
-                validation.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.COURSE_TERM, Constants.END_TIME_IS_LESS_THAN_START_TIME));
+                validation.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.COURSE_TERM, Constants.END_TIME_IS_LESS_THAN_START_TIME));
             }
             return validation;
         }
@@ -55,11 +55,11 @@ namespace EduServices.CourseTerm.Validator
         {
             if (registrationFrom != null && registrationTo != null && registrationTo < registrationFrom)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.COURSE_TERM, Constants.REGISTRATION_TO_IS_SMALLER_THEN_REGISTRATION_FROM));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.COURSE_TERM, Constants.REGISTRATION_TO_IS_SMALLER_THEN_REGISTRATION_FROM));
             }
             if (activeFrom != null && activeTo != null && activeTo < activeFrom)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.COURSE_TERM, Constants.ACTIVE_TO_IS_SMALLER_THEN_ACTIVE_FROM));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.COURSE_TERM, Constants.ACTIVE_TO_IS_SMALLER_THEN_ACTIVE_FROM));
             }
         }
 
@@ -67,11 +67,11 @@ namespace EduServices.CourseTerm.Validator
         {
             if (maximumStudent < minimumStudent)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.COURSE_TERM, Constants.MAXIMUM_STUDENTS_IS_LESS_THEN_MINIMUM_STUDENTS));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.COURSE_TERM, Constants.MAXIMUM_STUDENTS_IS_LESS_THEN_MINIMUM_STUDENTS));
             }
             if (maximumStudent > classRoomCapacity && classRoomCapacity > 0)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.COURSE_TERM, Constants.MAXIMUM_STUDENTS_IS_MORE_THEN_CAPACITY_CLASS_ROOM));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.COURSE_TERM, Constants.MAXIMUM_STUDENTS_IS_MORE_THEN_CAPACITY_CLASS_ROOM));
             }
         }
     }

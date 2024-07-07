@@ -1,9 +1,9 @@
-﻿using EduServices.StudentAttendance.Dto;
-using Model.Edu.AttendanceStudent;
+﻿using Model.Edu.AttendanceStudent;
+using Services.StudentAttendance.Dto;
 using System;
 using System.Collections.Generic;
 
-namespace EduServices.StudentAttendance.Convertor
+namespace Services.StudentAttendance.Convertor
 {
     public class StudentAttendanceConvertor : IStudentAttendanceConvertor
     {

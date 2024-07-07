@@ -1,11 +1,11 @@
 ﻿using Core.Base.Service;
-using EduRepository.CertificateRepository;
-using EduServices.Certificate.Convertor;
-using EduServices.Certificate.Dto;
-using EduServices.Certificate.Validator;
 using Model.Edu.Certificate;
+using Repository.CertificateRepository;
+using Services.Certificate.Convertor;
+using Services.Certificate.Dto;
+using Services.Certificate.Validator;
 
-namespace EduServices.Certificate.Service
+namespace Services.Certificate.Service
 {
     public class CertificateService(ICertificateRepository certificateRepository, ICertificateConvertor certificateConvertor, ICertificateValidator validator)
         : BaseService<ICertificateRepository, CertificateDbo, ICertificateConvertor, ICertificateValidator, CertificateCreateDto, CertificateListDto, CertificateDetailDto, CertificateUpdateDto>(
@@ -13,5 +13,6 @@ namespace EduServices.Certificate.Service
             certificateConvertor,
             validator
         ),
-            ICertificateService { }
+            ICertificateService
+    { }
 }

@@ -1,9 +1,9 @@
 ﻿using Core.Base.Convertor;
-using EduServices.CodeBookData.Dto;
 using Model.CodeBook;
+using Services.CodeBookData.Dto;
 using System.Collections.Generic;
 
-namespace EduServices.CodeBookData.Convertor
+namespace Services.CodeBookData.Convertor
 {
     public interface ICodeBookConvertor : IBaseConvertor
     {

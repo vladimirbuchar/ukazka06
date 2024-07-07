@@ -1,8 +1,8 @@
-﻿using System;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
 using Core.Extension;
+using System;
 
-namespace EduServices.CourseStudy.Dto
+namespace Services.CourseStudy.Dto
 {
     public class StudentTestResultListDto : ListDto
     {

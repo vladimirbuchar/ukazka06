@@ -1,7 +1,7 @@
-﻿using System;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
+using System;
 
-namespace EduServices.User.Dto
+namespace Services.User.Dto
 {
     public class LoginUserSocialNetworkDto : BaseDto
     {

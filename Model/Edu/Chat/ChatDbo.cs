@@ -1,7 +1,7 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
-using Model.Edu.CourseTerm;
+﻿using Model.Edu.CourseTerm;
 using Model.Edu.User;
+using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Model.Edu.Chat
 {

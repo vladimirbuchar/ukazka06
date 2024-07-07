@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using Core.Base.Dto;
-using EduServices.CourseTermTimeTable.Dto;
+﻿using Core.Base.Dto;
+using Services.CourseTermTimeTable.Dto;
+using System.Collections.Generic;
 
-namespace EduServices.StudentAttendance.Dto
+namespace Services.StudentAttendance.Dto
 {
     public class StudentAttendanceDetailDto : DetailDto
     {

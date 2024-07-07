@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using Core.Base.Convertor;
-using EduServices.CourseMaterial.Dto;
+﻿using Core.Base.Convertor;
 using Model.Edu.CourseMaterial;
+using Services.CourseMaterial.Dto;
+using System.Collections.Generic;
 
-namespace EduServices.CourseMaterial.Convertor
+namespace Services.CourseMaterial.Convertor
 {
     public interface ICourseMaterialConvertor : IBaseConvertor<CourseMaterialDbo, CourseMaterialCreateDto, CourseMaterialListDto, CourseMaterialDetailDto, CourseMaterialUpdateDto>
     {

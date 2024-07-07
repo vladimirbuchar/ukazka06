@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Model.Edu.PersonAddress;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using Model.Edu.PersonAddress;
 
 namespace Model.CodeBook
 {

@@ -1,11 +1,11 @@
 ﻿using Core.Base.Service;
-using EduRepository.StudentEvaluationRepository;
-using EduServices.StudentEvaluation.Convertor;
-using EduServices.StudentEvaluation.Dto;
-using EduServices.StudentEvaluation.Validator;
 using Model.Edu.StudentEvaluation;
+using Repository.StudentEvaluationRepository;
+using Services.StudentEvaluation.Convertor;
+using Services.StudentEvaluation.Dto;
+using Services.StudentEvaluation.Validator;
 
-namespace EduServices.StudentEvaluation.Service
+namespace Services.StudentEvaluation.Service
 {
     public class StudentEvaluationService(IStudentEvaluationRepository courseTermRepository, IStudentEvaluationConvertor courseTermConvertor, IStudentEvaluationValidator validator)
         : BaseService<

@@ -2,7 +2,7 @@
 using System;
 using System.Text.Json.Serialization;
 
-namespace EduServices.OrganizationCulture.Dto
+namespace Services.OrganizationCulture.Dto
 {
 
     public class OrganizationCultureUpdateDto : UpdateDto

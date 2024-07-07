@@ -1,10 +1,10 @@
 ﻿using Core.Base.Service;
 using Core.DataTypes;
-using EduServices.User.Dto;
 using Model.Edu.User;
+using Services.User.Dto;
 using System;
 
-namespace EduServices.User.Service
+namespace Services.User.Service
 {
     public interface IUserService : IBaseService<UserDbo, UserCreateDto, UserListDto, UserDetailDto, UserUpdateDto>
     {

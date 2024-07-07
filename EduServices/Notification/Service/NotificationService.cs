@@ -1,17 +1,17 @@
 ﻿using Core.Base.Service;
 using Core.Constants;
 using Core.DataTypes;
-using EduRepository.NotificationRepository;
-using EduRepository.OrganizationRepository;
-using EduServices.Notification.Convertor;
-using EduServices.Notification.Dto;
 using Model.Edu.Notification;
 using Model.Edu.Organization;
+using Repository.NotificationRepository;
+using Repository.OrganizationRepository;
+using Services.Notification.Convertor;
+using Services.Notification.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.Notification.Service
+namespace Services.Notification.Service
 {
     public class NotificationService(INotificationRepository notificationRepository, IOrganizationRepository organizationRepository, INotificationConvertor notificationConvertor)
         : BaseService<INotificationRepository, NotificationDbo, INotificationConvertor>(notificationRepository, notificationConvertor),

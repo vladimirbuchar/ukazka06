@@ -1,8 +1,8 @@
 ﻿using Core.Base.Convertor;
-using EduServices.CourseLesson.Dto;
 using Model.Edu.CourseLesson;
+using Services.CourseLesson.Dto;
 
-namespace EduServices.CourseLesson.Convertor
+namespace Services.CourseLesson.Convertor
 {
     public interface ICourseLessonConvertor : IBaseConvertor<CourseLessonDbo, CourseLessonCreateDto, CourseLessonListDto, CourseLessonDetailDto, CourseLessonUpdateDto> { }
 }

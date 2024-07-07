@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using Core.Base.Convertor;
-using EduServices.Course.Dto;
-using EduServices.CourseStudy.Dto;
+﻿using Core.Base.Convertor;
 using Model.Edu.Course;
 using Model.Edu.StudentTestSummary;
+using Services.Course.Dto;
+using Services.CourseStudy.Dto;
+using System.Collections.Generic;
 
-namespace EduServices.Course.Convertor
+namespace Services.Course.Convertor
 {
     public interface ICourseConvertor : IBaseConvertor<CourseDbo, CourseCreateDto, CourseListDto, CourseDetailDto, CourseUpdateDto>
     {

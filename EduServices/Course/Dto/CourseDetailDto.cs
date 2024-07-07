@@ -1,7 +1,7 @@
-﻿using System;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
+using System;
 
-namespace EduServices.Course.Dto
+namespace Services.Course.Dto
 {
     public class CourseDetailDto : DetailDto
     {

@@ -1,6 +1,6 @@
 ﻿using Core.Base.Dto;
 
-namespace EduServices.StudentGroup.Dto
+namespace Services.StudentGroup.Dto
 {
     public class StudentGroupDetailDto : DetailDto
     {

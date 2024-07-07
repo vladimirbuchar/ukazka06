@@ -3,7 +3,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Model;
 using Model.Link;
 
-namespace EduRepository.CourseTestBankOfQuestionRepository
+namespace Repository.CourseTestBankOfQuestionRepository
 {
     public class CourseTestBankOfQuestionRepository(EduDbContext dbContext, IMemoryCache memoryCache)
         : BaseRepository<CourseTestBankOfQuestionDbo>(dbContext, memoryCache),

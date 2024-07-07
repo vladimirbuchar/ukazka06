@@ -1,11 +1,11 @@
 ﻿using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Service;
-using EduServices.Page.Dto;
 using Model.CodeBook;
+using Services.Page.Dto;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.Page.Service
+namespace Services.Page.Service
 {
     public class PageService(ICodeBookRepository<LicenseDbo> repository) : BaseService<ICodeBookRepository<LicenseDbo>, LicenseDbo>(repository), IPageService
     {

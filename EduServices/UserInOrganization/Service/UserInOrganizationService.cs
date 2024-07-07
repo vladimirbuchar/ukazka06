@@ -3,31 +3,31 @@ using Core.Base.Service;
 using Core.Constants;
 using Core.DataTypes;
 using Core.Extension;
-using EduRepository.CourseLectorRepository;
-using EduRepository.CourseStudentRepository;
-using EduRepository.NotificationRepository;
-using EduRepository.OrganizationRoleRepository;
-using EduRepository.OrganizationSettingRepository;
-using EduRepository.RoleRepository;
-using EduRepository.UserInOrganizationRepository;
-using EduRepository.UserRepository;
-using EduServices.OrganizationRole.Dto;
-using EduServices.SystemService.SendMailService;
-using EduServices.UserInOrganization.Convertor;
-using EduServices.UserInOrganization.Dto;
-using EduServices.UserInOrganization.Validator;
 using Microsoft.Extensions.Configuration;
 using Model.CodeBook;
 using Model.Edu.Notification;
 using Model.Edu.Person;
 using Model.Edu.User;
 using Model.Link;
+using Repository.CourseLectorRepository;
+using Repository.CourseStudentRepository;
+using Repository.NotificationRepository;
+using Repository.OrganizationRoleRepository;
+using Repository.OrganizationSettingRepository;
+using Repository.RoleRepository;
+using Repository.UserInOrganizationRepository;
+using Repository.UserRepository;
+using Services.OrganizationRole.Dto;
+using Services.SystemService.SendMailService;
+using Services.UserInOrganization.Convertor;
+using Services.UserInOrganization.Dto;
+using Services.UserInOrganization.Validator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace EduServices.UserInOrganization.Service
+namespace Services.UserInOrganization.Service
 {
     public class UserInOrganizationService(
         IOrganizationSettingRepository organizationSettingRepository,
@@ -134,7 +134,7 @@ namespace EduServices.UserInOrganization.Service
                 }
                 else
                 {
-                    result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.ADD_USER_TO_ORGANIZATION, GlobalValue.EMAIL_IS_NOT_VALID, email, 0));
+                    result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.ADD_USER_TO_ORGANIZATION, MessageItem.EMAIL_IS_NOT_VALID, email, 0));
                 }
             }
             return new Result<UserInOrganizationDetailDto>() { Data = GetDetail(x => x.UserId == user.Id && x.OrganizationId == addObject.OrganizationId) };

@@ -1,7 +1,7 @@
 ﻿using Core.Base.Dto;
 using System;
 
-namespace EduServices.Chat.Dto
+namespace Services.Chat.Dto
 {
     public class ChatItemCreateDto : CreateDto
     {

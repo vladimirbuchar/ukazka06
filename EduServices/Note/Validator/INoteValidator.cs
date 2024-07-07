@@ -1,9 +1,9 @@
 ﻿using Core.Base.Validator;
-using EduRepository.NoteRepository;
-using EduServices.Note.Dto;
 using Model.Edu.Note;
+using Repository.NoteRepository;
+using Services.Note.Dto;
 
-namespace EduServices.Note.Validator
+namespace Services.Note.Validator
 {
     public interface INoteValidator : IBaseValidator<NoteDbo, INoteRepository, NoteCreateDto, NoteDetailDto, NoteUpdateDto> { }
 }

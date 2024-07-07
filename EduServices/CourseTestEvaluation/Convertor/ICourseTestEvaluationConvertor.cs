@@ -1,9 +1,10 @@
 ﻿using Core.Base.Convertor;
-using EduServices.CourseTestEvaluation.Dto;
 using Model.Edu.CourseTestEvaluation;
+using Services.CourseTestEvaluation.Dto;
 
-namespace EduServices.CourseTestEvaluation.Convertor
+namespace Services.CourseTestEvaluation.Convertor
 {
     public interface ICourseTestEvaluationConvertor
-        : IBaseConvertor<CourseTestEvaluationDbo, CourseTestEvaluationCreateDto, CourseTestEvaluationListDto, CourseTestEvaluationDetailDto, CourseTestEvaluationUpdateDto> { }
+        : IBaseConvertor<CourseTestEvaluationDbo, CourseTestEvaluationCreateDto, CourseTestEvaluationListDto, CourseTestEvaluationDetailDto, CourseTestEvaluationUpdateDto>
+    { }
 }

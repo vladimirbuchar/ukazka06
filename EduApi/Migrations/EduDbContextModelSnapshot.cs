@@ -4755,6 +4755,9 @@ namespace EduApi.Migrations
                     b.Property<string>("EmailToName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ErrorMessage")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool?>("IsActive")
                         .HasColumnType("bit")
                         .HasColumnName("IsActive");
@@ -4762,6 +4765,9 @@ namespace EduApi.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit")
                         .HasColumnName("IsDeleted");
+
+                    b.Property<bool>("IsError")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsHtml")
                         .HasColumnType("bit");
@@ -4873,7 +4879,7 @@ namespace EduApi.Migrations
                     b.ToTable("Edu_SendEmailAttachment");
                 });
 
-            modelBuilder.Entity("Model.Edu.SendMessage.SendMessageDbo", b =>
+            modelBuilder.Entity("Model.Edu.SendMessage.MessageDbo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -6806,7 +6812,7 @@ namespace EduApi.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Model.Edu.SendMessage.SendMessageDbo", "SendMessage")
+                    b.HasOne("Model.Edu.SendMessage.MessageDbo", "SendMessage")
                         .WithMany()
                         .HasForeignKey("SendMessageId");
 
@@ -7418,7 +7424,7 @@ namespace EduApi.Migrations
                     b.Navigation("SendEmail");
                 });
 
-            modelBuilder.Entity("Model.Edu.SendMessage.SendMessageDbo", b =>
+            modelBuilder.Entity("Model.Edu.SendMessage.MessageDbo", b =>
                 {
                     b.HasOne("Model.Edu.Organization.OrganizationDbo", "Organization")
                         .WithMany("SendMessages")
@@ -7445,7 +7451,7 @@ namespace EduApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Model.Edu.SendMessage.SendMessageDbo", "SendMessage")
+                    b.HasOne("Model.Edu.SendMessage.MessageDbo", "SendMessage")
                         .WithMany("SendMessageTranslations")
                         .HasForeignKey("SendMessageId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -8090,7 +8096,7 @@ namespace EduApi.Migrations
                     b.Navigation("SendEmailAttachments");
                 });
 
-            modelBuilder.Entity("Model.Edu.SendMessage.SendMessageDbo", b =>
+            modelBuilder.Entity("Model.Edu.SendMessage.MessageDbo", b =>
                 {
                     b.Navigation("SendMessageTranslations");
                 });

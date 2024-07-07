@@ -1,11 +1,11 @@
 ﻿using Core.Base.Validator;
 using Core.DataTypes;
-using EduRepository.OrganizationRepository;
-using EduServices.Organization.Dto;
-using EduServices.OrganizationSetting.Dto;
 using Model.Edu.Organization;
+using Repository.OrganizationRepository;
+using Services.Organization.Dto;
+using Services.OrganizationSetting.Dto;
 
-namespace EduServices.OrganizationSetting.Validator
+namespace Services.OrganizationSetting.Validator
 {
     public interface IOrganizationSettingValidator : IBaseValidator<OrganizationDbo, IOrganizationRepository, OrganizationCreateDto, OrganizationDetailDto, OrganizationUpdateDto>
     {

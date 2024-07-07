@@ -1,6 +1,6 @@
 ﻿using Core.Base.Dto;
 
-namespace EduServices.Chat.Dto
+namespace Services.Chat.Dto
 {
     public class ChatItemUpdateDto : UpdateDto
     {

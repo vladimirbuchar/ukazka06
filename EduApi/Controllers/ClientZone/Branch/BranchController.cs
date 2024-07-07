@@ -1,10 +1,10 @@
 ﻿using Core.Base.Dto;
 using Core.DataTypes;
-using EduServices.Branch.Dto;
-using EduServices.Branch.Service;
-using EduServices.OrganizationRole.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Services.Branch.Dto;
+using Services.Branch.Service;
+using Services.OrganizationRole.Service;
 using System;
 using System.Collections.Generic;
 

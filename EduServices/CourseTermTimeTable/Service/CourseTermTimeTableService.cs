@@ -1,17 +1,17 @@
 ﻿using Core.Base.Service;
 using Core.DataTypes;
-using EduRepository.CourseLectorRepository;
-using EduRepository.CourseTermDateRepository;
-using EduRepository.CourseTermRepository;
-using EduServices.CourseTermTimeTable.Convertor;
-using EduServices.CourseTermTimeTable.Dto;
 using Model.Edu.CourseTerm;
 using Model.Edu.CourseTermDate;
+using Repository.CourseLectorRepository;
+using Repository.CourseTermDateRepository;
+using Repository.CourseTermRepository;
+using Services.CourseTermTimeTable.Convertor;
+using Services.CourseTermTimeTable.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.CourseTermTimeTable.Service
+namespace Services.CourseTermTimeTable.Service
 {
     public class CourseTermTimeTableService(
         ICourseTermDateRepository courseTermDateRepository,

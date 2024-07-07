@@ -1,11 +1,11 @@
 ﻿using Core.Base.Service;
-using EduRepository.PermissionsRepository;
-using EduServices.Permissions.Convertor;
-using EduServices.Permissions.Dto;
-using EduServices.Permissions.Validator;
 using Model.System;
+using Repository.PermissionsRepository;
+using Services.Permissions.Convertor;
+using Services.Permissions.Dto;
+using Services.Permissions.Validator;
 
-namespace EduServices.Permissions.Service
+namespace Services.Permissions.Service
 {
     public class PermissionsService(
         IPermissionsRepository permissionsRepository,

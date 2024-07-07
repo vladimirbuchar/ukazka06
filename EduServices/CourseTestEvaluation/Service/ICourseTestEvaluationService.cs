@@ -1,9 +1,10 @@
 ﻿using Core.Base.Service;
-using EduServices.CourseTestEvaluation.Dto;
 using Model.Edu.CourseTestEvaluation;
+using Services.CourseTestEvaluation.Dto;
 
-namespace EduServices.CourseTestEvaluation.Service
+namespace Services.CourseTestEvaluation.Service
 {
     public interface ICourseTestEvaluationService
-        : IBaseService<CourseTestEvaluationDbo, CourseTestEvaluationCreateDto, CourseTestEvaluationListDto, CourseTestEvaluationDetailDto, CourseTestEvaluationUpdateDto> { }
+        : IBaseService<CourseTestEvaluationDbo, CourseTestEvaluationCreateDto, CourseTestEvaluationListDto, CourseTestEvaluationDetailDto, CourseTestEvaluationUpdateDto>
+    { }
 }

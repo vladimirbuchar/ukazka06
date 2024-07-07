@@ -1,8 +1,8 @@
 ﻿using Core.Base.Service;
-using EduServices.Permissions.Dto;
 using Model.System;
+using Services.Permissions.Dto;
 
-namespace EduServices.Permissions.Service
+namespace Services.Permissions.Service
 {
     public interface IPermissionsService : IBaseService<PermissionsDbo, PermissionsCreateDto, PermissionsListDto, PermissionsDetailDto, PermissionsUpdateDto>
     {

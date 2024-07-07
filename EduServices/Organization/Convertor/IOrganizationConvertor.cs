@@ -1,8 +1,8 @@
 ﻿using Core.Base.Convertor;
-using EduServices.Organization.Dto;
 using Model.Edu.Organization;
+using Services.Organization.Dto;
 
-namespace EduServices.Organization.Convertor
+namespace Services.Organization.Convertor
 {
     public interface IOrganizationConvertor : IBaseConvertor<OrganizationDbo, OrganizationCreateDto, OrganizationListDto, OrganizationDetailDto, OrganizationUpdateDto>
     {

@@ -1,7 +1,7 @@
 ﻿using Core.Base.Dto;
 using System;
 
-namespace EduServices.StudentGroup.Dto
+namespace Services.StudentGroup.Dto
 {
     public class StudentGroupCreateDto : CreateDto
     {

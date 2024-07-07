@@ -1,8 +1,8 @@
 ﻿using Core.Base.Convertor;
-using EduServices.CourseTermStudent.Dto;
 using Model.Link;
+using Services.CourseTermStudent.Dto;
 
-namespace EduServices.CourseTermStudent.Convertor
+namespace Services.CourseTermStudent.Convertor
 {
     public interface ICourseTermStudentConvertor : IBaseConvertor<CourseStudentDbo, CourseTermStudentCreateDto, CourseTermStudentListDto, CourseTermStudentDetailDto> { }
 }

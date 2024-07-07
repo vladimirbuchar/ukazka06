@@ -1,11 +1,11 @@
 ﻿using Core.Base.Service;
-using EduRepository.CourseRepository;
-using EduServices.Course.Convertor;
-using EduServices.Course.Dto;
-using EduServices.Course.Validator;
 using Model.Edu.Course;
+using Repository.CourseRepository;
+using Services.Course.Convertor;
+using Services.Course.Dto;
+using Services.Course.Validator;
 
-namespace EduServices.Course.Service
+namespace Services.Course.Service
 {
     public class CourseService(ICourseRepository courseRepository, ICourseConvertor courseConvertor, ICourseValidator validator)
         : BaseService<ICourseRepository, CourseDbo, ICourseConvertor, ICourseValidator, CourseCreateDto, CourseListDto, CourseDetailDto, CourseUpdateDto>(
@@ -13,5 +13,6 @@ namespace EduServices.Course.Service
             courseConvertor,
             validator
         ),
-            ICourseService { }
+            ICourseService
+    { }
 }

@@ -1,8 +1,8 @@
 ﻿using Core.Base.Convertor;
-using EduServices.StudentEvaluation.Dto;
 using Model.Edu.StudentEvaluation;
+using Services.StudentEvaluation.Dto;
 
-namespace EduServices.StudentEvaluation.Convertor
+namespace Services.StudentEvaluation.Convertor
 {
     public interface IStudentEvaluationConvertor : IBaseConvertor<StudentEvaluationDbo, StudentEvaluationCreateDto, StudentEvaluationListDto, StudentEvaluationDetailDto>
     {

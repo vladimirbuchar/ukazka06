@@ -1,13 +1,13 @@
 ﻿using Core.Base.Convertor;
-using EduServices.Organization.Dto;
-using EduServices.StudentEvaluation.Dto;
-using EduServices.UserProfile.Dto;
 using Model.Edu.StudentEvaluation;
 using Model.Edu.UserCertificate;
 using Model.Link;
+using Services.Organization.Dto;
+using Services.StudentEvaluation.Dto;
+using Services.UserProfile.Dto;
 using System.Collections.Generic;
 
-namespace EduServices.UserProfile.Convertor
+namespace Services.UserProfile.Convertor
 {
     public interface IUserProfileConvertor : IBaseConvertor
     {

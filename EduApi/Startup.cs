@@ -2,8 +2,6 @@
 using Core.Constants;
 using EduApi.Configuration.Hangfire;
 using EduApi.Configuration.Swagger;
-using EduServices;
-using EduServices.HangfireJob;
 using Hangfire;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -17,6 +15,8 @@ using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Model;
+using Services;
+using Services.HangfireJob;
 using System;
 using System.Linq;
 using System.Security.Claims;

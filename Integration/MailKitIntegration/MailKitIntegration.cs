@@ -1,10 +1,10 @@
-﻿using System;
-using Core.Constants;
+﻿using Core.Constants;
 using Core.DataTypes;
 using Core.Extension;
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Configuration;
 using MimeKit;
+using System;
 
 namespace Integration.MailKitIntegration
 {

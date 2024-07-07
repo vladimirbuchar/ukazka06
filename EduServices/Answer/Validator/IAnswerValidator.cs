@@ -1,9 +1,9 @@
 ﻿using Core.Base.Validator;
-using EduRepository.AnswerRepository;
-using EduServices.Answer.Dto;
 using Model.Edu.Answer;
+using Repository.AnswerRepository;
+using Services.Answer.Dto;
 
-namespace EduServices.Answer.Validator
+namespace Services.Answer.Validator
 {
     public interface IAnswerValidator : IBaseValidator<AnswerDbo, IAnswerRepository, AnswerCreateDto, AnswerDetailDto, AnswerUpdateDto> { }
 }

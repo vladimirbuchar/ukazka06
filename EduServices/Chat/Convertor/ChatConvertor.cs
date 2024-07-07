@@ -1,10 +1,10 @@
 ﻿using Core.Extension;
-using EduServices.Chat.Dto;
 using Model.Edu.Chat;
+using Services.Chat.Dto;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.Chat.Convertor
+namespace Services.Chat.Convertor
 {
     public class ChatConvertor : IChatConvertor
     {

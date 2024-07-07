@@ -1,9 +1,9 @@
 ﻿using Core.Base.Validator;
-using EduRepository.AttendanceStudentRepository;
-using EduServices.StudentAttendance.Dto;
 using Model.Edu.AttendanceStudent;
+using Repository.AttendanceStudentRepository;
+using Services.StudentAttendance.Dto;
 
-namespace EduServices.StudentAttendance.Validator
+namespace Services.StudentAttendance.Validator
 {
     public interface IStudentAttendanceValidator : IBaseValidator<AttendanceStudentDbo, IAttendanceStudentRepository, StudentAttendanceCreateDto, StudentAttendanceDetailDto> { }
 }

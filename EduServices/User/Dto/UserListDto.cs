@@ -1,6 +1,6 @@
 ﻿using Core.Base.Dto;
 
-namespace EduServices.User.Dto
+namespace Services.User.Dto
 {
     public class UserListDto : ListDto
     {

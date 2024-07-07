@@ -1,12 +1,12 @@
 ﻿using Core.Base.Validator;
 using Core.Constants;
 using Core.DataTypes;
-using EduRepository.OrganizationRepository;
-using EduRepository.StudentGroupRepository;
-using EduServices.StudentGroup.Dto;
 using Model.Edu.StudentGroup;
+using Repository.OrganizationRepository;
+using Repository.StudentGroupRepository;
+using Services.StudentGroup.Dto;
 
-namespace EduServices.StudentGroup.Validator
+namespace Services.StudentGroup.Validator
 {
     public class StudentGroupValidator(IStudentGroupRepository repository, IOrganizationRepository organizationRepository)
         : BaseValidator<StudentGroupDbo, IStudentGroupRepository, StudentGroupCreateDto, StudentGroupDetailDto, StudentGroupUpdateDto>(repository),
@@ -19,16 +19,16 @@ namespace EduServices.StudentGroup.Validator
             Result<StudentGroupDetailDto> result = new();
             if (_organizationRepository.GetEntity(create.OrganizationId) == null)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.ORGANIZATION, GlobalValue.NOT_EXISTS));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.ORGANIZATION, MessageItem.NOT_EXISTS));
             }
-            IsValidString(create.Name, result, Category.STUDENT_GROUP, GlobalValue.STRING_IS_EMPTY);
+            IsValidString(create.Name, result, MessageCategory.STUDENT_GROUP, MessageItem.STRING_IS_EMPTY);
             return result;
         }
 
         public override Result<StudentGroupDetailDto> IsValid(StudentGroupUpdateDto update)
         {
             Result<StudentGroupDetailDto> result = new();
-            IsValidString(update.Name, result, Category.STUDENT_GROUP, GlobalValue.STRING_IS_EMPTY);
+            IsValidString(update.Name, result, MessageCategory.STUDENT_GROUP, MessageItem.STRING_IS_EMPTY);
             return result;
         }
     }

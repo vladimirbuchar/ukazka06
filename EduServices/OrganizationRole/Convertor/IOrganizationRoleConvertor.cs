@@ -1,6 +1,6 @@
 ﻿using Core.Base.Convertor;
 
-namespace EduServices.OrganizationRole.Convertor
+namespace Services.OrganizationRole.Convertor
 {
     public interface IOrganizationRoleConvertor : IBaseConvertor { }
 }

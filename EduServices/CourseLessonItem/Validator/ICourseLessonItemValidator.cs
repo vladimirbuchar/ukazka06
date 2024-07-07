@@ -1,9 +1,9 @@
 ﻿using Core.Base.Validator;
-using EduRepository.CourseLessonItemRepository;
-using EduServices.CourseLessonItem.Dto;
 using Model.Edu.CourseLessonItem;
+using Repository.CourseLessonItemRepository;
+using Services.CourseLessonItem.Dto;
 
-namespace EduServices.CourseLessonItem.Validator
+namespace Services.CourseLessonItem.Validator
 {
     public interface ICourseLessonItemValidator : IBaseValidator<CourseLessonItemDbo, ICourseLessonItemRepository, CourseLessonItemCreateDto, CourseLessonItemDetailDto, CourseLessonItemUpdateDto> { }
 }

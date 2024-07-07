@@ -1,20 +1,20 @@
 ﻿using Core.Base.Service;
 using Core.DataTypes;
-using EduRepository.CourseLessonRepository;
-using EduRepository.CourseTestBankOfQuestionRepository;
-using EduRepository.TestRepository;
-using EduServices.CourseLesson.Convertor;
-using EduServices.CourseLesson.Dto;
-using EduServices.CourseLesson.Validator;
-using EduServices.Test.Convertor;
-using EduServices.Test.Dto;
 using Model.Edu.CourseLesson;
 using Model.Edu.CourseTest;
 using Model.Link;
+using Repository.CourseLessonRepository;
+using Repository.CourseTestBankOfQuestionRepository;
+using Repository.TestRepository;
+using Services.CourseLesson.Convertor;
+using Services.CourseLesson.Dto;
+using Services.CourseLesson.Validator;
+using Services.Test.Convertor;
+using Services.Test.Dto;
 using System;
 using System.Linq;
 
-namespace EduServices.Test.Service
+namespace Services.Test.Service
 {
     public class TestService(
         ICourseLessonConvertor courseLessonConvertor,

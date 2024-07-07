@@ -1,6 +1,6 @@
 ﻿using Core.Base.Dto;
 
-namespace EduServices.Page.Dto
+namespace Services.Page.Dto
 {
     public class PriceListDto : ListDto
     {

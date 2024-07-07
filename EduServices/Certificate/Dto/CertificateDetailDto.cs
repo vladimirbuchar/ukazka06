@@ -1,6 +1,6 @@
 ﻿using Core.Base.Dto;
 
-namespace EduServices.Certificate.Dto
+namespace Services.Certificate.Dto
 {
     public class CertificateDetailDto : DetailDto
     {

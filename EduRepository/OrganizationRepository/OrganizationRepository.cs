@@ -6,7 +6,7 @@ using Model.Edu.Organization;
 using System;
 using System.Linq;
 
-namespace EduRepository.OrganizationRepository
+namespace Repository.OrganizationRepository
 {
     public class OrganizationRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<OrganizationDbo>(dbContext, memoryCache), IOrganizationRepository
     {

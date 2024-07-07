@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Model.Edu.Notification;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using Model.Edu.Notification;
 
 namespace Model.CodeBook
 {

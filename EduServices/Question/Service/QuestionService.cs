@@ -1,14 +1,14 @@
 ﻿using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Repository.FileRepository;
 using Core.Base.Service;
-using EduRepository.QuestionRepository;
-using EduServices.Question.Convertor;
-using EduServices.Question.Dto;
-using EduServices.Question.Validator;
 using Model.CodeBook;
 using Model.Edu.Question;
+using Repository.QuestionRepository;
+using Services.Question.Convertor;
+using Services.Question.Dto;
+using Services.Question.Validator;
 
-namespace EduServices.Question.Service
+namespace Services.Question.Service
 {
     public class QuestionService(
         IQuestionRepository questionRepository,

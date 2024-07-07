@@ -1,6 +1,6 @@
 ﻿using Core.Base.Service;
 
-namespace EduServices.SystemService.FileUpload
+namespace Services.SystemService.FileUpload
 {
     public class FileUploadService : BaseService // <IFileUploadRepository, FileRepositoryDbo>, IFileUploadService
     {

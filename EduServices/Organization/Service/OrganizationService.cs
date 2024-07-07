@@ -1,15 +1,15 @@
 ﻿using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Repository.FileRepository;
 using Core.Base.Service;
-using EduRepository.OrganizationRepository;
-using EduServices.Organization.Convertor;
-using EduServices.Organization.Dto;
-using EduServices.Organization.Validator;
 using Model.CodeBook;
 using Model.Edu.Organization;
+using Repository.OrganizationRepository;
+using Services.Organization.Convertor;
+using Services.Organization.Dto;
+using Services.Organization.Validator;
 using System;
 
-namespace EduServices.Organization.Service
+namespace Services.Organization.Service
 {
     public class OrganizationService(
         IOrganizationRepository organizationRepository,

@@ -1,6 +1,6 @@
 ﻿using Core.Base.Dto;
 
-namespace EduServices.CourseMaterial.Dto
+namespace Services.CourseMaterial.Dto
 {
     public class CourseMaterialUpdateDto : UpdateDto
     {

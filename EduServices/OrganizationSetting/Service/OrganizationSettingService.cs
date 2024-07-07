@@ -1,17 +1,17 @@
 ﻿using Core.Base.Service;
 using Core.DataTypes;
-using EduRepository.LicenseChangeRepository;
-using EduRepository.OrganizationRepository;
-using EduRepository.OrganizationSettingRepository;
-using EduServices.OrganizationSetting.Convertor;
-using EduServices.OrganizationSetting.Dto;
-using EduServices.OrganizationSetting.Validator;
 using Model.Edu.LicenseChange;
 using Model.Edu.Organization;
 using Model.Edu.OrganizationSetting;
+using Repository.LicenseChangeRepository;
+using Repository.OrganizationRepository;
+using Repository.OrganizationSettingRepository;
+using Services.OrganizationSetting.Convertor;
+using Services.OrganizationSetting.Dto;
+using Services.OrganizationSetting.Validator;
 using System;
 
-namespace EduServices.OrganizationSetting.Service
+namespace Services.OrganizationSetting.Service
 {
     public class OrganizationSettingService(
         ILicenseChangeRepository licenseChangeRepository,

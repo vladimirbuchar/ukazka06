@@ -2,24 +2,24 @@
 using Core.Constants;
 using Core.DataTypes;
 using Core.Extension;
-using EduRepository.LinkLifeTimeRepository;
-using EduRepository.OrganizationRepository;
-using EduRepository.RoleRepository;
-using EduRepository.UserInOrganizationRepository;
-using EduRepository.UserRepository;
-using EduServices.Organization.Convertor;
-using EduServices.Organization.Dto;
-using EduServices.Organization.Validator;
-using EduServices.SystemService.SendMailService;
-using EduServices.User.Convertor;
-using EduServices.User.Dto;
-using EduServices.User.Validator;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Model.Edu.LinkLifeTime;
 using Model.Edu.User;
 using Model.Link;
 using Newtonsoft.Json;
+using Repository.LinkLifeTimeRepository;
+using Repository.OrganizationRepository;
+using Repository.RoleRepository;
+using Repository.UserInOrganizationRepository;
+using Repository.UserRepository;
+using Services.Organization.Convertor;
+using Services.Organization.Dto;
+using Services.Organization.Validator;
+using Services.SystemService.SendMailService;
+using Services.User.Convertor;
+using Services.User.Dto;
+using Services.User.Validator;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -27,7 +27,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 
-namespace EduServices.User.Service
+namespace Services.User.Service
 {
     public class UserService(
         IUserRepository userRepository,
@@ -354,7 +354,7 @@ namespace EduServices.User.Service
                 return base.DeleteObject(objectId, userId);
             }
             Result result = new();
-            result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.USER, GlobalValue.CAN_NOT_DELETE));
+            result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.USER, MessageItem.CAN_NOT_DELETE));
             return result;
         }
 

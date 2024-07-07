@@ -1,8 +1,8 @@
 ﻿using Core.Base.Convertor;
-using EduServices.OrganizationStudyHour.Dto;
 using Model.Edu.OrganizationStudyHour;
+using Services.OrganizationStudyHour.Dto;
 
-namespace EduServices.OrganizationStudyHour.Convertor
+namespace Services.OrganizationStudyHour.Convertor
 {
     public interface IOrganizationStudyHourConvertor : IBaseConvertor<OrganizationStudyHourDbo, StudyHourCreateDto, StudyHourListDto, StudyHourDetailDto, StudyHourUpdateDto> { }
 }

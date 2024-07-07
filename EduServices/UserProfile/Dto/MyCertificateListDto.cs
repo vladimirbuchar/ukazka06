@@ -1,7 +1,7 @@
-﻿using System;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
+using System;
 
-namespace EduServices.UserProfile.Dto
+namespace Services.UserProfile.Dto
 {
     public class MyCertificateListDto : ListDto
     {

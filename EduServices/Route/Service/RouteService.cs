@@ -1,11 +1,11 @@
 ﻿using Core.Base.Service;
-using EduRepository.RouteRepository;
-using EduServices.Route.Convertor;
-using EduServices.Route.Dto;
-using EduServices.Route.Validator;
 using Model.System;
+using Repository.RouteRepository;
+using Services.Route.Convertor;
+using Services.Route.Dto;
+using Services.Route.Validator;
 
-namespace EduServices.Route.Service
+namespace Services.Route.Service
 {
     public class RouteService(
         IRouteRepository routeRepository,

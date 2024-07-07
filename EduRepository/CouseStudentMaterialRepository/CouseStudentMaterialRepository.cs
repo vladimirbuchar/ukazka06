@@ -3,7 +3,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Model;
 using Model.Link;
 
-namespace EduRepository.CouseStudentMaterialRepository
+namespace Repository.CouseStudentMaterialRepository
 {
     public class CouseStudentMaterialRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<CouseStudentMaterialDbo>(dbContext, memoryCache), ICouseStudentMaterialRepository { }
 }

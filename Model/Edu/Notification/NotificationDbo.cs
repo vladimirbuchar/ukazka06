@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using Model.CodeBook;
+﻿using Model.CodeBook;
 using Model.Edu.CourseTerm;
 using Model.Edu.Organization;
 using Model.Edu.User;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Model.Edu.Notification
 {

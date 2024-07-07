@@ -1,9 +1,9 @@
 ﻿using Core.Base.Validator;
-using EduRepository.QuestionRepository;
-using EduServices.Question.Dto;
 using Model.Edu.Question;
+using Repository.QuestionRepository;
+using Services.Question.Dto;
 
-namespace EduServices.Question.Validator
+namespace Services.Question.Validator
 {
     public interface IQuestionValidator : IBaseValidator<QuestionDbo, IQuestionRepository, QuestionCreateDto, QuestionDetailDto, QuestionUpdateDto> { }
 }

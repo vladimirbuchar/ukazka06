@@ -103,7 +103,7 @@ namespace Model
             SetTableDefault<CourseTermDateDbo>(modelBuilder);
             SetTableDefault<OrganizationStudyHourDbo>(modelBuilder);
             SetTableDefault<SendMessageTypeDbo>(modelBuilder);
-            SetTableDefault<SendMessageDbo>(modelBuilder);
+            SetTableDefault<MessageDbo>(modelBuilder);
             SetTableDefault<StudentGroupDbo>(modelBuilder);
             SetTableDefault<StudentInGroupDbo>(modelBuilder);
             SetTableDefault<StudentInGroupCourseTermDbo>(modelBuilder);
@@ -146,55 +146,38 @@ namespace Model
             SetTableDefault<SendEmailDbo>(modelBuilder);
             SetTableDefault<SendEmailAttachmentDbo>(modelBuilder);
             SetTableDefault<PermissionsDbo>(modelBuilder);
-            //
+
             _ = modelBuilder.Entity<UserDbo>().HasIndex(u => u.UserEmail).IsUnique();
-            /*_ = modelBuilder.Entity<EduEmailDbo>().Property(x => x.IsHtml).HasDefaultValue(false);
-            _ = modelBuilder.Entity<LicenseDbo>().Property(x => x.OneYearSale).HasDefaultValue(0);
-            _ = modelBuilder.Entity<LicenseDbo>().Property(x => x.SendCourseInquiry).HasDefaultValue(false);9
-            _ = modelBuilder.Entity<UserDbo>().Property(x => x.IsActive).HasDefaultValue(false);*/
             _ = modelBuilder.Entity<OrganizationSettingDbo>().Property(x => x.ElearningUrl).IsRequired();
 
             _ = modelBuilder.Entity<BankOfQuestionDbo>().HasMany(x => x.BankOfQuestionsTranslations).WithOne(y => y.BankOfQuestion).OnDelete(DeleteBehavior.NoAction);
             _ = modelBuilder.Entity<BankOfQuestionDbo>().HasMany(x => x.TestQuestions).WithOne(y => y.BankOfQuestion).OnDelete(DeleteBehavior.NoAction);
-
             _ = modelBuilder.Entity<BranchDbo>().HasMany(x => x.BranchTranslations).WithOne(y => y.Branch).OnDelete(DeleteBehavior.NoAction);
             _ = modelBuilder.Entity<BranchDbo>().HasMany(x => x.ClassRoom).WithOne(y => y.Branch).OnDelete(DeleteBehavior.NoAction);
-
             _ = modelBuilder.Entity<CertificateDbo>().HasMany(x => x.CertificateTranslations).WithOne(y => y.Certificate).OnDelete(DeleteBehavior.NoAction);
-
             _ = modelBuilder.Entity<ClassRoomDbo>().HasMany(x => x.ClassRoomTranslations).WithOne(y => y.ClassRoom).OnDelete(DeleteBehavior.NoAction);
             _ = modelBuilder.Entity<ClassRoomDbo>().HasMany(x => x.CourseTermDates).WithOne(y => y.ClassRoom).OnDelete(DeleteBehavior.NoAction);
-
             _ = modelBuilder.Entity<CourseDbo>().HasMany(x => x.CourseTranslations).WithOne(y => y.Course).OnDelete(DeleteBehavior.NoAction);
             _ = modelBuilder.Entity<CourseDbo>().HasMany(x => x.CourseTerm).WithOne(y => y.Course).OnDelete(DeleteBehavior.NoAction);
             _ = modelBuilder.Entity<CourseDbo>().HasMany(x => x.CourseBrowses).WithOne(y => y.Course).OnDelete(DeleteBehavior.NoAction);
             _ = modelBuilder.Entity<CourseDbo>().HasMany(x => x.Notes).WithOne(y => y.Course).OnDelete(DeleteBehavior.NoAction);
-
             _ = modelBuilder.Entity<CourseLessonDbo>().HasMany(x => x.CourseItem).WithOne(y => y.CourseLesson).OnDelete(DeleteBehavior.NoAction);
             _ = modelBuilder.Entity<CourseLessonDbo>().HasMany(x => x.CourseLessonTranslations).WithOne(y => y.CourseLesson).OnDelete(DeleteBehavior.NoAction);
             _ = modelBuilder.Entity<CourseTestDbo>().HasOne(x => x.CourseLesson).WithOne(y => y.CourseTest).HasForeignKey<CourseLessonDbo>(x => x.CourseTestId);
-
             _ = modelBuilder.Entity<CourseLessonItemDbo>().HasMany(x => x.CourseLessonItemTranslations).WithOne(y => y.CourseLessonItem).OnDelete(DeleteBehavior.NoAction);
             _ = modelBuilder.Entity<CourseLessonItemDbo>().HasMany(x => x.CourseBrowses).WithOne(y => y.CourseLessonItem).OnDelete(DeleteBehavior.NoAction);
-
             _ = modelBuilder.Entity<CourseMaterialDbo>().HasMany(x => x.CourseMaterialTranslation).WithOne(y => y.CourseMaterial).OnDelete(DeleteBehavior.NoAction);
             _ = modelBuilder.Entity<CourseMaterialDbo>().HasMany(x => x.CourseLessons).WithOne(y => y.CourseMaterial).OnDelete(DeleteBehavior.NoAction);
-
             _ = modelBuilder.Entity<CourseTermDbo>().HasMany(x => x.AttendanceStudents).WithOne(y => y.CourseTerm).OnDelete(DeleteBehavior.NoAction);
             _ = modelBuilder.Entity<CourseTermDbo>().HasMany(x => x.CourseTermDate).WithOne(y => y.CourseTerm).OnDelete(DeleteBehavior.NoAction);
             _ = modelBuilder.Entity<CourseTermDbo>().HasMany(x => x.StudentInGroupCourseTerms).WithOne(y => y.CourseTerm).OnDelete(DeleteBehavior.NoAction);
             _ = modelBuilder.Entity<CourseTermDbo>().HasMany(x => x.CourseLectors).WithOne(y => y.CourseTerm).OnDelete(DeleteBehavior.NoAction);
             _ = modelBuilder.Entity<CourseTermDbo>().HasMany(x => x.CourseStudents).WithOne(y => y.CourseTerm).OnDelete(DeleteBehavior.NoAction);
             _ = modelBuilder.Entity<CourseTermDbo>().HasMany(x => x.Chats).WithOne(y => y.CourseTerm).OnDelete(DeleteBehavior.NoAction);
-
             _ = modelBuilder.Entity<CourseTermDateDbo>().HasMany(x => x.AttendanceStudents).WithOne(y => y.CourseTermDate).OnDelete(DeleteBehavior.NoAction);
-
             _ = modelBuilder.Entity<CourseTestDbo>().HasMany(x => x.CourseTestEvaluations).WithOne(y => y.CourseTest).OnDelete(DeleteBehavior.NoAction);
-
             _ = modelBuilder.Entity<OrganizationDbo>().HasMany(x => x.OrganizationTranslations).WithOne(y => y.Organization).OnDelete(DeleteBehavior.NoAction);
-            ;
             _ = modelBuilder.Entity<OrganizationDbo>().HasMany(x => x.LicenseChanges).WithOne(y => y.Organization).OnDelete(DeleteBehavior.NoAction);
-            ;
             _ = modelBuilder.Entity<OrganizationDbo>().HasMany(x => x.Branch).WithOne(y => y.Organization).OnDelete(DeleteBehavior.NoAction);
             _ = modelBuilder.Entity<OrganizationDbo>().HasMany(x => x.Course).WithOne(y => y.Organization).OnDelete(DeleteBehavior.NoAction);
             _ = modelBuilder.Entity<OrganizationDbo>().HasMany(x => x.BankOfQuestions).WithOne(y => y.Organization).OnDelete(DeleteBehavior.NoAction);
@@ -217,21 +200,16 @@ namespace Model
             _ = modelBuilder.Entity<TimeTableDbo>().HasMany(x => x.OrganizationStudyHourFrom).WithOne(y => y.ActiveFrom).OnDelete(DeleteBehavior.NoAction);
             _ = modelBuilder.Entity<TimeTableDbo>().HasMany(x => x.OrganizationStudyHourTo).WithOne(y => y.ActiveTo).OnDelete(DeleteBehavior.NoAction);
             _ = modelBuilder.Entity<StudentInGroupDbo>().HasOne(x => x.UserInOrganization).WithMany(y => y.StudentInGroups).OnDelete(DeleteBehavior.NoAction);
-            //modelBuilder.Entity<StudentInGroupDbo>().HasOne(x => x.UserInOrganization).WithMany(y => y.StudentInGroups);
             _ = modelBuilder.Entity<CourseLessonItemDbo>().HasMany(x => x.CourseBrowses).WithOne(y => y.CourseLessonItem).OnDelete(DeleteBehavior.NoAction);
             _ = modelBuilder.Entity<CourseLessonItemDbo>().HasMany(x => x.CouseStudentMaterials).WithOne(y => y.CourseLessonItem).OnDelete(DeleteBehavior.NoAction);
             _ = modelBuilder.Entity<QuestionDbo>().HasMany(x => x.StudentTestSummaryQuestions).WithOne(y => y.TestQuestion).OnDelete(DeleteBehavior.NoAction);
             _ = modelBuilder.Entity<QuestionDbo>().HasMany(x => x.TestUserAnswers).WithOne(y => y.TestQuestion).OnDelete(DeleteBehavior.NoAction);
             _ = modelBuilder.Entity<AnswerDbo>().HasMany(x => x.TestUserAnswers).WithOne(y => y.TestQuestionAnswer).OnDelete(DeleteBehavior.NoAction);
-
             _ = modelBuilder.Entity<TimeTableDbo>().HasMany(x => x.CourseTermFrom).WithOne(y => y.TimeFrom).OnDelete(DeleteBehavior.NoAction);
             _ = modelBuilder.Entity<TimeTableDbo>().HasMany(x => x.CourseTermTo).WithOne(y => y.TimeTo).OnDelete(DeleteBehavior.NoAction);
-
             _ = modelBuilder.Entity<TimeTableDbo>().HasMany(x => x.CourseTermDateFrom).WithOne(y => y.TimeFrom).OnDelete(DeleteBehavior.NoAction);
             _ = modelBuilder.Entity<TimeTableDbo>().HasMany(x => x.CourseTermDateTo).WithOne(y => y.TimeTo).OnDelete(DeleteBehavior.NoAction);
-
             _ = modelBuilder.Entity<UserDbo>().HasOne(d => d.UserRole).WithMany(p => p.Users).HasForeignKey(d => d.UserRoleId).OnDelete(DeleteBehavior.NoAction);
-
             base.OnModelCreating(modelBuilder);
         }
 
@@ -240,8 +218,6 @@ namespace Model
         {
             _ = modelBuilder.Entity<T>().HasIndex(u => u.SystemIdentificator).IsUnique();
             _ = modelBuilder.Entity<T>().Property(u => u.Id).ValueGeneratedOnAdd();
-            /*_ = modelBuilder.Entity<T>().Property(u => u.IsDeleted).HasDefaultValue(false);
-            _ = modelBuilder.Entity<T>().Property(u => u.IsActive).HasDefaultValue(true);*/
         }
 
         public DbSet<CourseDbo> Course { get; set; }
@@ -285,7 +261,7 @@ namespace Model
         public DbSet<CourseTermDateDbo> CourseTermDate { get; set; }
         public DbSet<OrganizationStudyHourDbo> OrganizationStudyHour { get; set; }
         public DbSet<SendMessageTypeDbo> SendMessageType { get; set; }
-        public DbSet<SendMessageDbo> SendMessage { get; set; }
+        public DbSet<MessageDbo> SendMessage { get; set; }
         public DbSet<StudentGroupDbo> StudentGroup { get; set; }
         public DbSet<StudentInGroupDbo> StudentInGroups { get; set; }
         public DbSet<StudentInGroupCourseTermDbo> StudentInGroupCourseTerm { get; set; }

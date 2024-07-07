@@ -2,14 +2,14 @@
 using Core.Base.Validator;
 using Core.Constants;
 using Core.DataTypes;
-using EduRepository.OrganizationRepository;
-using EduRepository.UserRepository;
-using EduServices.Organization.Dto;
 using Model.CodeBook;
 using Model.Edu.Organization;
+using Repository.OrganizationRepository;
+using Repository.UserRepository;
+using Services.Organization.Dto;
 using System.Collections.Generic;
 
-namespace EduServices.Organization.Validator
+namespace Services.Organization.Validator
 {
     public class OrganizationValidator(
         IOrganizationRepository repository,
@@ -28,15 +28,15 @@ namespace EduServices.Organization.Validator
         public override Result<OrganizationDetailDto> IsValid(OrganizationCreateDto create)
         {
             Result<OrganizationDetailDto> validate = new();
-            IsValidEmail(create.Email, validate, Category.ORGANIZATION, GlobalValue.EMAIL_IS_NOT_VALID);
-            IsValidPhoneNumber(create.PhoneNumber, validate, Category.ORGANIZATION, GlobalValue.IS_NOT_VALID_PHONE_NUMBER);
-            IsValidUri(create.WWW, validate, Category.ORGANIZATION, GlobalValue.IS_NOT_VALID_URI);
+            IsValidEmail(create.Email, validate, MessageCategory.ORGANIZATION, MessageItem.EMAIL_IS_NOT_VALID);
+            IsValidPhoneNumber(create.PhoneNumber, validate, MessageCategory.ORGANIZATION, MessageItem.IS_NOT_VALID_PHONE_NUMBER);
+            IsValidUri(create.WWW, validate, MessageCategory.ORGANIZATION, MessageItem.IS_NOT_VALID_URI);
             ValidateAddress(create.Addresses, validate);
-            IsValidString(create.Name, validate, Category.ORGANIZATION, GlobalValue.STRING_IS_EMPTY);
-            CodeBookValueExist(_culture, x => x.Id == create.DefaultCultureId, validate, Category.CULTURE, GlobalValue.NOT_EXISTS, create.DefaultCultureId.ToString());
+            IsValidString(create.Name, validate, MessageCategory.ORGANIZATION, MessageItem.STRING_IS_EMPTY);
+            CodeBookValueExist(_culture, x => x.Id == create.DefaultCultureId, validate, MessageCategory.CULTURE, MessageItem.NOT_EXISTS, create.DefaultCultureId.ToString());
             if (ValidateUser && _userRepository.GetEntity(false, x => x.Id == create.UserId) == null)
             {
-                validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.USER, GlobalValue.NOT_EXISTS));
+                validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.USER, MessageItem.NOT_EXISTS));
             }
             return validate;
         }
@@ -44,19 +44,19 @@ namespace EduServices.Organization.Validator
         public override Result<OrganizationDetailDto> IsValid(OrganizationUpdateDto update)
         {
             Result<OrganizationDetailDto> validate = new();
-            IsValidEmail(update.Email, validate, Category.ORGANIZATION, GlobalValue.EMAIL_IS_NOT_VALID);
-            IsValidPhoneNumber(update.PhoneNumber, validate, Category.ORGANIZATION, GlobalValue.IS_NOT_VALID_PHONE_NUMBER);
-            IsValidUri(update.WWW, validate, Category.ORGANIZATION, GlobalValue.IS_NOT_VALID_URI);
+            IsValidEmail(update.Email, validate, MessageCategory.ORGANIZATION, MessageItem.EMAIL_IS_NOT_VALID);
+            IsValidPhoneNumber(update.PhoneNumber, validate, MessageCategory.ORGANIZATION, MessageItem.IS_NOT_VALID_PHONE_NUMBER);
+            IsValidUri(update.WWW, validate, MessageCategory.ORGANIZATION, MessageItem.IS_NOT_VALID_URI);
             ValidateAddress(update.Addresses, validate);
-            IsValidString(update.Name, validate, Category.ORGANIZATION, GlobalValue.STRING_IS_EMPTY);
+            IsValidString(update.Name, validate, MessageCategory.ORGANIZATION, MessageItem.STRING_IS_EMPTY);
             return validate;
         }
 
-        private void ValidateAddress(HashSet<Core.DataTypes.Address> addresses, Result result)
+        private void ValidateAddress(HashSet<Address> addresses, Result result)
         {
             if (addresses != null && addresses.Count > 0)
             {
-                foreach (Core.DataTypes.Address address in addresses)
+                foreach (Address address in addresses)
                 {
                     base.CodeBookValueExist(_country, x => x.Id == address.CountryId, result, AddressValidator.COUNTRY, AddressValidator.COUNTRY_NOT_EXIST, address.CountryId.ToString());
                     base.CodeBookValueExist(_addressType, x => x.Id == address.AddressTypeId, result, AddressValidator.ADDRESS_TYPE, AddressValidator.ADDRESS_TYPE_NOT_EXIST, address.AddressTypeId.ToString());

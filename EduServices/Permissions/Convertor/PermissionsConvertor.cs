@@ -1,9 +1,9 @@
-﻿using EduServices.Permissions.Dto;
-using Model.System;
+﻿using Model.System;
+using Services.Permissions.Dto;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.Permissions.Convertor
+namespace Services.Permissions.Convertor
 {
     public class PermissionsConvertor() : IPermissionsConvertor
     {

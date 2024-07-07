@@ -3,28 +3,28 @@ using Core.Base.Service;
 using Core.Constants;
 using Core.DataTypes;
 using Core.Extension;
-using EduRepository.CourseStudentRepository;
-using EduRepository.NotificationRepository;
-using EduRepository.OrganizationRoleRepository;
-using EduRepository.OrganizationSettingRepository;
-using EduRepository.RoleRepository;
-using EduRepository.UserInOrganizationRepository;
-using EduRepository.UserRepository;
-using EduServices.CourseTermStudent.Convertor;
-using EduServices.CourseTermStudent.Dto;
-using EduServices.CourseTermStudent.Validator;
-using EduServices.SystemService.SendMailService;
 using Microsoft.Extensions.Configuration;
 using Model.CodeBook;
 using Model.Edu.Notification;
 using Model.Edu.Person;
 using Model.Edu.User;
 using Model.Link;
+using Repository.CourseStudentRepository;
+using Repository.NotificationRepository;
+using Repository.OrganizationRoleRepository;
+using Repository.OrganizationSettingRepository;
+using Repository.RoleRepository;
+using Repository.UserInOrganizationRepository;
+using Repository.UserRepository;
+using Services.CourseTermStudent.Convertor;
+using Services.CourseTermStudent.Dto;
+using Services.CourseTermStudent.Validator;
+using Services.SystemService.SendMailService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.CourseTermStudent.Service
+namespace Services.CourseTermStudent.Service
 {
     public class CourseTermStudentService(
         ICourseStudentRepository studentRepository,
@@ -144,7 +144,7 @@ namespace EduServices.CourseTermStudent.Service
                 }
                 else
                 {
-                    result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.ADD_STUDENT_TO_COURSE, GlobalValue.EMAIL_IS_NOT_VALID, email, 0));
+                    result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.ADD_STUDENT_TO_COURSE, MessageItem.EMAIL_IS_NOT_VALID, email, 0));
                 }
             }
             return result;

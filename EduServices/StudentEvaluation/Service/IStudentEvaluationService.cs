@@ -1,8 +1,8 @@
 ﻿using Core.Base.Service;
-using EduServices.StudentEvaluation.Dto;
 using Model.Edu.StudentEvaluation;
+using Services.StudentEvaluation.Dto;
 
-namespace EduServices.StudentEvaluation.Service
+namespace Services.StudentEvaluation.Service
 {
     public interface IStudentEvaluationService : IBaseService<StudentEvaluationDbo, StudentEvaluationCreateDto, StudentEvaluationListDto, StudentEvaluationDetailDto>
     {

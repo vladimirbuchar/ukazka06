@@ -1,11 +1,11 @@
 ﻿using Core.Base.Dto;
 using Core.DataTypes;
 using EduApi.Controllers.ClientZone.Note;
-using EduServices.Chat.Dto;
-using EduServices.Chat.Service;
-using EduServices.OrganizationRole.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Services.Chat.Dto;
+using Services.Chat.Service;
+using Services.OrganizationRole.Service;
 using System;
 using System.Collections.Generic;
 

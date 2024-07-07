@@ -1,7 +1,7 @@
 ﻿using Core.Base.Repository;
 using Model.Edu.CourseLessonItem;
 
-namespace EduRepository.CourseLessonItemRepository
+namespace Repository.CourseLessonItemRepository
 {
     public interface ICourseLessonItemRepository : IBaseRepository<CourseLessonItemDbo> { }
 }

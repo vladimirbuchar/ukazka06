@@ -1,9 +1,9 @@
 ﻿using Core.Base.Validator;
-using EduRepository.ClassRoomRepository;
-using EduServices.ClassRoom.Dto;
 using Model.Edu.ClassRoom;
+using Repository.ClassRoomRepository;
+using Services.ClassRoom.Dto;
 
-namespace EduServices.ClassRoom.Validator
+namespace Services.ClassRoom.Validator
 {
     public interface IClassRoomValidator : IBaseValidator<ClassRoomDbo, IClassRoomRepository, ClassRoomCreateDto, ClassRoomDetailDto, ClassRoomUpdateDto> { }
 }

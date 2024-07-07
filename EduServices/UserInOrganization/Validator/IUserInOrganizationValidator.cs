@@ -1,10 +1,11 @@
 ﻿using Core.Base.Validator;
-using EduRepository.UserInOrganizationRepository;
-using EduServices.UserInOrganization.Dto;
 using Model.Link;
+using Repository.UserInOrganizationRepository;
+using Services.UserInOrganization.Dto;
 
-namespace EduServices.UserInOrganization.Validator
+namespace Services.UserInOrganization.Validator
 {
     public interface IUserInOrganizationValidator
-        : IBaseValidator<UserInOrganizationDbo, IUserInOrganizationRepository, UserInOrganizationCreateDto, UserInOrganizationDetailDto, UserInOrganizationUpdateDto> { }
+        : IBaseValidator<UserInOrganizationDbo, IUserInOrganizationRepository, UserInOrganizationCreateDto, UserInOrganizationDetailDto, UserInOrganizationUpdateDto>
+    { }
 }

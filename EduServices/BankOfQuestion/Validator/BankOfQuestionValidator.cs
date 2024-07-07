@@ -1,12 +1,12 @@
 ﻿using Core.Base.Validator;
 using Core.Constants;
 using Core.DataTypes;
-using EduRepository.BankOfQuestionRepository;
-using EduRepository.OrganizationRepository;
-using EduServices.BankOfQuestion.Dto;
 using Model.Edu.BankOfQuestions;
+using Repository.BankOfQuestionRepository;
+using Repository.OrganizationRepository;
+using Services.BankOfQuestion.Dto;
 
-namespace EduServices.BankOfQuestion.Validator
+namespace Services.BankOfQuestion.Validator
 {
     public class BankOfQuestionValidator(IBankOfQuestionRepository repository, IOrganizationRepository organizationRepository)
         : BaseValidator<BankOfQuestionDbo, IBankOfQuestionRepository, BankOfQuestionCreateDto, BankOfQuestionDetailDto, BankOfQuestionUpdateDto>(repository),
@@ -17,10 +17,10 @@ namespace EduServices.BankOfQuestion.Validator
         public override Result<BankOfQuestionDetailDto> IsValid(BankOfQuestionCreateDto create)
         {
             Result<BankOfQuestionDetailDto> result = new();
-            IsValidString(create.Name, result, Category.BANK_OF_QUESTION, GlobalValue.STRING_IS_EMPTY);
+            IsValidString(create.Name, result, MessageCategory.BANK_OF_QUESTION, MessageItem.STRING_IS_EMPTY);
             if (_organizationRepository.GetEntity(create.OrganizationId) == null)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.ORGANIZATION, GlobalValue.NOT_EXISTS));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.ORGANIZATION, MessageItem.NOT_EXISTS));
             }
             return result;
         }
@@ -28,7 +28,7 @@ namespace EduServices.BankOfQuestion.Validator
         public override Result<BankOfQuestionDetailDto> IsValid(BankOfQuestionUpdateDto update)
         {
             Result<BankOfQuestionDetailDto> result = new();
-            IsValidString(update.Name, result, Category.BANK_OF_QUESTION, GlobalValue.STRING_IS_EMPTY);
+            IsValidString(update.Name, result, MessageCategory.BANK_OF_QUESTION, MessageItem.STRING_IS_EMPTY);
             return result;
         }
     }

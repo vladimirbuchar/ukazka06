@@ -2,16 +2,16 @@
 using Core.Base.Validator;
 using Core.Constants;
 using Core.DataTypes;
-using EduRepository.CourseLessonItemRepository;
-using EduRepository.CourseLessonRepository;
-using EduServices.CourseLessonItem.Dto;
 using Model.CodeBook;
 using Model.Edu.CourseLessonItem;
+using Repository.CourseLessonItemRepository;
+using Repository.CourseLessonRepository;
+using Services.CourseLessonItem.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.CourseLessonItem.Validator
+namespace Services.CourseLessonItem.Validator
 {
     public class CourseLessonItemValidator(ICourseLessonRepository courseLessonRepository, ICourseLessonItemRepository repository, ICodeBookRepository<CourseLessonItemTemplateDbo> codeBookRepository)
         : BaseValidator<CourseLessonItemDbo, ICourseLessonItemRepository, CourseLessonItemCreateDto, CourseLessonItemDetailDto, CourseLessonItemUpdateDto>(repository),
@@ -23,11 +23,11 @@ namespace EduServices.CourseLessonItem.Validator
         public override Result<CourseLessonItemDetailDto> IsValid(CourseLessonItemCreateDto create)
         {
             Result<CourseLessonItemDetailDto> result = new();
-            IsValidString(create.Name, result, Category.COURSE_LESSON_ITEM, GlobalValue.STRING_IS_EMPTY);
+            IsValidString(create.Name, result, MessageCategory.COURSE_LESSON_ITEM, MessageItem.STRING_IS_EMPTY);
             IsValidItemTemplate(create.TemplateId, result);
             if (_courseLessonRepository.GetEntity(create.CourseLessonId) == null)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.COURSE_LESSON, GlobalValue.NOT_EXISTS));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.COURSE_LESSON, MessageItem.NOT_EXISTS));
             }
             return result;
         }
@@ -36,14 +36,14 @@ namespace EduServices.CourseLessonItem.Validator
         {
             if (_courseLessonItemTemplates.FirstOrDefault(x => x.Id == templateId).SystemIdentificator == CodebookValue.CODEBOOK_SELECT_VALUE)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, Category.COURSE_LESSON_ITEM, Constants.COURSE_LESSON_ITEM_TEMPLATE_IS_EMPTY));
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.COURSE_LESSON_ITEM, Constants.COURSE_LESSON_ITEM_TEMPLATE_IS_EMPTY));
             }
         }
 
         public override Result<CourseLessonItemDetailDto> IsValid(CourseLessonItemUpdateDto update)
         {
             Result<CourseLessonItemDetailDto> result = new();
-            IsValidString(update.Name, result, Category.COURSE_LESSON_ITEM, GlobalValue.STRING_IS_EMPTY);
+            IsValidString(update.Name, result, MessageCategory.COURSE_LESSON_ITEM, MessageItem.STRING_IS_EMPTY);
             IsValidItemTemplate(update.TemplateId, result);
             return result;
         }

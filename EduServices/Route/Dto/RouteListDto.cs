@@ -1,6 +1,6 @@
 ﻿using Core.Base.Dto;
 
-namespace EduServices.Route.Dto
+namespace Services.Route.Dto
 {
     public class RouteListDto : ListDto
     {

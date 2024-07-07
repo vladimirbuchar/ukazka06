@@ -1,7 +1,7 @@
 ﻿using Core.Base.Repository;
 using Model.Link;
 
-namespace EduRepository.StudentInGroupRepository
+namespace Repository.StudentInGroupRepository
 {
     public interface IStudentInGroupRepository : IBaseRepository<StudentInGroupDbo> { }
 }

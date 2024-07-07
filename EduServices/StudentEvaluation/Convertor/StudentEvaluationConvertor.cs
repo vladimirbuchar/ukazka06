@@ -1,9 +1,9 @@
-﻿using EduServices.StudentEvaluation.Dto;
-using Model.Edu.StudentEvaluation;
+﻿using Model.Edu.StudentEvaluation;
+using Services.StudentEvaluation.Dto;
 using System;
 using System.Collections.Generic;
 
-namespace EduServices.StudentEvaluation.Convertor
+namespace Services.StudentEvaluation.Convertor
 {
     public class StudentEvaluationConvertor : IStudentEvaluationConvertor
     {

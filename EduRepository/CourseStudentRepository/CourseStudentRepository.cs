@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace EduRepository.CourseStudentRepository
+namespace Repository.CourseStudentRepository
 {
     public class CourseStudentRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<CourseStudentDbo>(dbContext, memoryCache), ICourseStudentRepository
     {

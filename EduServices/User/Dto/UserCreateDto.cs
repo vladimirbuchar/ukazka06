@@ -1,9 +1,9 @@
 ﻿using Core.Base.Dto;
-using EduServices.Organization.Dto;
+using Services.Organization.Dto;
 using System;
 using System.Text.Json.Serialization;
 
-namespace EduServices.User.Dto
+namespace Services.User.Dto
 {
     public class UserCreateDto : CreateDto
     {

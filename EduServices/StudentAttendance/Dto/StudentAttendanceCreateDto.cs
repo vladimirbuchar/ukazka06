@@ -1,7 +1,7 @@
 ﻿using Core.Base.Dto;
 using System;
 
-namespace EduServices.StudentAttendance.Dto
+namespace Services.StudentAttendance.Dto
 {
     public class StudentAttendanceCreateDto : CreateDto
     {

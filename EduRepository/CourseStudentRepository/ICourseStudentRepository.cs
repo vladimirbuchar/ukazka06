@@ -3,7 +3,7 @@ using Model.Link;
 using System;
 using System.Collections.Generic;
 
-namespace EduRepository.CourseStudentRepository
+namespace Repository.CourseStudentRepository
 {
     public interface ICourseStudentRepository : IBaseRepository<CourseStudentDbo>
     {

@@ -1,7 +1,7 @@
-﻿using System;
-using Core.Base.Service;
+﻿using Core.Base.Service;
+using System;
 
-namespace EduServices.SystemService.FileUpload
+namespace Services.SystemService.FileUpload
 {
     public interface IFileUploadService : IBaseService
     {

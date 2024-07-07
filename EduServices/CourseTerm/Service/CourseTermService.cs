@@ -1,21 +1,21 @@
 ﻿using Core.Base.Service;
 using Core.DataTypes;
-using EduRepository.ClassRoomRepository;
-using EduRepository.CourseLectorRepository;
-using EduRepository.CourseTermRepository;
-using EduRepository.OrganizationHoursRepository;
-using EduRepository.StudentInGroupCourseTerm;
-using EduServices.CourseTerm.Convertor;
-using EduServices.CourseTerm.Dto;
-using EduServices.CourseTerm.Validator;
 using Model.Edu.CourseTerm;
 using Model.Edu.OrganizationStudyHour;
 using Model.Link;
+using Repository.ClassRoomRepository;
+using Repository.CourseLectorRepository;
+using Repository.CourseTermRepository;
+using Repository.OrganizationHoursRepository;
+using Repository.StudentInGroupCourseTerm;
+using Services.CourseTerm.Convertor;
+using Services.CourseTerm.Dto;
+using Services.CourseTerm.Validator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.CourseTerm.Service
+namespace Services.CourseTerm.Service
 {
     public class CourseTermService(
         IStudentInGroupCourseTermRepository studentInGroupCourseTermRepository,

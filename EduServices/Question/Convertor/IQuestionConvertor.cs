@@ -1,8 +1,8 @@
 ﻿using Core.Base.Convertor;
-using EduServices.Question.Dto;
 using Model.Edu.Question;
+using Services.Question.Dto;
 
-namespace EduServices.Question.Convertor
+namespace Services.Question.Convertor
 {
     public interface IQuestionConvertor : IBaseConvertor<QuestionDbo, QuestionCreateDto, QuestionListDto, QuestionDetailDto, QuestionUpdateDto> { }
 }

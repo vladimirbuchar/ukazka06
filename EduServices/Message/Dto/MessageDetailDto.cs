@@ -1,9 +1,9 @@
-﻿using System;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
+using System;
 
-namespace EduServices.SendMessage.Dto
+namespace Services.Message.Dto
 {
-    public class SendMessageDetailDto : DetailDto
+    public class MessageDetailDto : DetailDto
     {
         public string Name { get; set; }
         public string Html { get; set; }

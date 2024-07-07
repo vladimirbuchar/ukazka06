@@ -1,8 +1,8 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
-using Model.Edu.Answer;
+﻿using Model.Edu.Answer;
 using Model.Edu.Question;
 using Model.Edu.StudentTestSummary;
+using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Model.Edu.TestUserAnswer
 {

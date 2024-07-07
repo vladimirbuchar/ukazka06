@@ -1,11 +1,11 @@
 ﻿using Core.Constants;
-using EduServices.Note.Dto;
 using Microsoft.Extensions.Configuration;
 using Model.Edu.Note;
+using Services.Note.Dto;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.Note.Convertor
+namespace Services.Note.Convertor
 {
     public class NoteConvertor(IConfiguration configuration) : INoteConvertor
     {

@@ -1,8 +1,6 @@
 ﻿using Core.Base.Repository.CodeBookRepository;
 using Core.Constants;
 using Core.DataTypes;
-using EduRepository.OrganizationRoleRepository;
-using EduServices.Organization.Dto;
 using Microsoft.Extensions.Configuration;
 using Model.CodeBook;
 using Model.Edu.BankOfQuestions;
@@ -12,11 +10,13 @@ using Model.Edu.Organization;
 using Model.Edu.OrganizationAddress;
 using Model.Edu.OrganizationSetting;
 using Model.Link;
+using Repository.OrganizationRoleRepository;
+using Services.Organization.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.Organization.Convertor
+namespace Services.Organization.Convertor
 {
     public class OrganizationConvertor(
         IConfiguration configuration,

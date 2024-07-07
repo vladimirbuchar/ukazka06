@@ -1,9 +1,9 @@
-﻿using EduServices.OrganizationCulture.Dto;
-using Model.Link;
+﻿using Model.Link;
+using Services.OrganizationCulture.Dto;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EduServices.OrganizationCulture.Convertor
+namespace Services.OrganizationCulture.Convertor
 {
     public class OrganizationCultureConvertor : IOrganizationCultureConvertor
     {

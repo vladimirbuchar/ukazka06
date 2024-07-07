@@ -11,7 +11,7 @@ namespace Model.Edu.SendMessage
 
         [Column("Subject")]
         public virtual string Subject { get; set; }
-        public virtual SendMessageDbo SendMessage { get; set; }
+        public virtual MessageDbo SendMessage { get; set; }
         public virtual Guid SendMessageId { get; set; }
     }
 }

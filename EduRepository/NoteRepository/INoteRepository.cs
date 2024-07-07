@@ -1,7 +1,7 @@
 ﻿using Core.Base.Repository;
 using Model.Edu.Note;
 
-namespace EduRepository.NoteRepository
+namespace Repository.NoteRepository
 {
     public interface INoteRepository : IBaseRepository<NoteDbo> { }
 }

@@ -1,8 +1,8 @@
 ﻿using Core.Base.Convertor;
-using EduServices.OrganizationSetting.Dto;
 using Model.Edu.OrganizationSetting;
+using Services.OrganizationSetting.Dto;
 
-namespace EduServices.OrganizationSetting.Convertor
+namespace Services.OrganizationSetting.Convertor
 {
     public interface IOrganizationSettingConvertor : IBaseConvertor
     {

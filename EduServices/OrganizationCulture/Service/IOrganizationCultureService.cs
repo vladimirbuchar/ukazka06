@@ -1,9 +1,10 @@
 ﻿using Core.Base.Service;
-using EduServices.OrganizationCulture.Dto;
 using Model.Link;
+using Services.OrganizationCulture.Dto;
 
-namespace EduServices.OrganizationCulture.Service
+namespace Services.OrganizationCulture.Service
 {
     public interface IOrganizationCultureService
-        : IBaseService<OrganizationCultureDbo, OrganizationCultureCreateDto, OrganizationCultureListDto, OrganizationCultureDetailDto, OrganizationCultureUpdateDto> { }
+        : IBaseService<OrganizationCultureDbo, OrganizationCultureCreateDto, OrganizationCultureListDto, OrganizationCultureDetailDto, OrganizationCultureUpdateDto>
+    { }
 }

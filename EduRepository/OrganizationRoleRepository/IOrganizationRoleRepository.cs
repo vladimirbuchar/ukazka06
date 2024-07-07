@@ -1,7 +1,7 @@
 ﻿using Core.Base.Repository;
 using Model.Edu.OrganizationRole;
 
-namespace EduRepository.OrganizationRoleRepository
+namespace Repository.OrganizationRoleRepository
 {
     public interface IOrganizationRoleRepository : IBaseRepository<OrganizationRoleDbo> { }
 }

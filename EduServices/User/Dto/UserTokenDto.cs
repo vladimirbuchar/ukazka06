@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace EduServices.User.Dto
+namespace Services.User.Dto
 {
     public class UserTokenDto : DetailDto
     {

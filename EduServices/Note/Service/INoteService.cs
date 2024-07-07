@@ -1,10 +1,10 @@
 ﻿using Core.Base.Service;
 using Core.DataTypes;
-using EduServices.Note.Dto;
 using Model.Edu.Note;
+using Services.Note.Dto;
 using System;
 
-namespace EduServices.Note.Service
+namespace Services.Note.Service
 {
     public interface INoteService : IBaseService<NoteDbo, NoteCreateDto, NoteListDto, NoteDetailDto, NoteUpdateDto>
     {

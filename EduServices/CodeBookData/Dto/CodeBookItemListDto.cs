@@ -1,6 +1,6 @@
 ﻿using Core.Base.Dto;
 
-namespace EduServices.CodeBookData.Dto
+namespace Services.CodeBookData.Dto
 {
     public class CodeBookItemListDto : ListDto
     {

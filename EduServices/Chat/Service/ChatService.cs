@@ -1,13 +1,14 @@
 ﻿using Core.Base.Service;
-using EduRepository.ChatRepository;
-using EduServices.Chat.Convertor;
-using EduServices.Chat.Dto;
-using EduServices.Chat.Validator;
 using Model.Edu.Chat;
+using Repository.ChatRepository;
+using Services.Chat.Convertor;
+using Services.Chat.Dto;
+using Services.Chat.Validator;
 
-namespace EduServices.Chat.Service
+namespace Services.Chat.Service
 {
     public class ChatService(IChatRepository chatRepository, IChatConvertor chatConvertor, IChatValidator validator)
         : BaseService<IChatRepository, ChatDbo, IChatConvertor, IChatValidator, ChatItemCreateDto, ChatItemListDto, ChatItemDetailDto, ChatItemUpdateDto>(chatRepository, chatConvertor, validator),
-            IChatService { }
+            IChatService
+    { }
 }

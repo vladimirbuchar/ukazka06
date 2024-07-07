@@ -1,8 +1,8 @@
 ﻿using Core.Base.Convertor;
-using EduServices.Certificate.Dto;
 using Model.Edu.Certificate;
+using Services.Certificate.Dto;
 
-namespace EduServices.Certificate.Convertor
+namespace Services.Certificate.Convertor
 {
     public interface ICertificateConvertor : IBaseConvertor<CertificateDbo, CertificateCreateDto, CertificateListDto, CertificateDetailDto, CertificateUpdateDto> { }
 }

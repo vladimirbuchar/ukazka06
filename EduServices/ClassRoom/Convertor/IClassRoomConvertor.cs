@@ -1,8 +1,8 @@
 ﻿using Core.Base.Convertor;
-using EduServices.ClassRoom.Dto;
 using Model.Edu.ClassRoom;
+using Services.ClassRoom.Dto;
 
-namespace EduServices.ClassRoom.Convertor
+namespace Services.ClassRoom.Convertor
 {
     public interface IClassRoomConvertor : IBaseConvertor<ClassRoomDbo, ClassRoomCreateDto, ClassRoomListDto, ClassRoomDetailDto, ClassRoomUpdateDto> { }
 }

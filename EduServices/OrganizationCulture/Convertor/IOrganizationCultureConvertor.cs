@@ -1,9 +1,10 @@
 ﻿using Core.Base.Convertor;
-using EduServices.OrganizationCulture.Dto;
 using Model.Link;
+using Services.OrganizationCulture.Dto;
 
-namespace EduServices.OrganizationCulture.Convertor
+namespace Services.OrganizationCulture.Convertor
 {
     public interface IOrganizationCultureConvertor
-        : IBaseConvertor<OrganizationCultureDbo, OrganizationCultureCreateDto, OrganizationCultureListDto, OrganizationCultureDetailDto, OrganizationCultureUpdateDto> { }
+        : IBaseConvertor<OrganizationCultureDbo, OrganizationCultureCreateDto, OrganizationCultureListDto, OrganizationCultureDetailDto, OrganizationCultureUpdateDto>
+    { }
 }

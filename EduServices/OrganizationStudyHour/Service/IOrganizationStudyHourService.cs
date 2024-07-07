@@ -1,8 +1,8 @@
 ﻿using Core.Base.Service;
-using EduServices.OrganizationStudyHour.Dto;
 using Model.Edu.OrganizationStudyHour;
+using Services.OrganizationStudyHour.Dto;
 
-namespace EduServices.OrganizationStudyHour.Service
+namespace Services.OrganizationStudyHour.Service
 {
     public interface IOrganizationStudyHourService : IBaseService<OrganizationStudyHourDbo, StudyHourCreateDto, StudyHourListDto, StudyHourDetailDto, StudyHourUpdateDto> { }
 }

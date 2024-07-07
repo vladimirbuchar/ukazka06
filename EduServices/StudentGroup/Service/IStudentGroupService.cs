@@ -1,8 +1,8 @@
 ﻿using Core.Base.Service;
-using EduServices.StudentGroup.Dto;
 using Model.Edu.StudentGroup;
+using Services.StudentGroup.Dto;
 
-namespace EduServices.StudentGroup.Service
+namespace Services.StudentGroup.Service
 {
     public interface IStudentGroupService : IBaseService<StudentGroupDbo, StudentGroupCreateDto, StudentGroupInOrganizationListDto, StudentGroupDetailDto, StudentGroupUpdateDto> { }
 }
