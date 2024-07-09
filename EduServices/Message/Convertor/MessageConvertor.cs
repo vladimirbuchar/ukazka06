@@ -2,18 +2,26 @@
 using System.Linq;
 using Core.Base.Repository.CodeBookRepository;
 using Model.CodeBook;
-using Model.Edu.SendMessage;
+using Model.Edu.Message;
 using Services.Message.Dto;
 
 namespace Services.Message.Convertor
 {
     public class MessageConvertor(ICodeBookRepository<CultureDbo> codeBookService) : IMessageConvertor
     {
-        private readonly HashSet<CultureDbo> _cultureList = codeBookService.GetEntities(false);
+        private readonly List<CultureDbo> _cultureList = codeBookService.GetEntities(false).Result;
 
-        public HashSet<MessageListDto> ConvertToWebModel(HashSet<MessageDbo> getSendMessageInOrganizations, string culture)
+        public List<MessageListDto> ConvertToWebModel(List<MessageDbo> getSendMessageInOrganizations, string culture)
         {
-            return getSendMessageInOrganizations.Select(x => new MessageListDto() { Id = x.Id, Name = x.SendMessageTranslations.FindTranslation(culture)?.Subject }).ToHashSet();
+            return getSendMessageInOrganizations
+                .Select(x => new MessageListDto()
+                {
+                    Id = x.Id,
+                    Name = x.SendMessageTranslations.FindTranslation(culture)?.Subject,
+                    Reply = x.Reply,
+                    SendMessageTypeId = x.SendMessageTypeId
+                })
+                .ToList();
         }
 
         public MessageDetailDto ConvertToWebModel(MessageDbo getSendMessageDetail, string culture)
@@ -37,13 +45,23 @@ namespace Services.Message.Convertor
                     Reply = addSendMessageDto.Reply,
                     SendMessageTypeId = addSendMessageDto.SendMessageTypeId
                 };
-            sendMessage.SendMessageTranslations = sendMessage.SendMessageTranslations.PrepareTranslation(addSendMessageDto.Name, addSendMessageDto.Html, clientCulture, _cultureList);
+            sendMessage.SendMessageTranslations = sendMessage.SendMessageTranslations.PrepareTranslation(
+                addSendMessageDto.Name,
+                addSendMessageDto.Html,
+                clientCulture,
+                _cultureList
+            );
             return sendMessage;
         }
 
         public MessageDbo ConvertToBussinessEntity(MessageUpdateDto updateSendMessageDto, MessageDbo entity, string culture)
         {
-            entity.SendMessageTranslations = entity.SendMessageTranslations.PrepareTranslation(updateSendMessageDto.Name, updateSendMessageDto.Html, culture, _cultureList);
+            entity.SendMessageTranslations = entity.SendMessageTranslations.PrepareTranslation(
+                updateSendMessageDto.Name,
+                updateSendMessageDto.Html,
+                culture,
+                _cultureList
+            );
             entity.Reply = updateSendMessageDto.Reply;
             entity.SendMessageTypeId = updateSendMessageDto.SendMessageTypeId;
             return entity;

@@ -9,7 +9,9 @@ using Services.BankOfQuestion.Dto;
 namespace Services.BankOfQuestion.Validator
 {
     public class BankOfQuestionValidator(IBankOfQuestionRepository repository, IOrganizationRepository organizationRepository)
-        : BaseValidator<BankOfQuestionDbo, IBankOfQuestionRepository, BankOfQuestionCreateDto, BankOfQuestionDetailDto, BankOfQuestionUpdateDto>(repository),
+        : BaseValidator<BankOfQuestionDbo, IBankOfQuestionRepository, BankOfQuestionCreateDto, BankOfQuestionDetailDto, BankOfQuestionUpdateDto>(
+            repository
+        ),
             IBankOfQuestionValidator
     {
         private readonly IOrganizationRepository _organizationRepository = organizationRepository;

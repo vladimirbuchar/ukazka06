@@ -18,7 +18,7 @@ namespace Services.CourseStudy.Dto
         public string Html { get; set; } = "";
         public string ImagePath { get; set; }
         public int TimeLimit { get; set; }
-        public HashSet<CourseLessonQuestionStudyDto> Questions { get; set; }
+        public List<CourseLessonQuestionStudyDto> Questions { get; set; }
         public string PowerPointFile { get; set; }
         public string Youtube { get; set; } = "";
         public bool CanRunTest { get; set; } = false;

@@ -484,35 +484,35 @@
     "route": "/api/clientzone/Question/FileUpload",
     "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
   },
-  //SendMessage
+  //Message
   {
-    "route": "/api/clientzone/SendMessage/Create",
+    "route": "/api/clientzone/Message/Create",
     "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
   },
   {
-    "route": "/api/clientzone/SendMessage/List",
+    "route": "/api/clientzone/Message/List",
     "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
   },
   {
-    "route": "/api/clientzone/SendMessage/Detail",
+    "route": "/api/clientzone/Message/Detail",
     "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
   },
   {
-    "route": "/api/clientzone/SendMessage/Update",
+    "route": "/api/clientzone/Message/Update",
     "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
   },
   {
-    "route": "/api/clientzone/SendMessage/Delete",
-    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
-  },
-
-  {
-    "route": "/api/clientzone/SendMessage/Restore",
+    "route": "/api/clientzone/Message/Delete",
     "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
   },
 
   {
-    "route": "/api/clientzone/SendMessage/GetSendMessageInOrganizationEmail",
+    "route": "/api/clientzone/Message/Restore",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+
+  {
+    "route": "/api/clientzone/Message/GetSendMessageInOrganizationEmail",
     "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "ORGANIZATION_ADMINISTRATOR" ]
   },
   //StudentGroup
@@ -574,6 +574,17 @@
   {
     "route": "/api/clientzone/UserInOrganization/Delete",
     "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/SendEmailInOrganization/GetList",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/SendEmailInOrganization/GetDetail",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/SendEmailInOrganization/Update",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
   }
-
 ]

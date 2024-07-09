@@ -9,7 +9,7 @@ namespace Services.CourseLessonItem.Convertor
 {
     public class CourseLessonItemConvertor(ICodeBookRepository<CultureDbo> codeBookService) : ICourseLessonItemConvertor
     {
-        private readonly HashSet<CultureDbo> _cultureList = codeBookService.GetEntities(false);
+        private readonly List<CultureDbo> _cultureList = codeBookService.GetEntities(false).Result;
 
         public CourseLessonItemDbo ConvertToBussinessEntity(CourseLessonItemCreateDto addCourseLessonItemDto, string culture)
         {
@@ -29,7 +29,7 @@ namespace Services.CourseLessonItem.Convertor
             return courseLessonItem;
         }
 
-        public HashSet<CourseLessonItemListDto> ConvertToWebModel(HashSet<CourseLessonItemDbo> getCourseLessonItems, string culture)
+        public List<CourseLessonItemListDto> ConvertToWebModel(List<CourseLessonItemDbo> getCourseLessonItems, string culture)
         {
             return getCourseLessonItems
                 .Select(item => new CourseLessonItemListDto()
@@ -39,7 +39,7 @@ namespace Services.CourseLessonItem.Convertor
                     Id = item.Id,
                     Position = item.Position,
                 })
-                .ToHashSet();
+                .ToList();
         }
 
         public CourseLessonItemDetailDto ConvertToWebModel(CourseLessonItemDbo getCourseLessonItemDetail, string culture)
@@ -56,12 +56,21 @@ namespace Services.CourseLessonItem.Convertor
             };
         }
 
-        public CourseLessonItemDbo ConvertToBussinessEntity(CourseLessonItemUpdateDto updateCourseLessonItemDto, CourseLessonItemDbo entity, string culture)
+        public CourseLessonItemDbo ConvertToBussinessEntity(
+            CourseLessonItemUpdateDto updateCourseLessonItemDto,
+            CourseLessonItemDbo entity,
+            string culture
+        )
         {
             entity.Youtube = updateCourseLessonItemDto.Youtube;
             entity.CourseLessonItemTemplateId = updateCourseLessonItemDto.TemplateId;
             entity.CourseLessonItemTemplate = null;
-            entity.CourseLessonItemTranslations = entity.CourseLessonItemTranslations.PrepareTranslation(updateCourseLessonItemDto.Name, updateCourseLessonItemDto.Html, culture, _cultureList);
+            entity.CourseLessonItemTranslations = entity.CourseLessonItemTranslations.PrepareTranslation(
+                updateCourseLessonItemDto.Name,
+                updateCourseLessonItemDto.Html,
+                culture,
+                _cultureList
+            );
             return entity;
         }
     }

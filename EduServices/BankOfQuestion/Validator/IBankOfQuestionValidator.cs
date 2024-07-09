@@ -5,5 +5,6 @@ using Services.BankOfQuestion.Dto;
 
 namespace Services.BankOfQuestion.Validator
 {
-    public interface IBankOfQuestionValidator : IBaseValidator<BankOfQuestionDbo, IBankOfQuestionRepository, BankOfQuestionCreateDto, BankOfQuestionDetailDto, BankOfQuestionUpdateDto> { }
+    public interface IBankOfQuestionValidator
+        : IBaseValidator<BankOfQuestionDbo, IBankOfQuestionRepository, BankOfQuestionCreateDto, BankOfQuestionDetailDto, BankOfQuestionUpdateDto> { }
 }

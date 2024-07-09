@@ -9,7 +9,14 @@ namespace EduApi.Migrations
         {
             migrationBuilder.DropColumn(name: "ObjectId", table: "Edu_Notification");
 
-            migrationBuilder.AlterColumn<Guid>(name: "OrganizationId", table: "Edu_Notification", type: "uniqueidentifier", nullable: true, oldClrType: typeof(Guid), oldType: "uniqueidentifier");
+            migrationBuilder.AlterColumn<Guid>(
+                name: "OrganizationId",
+                table: "Edu_Notification",
+                type: "uniqueidentifier",
+                nullable: true,
+                oldClrType: typeof(Guid),
+                oldType: "uniqueidentifier"
+            );
 
             migrationBuilder.AddColumn<Guid>(name: "CourseTermId", table: "Edu_Notification", type: "uniqueidentifier", nullable: true);
 
@@ -44,7 +51,13 @@ namespace EduApi.Migrations
                 oldNullable: true
             );
 
-            migrationBuilder.AddColumn<Guid>(name: "ObjectId", table: "Edu_Notification", type: "uniqueidentifier", nullable: false, defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
+            migrationBuilder.AddColumn<Guid>(
+                name: "ObjectId",
+                table: "Edu_Notification",
+                type: "uniqueidentifier",
+                nullable: false,
+                defaultValue: new Guid("00000000-0000-0000-0000-000000000000")
+            );
         }
     }
 }

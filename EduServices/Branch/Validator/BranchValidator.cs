@@ -10,9 +10,11 @@ using Services.Branch.Dto;
 
 namespace Services.Branch.Validator
 {
-    public class BranchValidator(IBranchRepository repository, IOrganizationRepository organizationRepository, ICodeBookRepository<CountryDbo> country)
-        : BaseValidator<BranchDbo, IBranchRepository, BranchCreateDto, BranchDetailDto, BranchUpdateDto>(repository),
-            IBranchValidator
+    public class BranchValidator(
+        IBranchRepository repository,
+        IOrganizationRepository organizationRepository,
+        ICodeBookRepository<CountryDbo> country
+    ) : BaseValidator<BranchDbo, IBranchRepository, BranchCreateDto, BranchDetailDto, BranchUpdateDto>(repository), IBranchValidator
     {
         private readonly ICodeBookRepository<CountryDbo> _country = country;
         private readonly IOrganizationRepository _organizationRepository = organizationRepository;
@@ -30,7 +32,14 @@ namespace Services.Branch.Validator
             }
             if (create.CountryId.HasValue)
             {
-                base.CodeBookValueExist(_country, x => x.Id == create.CountryId, validate, AddressValidator.COUNTRY, AddressValidator.COUNTRY_NOT_EXIST, create.CountryId.ToString());
+                base.CodeBookValueExist(
+                    _country,
+                    x => x.Id == create.CountryId,
+                    validate,
+                    AddressValidator.COUNTRY,
+                    AddressValidator.COUNTRY_NOT_EXIST,
+                    create.CountryId.ToString()
+                );
             }
 
             return validate;
@@ -45,7 +54,14 @@ namespace Services.Branch.Validator
             IsValidString(update.Name, validate, MessageCategory.BRANCH, MessageItem.STRING_IS_EMPTY);
             if (update.CountryId.HasValue)
             {
-                base.CodeBookValueExist(_country, x => x.Id == update.CountryId, validate, AddressValidator.COUNTRY, AddressValidator.COUNTRY_NOT_EXIST, update.CountryId.ToString());
+                base.CodeBookValueExist(
+                    _country,
+                    x => x.Id == update.CountryId,
+                    validate,
+                    AddressValidator.COUNTRY,
+                    AddressValidator.COUNTRY_NOT_EXIST,
+                    update.CountryId.ToString()
+                );
             }
 
             return validate;

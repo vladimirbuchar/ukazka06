@@ -5,6 +5,7 @@ using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.Certificate.Dto;
+using Services.Certificate.Filter;
 using Services.Certificate.Service;
 using Services.OrganizationRole.Service;
 
@@ -15,7 +16,11 @@ namespace EduApi.Controllers.ClientZone.Certificate
     {
         private readonly ICertificateService _certificateService;
 
-        public CertificateController(ICertificateService certificateService, ILogger<CertificateController> logger, IOrganizationRoleService organizationRoleService)
+        public CertificateController(
+            ICertificateService certificateService,
+            ILogger<CertificateController> logger,
+            IOrganizationRoleService organizationRoleService
+        )
             : base(logger, organizationRoleService)
         {
             _certificateService = certificateService;
@@ -46,12 +51,14 @@ namespace EduApi.Controllers.ClientZone.Certificate
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult List([FromQuery] ListDeletedRequestDto request)
+        public ActionResult List([FromQuery] ListDeletedRequestDto request, [FromQuery] CertificateFilter filter)
         {
             try
             {
                 CheckOrganizationPermition(request.ParentId);
-                return SendResponse(_certificateService.GetList(x => x.OrganizationId == request.ParentId, request.IsDeleted, GetClientCulture()));
+                return SendResponse(
+                    _certificateService.GetList(x => x.OrganizationId == request.ParentId, request.IsDeleted, GetClientCulture(), filter)
+                );
             }
             catch (Exception e)
             {

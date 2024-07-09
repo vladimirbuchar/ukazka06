@@ -5,5 +5,7 @@ using Model.Edu.UserCertificate;
 
 namespace Repository.UserCertificateRepository
 {
-    public class UserCertificateRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<UserCertificateDbo>(dbContext, memoryCache), IUserCertificateRepository { }
+    public class UserCertificateRepository(EduDbContext dbContext, IMemoryCache memoryCache)
+        : BaseRepository<UserCertificateDbo>(dbContext, memoryCache),
+            IUserCertificateRepository { }
 }

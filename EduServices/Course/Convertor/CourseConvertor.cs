@@ -12,9 +12,9 @@ namespace Services.Course.Convertor
 {
     public class CourseConvertor(ICodeBookRepository<CourseTypeDbo> courseType, ICodeBookRepository<CultureDbo> culture) : ICourseConvertor
     {
-        private readonly HashSet<CourseTypeDbo> _courseTypes = courseType.GetEntities(false);
+        private readonly List<CourseTypeDbo> _courseTypes = courseType.GetEntities(false).Result;
 
-        private readonly HashSet<CultureDbo> _cultureList = culture.GetEntities(false);
+        private readonly List<CultureDbo> _cultureList = culture.GetEntities(false).Result;
 
         public CourseDbo ConvertToBussinessEntity(CourseCreateDto addCourseDto, string culture)
         {
@@ -36,13 +36,21 @@ namespace Services.Course.Convertor
                     SendMessageId = addCourseDto.EmailTemplateId,
                     CourseWithLector = addCourseDto.CourseWithLector
                 };
-            _ = course.CourseTranslations = _ = course.CourseTranslations.PrepareTranslation(addCourseDto.Name, addCourseDto.Description, culture, _cultureList);
+            _ =
+                course.CourseTranslations =
+                _ =
+                    course.CourseTranslations.PrepareTranslation(addCourseDto.Name, addCourseDto.Description, culture, _cultureList);
             return course;
         }
 
         public CourseDbo ConvertToBussinessEntity(CourseUpdateDto updateCourseDto, CourseDbo entity, string culture)
         {
-            entity.CourseTranslations = entity.CourseTranslations.PrepareTranslation(updateCourseDto.Name, updateCourseDto.Description, culture, _cultureList);
+            entity.CourseTranslations = entity.CourseTranslations.PrepareTranslation(
+                updateCourseDto.Name,
+                updateCourseDto.Description,
+                culture,
+                _cultureList
+            );
             entity.Price = updateCourseDto.Price;
             entity.Sale = updateCourseDto.Sale;
             entity.CourseStatusId = updateCourseDto.CourseStatusId;
@@ -59,9 +67,11 @@ namespace Services.Course.Convertor
             return entity;
         }
 
-        public HashSet<CourseListDto> ConvertToWebModel(HashSet<CourseDbo> getAllCourseInOrganizations, string culture)
+        public List<CourseListDto> ConvertToWebModel(List<CourseDbo> getAllCourseInOrganizations, string culture)
         {
-            return getAllCourseInOrganizations.Select(item => new CourseListDto() { Id = item.Id, Name = item.CourseTranslations.FindTranslation(culture).Name, }).ToHashSet();
+            return getAllCourseInOrganizations
+                .Select(item => new CourseListDto() { Id = item.Id, Name = item.CourseTranslations.FindTranslation(culture).Name, })
+                .ToList();
         }
 
         public CourseDetailDto ConvertToWebModel(CourseDbo getCourseDetail, string culture)
@@ -89,7 +99,7 @@ namespace Services.Course.Convertor
             };
         }
 
-        public HashSet<StudentTestListDto> ConvertToWebModel(HashSet<StudentTestSummaryDbo> getStudentTests, string culture)
+        public List<StudentTestListDto> ConvertToWebModel(List<StudentTestSummaryDbo> getStudentTests, string culture)
         {
             return getStudentTests
                 .Select(x => new StudentTestListDto()
@@ -103,7 +113,7 @@ namespace Services.Course.Convertor
                     CourseMaterialId = x.CourseTest.CourseLesson.CourseMaterialId,
                     CourseId = x.CourseId
                 })
-                .ToHashSet();
+                .ToList();
         }
     }
 }

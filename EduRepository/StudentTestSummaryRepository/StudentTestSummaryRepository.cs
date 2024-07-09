@@ -5,5 +5,7 @@ using Model.Edu.StudentTestSummary;
 
 namespace Repository.StudentTestSummaryRepository
 {
-    public class StudentTestSummaryRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<StudentTestSummaryDbo>(dbContext, memoryCache), IStudentTestSummaryRepository { }
+    public class StudentTestSummaryRepository(EduDbContext dbContext, IMemoryCache memoryCache)
+        : BaseRepository<StudentTestSummaryDbo>(dbContext, memoryCache),
+            IStudentTestSummaryRepository { }
 }

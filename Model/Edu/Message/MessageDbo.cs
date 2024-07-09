@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Model.CodeBook;
 using Model.Edu.Organization;
 
-namespace Model.Edu.SendMessage
+namespace Model.Edu.Message
 {
     [Table("Edu_SendMessage")]
     public class MessageDbo : TableModel
@@ -15,6 +15,6 @@ namespace Model.Edu.SendMessage
         public virtual Guid SendMessageTypeId { get; set; }
         public virtual Guid OrganizationId { get; set; }
         public virtual OrganizationDbo Organization { get; set; }
-        public virtual ICollection<SendMessageTranslationDbo> SendMessageTranslations { get; set; }
+        public virtual ICollection<MessageTranslationDbo> SendMessageTranslations { get; set; }
     }
 }

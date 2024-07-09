@@ -25,7 +25,7 @@ namespace Services.OrganizationCulture.Convertor
             return entity;
         }
 
-        public HashSet<OrganizationCultureListDto> ConvertToWebModel(HashSet<OrganizationCultureDbo> list, string culture)
+        public List<OrganizationCultureListDto> ConvertToWebModel(List<OrganizationCultureDbo> list, string culture)
         {
             return list.Select(item => new OrganizationCultureListDto()
                 {
@@ -34,7 +34,7 @@ namespace Services.OrganizationCulture.Convertor
                     Name = item.Culture.Name,
                     CultureId = item.CultureId
                 })
-                .ToHashSet();
+                .ToList();
         }
 
         public OrganizationCultureDetailDto ConvertToWebModel(OrganizationCultureDbo detail, string culture)

@@ -17,7 +17,7 @@ namespace Services.StudentAttendance.Convertor
             };
         }
 
-        public HashSet<StudentAttendanceListDto> ConvertToWebModel(HashSet<AttendanceStudentDbo> list, string culture)
+        public List<StudentAttendanceListDto> ConvertToWebModel(List<AttendanceStudentDbo> list, string culture)
         {
             throw new NotImplementedException();
         }

@@ -14,7 +14,11 @@ namespace EduApi.Controllers.Admin.Permissions
     {
         private readonly IPermissionsService _permissionsService;
 
-        public PermissionsController(IPermissionsService permissionsService, ILogger<PermissionsController> logger, IOrganizationRoleService organizationRoleService)
+        public PermissionsController(
+            IPermissionsService permissionsService,
+            ILogger<PermissionsController> logger,
+            IOrganizationRoleService organizationRoleService
+        )
             : base(logger)
         {
             _permissionsService = permissionsService;

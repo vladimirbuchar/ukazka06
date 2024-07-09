@@ -13,8 +13,8 @@ namespace Services.User.Dto
         }
 
         public string OrganizationName { get; set; }
-        public HashSet<StudyHourListDto> StudyHours { get; set; }
+        public List<StudyHourListDto> StudyHours { get; set; }
         public bool HaveStudyHours { get; set; }
-        public HashSet<TimeTableDto> TimeTable { get; set; }
+        public List<TimeTableDto> TimeTable { get; set; }
     }
 }

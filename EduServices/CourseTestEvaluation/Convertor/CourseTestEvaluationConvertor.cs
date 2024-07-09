@@ -26,7 +26,7 @@ namespace Services.CourseTestEvaluation.Convertor
             };
         }
 
-        public HashSet<CourseTestEvaluationListDto> ConvertToWebModel(HashSet<CourseTestEvaluationDbo> list, string culture)
+        public List<CourseTestEvaluationListDto> ConvertToWebModel(List<CourseTestEvaluationDbo> list, string culture)
         {
             return list.Select(item => new CourseTestEvaluationListDto()
                 {
@@ -35,7 +35,7 @@ namespace Services.CourseTestEvaluation.Convertor
                     Id = item.Id,
                     PointTo = item.PointTo,
                 })
-                .ToHashSet();
+                .ToList();
         }
 
         public CourseTestEvaluationDetailDto ConvertToWebModel(CourseTestEvaluationDbo detail, string culture)

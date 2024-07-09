@@ -1,4 +1,5 @@
 ﻿using System;
+using Core.Base.Request;
 using Core.Base.Service;
 using Core.DataTypes;
 using Model.Edu.User;
@@ -6,7 +7,7 @@ using Services.User.Dto;
 
 namespace Services.User.Service
 {
-    public interface IUserService : IBaseService<UserDbo, UserCreateDto, UserListDto, UserDetailDto, UserUpdateDto>
+    public interface IUserService : IBaseService<UserDbo, UserCreateDto, UserListDto, UserDetailDto, UserUpdateDto, FilterRequest>
     {
         /// <summary>
         /// return information for user login

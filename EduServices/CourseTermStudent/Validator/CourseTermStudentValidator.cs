@@ -29,9 +29,11 @@ namespace Services.CourseTermStudent.Validator
             int maximumStudent = term?.MaximumStudent ?? 0;
             if (maximumStudent > 0)
             {
-                if (maximumStudent < _repository.GetEntities(false, x => x.CourseTermId == termId).Count + 1)
+                if (maximumStudent < _repository.GetEntities(false, x => x.CourseTermId == termId).Result.Count + 1)
                 {
-                    result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.COURSE, Constants.ADD_MORE_STUDENTS_THAN_MAXIMUM));
+                    result.AddResultStatus(
+                        new ValidationMessage(MessageType.ERROR, MessageCategory.COURSE, Constants.ADD_MORE_STUDENTS_THAN_MAXIMUM)
+                    );
                 }
             }
         }

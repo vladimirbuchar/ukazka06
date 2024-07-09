@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Core.Base.Repository;
@@ -10,24 +9,18 @@ using Model.Edu.ClassRoom;
 
 namespace Repository.ClassRoomRepository
 {
-    public class ClassRoomRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<ClassRoomDbo>(dbContext, memoryCache), IClassRoomRepository
+    public class ClassRoomRepository(EduDbContext dbContext, IMemoryCache memoryCache)
+        : BaseRepository<ClassRoomDbo>(dbContext, memoryCache),
+            IClassRoomRepository
     {
-        public override ClassRoomDbo GetEntity(Guid id)
+        protected override IQueryable<ClassRoomDbo> PrepareDetailQuery()
         {
-            return _dbContext.Set<ClassRoomDbo>().Include(x => x.ClassRoomTranslations.Where(x => x.IsDeleted == false)).ThenInclude(x => x.Culture).FirstOrDefault(x => x.Id == id);
+            return _dbContext.Set<ClassRoomDbo>().Include(x => x.ClassRoomTranslations.Where(x => x.IsDeleted == false)).ThenInclude(x => x.Culture);
         }
 
-        public override HashSet<ClassRoomDbo> GetEntities(
-            bool deleted,
-            Expression<Func<ClassRoomDbo, bool>> predicate = null,
-            Expression<Func<ClassRoomDbo, object>> orderBy = null,
-            Expression<Func<ClassRoomDbo, object>> orderByDesc = null
-        )
+        protected override IQueryable<ClassRoomDbo> PrepareListQuery()
         {
-            return
-            [
-                .. _dbContext.Set<ClassRoomDbo>().Include(x => x.ClassRoomTranslations.Where(x => x.IsDeleted == false)).ThenInclude(x => x.Culture).Where(predicate).Where(x => x.IsDeleted == deleted)
-            ];
+            return _dbContext.Set<ClassRoomDbo>().Include(x => x.ClassRoomTranslations.Where(x => x.IsDeleted == false)).ThenInclude(x => x.Culture);
         }
 
         public override Guid GetOrganizationId(Guid objectId)
@@ -37,7 +30,13 @@ namespace Repository.ClassRoomRepository
 
         public override ClassRoomDbo GetEntity(bool deleted, Expression<Func<ClassRoomDbo, bool>> predicate = null)
         {
-            return _dbContext.Set<ClassRoomDbo>().Include(x => x.Branch).Include(x => x.CourseTermDates.Where(y => y.IsDeleted == false)).Where(x => x.IsDeleted == deleted).FirstOrDefault(predicate);
+            return _dbContext
+                .Set<ClassRoomDbo>()
+                .Include(x => x.Branch)
+                .Include(x => x.CourseTermDates.Where(y => y.IsDeleted == false))
+                .ThenInclude(x => x.CourseTerm)
+                .Where(x => x.IsDeleted == deleted)
+                .FirstOrDefault(predicate);
         }
     }
 }

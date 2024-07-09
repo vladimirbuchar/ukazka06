@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.OrganizationRole.Service;
 using Services.StudentGroup.Dto;
+using Services.StudentGroup.Filter;
 using Services.StudentGroup.Service;
 
 namespace EduApi.Controllers.ClientZone.StudentGroup
@@ -16,7 +17,11 @@ namespace EduApi.Controllers.ClientZone.StudentGroup
     {
         private readonly IStudentGroupService _studentGroupService;
 
-        public StudentGroupController(IStudentGroupService studentGroupService, ILogger<StudentInGroupController> logger, IOrganizationRoleService organizationRoleService)
+        public StudentGroupController(
+            IStudentGroupService studentGroupService,
+            ILogger<StudentInGroupController> logger,
+            IOrganizationRoleService organizationRoleService
+        )
             : base(logger, organizationRoleService)
         {
             _studentGroupService = studentGroupService;
@@ -47,12 +52,14 @@ namespace EduApi.Controllers.ClientZone.StudentGroup
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult List([FromQuery] ListDeletedRequestDto reuest)
+        public ActionResult List([FromQuery] ListDeletedRequestDto reuest, [FromQuery] StudentGroupFilter filter)
         {
             try
             {
                 CheckOrganizationPermition(reuest.ParentId);
-                return SendResponse(_studentGroupService.GetList(x => x.OrganizationId == reuest.ParentId, reuest.IsDeleted, GetClientCulture()));
+                return SendResponse(
+                    _studentGroupService.GetList(x => x.OrganizationId == reuest.ParentId, reuest.IsDeleted, GetClientCulture(), filter)
+                );
             }
             catch (Exception e)
             {

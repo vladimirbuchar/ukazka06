@@ -12,7 +12,7 @@ namespace Services.CourseTermStudent.Convertor
             throw new System.NotImplementedException();
         }
 
-        public HashSet<CourseTermStudentListDto> ConvertToWebModel(HashSet<CourseStudentDbo> list, string culture)
+        public List<CourseTermStudentListDto> ConvertToWebModel(List<CourseStudentDbo> list, string culture)
         {
             return list.Select(item => new CourseTermStudentListDto()
                 {
@@ -24,7 +24,7 @@ namespace Services.CourseTermStudent.Convertor
                     Email = item.UserInOrganization.User.UserEmail,
                     CourseFinish = item.CourseFinish
                 })
-                .ToHashSet();
+                .ToList();
         }
 
         public CourseTermStudentDetailDto ConvertToWebModel(CourseStudentDbo detail, string culture)

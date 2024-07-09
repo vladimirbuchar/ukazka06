@@ -157,18 +157,36 @@ namespace EduApi
             {
                 c.SwaggerDoc("Public", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - internal public", Version = "v1" });
                 c.SwaggerDoc("ClientZone", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - internal course", Version = "v1" });
-                c.SwaggerDoc("Organization", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - internal organization", Version = "v1" });
+                c.SwaggerDoc(
+                    "Organization",
+                    new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - internal organization", Version = "v1" }
+                );
                 c.SwaggerDoc("User", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - internal user", Version = "v1" });
                 c.SwaggerDoc("StudyZone", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - internal study zone", Version = "v1" });
                 c.SwaggerDoc("Codebook", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - internal codebook", Version = "v1" });
                 c.SwaggerDoc("Admin", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - admin ", Version = "v1" });
                 c.SwaggerDoc("Setup", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - setup ", Version = "v1" });
-                c.SwaggerDoc("ExternalPublic", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - external public", Version = "v1" });
-                c.SwaggerDoc("ExternalClientZone", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - external course", Version = "v1" });
-                c.SwaggerDoc("ExternalOrganization", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - external organization", Version = "v1" });
+                c.SwaggerDoc(
+                    "ExternalPublic",
+                    new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - external public", Version = "v1" }
+                );
+                c.SwaggerDoc(
+                    "ExternalClientZone",
+                    new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - external course", Version = "v1" }
+                );
+                c.SwaggerDoc(
+                    "ExternalOrganization",
+                    new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - external organization", Version = "v1" }
+                );
                 c.SwaggerDoc("ExternalUser", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - external user", Version = "v1" });
-                c.SwaggerDoc("ExternalStudyZone", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - external study zone", Version = "v1" });
-                c.SwaggerDoc("ExternalCodebook", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - external codebook", Version = "v1" });
+                c.SwaggerDoc(
+                    "ExternalStudyZone",
+                    new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - external study zone", Version = "v1" }
+                );
+                c.SwaggerDoc(
+                    "ExternalCodebook",
+                    new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - external codebook", Version = "v1" }
+                );
 
                 c.DocInclusionPredicate(
                     (docName, apiDesc) =>

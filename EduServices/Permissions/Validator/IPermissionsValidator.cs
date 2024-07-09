@@ -5,5 +5,6 @@ using Services.Permissions.Dto;
 
 namespace Services.Permissions.Validator
 {
-    public interface IPermissionsValidator : IBaseValidator<PermissionsDbo, IPermissionsRepository, PermissionsCreateDto, PermissionsDetailDto, PermissionsUpdateDto> { }
+    public interface IPermissionsValidator
+        : IBaseValidator<PermissionsDbo, IPermissionsRepository, PermissionsCreateDto, PermissionsDetailDto, PermissionsUpdateDto> { }
 }

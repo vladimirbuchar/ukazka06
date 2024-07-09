@@ -17,7 +17,11 @@ namespace EduApi.Controllers.ClientZone.Organization
     {
         private readonly IOrganizationService _organizationService;
 
-        public OrganizationController(ILogger<OrganizationController> logger, IOrganizationService organizationService, IOrganizationRoleService organizationRoleService)
+        public OrganizationController(
+            ILogger<OrganizationController> logger,
+            IOrganizationService organizationService,
+            IOrganizationRoleService organizationRoleService
+        )
             : base(logger, organizationRoleService)
         {
             _organizationService = organizationService;

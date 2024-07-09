@@ -13,19 +13,23 @@ using Services.Notification.Dto;
 
 namespace Services.Notification.Service
 {
-    public class NotificationService(INotificationRepository notificationRepository, IOrganizationRepository organizationRepository, INotificationConvertor notificationConvertor)
+    public class NotificationService(
+        INotificationRepository notificationRepository,
+        IOrganizationRepository organizationRepository,
+        INotificationConvertor notificationConvertor
+    )
         : BaseService<INotificationRepository, NotificationDbo, INotificationConvertor>(notificationRepository, notificationConvertor),
             INotificationService
     {
         private readonly IOrganizationRepository _organizationRepository = organizationRepository;
 
-        public HashSet<MyNotificationListDto> GetMyNotification(Guid userId, bool onlyNew)
+        public List<MyNotificationListDto> GetMyNotification(Guid userId, bool onlyNew)
         {
-            HashSet<NotificationDbo> notifications = [];
-            notifications = [.. _repository.GetEntities(false, x => x.UserId == userId, null, x => x.AddDate)];
+            List<NotificationDbo> notifications = [];
+            notifications = [.. _repository.GetEntities(false, x => x.UserId == userId, null, x => x.AddDate).Result];
             if (onlyNew)
             {
-                notifications = notifications.Where(x => x.IsNew).ToHashSet();
+                notifications = notifications.Where(x => x.IsNew).ToList();
             }
             foreach (NotificationDbo item in notifications)
             {
@@ -40,7 +44,7 @@ namespace Services.Notification.Service
 
         public Result SetIsNewNotificationToFalse(Guid userId)
         {
-            HashSet<NotificationDbo> notificationDbo = _repository.GetEntities(false, x => x.UserId == userId && x.IsNew == true);
+            List<NotificationDbo> notificationDbo = _repository.GetEntities(false, x => x.UserId == userId && x.IsNew == true).Result;
             foreach (NotificationDbo item in notificationDbo)
             {
                 item.IsNew = false;

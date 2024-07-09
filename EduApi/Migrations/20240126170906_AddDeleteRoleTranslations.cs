@@ -94,9 +94,17 @@ namespace EduApi.Migrations
                 }
             );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_OrganizationRoleTranslation_CultureId", table: "Edu_OrganizationRoleTranslation", column: "CultureId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_OrganizationRoleTranslation_CultureId",
+                table: "Edu_OrganizationRoleTranslation",
+                column: "CultureId"
+            );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_OrganizationRoleTranslation_OrganizationRoleId", table: "Edu_OrganizationRoleTranslation", column: "OrganizationRoleId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_OrganizationRoleTranslation_OrganizationRoleId",
+                table: "Edu_OrganizationRoleTranslation",
+                column: "OrganizationRoleId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Edu_OrganizationRoleTranslation_SystemIdentificator",

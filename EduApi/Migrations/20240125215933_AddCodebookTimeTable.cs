@@ -10,7 +10,18 @@ namespace EduApi.Migrations
             migrationBuilder.InsertData(
                 "Cb_TimeTable",
                 new string[] { "Id", "IsDeleted", "IsSystemObject", "IsChanged", "SystemIdentificator", "Name", "Value", "IsDefault", "Priority" },
-                new object[] { Guid.NewGuid(), false, true, true, "CODEBOOK_SELECT_VALUE", "CODEBOOK_SELECT_VALUE", "CODEBOOK_SELECT_VALUE", true, -1 }
+                new object[]
+                {
+                    Guid.NewGuid(),
+                    false,
+                    true,
+                    true,
+                    "CODEBOOK_SELECT_VALUE",
+                    "CODEBOOK_SELECT_VALUE",
+                    "CODEBOOK_SELECT_VALUE",
+                    true,
+                    -1
+                }
             );
             int priority = 0;
             for (int h = 0; h <= 23; h++)
@@ -22,7 +33,18 @@ namespace EduApi.Migrations
                     string time = string.Format("{0}:{1}", hour, minute);
                     migrationBuilder.InsertData(
                         "Cb_TimeTable",
-                        new string[] { "Id", "IsDeleted", "IsSystemObject", "IsChanged", "SystemIdentificator", "Name", "Value", "IsDefault", "Priority" },
+                        new string[]
+                        {
+                            "Id",
+                            "IsDeleted",
+                            "IsSystemObject",
+                            "IsChanged",
+                            "SystemIdentificator",
+                            "Name",
+                            "Value",
+                            "IsDefault",
+                            "Priority"
+                        },
                         new object[] { Guid.NewGuid(), false, true, true, time, time, time, true, priority }
                     );
 

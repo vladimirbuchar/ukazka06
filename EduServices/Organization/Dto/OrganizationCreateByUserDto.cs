@@ -10,7 +10,7 @@ namespace Services.Organization.Dto
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string WWW { get; set; }
-        public HashSet<Address> Addresses { get; set; }
+        public List<Address> Addresses { get; set; }
         public string Name { get; set; }
         public Guid DefaultCultureId { get; set; }
     }

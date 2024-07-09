@@ -15,7 +15,11 @@ namespace EduApi.Controllers.ClientZone.StudentAttendance
     {
         private readonly IStudentAttendanceService _studentAttendanceService;
 
-        public StudentAttendanceController(IStudentAttendanceService studentAttendanceService, ILogger<StudentAttendanceController> logger, IOrganizationRoleService organizationRoleService)
+        public StudentAttendanceController(
+            IStudentAttendanceService studentAttendanceService,
+            ILogger<StudentAttendanceController> logger,
+            IOrganizationRoleService organizationRoleService
+        )
             : base(logger, organizationRoleService)
         {
             _studentAttendanceService = studentAttendanceService;

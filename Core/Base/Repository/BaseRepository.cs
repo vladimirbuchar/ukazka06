@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
 
@@ -41,7 +43,9 @@ namespace Core.Base.Repository
         }
     }
 
-    public abstract class BaseRepository<Model>(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository(memoryCache), IBaseRepository<Model>
+    public abstract class BaseRepository<Model>(EduDbContext dbContext, IMemoryCache memoryCache)
+        : BaseRepository(memoryCache),
+            IBaseRepository<Model>
         where Model : TableModel
     {
         protected readonly EduDbContext _dbContext = dbContext;
@@ -78,7 +82,7 @@ namespace Core.Base.Repository
                 _ = _dbContext.SaveChanges();
             }
             _dbContext.ChangeTracker.Clear();
-            return obj;
+            return GetEntity(obj.Id);
         }
 
         /// <summary>
@@ -168,7 +172,7 @@ namespace Core.Base.Repository
         /// <returns></returns>
         public virtual Model GetEntity(Guid id)
         {
-            IQueryable<Model> query = _dbContext.Set<Model>();
+            IQueryable<Model> query = PrepareDetailQuery();
             return query.FirstOrDefault(x => x.Id == id);
         }
 
@@ -194,34 +198,83 @@ namespace Core.Base.Repository
             return query.Where(x => x.IsDeleted == deleted).FirstOrDefault(predicate);
         }
 
+        protected IQueryable<Model> PrepareOrderBy(
+            IQueryable<Model> query,
+            Expression<Func<Model, object>> orderBy = null,
+            Expression<Func<Model, object>> orderByDesc = null
+        )
+        {
+            if (orderBy != null && orderByDesc == null)
+            {
+                query = query.OrderBy(orderBy);
+            }
+            else if (orderByDesc != null && orderBy == null)
+            {
+                query = query.OrderByDescending(orderByDesc);
+            }
+            return query;
+        }
+
+        protected IQueryable<Model> PrepareLimit(IQueryable<Model> query, int page = 0, int itemCount = 0)
+        {
+            if (page > 0 && itemCount > 0)
+            {
+                query = query.Skip((page - 1) * itemCount);
+                query = query.Take(itemCount);
+            }
+            return query;
+        }
+
+        protected IQueryable<Model> PrepareWhere(
+            IQueryable<Model> query,
+            bool deleted,
+            Expression<Func<Model, bool>> predicate = null,
+            Expression<Func<Model, bool>> customPredicate = null
+        )
+        {
+            if (predicate != null)
+            {
+                query = query.Where(predicate);
+            }
+            query = query.Where(x => x.IsDeleted == deleted);
+            if (customPredicate != null)
+            {
+                query = query.Where(customPredicate);
+            }
+            return query;
+        }
+
+        protected virtual IQueryable<Model> PrepareDetailQuery()
+        {
+            return _dbContext.Set<Model>();
+        }
+
+        protected virtual IQueryable<Model> PrepareListQuery()
+        {
+            return _dbContext.Set<Model>();
+        }
+
         /// <summary>
         /// get entity list
         /// </summary>
         /// <param name="deleted"></param>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        public virtual HashSet<Model> GetEntities(
+        public virtual async Task<List<Model>> GetEntities(
             bool deleted,
             Expression<Func<Model, bool>> predicate = null,
+            Expression<Func<Model, bool>> customPredicate = null,
             Expression<Func<Model, object>> orderBy = null,
-            Expression<Func<Model, object>> orderByDesc = null
+            Expression<Func<Model, object>> orderByDesc = null,
+            int page = 0,
+            int itemCount = 0
         )
         {
-            IQueryable<Model> query = _dbContext.Set<Model>();
-            if (predicate != null)
-            {
-                query = query.Where(predicate);
-            }
-            query = query.Where(x => x.IsDeleted == deleted);
-            if (orderBy != null)
-            {
-                query = query.OrderBy(orderBy);
-            }
-            else if (orderByDesc != null)
-            {
-                query = query.OrderByDescending(orderByDesc);
-            }
-            return [.. query];
+            IQueryable<Model> query = PrepareListQuery();
+            query = PrepareWhere(query, deleted, predicate, customPredicate);
+            query = PrepareOrderBy(query, orderBy, orderByDesc);
+            query = PrepareLimit(query, page, itemCount);
+            return await query.ToListAsync();
         }
     }
 }

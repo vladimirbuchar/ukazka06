@@ -11,15 +11,15 @@ namespace Services.UserInOrganization.Convertor
     {
         public UserInOrganizationConvertor() { }
 
-        public HashSet<UserInOrganizationListDto> ConvertToWebModel(HashSet<UserInOrganizationDbo> getAllUserInOrganizations, string culture = "")
+        public List<UserInOrganizationListDto> ConvertToWebModel(List<UserInOrganizationDbo> getAllUserInOrganizations, string culture = "")
         {
-            HashSet<UserInOrganizationListDto> data = [];
+            List<UserInOrganizationListDto> data = [];
             foreach (UserInOrganizationDbo item in getAllUserInOrganizations)
             {
                 UserInOrganizationListDto find = data.FirstOrDefault(x => x.Id == item.UserId);
                 if (find == null)
                 {
-                    _ = data.Add(
+                    data.Add(
                         new UserInOrganizationListDto()
                         {
                             FirstName = item.User.Person.FirstName,
@@ -40,9 +40,11 @@ namespace Services.UserInOrganization.Convertor
             return data;
         }
 
-        public HashSet<OrganizationRoleListDto> ConvertToWebModel(HashSet<OrganizationRoleDbo> organizationRoles)
+        public List<OrganizationRoleListDto> ConvertToWebModel(List<OrganizationRoleDbo> organizationRoles)
         {
-            return organizationRoles.Select(item => new OrganizationRoleListDto() { RoleIndentificator = item.SystemIdentificator, RoleId = item.Id }).ToHashSet();
+            return organizationRoles
+                .Select(item => new OrganizationRoleListDto() { RoleIndentificator = item.SystemIdentificator, RoleId = item.Id })
+                .ToList();
         }
 
         public UserInOrganizationDbo ConvertToBussinessEntity(UserInOrganizationCreateDto create, string culture)

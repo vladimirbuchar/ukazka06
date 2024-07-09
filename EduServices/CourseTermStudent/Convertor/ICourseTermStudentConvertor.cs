@@ -4,5 +4,6 @@ using Services.CourseTermStudent.Dto;
 
 namespace Services.CourseTermStudent.Convertor
 {
-    public interface ICourseTermStudentConvertor : IBaseConvertor<CourseStudentDbo, CourseTermStudentCreateDto, CourseTermStudentListDto, CourseTermStudentDetailDto> { }
+    public interface ICourseTermStudentConvertor
+        : IBaseConvertor<CourseStudentDbo, CourseTermStudentCreateDto, CourseTermStudentListDto, CourseTermStudentDetailDto> { }
 }

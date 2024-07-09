@@ -14,7 +14,12 @@ namespace Core.Base.Repository.FileRepository
     {
         private readonly string _fileRepositoryPath;
 
-        public FileUploadRepository(IWebHostEnvironment hostingEnvironment, EduDbContext dbContext, IMemoryCache memoryCache, IConfiguration configuration)
+        public FileUploadRepository(
+            IWebHostEnvironment hostingEnvironment,
+            EduDbContext dbContext,
+            IMemoryCache memoryCache,
+            IConfiguration configuration
+        )
             : base(dbContext, memoryCache)
         {
             string projectRootPath = hostingEnvironment.ContentRootPath;

@@ -10,8 +10,18 @@ using Services.OrganizationCulture.Dto;
 
 namespace Services.OrganizationCulture.Validator
 {
-    public class OrganizationCultureValidator(IOrganizationCultureRepository repository, IOrganizationRepository organizationRepository, ICodeBookRepository<CultureDbo> culture)
-        : BaseValidator<OrganizationCultureDbo, IOrganizationCultureRepository, OrganizationCultureCreateDto, OrganizationCultureDetailDto, OrganizationCultureUpdateDto>(repository),
+    public class OrganizationCultureValidator(
+        IOrganizationCultureRepository repository,
+        IOrganizationRepository organizationRepository,
+        ICodeBookRepository<CultureDbo> culture
+    )
+        : BaseValidator<
+            OrganizationCultureDbo,
+            IOrganizationCultureRepository,
+            OrganizationCultureCreateDto,
+            OrganizationCultureDetailDto,
+            OrganizationCultureUpdateDto
+        >(repository),
             IOrganizationCultureValidator
     {
         private readonly IOrganizationRepository _organizationRepository = organizationRepository;

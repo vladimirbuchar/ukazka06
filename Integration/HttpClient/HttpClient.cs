@@ -23,7 +23,10 @@ namespace Integration.HttpClient
             {
                 data.Add("UserAccessToken", userAccessToken);
             }
-            HttpResponseMessage response = await _httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json"));
+            HttpResponseMessage response = await _httpClient.PostAsync(
+                url,
+                new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json")
+            );
             return response;
         }
 

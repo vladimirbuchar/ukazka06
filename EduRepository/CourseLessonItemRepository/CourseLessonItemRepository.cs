@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using Core.Base.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
@@ -10,35 +8,25 @@ using Model.Edu.CourseLessonItem;
 
 namespace Repository.CourseLessonItemRepository
 {
-    public class CourseLessonItemRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<CourseLessonItemDbo>(dbContext, memoryCache), ICourseLessonItemRepository
+    public class CourseLessonItemRepository(EduDbContext dbContext, IMemoryCache memoryCache)
+        : BaseRepository<CourseLessonItemDbo>(dbContext, memoryCache),
+            ICourseLessonItemRepository
     {
-        public override CourseLessonItemDbo GetEntity(Guid id)
+        protected override IQueryable<CourseLessonItemDbo> PrepareDetailQuery()
         {
             return _dbContext
                 .Set<CourseLessonItemDbo>()
                 .Include(x => x.CourseLessonItemTranslations)
                 .ThenInclude(x => x.Culture)
-                .Include(x => x.CourseLessonItemTemplate)
-                .FirstOrDefault(x => x.Id == id);
+                .Include(x => x.CourseLessonItemTemplate);
         }
 
-        public override HashSet<CourseLessonItemDbo> GetEntities(
-            bool deleted,
-            Expression<Func<CourseLessonItemDbo, bool>> predicate = null,
-            Expression<Func<CourseLessonItemDbo, object>> orderBy = null,
-            Expression<Func<CourseLessonItemDbo, object>> orderByDesc = null
-        )
+        protected override IQueryable<CourseLessonItemDbo> PrepareListQuery()
         {
-            return
-            [
-                .. _dbContext
-                    .Set<CourseLessonItemDbo>()
-                    .Include(x => x.CourseLessonItemTranslations.Where(x => x.IsDeleted == false))
-                    .ThenInclude(x => x.Culture)
-                    .Where(predicate)
-                    .Where(x => x.IsDeleted == deleted)
-            ];
-            ;
+            return _dbContext
+                .Set<CourseLessonItemDbo>()
+                .Include(x => x.CourseLessonItemTranslations.Where(x => x.IsDeleted == false))
+                .ThenInclude(x => x.Culture);
         }
 
         public override Guid GetOrganizationId(Guid objectId)

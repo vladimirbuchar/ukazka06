@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Core.Base.Request;
 using Core.Base.Service;
 using Core.DataTypes;
 using Model.Edu.BankOfQuestions;
@@ -26,7 +27,8 @@ namespace Services.BankOfQuestion.Service
             BankOfQuestionCreateDto,
             BankOfQuestionListDto,
             BankOfQuestionDetailDto,
-            BankOfQuestionUpdateDto
+            BankOfQuestionUpdateDto,
+            FilterRequest
         >(bankOfQuestionRepository, bankOfQuestionConvertor, validator),
             IBankOfQuestionService
     {
@@ -34,7 +36,7 @@ namespace Services.BankOfQuestion.Service
 
         public override Result DeleteObject(Guid objectId, Guid userId)
         {
-            HashSet<QuestionDbo> getQuestionsInBanks = _questionRepository.GetEntities(false, x => x.BankOfQuestionId == objectId);
+            List<QuestionDbo> getQuestionsInBanks = _questionRepository.GetEntities(false, x => x.BankOfQuestionId == objectId).Result;
             Guid organizationId = _repository.GetEntity(objectId).OrganizationId;
             Guid defaultBankOfQuestion = _repository.GetEntity(false, x => x.OrganizationId == organizationId && x.IsDefault).Id;
             foreach (QuestionDbo item in getQuestionsInBanks)

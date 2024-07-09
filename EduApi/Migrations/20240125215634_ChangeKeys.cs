@@ -46,7 +46,13 @@ namespace EduApi.Migrations
                 defaultValue: new Guid("00000000-0000-0000-0000-000000000000")
             );
 
-            migrationBuilder.AddColumn<Guid>(name: "CourseTermToId", table: "Cb_TimeTable", type: "uniqueidentifier", nullable: false, defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
+            migrationBuilder.AddColumn<Guid>(
+                name: "CourseTermToId",
+                table: "Cb_TimeTable",
+                type: "uniqueidentifier",
+                nullable: false,
+                defaultValue: new Guid("00000000-0000-0000-0000-000000000000")
+            );
 
             migrationBuilder.AddColumn<Guid>(
                 name: "OrganizationStudyHourFromId",

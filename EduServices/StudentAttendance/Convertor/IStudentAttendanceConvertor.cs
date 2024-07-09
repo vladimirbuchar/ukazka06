@@ -4,5 +4,6 @@ using Services.StudentAttendance.Dto;
 
 namespace Services.StudentAttendance.Convertor
 {
-    public interface IStudentAttendanceConvertor : IBaseConvertor<AttendanceStudentDbo, StudentAttendanceCreateDto, StudentAttendanceListDto, StudentAttendanceDetailDto> { }
+    public interface IStudentAttendanceConvertor
+        : IBaseConvertor<AttendanceStudentDbo, StudentAttendanceCreateDto, StudentAttendanceListDto, StudentAttendanceDetailDto> { }
 }

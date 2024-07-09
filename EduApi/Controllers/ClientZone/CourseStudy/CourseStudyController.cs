@@ -16,7 +16,11 @@ namespace EduApi.Controllers.ClientZone.CourseStudy
     {
         private readonly ICourseStudyService _courseStudyService;
 
-        public CourseStudyController(ICourseStudyService courseService, ILogger<CourseController> logger, IOrganizationRoleService organizationRoleService)
+        public CourseStudyController(
+            ICourseStudyService courseService,
+            ILogger<CourseController> logger,
+            IOrganizationRoleService organizationRoleService
+        )
             : base(logger, organizationRoleService)
         {
             _courseStudyService = courseService;
@@ -122,7 +126,13 @@ namespace EduApi.Controllers.ClientZone.CourseStudy
         {
             try
             {
-                return SendResponse(_courseStudyService.EvaluateTest(evaluateTestDto.UserTestSummaryId ?? Guid.Empty, evaluateTestDto.EvaluateQuestions, evaluateTestDto.CourseLessonId));
+                return SendResponse(
+                    _courseStudyService.EvaluateTest(
+                        evaluateTestDto.UserTestSummaryId ?? Guid.Empty,
+                        evaluateTestDto.EvaluateQuestions,
+                        evaluateTestDto.CourseLessonId
+                    )
+                );
             }
             catch (Exception e)
             {
@@ -176,7 +186,15 @@ namespace EduApi.Controllers.ClientZone.CourseStudy
         {
             try
             {
-                return SendResponse(_courseStudyService.FinishCourse(GetLoggedUserId(), courseStudentId, courseId, _courseStudyService.GetOrganizationIdByObjectId(courseId), GetClientCulture()));
+                return SendResponse(
+                    _courseStudyService.FinishCourse(
+                        GetLoggedUserId(),
+                        courseStudentId,
+                        courseId,
+                        _courseStudyService.GetOrganizationIdByObjectId(courseId),
+                        GetClientCulture()
+                    )
+                );
             }
             catch (Exception e)
             {

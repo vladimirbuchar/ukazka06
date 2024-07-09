@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Repository.FileRepository;
+using Core.Base.Request;
 using Core.Base.Service;
 using Model.CodeBook;
 using Model.Edu.CourseMaterial;
@@ -31,18 +32,19 @@ namespace Services.CourseMaterial.Service
             CourseMaterialListDto,
             CourseMaterialDetailDto,
             CourseMaterialUpdateDto,
-            CourseMaterialFileRepositoryDbo
+            CourseMaterialFileRepositoryDbo,
+            FilterRequest
         >(courseMaterialRepository, courseMaterialConvertor, validator, repository, culture),
             ICourseMaterialService
     {
         private readonly ICourseRepository _courseRepository = courseRepository;
 
-        public HashSet<CourseMaterialFileListDto> GetFiles(Guid courseMaterialId)
+        public List<CourseMaterialFileListDto> GetFiles(Guid courseMaterialId)
         {
-            return _convertor.ConvertToWebModel(_repository.GetEntity(courseMaterialId).CourseMaterialFileRepositories.ToHashSet());
+            return _convertor.ConvertToWebModel(_repository.GetEntity(courseMaterialId).CourseMaterialFileRepositories.ToList());
         }
 
-        public HashSet<CourseMaterialFileListDto> GetFilesStudent(Guid courseId)
+        public List<CourseMaterialFileListDto> GetFilesStudent(Guid courseId)
         {
             Guid? courseMaterialId = _courseRepository.GetEntity(courseId).CourseMaterialId;
             return courseMaterialId != null ? GetFiles(courseMaterialId.Value) : null;

@@ -7,6 +7,6 @@ namespace Services.Notification.Convertor
 {
     public interface INotificationConvertor : IBaseConvertor
     {
-        HashSet<MyNotificationListDto> ConvertToWebModel(HashSet<NotificationDbo> getMyNotifications);
+        List<MyNotificationListDto> ConvertToWebModel(List<NotificationDbo> getMyNotifications);
     }
 }

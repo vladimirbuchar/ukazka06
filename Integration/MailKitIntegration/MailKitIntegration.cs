@@ -30,7 +30,8 @@ namespace Integration.MailKitIntegration
             if (sendEmail)
             {
                 MimeMessage message = new();
-                MailboxAddress from = new(mail.From.Name, string.IsNullOrWhiteSpace(mail.From.Email) ? ConfigValue.DEFAULT_EMAIL_FROM : mail.From.Email);
+                MailboxAddress from =
+                    new(mail.From.Name, string.IsNullOrWhiteSpace(mail.From.Email) ? ConfigValue.DEFAULT_EMAIL_FROM : mail.From.Email);
                 message.From.Add(from);
 
                 MailboxAddress to = new(mail.To.Name, mail.To.Email);

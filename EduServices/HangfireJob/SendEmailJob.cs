@@ -17,14 +17,18 @@ namespace Services.HangfireJob
         public override void Execute()
         {
             ISendEmailRepository _repository = _scope.ServiceProvider.GetRequiredService<ISendEmailRepository>();
-            IOrganizationSettingRepository _organizationSettingRepository = _scope.ServiceProvider.GetRequiredService<IOrganizationSettingRepository>();
+            IOrganizationSettingRepository _organizationSettingRepository =
+                _scope.ServiceProvider.GetRequiredService<IOrganizationSettingRepository>();
             IMailKitIntegration _mailKitIntegration = _scope.ServiceProvider.GetRequiredService<IMailKitIntegration>();
-            HashSet<SendEmailDbo> sendEmails = _repository.GetEntities(false, x => x.IsSended == false && x.IsError == false);
+            List<SendEmailDbo> sendEmails = _repository.GetEntities(false, x => x.IsSended == false && x.IsError == false).Result;
             foreach (SendEmailDbo sendEmail in sendEmails)
             {
                 try
                 {
-                    OrganizationSettingDbo getOrganizationSetting = _organizationSettingRepository.GetEntity(false, x => x.OrganizationId == sendEmail.OrganizationId);
+                    OrganizationSettingDbo getOrganizationSetting = _organizationSettingRepository.GetEntity(
+                        false,
+                        x => x.OrganizationId == sendEmail.OrganizationId
+                    );
                     if (getOrganizationSetting != null && getOrganizationSetting.UseCustomSmtpServer)
                     {
                         _mailKitIntegration.SendEmail(

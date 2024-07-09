@@ -26,7 +26,7 @@ namespace Services.Chat.Convertor
             return entity;
         }
 
-        public HashSet<ChatItemListDto> ConvertToWebModel(HashSet<ChatDbo> getAllChatItems, string culture)
+        public List<ChatItemListDto> ConvertToWebModel(List<ChatDbo> getAllChatItems, string culture)
         {
             return getAllChatItems
                 .Select(x => new ChatItemListDto()
@@ -63,7 +63,7 @@ namespace Services.Chat.Convertor
     
                     }).ToHashSet()*/
                 })
-                .ToHashSet();
+                .ToList();
         }
 
         public ChatItemDetailDto ConvertToWebModel(ChatDbo detail, string culture)

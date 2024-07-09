@@ -45,7 +45,12 @@ namespace EduApi.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade
                     );
-                    table.ForeignKey(name: "FK_Edu_LicenseChange_Edu_Organization_OrganizationId", column: x => x.OrganizationId, principalTable: "Edu_Organization", principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Edu_LicenseChange_Edu_Organization_OrganizationId",
+                        column: x => x.OrganizationId,
+                        principalTable: "Edu_Organization",
+                        principalColumn: "Id"
+                    );
                 }
             );
 

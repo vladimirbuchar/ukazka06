@@ -11,7 +11,18 @@ namespace EduApi.Migrations
             migrationBuilder.InsertData(
                 "Cb_Country",
                 new string[] { "Id", "IsDeleted", "IsSystemObject", "IsChanged", "SystemIdentificator", "Name", "Value", "IsDefault", "Priority", },
-                new object[] { Guid.NewGuid(), false, true, true, "CODEBOOK_SELECT_VALUE", "CODEBOOK_SELECT_VALUE", "CODEBOOK_SELECT_VALUE", true, -1 }
+                new object[]
+                {
+                    Guid.NewGuid(),
+                    false,
+                    true,
+                    true,
+                    "CODEBOOK_SELECT_VALUE",
+                    "CODEBOOK_SELECT_VALUE",
+                    "CODEBOOK_SELECT_VALUE",
+                    true,
+                    -1
+                }
             );
         }
 

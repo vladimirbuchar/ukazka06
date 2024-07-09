@@ -2,34 +2,28 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Core.Base.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
+using Model.Edu.Branch;
 using Model.Link;
 
 namespace Repository.CourseStudentRepository
 {
-    public class CourseStudentRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<CourseStudentDbo>(dbContext, memoryCache), ICourseStudentRepository
+    public class CourseStudentRepository(EduDbContext dbContext, IMemoryCache memoryCache)
+        : BaseRepository<CourseStudentDbo>(dbContext, memoryCache),
+            ICourseStudentRepository
     {
-        public override HashSet<CourseStudentDbo> GetEntities(
-            bool deleted,
-            Expression<Func<CourseStudentDbo, bool>> predicate = null,
-            Expression<Func<CourseStudentDbo, object>> orderBy = null,
-            Expression<Func<CourseStudentDbo, object>> orderByDesc = null
-        )
+        protected override IQueryable<CourseStudentDbo> PrepareListQuery()
         {
-            return
-            [
-                .. _dbContext
-                    .Set<CourseStudentDbo>()
-                    .Include(x => x.UserInOrganization)
-                    .ThenInclude(x => x.User)
-                    .ThenInclude(x => x.Person)
-                    .Include(x => x.CourseTerm)
-                    .Where(predicate)
-                    .Where(x => x.IsDeleted == deleted)
-            ];
+            return _dbContext
+                .Set<CourseStudentDbo>()
+                .Include(x => x.UserInOrganization)
+                .ThenInclude(x => x.User)
+                .ThenInclude(x => x.Person)
+                .Include(x => x.CourseTerm);
         }
 
         public HashSet<CourseStudentDbo> GetAllStudentInCourseTerm(Guid courseTermId)
@@ -46,9 +40,9 @@ namespace Repository.CourseStudentRepository
             ];
         }
 
-        public HashSet<CourseStudentDbo> GetStudentCourse(Guid userId, bool hideFinishCourse)
+        public List<CourseStudentDbo> GetStudentCourse(Guid userId, bool hideFinishCourse)
         {
-            HashSet<CourseStudentDbo> courses =
+            List<CourseStudentDbo> courses =
             [
                 .. _dbContext
                     .Set<CourseStudentDbo>()
@@ -74,14 +68,19 @@ namespace Repository.CourseStudentRepository
             ];
             if (hideFinishCourse)
             {
-                courses = courses.Where(x => x.CourseFinish == false).ToHashSet();
+                courses = courses.Where(x => x.CourseFinish == false).ToList();
             }
             return [.. courses.OrderBy(x => x.CourseFinish)];
         }
 
         public override Guid GetOrganizationId(Guid objectId)
         {
-            return _dbContext.Set<CourseStudentDbo>().Include(x => x.CourseTerm).ThenInclude(x => x.Course).FirstOrDefault(x => x.Id == objectId).CourseTerm.Course.OrganizationId;
+            return _dbContext
+                .Set<CourseStudentDbo>()
+                .Include(x => x.CourseTerm)
+                .ThenInclude(x => x.Course)
+                .FirstOrDefault(x => x.Id == objectId)
+                .CourseTerm.Course.OrganizationId;
         }
     }
 }

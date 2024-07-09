@@ -44,26 +44,31 @@ namespace Services.UserProfile.Service
         private readonly IAttendanceStudentRepository _attendanceStudentRepository = atendanceStudentRepository;
         private readonly IStudentEvaluationRepository _studentEvaluationRepository = studentEvaluationRepository;
 
-        public HashSet<MyCertificateListDto> GetMyCertificate(Guid userId)
+        public List<MyCertificateListDto> GetMyCertificate(Guid userId)
         {
-            return _convertor.ConvertToWebModel([.. _userCertificateRepository.GetEntities(false, x => x.UserId == userId, null, x => x.ActiveFrom)]);
+            return _convertor.ConvertToWebModel(
+                [.. _userCertificateRepository.GetEntities(false, x => x.UserId == userId, null, x => x.ActiveFrom).Result]
+            );
         }
 
-        public HashSet<MyCourseListDto> GetMyCourse(Guid userId, bool hideFinishCourse, string culture)
+        public List<MyCourseListDto> GetMyCourse(Guid userId, bool hideFinishCourse, string culture)
         {
-            HashSet<MyCourseListDto> myCourse = [];
-            HashSet<MyCourseListDto> study = _convertor.ConvertToWebModel(_courseStudentRepository.GetStudentCourse(userId, hideFinishCourse), culture);
+            List<MyCourseListDto> myCourse = [];
+            List<MyCourseListDto> study = _convertor.ConvertToWebModel(_courseStudentRepository.GetStudentCourse(userId, hideFinishCourse), culture);
             foreach (MyCourseListDto item in study)
             {
                 item.IsStudent = true;
             }
-            HashSet<MyCourseListDto> lector = _convertor.ConvertToWebModel(_courseLectorRepository.GetEntities(false, x => x.UserInOrganization.UserId == userId), culture);
+            List<MyCourseListDto> lector = _convertor.ConvertToWebModel(
+                _courseLectorRepository.GetEntities(false, x => x.UserInOrganization.UserId == userId).Result,
+                culture
+            );
             foreach (MyCourseListDto item in lector)
             {
                 item.IsLector = true;
             }
-            myCourse.UnionWith(study);
-            myCourse.UnionWith(lector);
+            myCourse.AddRange(study);
+            myCourse.AddRange(lector);
             myCourse = [.. myCourse.OrderBy(x => x.CourseFinish).ThenBy(x => x.CourseName)];
             return myCourse;
         }
@@ -71,28 +76,36 @@ namespace Services.UserProfile.Service
         public List<MyTimeTableListDto> GetMyTimeTable(Guid userId, string culture)
         {
             List<MyTimeTableListDto> getUserDetailDtos = [];
-            HashSet<UserInOrganizationDbo> organizations = _userInOrganizationRepository.GetEntities(
-                false,
-                x =>
-                    x.UserId == userId
-                    && (x.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.STUDENT || x.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.LECTOR)
-            );
-            HashSet<CourseStudentDbo> myCourse = _courseStudentRepository.GetStudentCourse(userId, true);
-            HashSet<CourseLectorDbo> myCourseLector = _courseLectorRepository.GetEntities(false, x => x.UserInOrganization.UserId == userId);
+            List<UserInOrganizationDbo> organizations = _userInOrganizationRepository
+                .GetEntities(
+                    false,
+                    x =>
+                        x.UserId == userId
+                        && (
+                            x.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.STUDENT
+                            || x.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.LECTOR
+                        )
+                )
+                .Result;
+            List<CourseStudentDbo> myCourse = _courseStudentRepository.GetStudentCourse(userId, true).ToList();
+            List<CourseLectorDbo> myCourseLector = _courseLectorRepository.GetEntities(false, x => x.UserInOrganization.UserId == userId).Result;
 
             foreach (UserInOrganizationDbo item in organizations)
             {
-                HashSet<CourseStudentDbo> courseInOrganization = myCourse.Where(x => x.CourseTerm.ClassRoom.Branch.OrganizationId == item.Id).ToHashSet();
+                List<CourseStudentDbo> courseInOrganization = myCourse.Where(x => x.CourseTerm.ClassRoom.Branch.OrganizationId == item.Id).ToList();
                 MyTimeTableListDto timeTableItem = new();
-                HashSet<OrganizationStudyHourDbo> getStudyHours = [.. _organizationStudyHourRepository.GetEntities(false, x => x.OrganizationId == item.Id, x => x.Position)];
-                HashSet<TimeTableDto> timeTable = [];
-                HashSet<CourseStudentDbo> monday = courseInOrganization.Where(x => x.CourseTerm.Monday).ToHashSet();
-                HashSet<CourseStudentDbo> tuesday = courseInOrganization.Where(x => x.CourseTerm.Tuesday).ToHashSet();
-                HashSet<CourseStudentDbo> wednesday = courseInOrganization.Where(x => x.CourseTerm.Wednesday).ToHashSet();
-                HashSet<CourseStudentDbo> thursday = courseInOrganization.Where(x => x.CourseTerm.Thursday).ToHashSet();
-                HashSet<CourseStudentDbo> friday = courseInOrganization.Where(x => x.CourseTerm.Friday).ToHashSet();
-                HashSet<CourseStudentDbo> saturday = courseInOrganization.Where(x => x.CourseTerm.Saturday).ToHashSet();
-                HashSet<CourseStudentDbo> sunday = courseInOrganization.Where(x => x.CourseTerm.Sunday).ToHashSet();
+                List<OrganizationStudyHourDbo> getStudyHours =
+                [
+                    .. _organizationStudyHourRepository.GetEntities(false, x => x.OrganizationId == item.Id, null, x => x.Position).Result
+                ];
+                List<TimeTableDto> timeTable = [];
+                List<CourseStudentDbo> monday = courseInOrganization.Where(x => x.CourseTerm.Monday).ToList();
+                List<CourseStudentDbo> tuesday = courseInOrganization.Where(x => x.CourseTerm.Tuesday).ToList();
+                List<CourseStudentDbo> wednesday = courseInOrganization.Where(x => x.CourseTerm.Wednesday).ToList();
+                List<CourseStudentDbo> thursday = courseInOrganization.Where(x => x.CourseTerm.Thursday).ToList();
+                List<CourseStudentDbo> friday = courseInOrganization.Where(x => x.CourseTerm.Friday).ToList();
+                List<CourseStudentDbo> saturday = courseInOrganization.Where(x => x.CourseTerm.Saturday).ToList();
+                List<CourseStudentDbo> sunday = courseInOrganization.Where(x => x.CourseTerm.Sunday).ToList();
 
                 timeTableItem.StudyHours = getStudyHours
                     .Select(x => new StudyHourListDto()
@@ -104,7 +117,7 @@ namespace Services.UserProfile.Service
                         Id = x.Id,
                         Position = x.Position
                     })
-                    .ToHashSet();
+                    .ToList();
                 timeTableItem.HaveStudyHours = getStudyHours.Count > 0;
                 timeTableItem.OrganizationName = item.Organization.Name;
                 PrepareTimeTable(monday, getStudyHours, timeTableItem, "TIME_TABLE_MONDAY", culture);
@@ -119,17 +132,22 @@ namespace Services.UserProfile.Service
 
             foreach (UserInOrganizationDbo item in organizations)
             {
-                HashSet<CourseLectorDbo> courseInOrganization = myCourseLector.Where(x => x.CourseTerm.ClassRoom.Branch.OrganizationId == item.Id).ToHashSet();
+                List<CourseLectorDbo> courseInOrganization = myCourseLector
+                    .Where(x => x.CourseTerm.ClassRoom.Branch.OrganizationId == item.Id)
+                    .ToList();
                 MyTimeTableListDto timeTableItem = new();
-                HashSet<OrganizationStudyHourDbo> getStudyHours = [.. _organizationStudyHourRepository.GetEntities(false, x => x.OrganizationId == item.Id, x => x.Position)];
-                HashSet<TimeTableDto> timeTable = [];
-                HashSet<CourseLectorDbo> monday = courseInOrganization.Where(x => x.CourseTerm.Monday).ToHashSet();
-                HashSet<CourseLectorDbo> tuesday = courseInOrganization.Where(x => x.CourseTerm.Tuesday).ToHashSet();
-                HashSet<CourseLectorDbo> wednesday = courseInOrganization.Where(x => x.CourseTerm.Wednesday).ToHashSet();
-                HashSet<CourseLectorDbo> thursday = courseInOrganization.Where(x => x.CourseTerm.Thursday).ToHashSet();
-                HashSet<CourseLectorDbo> friday = courseInOrganization.Where(x => x.CourseTerm.Friday).ToHashSet();
-                HashSet<CourseLectorDbo> saturday = courseInOrganization.Where(x => x.CourseTerm.Saturday).ToHashSet();
-                HashSet<CourseLectorDbo> sunday = courseInOrganization.Where(x => x.CourseTerm.Sunday).ToHashSet();
+                List<OrganizationStudyHourDbo> getStudyHours =
+                [
+                    .. _organizationStudyHourRepository.GetEntities(false, x => x.OrganizationId == item.Id, null, x => x.Position).Result
+                ];
+                List<TimeTableDto> timeTable = [];
+                List<CourseLectorDbo> monday = courseInOrganization.Where(x => x.CourseTerm.Monday).ToList();
+                List<CourseLectorDbo> tuesday = courseInOrganization.Where(x => x.CourseTerm.Tuesday).ToList();
+                List<CourseLectorDbo> wednesday = courseInOrganization.Where(x => x.CourseTerm.Wednesday).ToList();
+                List<CourseLectorDbo> thursday = courseInOrganization.Where(x => x.CourseTerm.Thursday).ToList();
+                List<CourseLectorDbo> friday = courseInOrganization.Where(x => x.CourseTerm.Friday).ToList();
+                List<CourseLectorDbo> saturday = courseInOrganization.Where(x => x.CourseTerm.Saturday).ToList();
+                List<CourseLectorDbo> sunday = courseInOrganization.Where(x => x.CourseTerm.Sunday).ToList();
 
                 timeTableItem.StudyHours = getStudyHours
                     .Select(x => new StudyHourListDto()
@@ -141,7 +159,7 @@ namespace Services.UserProfile.Service
                         Id = x.Id,
                         Position = x.Position
                     })
-                    .ToHashSet();
+                    .ToList();
                 timeTableItem.HaveStudyHours = getStudyHours.Count > 0;
                 timeTableItem.OrganizationName = item.Organization.Name;
                 PrepareTimeTable(monday, getStudyHours, timeTableItem, "TIME_TABLE_MONDAY", culture);
@@ -156,7 +174,13 @@ namespace Services.UserProfile.Service
             return getUserDetailDtos;
         }
 
-        private static void PrepareTimeTable(HashSet<CourseStudentDbo> day, HashSet<OrganizationStudyHourDbo> getStudyHours, MyTimeTableListDto timeTableItem, string dayName, string culture)
+        private static void PrepareTimeTable(
+            List<CourseStudentDbo> day,
+            List<OrganizationStudyHourDbo> getStudyHours,
+            MyTimeTableListDto timeTableItem,
+            string dayName,
+            string culture
+        )
         {
             TimeTableDto timeTableDto = new() { DayOfWeek = dayName };
             foreach (OrganizationStudyHourDbo item in getStudyHours)
@@ -167,10 +191,16 @@ namespace Services.UserProfile.Service
                     .Name;
                 timeTableDto.CourseTerm.Add(courseName);
             }
-            _ = timeTableItem.TimeTable.Add(timeTableDto);
+            timeTableItem.TimeTable.Add(timeTableDto);
         }
 
-        private static void PrepareTimeTable(HashSet<CourseLectorDbo> day, HashSet<OrganizationStudyHourDbo> getStudyHours, MyTimeTableListDto timeTableItem, string dayName, string culture)
+        private static void PrepareTimeTable(
+            List<CourseLectorDbo> day,
+            List<OrganizationStudyHourDbo> getStudyHours,
+            MyTimeTableListDto timeTableItem,
+            string dayName,
+            string culture
+        )
         {
             TimeTableDto timeTableDto = new() { DayOfWeek = dayName };
             foreach (OrganizationStudyHourDbo item in getStudyHours)
@@ -181,25 +211,28 @@ namespace Services.UserProfile.Service
                     .Name;
                 timeTableDto.CourseTerm.Add(courseName);
             }
-            _ = timeTableItem.TimeTable.Add(timeTableDto);
+            timeTableItem.TimeTable.Add(timeTableDto);
         }
 
-        public HashSet<MyAttendanceListDto> GetMyAttendance(Guid userId, string culture)
+        public List<MyAttendanceListDto> GetMyAttendance(Guid userId, string culture)
         {
-            HashSet<MyAttendanceListDto> getMyAttendanceDtos = [];
-            HashSet<CourseStudentDbo> myCourse = _courseStudentRepository.GetStudentCourse(userId, true);
+            List<MyAttendanceListDto> getMyAttendanceDtos = [];
+            List<CourseStudentDbo> myCourse = _courseStudentRepository.GetStudentCourse(userId, true);
 
             foreach (CourseStudentDbo course in myCourse)
             {
-                HashSet<AttendanceStudentDbo> getStudentAttendances = _attendanceStudentRepository
+                List<AttendanceStudentDbo> getStudentAttendances = _attendanceStudentRepository
                     .GetEntities(false, x => x.CourseTermId == course.CourseTermId)
-                    .Where(x => x.CourseStudentId == course.UserInOrganizationId)
-                    .ToHashSet();
+                    .Result.Where(x => x.CourseStudentId == course.UserInOrganizationId)
+                    .ToList();
                 foreach (AttendanceStudentDbo item in getStudentAttendances)
                 {
-                    AttendanceStudentDbo myAttendances = _attendanceStudentRepository.GetEntity(false, x => x.CourseStudentId == item.CourseStudentId && x.CourseTermDateId == item.CourseTermDateId);
+                    AttendanceStudentDbo myAttendances = _attendanceStudentRepository.GetEntity(
+                        false,
+                        x => x.CourseStudentId == item.CourseStudentId && x.CourseTermDateId == item.CourseTermDateId
+                    );
 
-                    _ = getMyAttendanceDtos.Add(
+                    getMyAttendanceDtos.Add(
                         new MyAttendanceListDto()
                         {
                             CourseName = course.CourseTerm.Course.CourseTranslations.FindTranslation(culture).Name,
@@ -215,26 +248,26 @@ namespace Services.UserProfile.Service
             return [.. getMyAttendanceDtos.OrderByDescending(x => x.Date)];
         }
 
-        public HashSet<ManagedCourseListDto> GetManagedCourse(Guid userId)
+        public List<ManagedCourseListDto> GetManagedCourse(Guid userId)
         {
-            HashSet<UserInOrganizationDbo> org = _userInOrganizationRepository
+            List<UserInOrganizationDbo> org = _userInOrganizationRepository
                 .GetEntities(false, x => x.UserId == userId)
-                .Where(x =>
+                .Result.Where(x =>
                     x.OrganizationRole.SystemIdentificator
                         is Core.Constants.OrganizationRole.ORGANIZATION_OWNER
                             or Core.Constants.OrganizationRole.ORGANIZATION_ADMINISTRATOR
                             or Core.Constants.OrganizationRole.COURSE_EDITOR
                             or Core.Constants.OrganizationRole.COURSE_ADMINISTATOR
                 )
-                .ToHashSet();
-            HashSet<ManagedCourseListDto> data = [];
+                .ToList();
+            List<ManagedCourseListDto> data = [];
 
             foreach (UserInOrganizationDbo item in org)
             {
-                HashSet<CourseDbo> courses = _courseRepository.GetEntities(false, x => x.OrganizationId == item.Id);
+                List<CourseDbo> courses = _courseRepository.GetEntities(false, x => x.OrganizationId == item.Id).Result;
                 foreach (CourseDbo course in courses)
                 {
-                    _ = data.Add(
+                    data.Add(
                         new ManagedCourseListDto()
                         {
                             CourseName = course.CourseTranslations.FindTranslation("").Name,
@@ -243,7 +276,8 @@ namespace Services.UserProfile.Service
                             IsCourseAdministrator = item.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.COURSE_ADMINISTATOR,
 
                             IsCourseEditor = item.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.COURSE_EDITOR,
-                            IsOrganizationAdministrator = item.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.ORGANIZATION_ADMINISTRATOR,
+                            IsOrganizationAdministrator =
+                                item.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.ORGANIZATION_ADMINISTRATOR,
                             IsOrganizationOwner = item.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.ORGANIZATION_OWNER
                         }
                     );
@@ -252,14 +286,16 @@ namespace Services.UserProfile.Service
             return data;
         }
 
-        public HashSet<MyOrganizationListDto> GetMyOrganization(Guid userId)
+        public List<MyOrganizationListDto> GetMyOrganization(Guid userId)
         {
-            return _convertor.ConvertToWebModel(_userInOrganizationRepository.GetEntities(false, x => x.UserId == userId));
+            return _convertor.ConvertToWebModel(_userInOrganizationRepository.GetEntities(false, x => x.UserId == userId).Result);
         }
 
-        public HashSet<MyEvaluationListDto> GetMyEvaluation(Guid id)
+        public List<MyEvaluationListDto> GetMyEvaluation(Guid id)
         {
-            return _convertor.ConvertToWebModel(_studentEvaluationRepository.GetEntities(false, x => x.CourseStudent.UserInOrganization.UserId == id));
+            return _convertor.ConvertToWebModel(
+                _studentEvaluationRepository.GetEntities(false, x => x.CourseStudent.UserInOrganization.UserId == id).Result
+            );
         }
     }
 }

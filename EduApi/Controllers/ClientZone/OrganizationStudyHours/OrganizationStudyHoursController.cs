@@ -16,7 +16,11 @@ namespace EduApi.Controllers.ClientZone.OrganizationStudyHours
     {
         private readonly IOrganizationStudyHourService _organizationService;
 
-        public OrganizationStudyHoursController(ILogger<OrganizationController> logger, IOrganizationStudyHourService organizationService, IOrganizationRoleService organizationRoleService)
+        public OrganizationStudyHoursController(
+            ILogger<OrganizationController> logger,
+            IOrganizationStudyHourService organizationService,
+            IOrganizationRoleService organizationRoleService
+        )
             : base(logger, organizationRoleService)
         {
             _organizationService = organizationService;

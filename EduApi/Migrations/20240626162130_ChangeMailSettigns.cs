@@ -17,7 +17,14 @@ namespace EduApi.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(name: "SmtpServerPort", table: "Edu_OrganizationSetting", type: "nvarchar(max)", nullable: true, oldClrType: typeof(int), oldType: "int");
+            migrationBuilder.AlterColumn<string>(
+                name: "SmtpServerPort",
+                table: "Edu_OrganizationSetting",
+                type: "nvarchar(max)",
+                nullable: true,
+                oldClrType: typeof(int),
+                oldType: "int"
+            );
         }
     }
 }

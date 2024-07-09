@@ -269,12 +269,34 @@ namespace EduApi.Migrations
             {
                 migrationBuilder.InsertData(
                     "Cb_Country",
-                    new string[] { "Id", "IsDeleted", "IsSystemObject", "IsChanged", "SystemIdentificator", "Name", "Value", "IsDefault", "Priority" },
+                    new string[]
+                    {
+                        "Id",
+                        "IsDeleted",
+                        "IsSystemObject",
+                        "IsChanged",
+                        "SystemIdentificator",
+                        "Name",
+                        "Value",
+                        "IsDefault",
+                        "Priority"
+                    },
                     new object[] { Guid.NewGuid(), false, true, true, item.Key.Trim(), item.Value.Trim(), item.Key.Trim(), false, priority }
                 );
                 priority = priority + 1;
             }
-            string[] columns = new string[] { "Id", "IsDeleted", "IsSystemObject", "IsChanged", "SystemIdentificator", "Name", "Value", "IsDefault", "Priority" };
+            string[] columns = new string[]
+            {
+                "Id",
+                "IsDeleted",
+                "IsSystemObject",
+                "IsChanged",
+                "SystemIdentificator",
+                "Name",
+                "Value",
+                "IsDefault",
+                "Priority"
+            };
             object[] value = new object[] { Guid.NewGuid(), false, true, true, "SK", "Slovenská republika", "SK", false, 2 };
             migrationBuilder.InsertData("Cb_Country", columns, value);
 
@@ -329,11 +351,40 @@ namespace EduApi.Migrations
                 "CreatePrivateCourse",
                 "Priority"
             };
-            object[] data = new object[] { Guid.NewGuid(), false, true, true, "FREE", "FREE_LICENSE", "FREE_LICENSE", true, 10, 10, 10, false, false, false, false, 3 };
+            object[] data = new object[]
+            {
+                Guid.NewGuid(),
+                false,
+                true,
+                true,
+                "FREE",
+                "FREE_LICENSE",
+                "FREE_LICENSE",
+                true,
+                10,
+                10,
+                10,
+                false,
+                false,
+                false,
+                false,
+                3
+            };
             migrationBuilder.InsertData("Cb_License", columnsLicence, data);
 
             List<string> couserStatus = new List<string> { "ONLINE", "ATTENDANCE", "COMBINED" };
-            string[] columnCType = new string[] { "Id", "IsDeleted", "IsSystemObject", "IsChanged", "SystemIdentificator", "Name", "Value", "IsDefault", "Priority" };
+            string[] columnCType = new string[]
+            {
+                "Id",
+                "IsDeleted",
+                "IsSystemObject",
+                "IsChanged",
+                "SystemIdentificator",
+                "Name",
+                "Value",
+                "IsDefault",
+                "Priority"
+            };
             int priorityCType = 1;
             foreach (string item in couserStatus)
             {
@@ -343,7 +394,18 @@ namespace EduApi.Migrations
             }
 
             List<string> couserStatusType = new List<string> { "NEW", "IN_PREPARATION", "OPEN", "ONGOING", "CLOSED" };
-            string[] columnCsType = new string[] { "Id", "IsDeleted", "IsSystemObject", "IsChanged", "SystemIdentificator", "Name", "Value", "IsDefault", "Priority" };
+            string[] columnCsType = new string[]
+            {
+                "Id",
+                "IsDeleted",
+                "IsSystemObject",
+                "IsChanged",
+                "SystemIdentificator",
+                "Name",
+                "Value",
+                "IsDefault",
+                "Priority"
+            };
             int priorityCsType = 1;
             foreach (string item in couserStatusType)
             {

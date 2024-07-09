@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
+﻿using Core.Base.Request;
 using Core.Base.Service;
 using Core.Constants;
 using Core.DataTypes;
@@ -22,10 +17,16 @@ using Repository.UserRepository;
 using Services.Organization.Convertor;
 using Services.Organization.Dto;
 using Services.Organization.Validator;
-using Services.SystemService.SendMailService;
+using Services.SystemService.SendMailService.Service;
 using Services.User.Convertor;
 using Services.User.Dto;
 using Services.User.Validator;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
 
 namespace Services.User.Service
 {
@@ -41,7 +42,19 @@ namespace Services.User.Service
         IRoleRepository roleRepository,
         IOrganizationValidator organizationValidator,
         IUserInOrganizationRepository userInOrganizationRepository
-    ) : BaseService<IUserRepository, UserDbo, IUserConvertor, IUserValidator, UserCreateDto, UserListDto, UserDetailDto, UserUpdateDto>(userRepository, userConvertor, validator), IUserService
+    )
+        : BaseService<
+            IUserRepository,
+            UserDbo,
+            IUserConvertor,
+            IUserValidator,
+            UserCreateDto,
+            UserListDto,
+            UserDetailDto,
+            UserUpdateDto,
+            FilterRequest
+        >(userRepository, userConvertor, validator),
+            IUserService
     {
         private readonly ISendMailService _sendMailService = sendMailService;
         private readonly IConfiguration _configuration = configuration;
@@ -78,10 +91,25 @@ namespace Services.User.Service
 
                 if (addObject.SendActivateEmail)
                 {
-                    Guid id = _linkLifeTimeRepository.CreateEntity(new LinkLifeTimeDbo() { UserId = entity.Id, EndTime = DateTime.Now.AddMinutes(30) }, Guid.Empty).Id;
+                    Guid id = _linkLifeTimeRepository
+                        .CreateEntity(new LinkLifeTimeDbo() { UserId = entity.Id, EndTime = DateTime.Now.AddMinutes(30) }, Guid.Empty)
+                        .Id;
                     Dictionary<string, string> replaceData =
-                        new() { { ConfigValue.ACTIVATION_LINK, string.Format("{0}/?id={1}", _configuration.GetSection(ConfigValue.CLIENT_URL_ACTIVATE).Value, id) } };
-                    _sendMailService.AddEmailToQueue(EduEmail.REGISTRATION_USER, culture, new EmailAddress() { Email = addObject.UserEmail, Name = addObject.Person.FullName }, replaceData, null, "");
+                        new()
+                        {
+                            {
+                                ConfigValue.ACTIVATION_LINK,
+                                string.Format("{0}/?id={1}", _configuration.GetSection(ConfigValue.CLIENT_URL_ACTIVATE).Value, id)
+                            }
+                        };
+                    _sendMailService.AddEmailToQueue(
+                        EduEmail.REGISTRATION_USER,
+                        culture,
+                        new EmailAddress() { Email = addObject.UserEmail, Name = addObject.Person.FullName },
+                        replaceData,
+                        null,
+                        ""
+                    );
                 }
                 else
                 {
@@ -136,11 +164,19 @@ namespace Services.User.Service
         {
             UserDbo loginUser = _repository.GetEntity(
                 false,
-                x => x.UserEmail == loginData.UserEmail && x.UserPassword == loginData.UserPassword.GetHashString() && x.IsActive == true && x.AllowCLassicLogin == true
+                x =>
+                    x.UserEmail == loginData.UserEmail
+                    && x.UserPassword == loginData.UserPassword.GetHashString()
+                    && x.IsActive == true
+                    && x.AllowCLassicLogin == true
             );
             if (loginUser != null)
             {
-                if (loginData.OrganizationId != null && _userInOrganizationRepository.GetEntity(false, x => x.UserId == loginUser.Id && x.OrganizationId == loginData.OrganizationId) == null)
+                if (
+                    loginData.OrganizationId != null
+                    && _userInOrganizationRepository.GetEntity(false, x => x.UserId == loginUser.Id && x.OrganizationId == loginData.OrganizationId)
+                        == null
+                )
                 {
                     return null;
                 }
@@ -148,10 +184,10 @@ namespace Services.User.Service
                 UserTokenDto user = _convertor.ConvertToWebModel(loginUser);
                 if (user.UserRole == UserRole.REGISTERED_USER)
                 {
-                    HashSet<UserInOrganizationDbo> roles = _userInOrganizationRepository.GetEntities(false, x => x.UserId == loginUser.Id);
+                    List<UserInOrganizationDbo> roles = _userInOrganizationRepository.GetEntities(false, x => x.UserId == loginUser.Id).Result;
                     if (loginData.OrganizationId != null)
                     {
-                        roles = roles.Where(x => x.OrganizationId == loginData.OrganizationId).ToHashSet();
+                        roles = roles.Where(x => x.OrganizationId == loginData.OrganizationId).ToList();
                     }
                     foreach (UserInOrganizationDbo role in roles)
                     {
@@ -247,7 +283,12 @@ namespace Services.User.Service
             }
             if (loginSocialNetwork.OrganizationId != null)
             {
-                if (_userInOrganizationRepository.GetEntity(false, x => x.UserId == detail.Id && x.OrganizationId == loginSocialNetwork.OrganizationId) == null)
+                if (
+                    _userInOrganizationRepository.GetEntity(
+                        false,
+                        x => x.UserId == detail.Id && x.OrganizationId == loginSocialNetwork.OrganizationId
+                    ) == null
+                )
                 {
                     return null;
                 }
@@ -279,11 +320,24 @@ namespace Services.User.Service
 
             if (userDetail != null)
             {
-                Guid id = _linkLifeTimeRepository.CreateEntity(new LinkLifeTimeDbo() { UserId = userDetail.Id, EndTime = DateTime.Now.AddMinutes(30) }, userDetail.Id).Id;
+                Guid id = _linkLifeTimeRepository
+                    .CreateEntity(new LinkLifeTimeDbo() { UserId = userDetail.Id, EndTime = DateTime.Now.AddMinutes(30) }, userDetail.Id)
+                    .Id;
                 Dictionary<string, string> replace =
-                    new() { { ConfigValue.PASSWORD_RESET_LINK, string.Format("{0}/?id={1}", _configuration.GetSection(ConfigValue.CLIENT_URL_RESET_PASSWORD).Value, id) } };
+                    new()
+                    {
+                        {
+                            ConfigValue.PASSWORD_RESET_LINK,
+                            string.Format("{0}/?id={1}", _configuration.GetSection(ConfigValue.CLIENT_URL_RESET_PASSWORD).Value, id)
+                        }
+                    };
 
-                _sendMailService.AddEmailToQueue(EduEmail.PASSWORD_RESET, clientCulture, new EmailAddress() { Email = userDetail.UserEmail }, replace);
+                _sendMailService.AddEmailToQueue(
+                    EduEmail.PASSWORD_RESET,
+                    clientCulture,
+                    new EmailAddress() { Email = userDetail.UserEmail },
+                    replace
+                );
             }
             return new Result();
         }
@@ -329,7 +383,11 @@ namespace Services.User.Service
         {
             UserDbo loginUser = _repository.GetEntity(
                 false,
-                x => x.UserEmail == loginData.UserEmail && x.UserPassword == loginData.UserPassword.GetHashString() && x.IsActive == true && x.AllowCLassicLogin == true
+                x =>
+                    x.UserEmail == loginData.UserEmail
+                    && x.UserPassword == loginData.UserPassword.GetHashString()
+                    && x.IsActive == true
+                    && x.AllowCLassicLogin == true
             );
             if (loginUser != null)
             {
@@ -346,7 +404,12 @@ namespace Services.User.Service
 
         public override Result DeleteObject(Guid objectId, Guid userId)
         {
-            if (_userInOrganizationRepository.GetEntity(false, x => x.UserId == objectId && x.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.ORGANIZATION_OWNER) == null)
+            if (
+                _userInOrganizationRepository.GetEntity(
+                    false,
+                    x => x.UserId == objectId && x.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.ORGANIZATION_OWNER
+                ) == null
+            )
             {
                 return base.DeleteObject(objectId, userId);
             }

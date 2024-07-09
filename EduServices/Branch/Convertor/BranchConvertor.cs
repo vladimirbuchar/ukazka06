@@ -9,7 +9,7 @@ namespace Services.Branch.Convertor
 {
     public class BranchConvertor(ICodeBookRepository<CultureDbo> codeBookService) : IBranchConvertor
     {
-        private readonly HashSet<CultureDbo> _cultureList = codeBookService.GetEntities(false);
+        private readonly List<CultureDbo> _cultureList = codeBookService.GetEntities(false).Result;
 
         public BranchDbo ConvertToBussinessEntity(BranchCreateDto addBranchDto, string culture)
         {
@@ -29,7 +29,12 @@ namespace Services.Branch.Convertor
                     IsMainBranch = addBranchDto.IsMainBranch,
                     IsOnline = addBranchDto.IsOnline,
                 };
-            branch.BranchTranslations = branch.BranchTranslations.PrepareTranslation(addBranchDto.Name, addBranchDto.Description, culture, _cultureList);
+            branch.BranchTranslations = branch.BranchTranslations.PrepareTranslation(
+                addBranchDto.Name,
+                addBranchDto.Description,
+                culture,
+                _cultureList
+            );
             return branch;
         }
 
@@ -44,12 +49,17 @@ namespace Services.Branch.Convertor
             entity.Email = updateBranchDto.Email;
             entity.WWW = updateBranchDto.WWW;
             entity.PhoneNumber = updateBranchDto.PhoneNumber;
-            entity.BranchTranslations = entity.BranchTranslations.PrepareTranslation(updateBranchDto.Name, updateBranchDto.Description, culture, _cultureList);
+            entity.BranchTranslations = entity.BranchTranslations.PrepareTranslation(
+                updateBranchDto.Name,
+                updateBranchDto.Description,
+                culture,
+                _cultureList
+            );
             entity.IsMainBranch = updateBranchDto.IsMainBranch;
             return entity;
         }
 
-        public HashSet<BranchListDto> ConvertToWebModel(HashSet<BranchDbo> getAllBranchInOrganizations, string culture)
+        public List<BranchListDto> ConvertToWebModel(List<BranchDbo> getAllBranchInOrganizations, string culture)
         {
             return getAllBranchInOrganizations
                 .Select(item => new BranchListDto()
@@ -60,16 +70,14 @@ namespace Services.Branch.Convertor
                     Region = item.Region,
                     Street = item.Street,
                     ZipCode = item.ZipCode,
-                    Description = item.BranchTranslations?.FindTranslation(culture)?.Description,
                     Name = item.BranchTranslations?.FindTranslation(culture)?.Name,
                     Email = item.Email,
                     PhoneNumber = item.PhoneNumber,
                     WWW = item.WWW,
                     Id = item.Id,
-                    IsMainBranch = item.IsMainBranch,
-                    IsOnline = item.IsOnline
+                    IsMainBranch = item.IsMainBranch
                 })
-                .ToHashSet();
+                .ToList();
         }
 
         public BranchDetailDto ConvertToWebModel(BranchDbo getBranchDetail, string culture)

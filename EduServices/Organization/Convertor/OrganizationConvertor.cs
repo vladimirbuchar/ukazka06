@@ -25,15 +25,15 @@ namespace Services.Organization.Convertor
         IOrganizationRoleRepository organizationRoleRepository
     ) : IOrganizationConvertor
     {
-        private readonly HashSet<LicenseDbo> _licences = licences.GetEntities(false);
-        private readonly HashSet<CountryDbo> _countries = countries.GetEntities(false);
+        private readonly List<LicenseDbo> _licences = licences.GetEntities(false).Result;
+        private readonly List<CountryDbo> _countries = countries.GetEntities(false).Result;
         private readonly IOrganizationRoleRepository _organizationRoleRepository = organizationRoleRepository;
         private readonly string _elearningUrl = configuration.GetSection(ConfigValue.ELEARNING_URL).Value;
         private readonly string _fileServerUrl = configuration.GetSection(ConfigValue.FILE_SERVER_URL).Value;
 
         public OrganizationDbo ConvertToBussinessEntity(OrganizationCreateDto addOrganizationDto, string culture)
         {
-            HashSet<OrganizationAddressDbo> addresses = addOrganizationDto
+            List<OrganizationAddressDbo> addresses = addOrganizationDto
                 .Addresses?.Select(item => new OrganizationAddressDbo()
                 {
                     AddressTypeId = item.AddressTypeId,
@@ -45,7 +45,7 @@ namespace Services.Organization.Convertor
                     ZipCode = item.ZipCode,
                     OrganizationId = Guid.Empty
                 })
-                .ToHashSet();
+                .ToList();
             return new OrganizationDbo()
             {
                 Name = addOrganizationDto.Name,
@@ -58,7 +58,14 @@ namespace Services.Organization.Convertor
                 [
                     new BankOfQuestionDbo()
                     {
-                        BankOfQuestionsTranslations = [new BankOfQuestionsTranslationDbo() { Name = Constants.DEFAULT_BANK_OF_QUESTION, CultureId = addOrganizationDto.DefaultCultureId, }],
+                        BankOfQuestionsTranslations =
+                        [
+                            new BankOfQuestionsTranslationDbo()
+                            {
+                                Name = Constants.DEFAULT_BANK_OF_QUESTION,
+                                CultureId = addOrganizationDto.DefaultCultureId,
+                            }
+                        ],
                         IsDefault = true
                     }
                 ],
@@ -68,7 +75,9 @@ namespace Services.Organization.Convertor
                     new UserInOrganizationDbo()
                     {
                         UserId = addOrganizationDto.UserId,
-                        OrganizationRoleId = _organizationRoleRepository.GetEntity(false, x => x.SystemIdentificator == Core.Constants.OrganizationRole.ORGANIZATION_OWNER).Id
+                        OrganizationRoleId = _organizationRoleRepository
+                            .GetEntity(false, x => x.SystemIdentificator == Core.Constants.OrganizationRole.ORGANIZATION_OWNER)
+                            .Id
                     }
                 ],
                 Branch =
@@ -99,7 +108,14 @@ namespace Services.Organization.Convertor
                         [
                             new ClassRoomDbo()
                             {
-                                ClassRoomTranslations = [new ClassRoomTranslationDbo() { Name = Constants.ONLINE_CLASSROOM, CultureId = addOrganizationDto.DefaultCultureId }],
+                                ClassRoomTranslations =
+                                [
+                                    new ClassRoomTranslationDbo()
+                                    {
+                                        Name = Constants.ONLINE_CLASSROOM,
+                                        CultureId = addOrganizationDto.DefaultCultureId
+                                    }
+                                ],
                                 Floor = 0,
                                 IsOnline = true,
                                 MaxCapacity = 0
@@ -163,7 +179,7 @@ namespace Services.Organization.Convertor
 
         public OrganizationDetailDto ConvertToWebModel(OrganizationDbo getOrganizationDetail, string culture = "")
         {
-            HashSet<Address> addresss = getOrganizationDetail
+            List<Address> addresss = getOrganizationDetail
                 .Addresses?.Select(item => new Address()
                 {
                     AddressTypeId = item.AddressTypeId,
@@ -175,7 +191,7 @@ namespace Services.Organization.Convertor
                     ZipCode = item.ZipCode,
                     Id = item.Id
                 })
-                .ToHashSet();
+                .ToList();
             return new OrganizationDetailDto()
             {
                 Id = getOrganizationDetail.Id,
@@ -185,11 +201,16 @@ namespace Services.Organization.Convertor
                 WWW = getOrganizationDetail.WWW,
                 LicenseId = getOrganizationDetail.LicenseId,
                 Addresses = addresss,
-                Logo = string.Format("{0}{1}/{2}", _fileServerUrl, getOrganizationDetail.Id, getOrganizationDetail.OrganizationFileRepositories.FindTranslation(culture).FileName)
+                Logo = string.Format(
+                    "{0}{1}/{2}",
+                    _fileServerUrl,
+                    getOrganizationDetail.Id,
+                    getOrganizationDetail.OrganizationFileRepositories.FindTranslation(culture)?.FileName
+                )
             };
         }
 
-        public HashSet<OrganizationListDto> ConvertToWebModel(HashSet<OrganizationDbo> getAllOrganizations, string culture = "")
+        public List<OrganizationListDto> ConvertToWebModel(List<OrganizationDbo> getAllOrganizations, string culture = "")
         {
             return getAllOrganizations
                 .Select(item => new OrganizationListDto()
@@ -198,7 +219,7 @@ namespace Services.Organization.Convertor
                     Id = item.Id,
                     Name = item.Name,
                 })
-                .ToHashSet();
+                .ToList();
         }
 
         public OrganizationDetailWebDto ConvertToWebModelWeb(OrganizationDbo getOrganizationDetail)

@@ -1,4 +1,5 @@
-﻿using Core.Base.Service;
+﻿using Core.Base.Request;
+using Core.Base.Service;
 using Model.Edu.StudentEvaluation;
 using Repository.StudentEvaluationRepository;
 using Services.StudentEvaluation.Convertor;
@@ -7,7 +8,11 @@ using Services.StudentEvaluation.Validator;
 
 namespace Services.StudentEvaluation.Service
 {
-    public class StudentEvaluationService(IStudentEvaluationRepository courseTermRepository, IStudentEvaluationConvertor courseTermConvertor, IStudentEvaluationValidator validator)
+    public class StudentEvaluationService(
+        IStudentEvaluationRepository courseTermRepository,
+        IStudentEvaluationConvertor courseTermConvertor,
+        IStudentEvaluationValidator validator
+    )
         : BaseService<
             IStudentEvaluationRepository,
             StudentEvaluationDbo,
@@ -15,7 +20,8 @@ namespace Services.StudentEvaluation.Service
             IStudentEvaluationValidator,
             StudentEvaluationCreateDto,
             StudentEvaluationListDto,
-            StudentEvaluationDetailDto
+            StudentEvaluationDetailDto,
+            FilterRequest
         >(courseTermRepository, courseTermConvertor, validator),
             IStudentEvaluationService { }
 }

@@ -14,13 +14,24 @@ namespace Model.Edu.Question
             return translation;
         }
 
-        public static ICollection<QuestionTranslationDbo> PrepareTranslation(this ICollection<QuestionTranslationDbo> translations, string question, string culture, HashSet<CultureDbo> cultureList)
+        public static ICollection<QuestionTranslationDbo> PrepareTranslation(
+            this ICollection<QuestionTranslationDbo> translations,
+            string question,
+            string culture,
+            List<CultureDbo> cultureList
+        )
         {
             translations ??= [];
             QuestionTranslationDbo translation = translations.FirstOrDefault(x => x.Culture.SystemIdentificator == culture);
             if (translation == null)
             {
-                translations.Add(new QuestionTranslationDbo() { CultureId = cultureList.FirstOrDefault(x => x.SystemIdentificator == culture).Id, Question = question, });
+                translations.Add(
+                    new QuestionTranslationDbo()
+                    {
+                        CultureId = cultureList.FirstOrDefault(x => x.SystemIdentificator == culture).Id,
+                        Question = question,
+                    }
+                );
             }
             else
             {

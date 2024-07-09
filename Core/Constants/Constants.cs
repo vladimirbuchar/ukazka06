@@ -61,5 +61,6 @@
         public const string FACEBOOK = "FACEBOOK";
         public const string USER_ORGANIZATION_ROLE = "UserOrganizationRole";
         public const string CAN_NOT_DELETE_DEFAULT_CULTURE = "CAN_NOT_DELETE_DEFAULT_CULTURE";
+        public const string MUST_SET_MAIN_BRANCH = "MUST_SET_MAIN_BRANCH";
     };
 }

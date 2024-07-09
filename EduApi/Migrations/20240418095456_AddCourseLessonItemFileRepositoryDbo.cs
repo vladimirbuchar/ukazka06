@@ -48,9 +48,17 @@ namespace EduApi.Migrations
                 }
             );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_CourseLessonItemFileRepository_CourseLessonItemId", table: "Edu_CourseLessonItemFileRepository", column: "CourseLessonItemId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_CourseLessonItemFileRepository_CourseLessonItemId",
+                table: "Edu_CourseLessonItemFileRepository",
+                column: "CourseLessonItemId"
+            );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_CourseLessonItemFileRepository_CultureId", table: "Edu_CourseLessonItemFileRepository", column: "CultureId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_CourseLessonItemFileRepository_CultureId",
+                table: "Edu_CourseLessonItemFileRepository",
+                column: "CultureId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Edu_CourseLessonItemFileRepository_SystemIdentificator",

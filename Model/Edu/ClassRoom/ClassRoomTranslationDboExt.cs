@@ -14,13 +14,20 @@ namespace Model.Edu.ClassRoom
             return translation;
         }
 
-        public static ICollection<ClassRoomTranslationDbo> PrepareTranslation(this ICollection<ClassRoomTranslationDbo> translations, string name, string culture, HashSet<CultureDbo> cultureList)
+        public static ICollection<ClassRoomTranslationDbo> PrepareTranslation(
+            this ICollection<ClassRoomTranslationDbo> translations,
+            string name,
+            string culture,
+            List<CultureDbo> cultureList
+        )
         {
             translations ??= [];
             ClassRoomTranslationDbo translation = translations.FirstOrDefault(x => x.Culture.SystemIdentificator == culture);
             if (translation == null)
             {
-                translations.Add(new ClassRoomTranslationDbo() { CultureId = cultureList.FirstOrDefault(x => x.SystemIdentificator == culture).Id, Name = name });
+                translations.Add(
+                    new ClassRoomTranslationDbo() { CultureId = cultureList.FirstOrDefault(x => x.SystemIdentificator == culture).Id, Name = name }
+                );
             }
             else
             {

@@ -4,5 +4,12 @@ using Services.CourseLessonItem.Dto;
 
 namespace Services.CourseLessonItem.Convertor
 {
-    public interface ICourseLessonItemConvertor : IBaseConvertor<CourseLessonItemDbo, CourseLessonItemCreateDto, CourseLessonItemListDto, CourseLessonItemDetailDto, CourseLessonItemUpdateDto> { }
+    public interface ICourseLessonItemConvertor
+        : IBaseConvertor<
+            CourseLessonItemDbo,
+            CourseLessonItemCreateDto,
+            CourseLessonItemListDto,
+            CourseLessonItemDetailDto,
+            CourseLessonItemUpdateDto
+        > { }
 }

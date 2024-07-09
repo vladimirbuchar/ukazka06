@@ -23,7 +23,9 @@ namespace Services.OrganizationSetting.Validator
         ICodeBookRepository<AddressTypeDbo> addressType,
         IUserRepository userRepository,
         ICodeBookRepository<CountryDbo> country
-    ) : BaseValidator<OrganizationDbo, IOrganizationRepository, OrganizationCreateDto, OrganizationDetailDto, OrganizationUpdateDto>(repository), IOrganizationSettingValidator
+    )
+        : BaseValidator<OrganizationDbo, IOrganizationRepository, OrganizationCreateDto, OrganizationDetailDto, OrganizationUpdateDto>(repository),
+            IOrganizationSettingValidator
     {
         private readonly ICodeBookRepository<CountryDbo> _country = country;
         private readonly ICodeBookRepository<AddressTypeDbo> _addressType = addressType;
@@ -63,7 +65,7 @@ namespace Services.OrganizationSetting.Validator
             {
                 result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.ORGANIZATION, Constants.ELEARNIG_BAD_EMPTY_URL));
             }
-            if (_organizationSettingRepository.GetEntities(false, x => x.ElearningUrl == url && x.OrganizationId != organizationId).Count > 0)
+            if (_organizationSettingRepository.GetEntities(false, x => x.ElearningUrl == url && x.OrganizationId != organizationId).Result.Count > 0)
             {
                 result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.ORGANIZATION, Constants.ELEARNIG_URL_EXISTS, url));
             }
@@ -89,13 +91,20 @@ namespace Services.OrganizationSetting.Validator
             return validate;
         }
 
-        private void ValidateAddress(HashSet<Address> addresses, Result result)
+        private void ValidateAddress(List<Address> addresses, Result result)
         {
             if (addresses != null && addresses.Count > 0)
             {
                 foreach (Address address in addresses)
                 {
-                    base.CodeBookValueExist(_country, x => x.Id == address.CountryId, result, AddressValidator.COUNTRY, AddressValidator.COUNTRY_NOT_EXIST, address.CountryId.ToString());
+                    base.CodeBookValueExist(
+                        _country,
+                        x => x.Id == address.CountryId,
+                        result,
+                        AddressValidator.COUNTRY,
+                        AddressValidator.COUNTRY_NOT_EXIST,
+                        address.CountryId.ToString()
+                    );
                     base.CodeBookValueExist(
                         _addressType,
                         x => x.Id == address.AddressTypeId,

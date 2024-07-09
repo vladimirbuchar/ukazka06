@@ -4,6 +4,7 @@ using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.OrganizationCulture.Dto;
+using Services.OrganizationCulture.Filter;
 using Services.OrganizationCulture.Service;
 using Services.OrganizationRole.Service;
 
@@ -14,7 +15,11 @@ namespace EduApi.Controllers.ClientZone.OrganizationCulture
     {
         private readonly IOrganizationCultureService _organizationSettingService;
 
-        public OrganizationCultureController(ILogger<OrganizationCultureController> logger, IOrganizationCultureService organizationSettingService, IOrganizationRoleService organizationRoleService)
+        public OrganizationCultureController(
+            ILogger<OrganizationCultureController> logger,
+            IOrganizationCultureService organizationSettingService,
+            IOrganizationRoleService organizationRoleService
+        )
             : base(logger, organizationRoleService)
         {
             _organizationSettingService = organizationSettingService;
@@ -45,12 +50,19 @@ namespace EduApi.Controllers.ClientZone.OrganizationCulture
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult List([FromQuery] ListDeletedRequestDto listRequest)
+        public ActionResult List([FromQuery] ListDeletedRequestDto listRequest, [FromQuery] OrganizationCultureFilter filter)
         {
             try
             {
                 CheckOrganizationPermition(listRequest.ParentId);
-                return SendResponse(_organizationSettingService.GetList(x => x.OrganizationId == listRequest.ParentId, listRequest.IsDeleted));
+                return SendResponse(
+                    _organizationSettingService.GetList(
+                        x => x.OrganizationId == listRequest.ParentId,
+                        listRequest.IsDeleted,
+                        GetClientCulture(),
+                        filter
+                    )
+                );
             }
             catch (Exception e)
             {

@@ -7,11 +7,13 @@ using Services.Page.Dto;
 
 namespace Services.Page.Service
 {
-    public class PageService(ICodeBookRepository<LicenseDbo> repository) : BaseService<ICodeBookRepository<LicenseDbo>, LicenseDbo>(repository), IPageService
+    public class PageService(ICodeBookRepository<LicenseDbo> repository)
+        : BaseService<ICodeBookRepository<LicenseDbo>, LicenseDbo>(repository),
+            IPageService
     {
-        public HashSet<PriceListDto> PriceList()
+        public List<PriceListDto> PriceList()
         {
-            HashSet<LicenseDbo> licences = _repository.GetEntities(false);
+            List<LicenseDbo> licences = _repository.GetEntities(false).Result;
             return licences
                 .Select(x => new PriceListDto()
                 {
@@ -20,7 +22,7 @@ namespace Services.Page.Service
                     Name = x.SystemIdentificator,
                     OneYearSale = x.OneYearSale
                 })
-                .ToHashSet();
+                .ToList();
         }
     }
 }

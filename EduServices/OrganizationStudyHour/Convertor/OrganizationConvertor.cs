@@ -32,7 +32,11 @@ namespace Services.OrganizationStudyHour.Convertor
             };
         }
 
-        public OrganizationStudyHourDbo ConvertToBussinessEntity(StudyHourUpdateDto updateStudyHoursDto, OrganizationStudyHourDbo entity, string culture)
+        public OrganizationStudyHourDbo ConvertToBussinessEntity(
+            StudyHourUpdateDto updateStudyHoursDto,
+            OrganizationStudyHourDbo entity,
+            string culture
+        )
         {
             Guid activeFromId = Guid.Empty;
             Guid activeToId = Guid.Empty;
@@ -54,7 +58,7 @@ namespace Services.OrganizationStudyHour.Convertor
             return entity;
         }
 
-        public HashSet<StudyHourListDto> ConvertToWebModel(HashSet<OrganizationStudyHourDbo> list, string culture)
+        public List<StudyHourListDto> ConvertToWebModel(List<OrganizationStudyHourDbo> list, string culture)
         {
             return list.Select(x => new StudyHourListDto()
                 {
@@ -65,7 +69,7 @@ namespace Services.OrganizationStudyHour.Convertor
                     ActiveToId = x.ActiveToId,
                     Id = x.Id
                 })
-                .ToHashSet();
+                .ToList();
         }
 
         public StudyHourDetailDto ConvertToWebModel(OrganizationStudyHourDbo detail, string culture)

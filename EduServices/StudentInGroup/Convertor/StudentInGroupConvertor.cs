@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Model.Link;
 using Services.StudentInGroup.Dto;
 
@@ -13,9 +14,18 @@ namespace Services.StudentInGroup.Convertor
             return new StudentInGroupDbo() { };
         }
 
-        public HashSet<StudentInGroupListDto> ConvertToWebModel(HashSet<StudentInGroupDbo> list, string culture)
+        public List<StudentInGroupListDto> ConvertToWebModel(List<StudentInGroupDbo> list, string culture)
         {
-            throw new System.NotImplementedException();
+            return list.Select(x => new StudentInGroupListDto()
+                {
+                    Email = x.UserInOrganization.User.UserEmail,
+                    FirstName = x.UserInOrganization.User.Person.FirstName,
+                    Id = x.Id,
+                    LastName = x.UserInOrganization.User.Person.LastName,
+                    SecondName = x.UserInOrganization.User.Person.SecondName,
+                    StudentId = x.UserInOrganizationId
+                })
+                .ToList();
         }
 
         public StudentInGroupDetailDto ConvertToWebModel(StudentInGroupDbo detail, string culture)

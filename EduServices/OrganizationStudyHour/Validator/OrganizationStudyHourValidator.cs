@@ -12,8 +12,14 @@ using Services.OrganizationStudyHour.Dto;
 
 namespace Services.OrganizationStudyHour.Validator
 {
-    public class OrganizationStudyHourValidator(IOrganizationStudyHourRepository repository, IOrganizationRepository organizationRepository, ICodeBookRepository<TimeTableDbo> timeTable)
-        : BaseValidator<OrganizationStudyHourDbo, IOrganizationStudyHourRepository, StudyHourCreateDto, StudyHourDetailDto, StudyHourUpdateDto>(repository),
+    public class OrganizationStudyHourValidator(
+        IOrganizationStudyHourRepository repository,
+        IOrganizationRepository organizationRepository,
+        ICodeBookRepository<TimeTableDbo> timeTable
+    )
+        : BaseValidator<OrganizationStudyHourDbo, IOrganizationStudyHourRepository, StudyHourCreateDto, StudyHourDetailDto, StudyHourUpdateDto>(
+            repository
+        ),
             IOrganizationStudyHourValidator
     {
         private readonly IOrganizationRepository _organizationRepository = organizationRepository;

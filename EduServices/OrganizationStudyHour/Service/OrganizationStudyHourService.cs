@@ -10,6 +10,7 @@ using Model.Edu.OrganizationStudyHour;
 using Repository.OrganizationHoursRepository;
 using Services.OrganizationStudyHour.Convertor;
 using Services.OrganizationStudyHour.Dto;
+using Services.OrganizationStudyHour.Filter;
 using Services.OrganizationStudyHour.Validator;
 
 namespace Services.OrganizationStudyHour.Service
@@ -28,23 +29,38 @@ namespace Services.OrganizationStudyHour.Service
             StudyHourCreateDto,
             StudyHourListDto,
             StudyHourDetailDto,
-            StudyHourUpdateDto
+            StudyHourUpdateDto,
+            OrganizationStudyHourFilter
         >(organizationStudyHoursRepository, organizationConvertor, validator),
             IOrganizationStudyHourService
     {
-        private readonly HashSet<TimeTableDbo> _timeTables = timeTableCodebook.GetEntities(false);
+        private readonly List<TimeTableDbo> _timeTables = timeTableCodebook.GetEntities(false).Result;
 
-        public override Result<StudyHourDetailDto> UpdateObject(StudyHourUpdateDto update, Guid userId, string culture, Result<StudyHourDetailDto> result = null)
+        public override Result<StudyHourDetailDto> UpdateObject(
+            StudyHourUpdateDto update,
+            Guid userId,
+            string culture,
+            Result<StudyHourDetailDto> result = null
+        )
         {
-            OrganizationStudyHourDbo organizationStudyHourDbo = _repository.GetEntity(update.Id) ?? throw new KeyNotFoundException(update.Id.ToString());
+            OrganizationStudyHourDbo organizationStudyHourDbo =
+                _repository.GetEntity(update.Id) ?? throw new KeyNotFoundException(update.Id.ToString());
             OrganizationStudyHourDbo updateStudyHours = _convertor.ConvertToBussinessEntity(update, organizationStudyHourDbo, culture);
             result = new() { Data = _convertor.ConvertToWebModel(_repository.UpdateEntity(updateStudyHours, Guid.Empty), culture) };
             return result;
         }
 
-        public override HashSet<StudyHourListDto> GetList(Expression<Func<OrganizationStudyHourDbo, bool>> predicate = null, bool deleted = false, string culture = "")
+        public override List<StudyHourListDto> GetList(
+            Expression<Func<OrganizationStudyHourDbo, bool>> predicate = null,
+            bool deleted = false,
+            string culture = "",
+            OrganizationStudyHourFilter filter = null
+        )
         {
-            return _convertor.ConvertToWebModel([.. _repository.GetEntities(deleted, predicate, x => x.Position)], string.Empty);
+            return _convertor.ConvertToWebModel(
+                [.. _repository.GetEntities(deleted, predicate, PrepareSqlFilter(filter, culture), x => x.Position).Result],
+                string.Empty
+            );
         }
 
         public override Result<StudyHourDetailDto> AddObject(StudyHourCreateDto addObject, Guid userId, string culture)
@@ -55,10 +71,11 @@ namespace Services.OrganizationStudyHour.Service
                 TimeTableDbo timeTable = _timeTables.FirstOrDefault(x => x.Id == addStudyHours.ActiveFromId);
                 if (timeTable != null)
                 {
-                    addStudyHours.ActiveToId = _timeTables.FirstOrDefault(x => x.Priority == timeTable.Priority + addObject.LessonLength / 5).Id;
+                    addStudyHours.ActiveToId = _timeTables.FirstOrDefault(x => x.Priority == timeTable.Priority + (addObject.LessonLength / 5)).Id;
                 }
             }
-            Result<StudyHourDetailDto> result = new() { Data = _convertor.ConvertToWebModel(_repository.CreateEntity(addStudyHours, userId), culture) };
+            Result<StudyHourDetailDto> result =
+                new() { Data = _convertor.ConvertToWebModel(_repository.CreateEntity(addStudyHours, userId), culture) };
             return result;
         }
     }

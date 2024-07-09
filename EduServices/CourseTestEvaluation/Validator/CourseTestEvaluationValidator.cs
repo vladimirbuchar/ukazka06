@@ -9,8 +9,18 @@ using Services.CourseTestEvaluation.Dto;
 
 namespace Services.CourseTestEvaluation.Validator
 {
-    public class CourseTestEvaluationValidator(ICourseTestEvaluationRepository repository, ITestRepository testRepository, ICourseMaterialRepository courseMaterialRepository)
-        : BaseValidator<CourseTestEvaluationDbo, ICourseTestEvaluationRepository, CourseTestEvaluationCreateDto, CourseTestEvaluationDetailDto, CourseTestEvaluationUpdateDto>(repository),
+    public class CourseTestEvaluationValidator(
+        ICourseTestEvaluationRepository repository,
+        ITestRepository testRepository,
+        ICourseMaterialRepository courseMaterialRepository
+    )
+        : BaseValidator<
+            CourseTestEvaluationDbo,
+            ICourseTestEvaluationRepository,
+            CourseTestEvaluationCreateDto,
+            CourseTestEvaluationDetailDto,
+            CourseTestEvaluationUpdateDto
+        >(repository),
             ICourseTestEvaluationValidator
     {
         private readonly ITestRepository _testRepository = testRepository;

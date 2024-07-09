@@ -4,5 +4,6 @@ using Services.Permissions.Dto;
 
 namespace Services.Permissions.Convertor
 {
-    public interface IPermissionsConvertor : IBaseConvertor<PermissionsDbo, PermissionsCreateDto, PermissionsListDto, PermissionsDetailDto, PermissionsUpdateDto> { }
+    public interface IPermissionsConvertor
+        : IBaseConvertor<PermissionsDbo, PermissionsCreateDto, PermissionsListDto, PermissionsDetailDto, PermissionsUpdateDto> { }
 }

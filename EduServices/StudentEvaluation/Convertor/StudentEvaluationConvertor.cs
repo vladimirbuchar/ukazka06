@@ -17,7 +17,7 @@ namespace Services.StudentEvaluation.Convertor
             };
         }
 
-        public HashSet<StudentEvaluationListDto> ConvertToWebModel(HashSet<StudentEvaluationDbo> list, string culture)
+        public List<StudentEvaluationListDto> ConvertToWebModel(List<StudentEvaluationDbo> list, string culture)
         {
             throw new NotImplementedException();
         }

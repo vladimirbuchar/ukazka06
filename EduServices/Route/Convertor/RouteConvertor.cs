@@ -18,9 +18,9 @@ namespace Services.Route.Convertor
             return entity;
         }
 
-        public HashSet<RouteListDto> ConvertToWebModel(HashSet<RouteDbo> getAnswersInQuestions, string culture)
+        public List<RouteListDto> ConvertToWebModel(List<RouteDbo> getAnswersInQuestions, string culture)
         {
-            return getAnswersInQuestions.Select(item => new RouteListDto() { Id = item.Id, Route = item.Route, }).ToHashSet();
+            return getAnswersInQuestions.Select(item => new RouteListDto() { Id = item.Id, Route = item.Route, }).ToList();
         }
 
         public RouteDetailDto ConvertToWebModel(RouteDbo answerDetail, string culture)

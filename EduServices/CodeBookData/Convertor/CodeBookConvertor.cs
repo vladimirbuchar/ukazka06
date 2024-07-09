@@ -7,7 +7,7 @@ namespace Services.CodeBookData.Convertor
 {
     public class CodeBookConvertor : ICodeBookConvertor
     {
-        public HashSet<CodeBookListDto> ConvertToWebModel<T>(HashSet<T> codebookItems)
+        public List<CodeBookListDto> ConvertToWebModel<T>(List<T> codebookItems)
             where T : CodeBook
         {
             return codebookItems
@@ -18,7 +18,7 @@ namespace Services.CodeBookData.Convertor
                     Name = item.Name,
                     SystemIdentificator = item.SystemIdentificator
                 })
-                .ToHashSet();
+                .ToList();
         }
     }
 }

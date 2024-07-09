@@ -4,5 +4,6 @@ using Services.Certificate.Dto;
 
 namespace Services.Certificate.Convertor
 {
-    public interface ICertificateConvertor : IBaseConvertor<CertificateDbo, CertificateCreateDto, CertificateListDto, CertificateDetailDto, CertificateUpdateDto> { }
+    public interface ICertificateConvertor
+        : IBaseConvertor<CertificateDbo, CertificateCreateDto, CertificateListDto, CertificateDetailDto, CertificateUpdateDto> { }
 }

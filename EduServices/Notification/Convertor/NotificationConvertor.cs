@@ -7,7 +7,7 @@ namespace Services.Notification.Convertor
 {
     public class NotificationConvertor : INotificationConvertor
     {
-        public HashSet<MyNotificationListDto> ConvertToWebModel(HashSet<NotificationDbo> getMyNotifications)
+        public List<MyNotificationListDto> ConvertToWebModel(List<NotificationDbo> getMyNotifications)
         {
             return getMyNotifications
                 .Select(item => new MyNotificationListDto()
@@ -19,7 +19,7 @@ namespace Services.Notification.Convertor
                     AddDate = item.AddDate,
                     IsNew = item.IsNew
                 })
-                .ToHashSet();
+                .ToList();
         }
     }
 }

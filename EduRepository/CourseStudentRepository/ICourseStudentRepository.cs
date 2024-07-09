@@ -7,6 +7,6 @@ namespace Repository.CourseStudentRepository
 {
     public interface ICourseStudentRepository : IBaseRepository<CourseStudentDbo>
     {
-        HashSet<CourseStudentDbo> GetStudentCourse(Guid userId, bool hideFinishCourse);
+        List<CourseStudentDbo> GetStudentCourse(Guid userId, bool hideFinishCourse);
     }
 }

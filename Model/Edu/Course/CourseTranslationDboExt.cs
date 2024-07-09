@@ -19,7 +19,7 @@ namespace Model.Edu.Course
             string name,
             string description,
             string culture,
-            HashSet<CultureDbo> cultureList
+            List<CultureDbo> cultureList
         )
         {
             translations ??= [];

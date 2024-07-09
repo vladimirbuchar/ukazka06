@@ -1,4 +1,5 @@
-﻿using Core.Base.Service;
+﻿using Core.Base.Request;
+using Core.Base.Service;
 using Model.Edu.AttendanceStudent;
 using Repository.AttendanceStudentRepository;
 using Services.StudentAttendance.Convertor;
@@ -7,7 +8,11 @@ using Services.StudentAttendance.Validator;
 
 namespace Services.StudentAttendance.Service
 {
-    public class StudentAttendanceService(IAttendanceStudentRepository repository, IStudentAttendanceConvertor convertor, IStudentAttendanceValidator validator)
+    public class StudentAttendanceService(
+        IAttendanceStudentRepository repository,
+        IStudentAttendanceConvertor convertor,
+        IStudentAttendanceValidator validator
+    )
         : BaseService<
             IAttendanceStudentRepository,
             AttendanceStudentDbo,
@@ -15,7 +20,8 @@ namespace Services.StudentAttendance.Service
             IStudentAttendanceValidator,
             StudentAttendanceCreateDto,
             StudentAttendanceListDto,
-            StudentAttendanceDetailDto
+            StudentAttendanceDetailDto,
+            FilterRequest
         >(repository, convertor, validator),
             IStudentAttendanceService { }
 }

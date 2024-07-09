@@ -13,7 +13,7 @@ namespace Services.CourseStudy.Dto
 
         public Guid TestQuestionId { get; set; }
         public bool IsTrue { get; set; }
-        public HashSet<ShowTestResultAnswerDto> UserAnswers { get; set; }
+        public List<ShowTestResultAnswerDto> UserAnswers { get; set; }
         public string AnswerMode { get; set; }
         public string Question { get; set; }
         public int Score { get; set; }

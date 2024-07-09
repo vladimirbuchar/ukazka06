@@ -37,55 +37,59 @@ namespace Services.CodeBookData.Service
         private readonly ICodeBookRepository<QuestionModeDbo> _questionModeCodebook = questionModeCodebook;
         private readonly ICodeBookRepository<NoteTypeDbo> _noteTypeCodebook = noteTypeCodebook;
 
-        public HashSet<CodeBookListDto> GetCodeBookItems(string codeBookName, bool isLogged)
+        public List<CodeBookListDto> GetCodeBookItems(string codeBookName, bool isLogged)
         {
             switch (codeBookName)
             {
                 case CodebookValue.CB_LICENSE:
                 {
-                    return isLogged ? _convertor.ConvertToWebModel(_licenseCodebook.GetEntities(false)) : null;
+                    return isLogged ? _convertor.ConvertToWebModel(_licenseCodebook.GetEntities(false).Result) : null;
                 }
                 case CodebookValue.CB_COURSE_TYPE:
                 {
-                    return isLogged ? _convertor.ConvertToWebModel(_courseTypeCodebook.GetEntities(false)) : null;
+                    return isLogged ? _convertor.ConvertToWebModel(_courseTypeCodebook.GetEntities(false).Result) : null;
                 }
                 case CodebookValue.CB_COURSE_STATUS:
                 {
-                    return isLogged ? _convertor.ConvertToWebModel(_courseStatusCodebook.GetEntities(false)) : null;
+                    return isLogged ? _convertor.ConvertToWebModel(_courseStatusCodebook.GetEntities(false).Result) : null;
                 }
                 case CodebookValue.CB_TIME_TABLE:
                 {
-                    return isLogged ? _convertor.ConvertToWebModel(_timeTableCodebook.GetEntities(false)) : null;
+                    return isLogged ? _convertor.ConvertToWebModel(_timeTableCodebook.GetEntities(false).Result) : null;
                 }
                 case CodebookValue.CB_COUNTRY:
                 {
-                    return _convertor.ConvertToWebModel(_countryCodebook.GetEntities(false));
+                    return _convertor.ConvertToWebModel(_countryCodebook.GetEntities(false).Result);
                 }
                 case CodebookValue.CB_ADDRESS_TYPE:
                 {
-                    return _convertor.ConvertToWebModel(_addressTypeCodebook.GetEntities(false));
+                    return _convertor.ConvertToWebModel(_addressTypeCodebook.GetEntities(false).Result);
                 }
                 case CodebookValue.CB_ANSWER_MODE:
                 {
-                    return isLogged ? _convertor.ConvertToWebModel(_answerModeCodebook.GetEntities(false)) : null;
+                    return isLogged ? _convertor.ConvertToWebModel(_answerModeCodebook.GetEntities(false).Result) : null;
                 }
                 case CodebookValue.CB_COURSE_LESSON_ITEM_TEMPLATE:
                 {
-                    return isLogged ? _convertor.ConvertToWebModel(_courseLessonItemTemplateCodebook.GetEntities(false)) : null;
+                    return isLogged ? _convertor.ConvertToWebModel(_courseLessonItemTemplateCodebook.GetEntities(false).Result) : null;
                 }
                 case CodebookValue.CB_ENV_CULTURE:
                 {
-                    return _convertor.ConvertToWebModel(_cultureCodebook.GetEntities(false, x => x.IsEnvironmentCulture, x => x.Priority));
+                    return _convertor.ConvertToWebModel(
+                        _cultureCodebook.GetEntities(false, x => x.IsEnvironmentCulture, null, x => x.Priority).Result
+                    );
                 }
                 case CodebookValue.CB_CULTURE:
                 {
-                    return isLogged ? _convertor.ConvertToWebModel(_cultureCodebook.GetEntities(false, null, x => x.Priority)) : null;
+                    return isLogged ? _convertor.ConvertToWebModel(_cultureCodebook.GetEntities(false, null, null, x => x.Priority).Result) : null;
                 }
                 case CodebookValue.CB_SEND_MESSAGE_TYPE:
                 {
                     if (isLogged)
                     {
-                        HashSet<CodeBookListDto> sendmessagetype = _convertor.ConvertToWebModel(_sendMessageTypeCodebook.GetEntities(false, null, x => x.Priority));
+                        List<CodeBookListDto> sendmessagetype = _convertor.ConvertToWebModel(
+                            _sendMessageTypeCodebook.GetEntities(false, null, null, x => x.Priority).Result
+                        );
                         foreach (CodeBookListDto item in sendmessagetype)
                         {
                             item.Disabled = item.SystemIdentificator == SendMessageType.SMS;
@@ -96,11 +100,11 @@ namespace Services.CodeBookData.Service
                 }
                 case CodebookValue.CB_QUESTION_MODE:
                 {
-                    return isLogged ? _convertor.ConvertToWebModel(_questionModeCodebook.GetEntities(false)) : null;
+                    return isLogged ? _convertor.ConvertToWebModel(_questionModeCodebook.GetEntities(false).Result) : null;
                 }
                 case CodebookValue.CB_NOTE_TYPE:
                 {
-                    return isLogged ? _convertor.ConvertToWebModel(_noteTypeCodebook.GetEntities(false)) : null;
+                    return isLogged ? _convertor.ConvertToWebModel(_noteTypeCodebook.GetEntities(false).Result) : null;
                 }
             }
             return null;

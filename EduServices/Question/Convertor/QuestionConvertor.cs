@@ -10,7 +10,7 @@ namespace Services.Question.Convertor
 {
     public class QuestionConvertor(ICodeBookRepository<CultureDbo> codeBookService) : IQuestionConvertor
     {
-        private readonly HashSet<CultureDbo> _cultureList = codeBookService.GetEntities(false);
+        private readonly List<CultureDbo> _cultureList = codeBookService.GetEntities(false).Result;
 
         public QuestionDbo ConvertToBussinessEntity(QuestionCreateDto addQuestionDto, string culture)
         {
@@ -34,7 +34,7 @@ namespace Services.Question.Convertor
             return entity;
         }
 
-        public HashSet<QuestionListDto> ConvertToWebModel(HashSet<QuestionDbo> getQuestionsInBanks, string culture)
+        public List<QuestionListDto> ConvertToWebModel(List<QuestionDbo> getQuestionsInBanks, string culture)
         {
             return getQuestionsInBanks
                 .Select(item => new QuestionListDto()
@@ -45,7 +45,7 @@ namespace Services.Question.Convertor
                     BankOfQuestionName = item.BankOfQuestion.BankOfQuestionsTranslations?.FindTranslation(culture)?.Name,
                     BankOfQuestionId = item.BankOfQuestionId
                 })
-                .ToHashSet();
+                .ToList();
         }
 
         public QuestionDetailDto ConvertToWebModel(QuestionDbo getQuestionDetail, string culture)
@@ -57,9 +57,15 @@ namespace Services.Question.Convertor
                 Question = getQuestionDetail.TestQuestionTranslation.FindTranslation(culture).Question,
                 BankOfQuestionId = getQuestionDetail.BankOfQuestionId,
                 QuestionModeId = getQuestionDetail.QuestionModeId,
-                FileId = getQuestionDetail.QuestionFileRepositories.FirstOrDefault(x => x.QuestionId == getQuestionDetail.Id && x.Culture.SystemIdentificator == culture && x.IsDeleted == false).Id,
+                FileId = getQuestionDetail
+                    .QuestionFileRepositories.FirstOrDefault(x =>
+                        x.QuestionId == getQuestionDetail.Id && x.Culture.SystemIdentificator == culture && x.IsDeleted == false
+                    )
+                    .Id,
                 OriginalFileName = getQuestionDetail
-                    .QuestionFileRepositories.FirstOrDefault(x => x.QuestionId == getQuestionDetail.Id && x.Culture.SystemIdentificator == culture && x.IsDeleted == false)
+                    .QuestionFileRepositories.FirstOrDefault(x =>
+                        x.QuestionId == getQuestionDetail.Id && x.Culture.SystemIdentificator == culture && x.IsDeleted == false
+                    )
                     .OriginalFileName
             };
         }

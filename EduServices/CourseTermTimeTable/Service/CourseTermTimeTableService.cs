@@ -18,7 +18,9 @@ namespace Services.CourseTermTimeTable.Service
         ICourseLectorRepository courseLectorRepository,
         ICourseTermRepository courseTermRepository,
         ICourseTermTimeTableConvertor convertor
-    ) : BaseService<ICourseTermDateRepository, CourseTermDateDbo, ICourseTermTimeTableConvertor>(courseTermDateRepository, convertor), ICourseTermTimeTableService
+    )
+        : BaseService<ICourseTermDateRepository, CourseTermDateDbo, ICourseTermTimeTableConvertor>(courseTermDateRepository, convertor),
+            ICourseTermTimeTableService
     {
         private readonly ICourseLectorRepository _courseLectorRepository = courseLectorRepository;
         private readonly ICourseTermRepository _courseTermRepository = courseTermRepository;
@@ -26,7 +28,9 @@ namespace Services.CourseTermTimeTable.Service
         public Result GenerateTimeTable(Guid courseTermId)
         {
             CourseTermDbo getCourseTermDetail = _courseTermRepository.GetEntity(courseTermId);
-            HashSet<CourseTermDateDbo> getTimeTables = _repository.GetEntities(false, x => x.CourseTermId == courseTermId && x.Date >= DateTime.Now);
+            List<CourseTermDateDbo> getTimeTables = _repository
+                .GetEntities(false, x => x.CourseTermId == courseTermId && x.Date >= DateTime.Now)
+                .Result;
             foreach (CourseTermDateDbo item in getTimeTables)
             {
                 _repository.DeleteEntity(item.Id, Guid.Empty);
@@ -52,13 +56,25 @@ namespace Services.CourseTermTimeTable.Service
                     getCourseTermDetail.Sunday
                 ],
                 courseTermId,
-                _courseLectorRepository.GetEntities(false, x => x.CourseTermId == courseTermId).Select(x => x.UserInOrganizationId.ToString()).ToList(),
+                _courseLectorRepository
+                    .GetEntities(false, x => x.CourseTermId == courseTermId)
+                    .Result.Select(x => x.UserInOrganizationId.ToString())
+                    .ToList(),
                 getCourseTermDetail.ClassRoomId
             );
             return new Result();
         }
 
-        public Result GenerateTimeTable(DateTime activeFrom, DateTime activeTo, Guid timeFromId, Guid timeToId, List<bool> days, Guid courseTermId, List<string> lectors, Guid classRoomId)
+        public Result GenerateTimeTable(
+            DateTime activeFrom,
+            DateTime activeTo,
+            Guid timeFromId,
+            Guid timeToId,
+            List<bool> days,
+            Guid courseTermId,
+            List<string> lectors,
+            Guid classRoomId
+        )
         {
             DateTime activeFromDate = activeFrom.Date;
             DateTime activeToDate = activeTo.Date;
@@ -193,9 +209,9 @@ namespace Services.CourseTermTimeTable.Service
             return new Result();
         }
 
-        public HashSet<CourseTermTimeTableListDto> GetTimeTable(Guid courseTermId, string culture)
+        public List<CourseTermTimeTableListDto> GetTimeTable(Guid courseTermId, string culture)
         {
-            return _convertor.ConvertToWebModel([.. _repository.GetEntities(false, x => x.CourseTermId == courseTermId)], culture);
+            return _convertor.ConvertToWebModel([.. _repository.GetEntities(false, x => x.CourseTermId == courseTermId).Result], culture);
         }
 
         public Result CancelCourseTerm(Guid courseTermTimeTableId)

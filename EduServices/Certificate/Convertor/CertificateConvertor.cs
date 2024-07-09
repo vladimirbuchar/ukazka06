@@ -9,32 +9,43 @@ namespace Services.Certificate.Convertor
 {
     public class CertificateConvertor(ICodeBookRepository<CultureDbo> codeBookService) : ICertificateConvertor
     {
-        private readonly HashSet<CultureDbo> _cultureList = codeBookService.GetEntities(false);
+        private readonly List<CultureDbo> _cultureList = codeBookService.GetEntities(false).Result;
 
         public CertificateDbo ConvertToBussinessEntity(CertificateCreateDto addCertificateDto, string culture)
         {
-            CertificateDbo certificate = new() { OrganizationId = addCertificateDto.OrganizationId, CertificateValidTo = addCertificateDto.CertificateValidTo };
-            certificate.CertificateTranslations = certificate.CertificateTranslations.PrepareTranslation(addCertificateDto.Name, addCertificateDto.Html, culture, _cultureList);
+            CertificateDbo certificate =
+                new() { OrganizationId = addCertificateDto.OrganizationId, CertificateValidTo = addCertificateDto.CertificateValidTo };
+            certificate.CertificateTranslations = certificate.CertificateTranslations.PrepareTranslation(
+                addCertificateDto.Name,
+                addCertificateDto.Html,
+                culture,
+                _cultureList
+            );
             return certificate;
         }
 
         public CertificateDbo ConvertToBussinessEntity(CertificateUpdateDto updateCertificateDto, CertificateDbo entity, string culture)
         {
-            entity.CertificateTranslations = entity.CertificateTranslations.PrepareTranslation(updateCertificateDto.Name, updateCertificateDto.Html, culture, _cultureList);
+            entity.CertificateTranslations = entity.CertificateTranslations.PrepareTranslation(
+                updateCertificateDto.Name,
+                updateCertificateDto.Html,
+                culture,
+                _cultureList
+            );
             entity.CertificateValidTo = updateCertificateDto.CertificateValidTo;
             return entity;
         }
 
-        public HashSet<CertificateListDto> ConvertToWebModel(HashSet<CertificateDbo> getCertificateInOrganizations, string culture)
+        public List<CertificateListDto> ConvertToWebModel(List<CertificateDbo> getCertificateInOrganizations, string culture)
         {
             return getCertificateInOrganizations
                 .Select(item => new CertificateListDto()
                 {
                     Id = item.Id,
-                    Html = item.CertificateTranslations.FindTranslation(culture).Html,
-                    Name = item.CertificateTranslations.FindTranslation(culture).Name
+                    Name = item.CertificateTranslations.FindTranslation(culture).Name,
+                    CertificateValidTo = item.CertificateValidTo
                 })
-                .ToHashSet();
+                .ToList();
         }
 
         public CertificateDetailDto ConvertToWebModel(CertificateDbo getCertificateDetail, string culture)

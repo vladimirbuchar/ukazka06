@@ -6,6 +6,6 @@ namespace Services.Page.Service
 {
     public interface IPageService : IBaseService
     {
-        HashSet<PriceListDto> PriceList();
+        List<PriceListDto> PriceList();
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Repository.FileRepository;
+using Core.Base.Request;
 using Core.Base.Service;
 using Core.Constants;
 using Core.DataTypes;
@@ -32,7 +33,8 @@ namespace Services.CourseLesson.Service
             CourseLessonListDto,
             CourseLessonDetailDto,
             CourseLessonUpdateDto,
-            CourseLessonFileRepositoryDbo
+            CourseLessonFileRepositoryDbo,
+            FilterRequest
         >(courseLessonRepository, convertor, validator, repository, culture),
             ICourseLessonService
     {

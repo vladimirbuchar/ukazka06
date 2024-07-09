@@ -14,7 +14,11 @@ namespace EduApi.Controllers.ClientZone.Notification
     {
         private readonly INotificationService _notificationService;
 
-        public NotificationController(INotificationService notificationService, ILogger<NotificationController> logger, IOrganizationRoleService organizationRoleService)
+        public NotificationController(
+            INotificationService notificationService,
+            ILogger<NotificationController> logger,
+            IOrganizationRoleService organizationRoleService
+        )
             : base(logger, organizationRoleService)
         {
             _notificationService = notificationService;

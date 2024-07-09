@@ -7,7 +7,7 @@ namespace Services.CodeBookData.Convertor
 {
     public interface ICodeBookConvertor : IBaseConvertor
     {
-        HashSet<CodeBookListDto> ConvertToWebModel<T>(HashSet<T> codebookItems)
+        List<CodeBookListDto> ConvertToWebModel<T>(List<T> codebookItems)
             where T : CodeBook;
     }
 }

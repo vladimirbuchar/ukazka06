@@ -12,9 +12,9 @@ namespace Services.CourseMaterial.Convertor
     public class CourseMaterialConvertor(IConfiguration configuration, ICodeBookRepository<CultureDbo> codeBookService) : ICourseMaterialConvertor
     {
         private readonly IConfiguration _configuration = configuration;
-        private readonly HashSet<CultureDbo> _cultureList = codeBookService.GetEntities(false);
+        private readonly List<CultureDbo> _cultureList = codeBookService.GetEntities(false).Result;
 
-        public HashSet<CourseMaterialListDto> ConvertToWebModel(HashSet<CourseMaterialDbo> getCourseMaterialInOrganizations, string culture)
+        public List<CourseMaterialListDto> ConvertToWebModel(List<CourseMaterialDbo> getCourseMaterialInOrganizations, string culture)
         {
             return getCourseMaterialInOrganizations
                 .Select(x => new CourseMaterialListDto()
@@ -23,7 +23,7 @@ namespace Services.CourseMaterial.Convertor
                     Name = x.CourseMaterialTranslation.FindTranslation(culture)?.Name,
                     Id = x.Id
                 })
-                .ToHashSet();
+                .ToList();
         }
 
         public CourseMaterialDetailDto ConvertToWebModel(CourseMaterialDbo getCourseMaterialDetail, string culture)
@@ -36,7 +36,7 @@ namespace Services.CourseMaterial.Convertor
             };
         }
 
-        public HashSet<CourseMaterialFileListDto> ConvertToWebModel(HashSet<CourseMaterialFileRepositoryDbo> getFiles)
+        public List<CourseMaterialFileListDto> ConvertToWebModel(List<CourseMaterialFileRepositoryDbo> getFiles)
         {
             return getFiles
                 .Select(x => new CourseMaterialFileListDto()
@@ -47,19 +47,29 @@ namespace Services.CourseMaterial.Convertor
                     OriginalFileName = x.OriginalFileName,
                     Url = string.Format("{0}{1}/{2}", _configuration.GetSection(ConfigValue.FILE_SERVER_URL).Value, x.CourseMaterialId, x.FileName)
                 })
-                .ToHashSet();
+                .ToList();
         }
 
         public CourseMaterialDbo ConvertToBussinessEntity(CourseMaterialCreateDto create, string culture)
         {
             CourseMaterialDbo material = new() { OrganizationId = create.OrganizationId };
-            material.CourseMaterialTranslation = material.CourseMaterialTranslation.PrepareTranslation(create.Name, create.Description, culture, _cultureList);
+            material.CourseMaterialTranslation = material.CourseMaterialTranslation.PrepareTranslation(
+                create.Name,
+                create.Description,
+                culture,
+                _cultureList
+            );
             return material;
         }
 
         public CourseMaterialDbo ConvertToBussinessEntity(CourseMaterialUpdateDto update, CourseMaterialDbo entity, string culture)
         {
-            entity.CourseMaterialTranslation = entity.CourseMaterialTranslation.PrepareTranslation(update.Name, update.Description, culture, _cultureList);
+            entity.CourseMaterialTranslation = entity.CourseMaterialTranslation.PrepareTranslation(
+                update.Name,
+                update.Description,
+                culture,
+                _cultureList
+            );
             return entity;
         }
     }

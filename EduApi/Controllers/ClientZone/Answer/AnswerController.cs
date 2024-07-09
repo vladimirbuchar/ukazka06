@@ -1,4 +1,6 @@
-﻿using Core.Base.Dto;
+﻿using System;
+using System.Collections.Generic;
+using Core.Base.Dto;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -7,8 +9,6 @@ using Model.Edu.Answer;
 using Services.Answer.Dto;
 using Services.Answer.Service;
 using Services.OrganizationRole.Service;
-using System;
-using System.Collections.Generic;
 
 namespace EduApi.Controllers.ClientZone.Answer
 {

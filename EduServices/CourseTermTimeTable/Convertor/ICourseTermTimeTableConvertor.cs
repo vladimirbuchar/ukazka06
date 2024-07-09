@@ -7,6 +7,6 @@ namespace Services.CourseTermTimeTable.Convertor
 {
     public interface ICourseTermTimeTableConvertor : IBaseConvertor
     {
-        HashSet<CourseTermTimeTableListDto> ConvertToWebModel(HashSet<CourseTermDateDbo> getTimeTables, string culture);
+        List<CourseTermTimeTableListDto> ConvertToWebModel(List<CourseTermDateDbo> getTimeTables, string culture);
     }
 }

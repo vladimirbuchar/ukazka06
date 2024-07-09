@@ -1,5 +1,5 @@
 ﻿using Core.Base.Convertor;
-using Model.Edu.SendMessage;
+using Model.Edu.Message;
 using Services.Message.Dto;
 
 namespace Services.Message.Convertor

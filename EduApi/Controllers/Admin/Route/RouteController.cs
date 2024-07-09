@@ -16,7 +16,12 @@ namespace EduApi.Controllers.Admin.Route
         private readonly IRouteService _routeService;
         private readonly IEnumerable<EndpointDataSource> _endpointSources;
 
-        public RouteController(IRouteService routeService, ILogger<RouteController> logger, IOrganizationRoleService organizationRoleService, IEnumerable<EndpointDataSource> endpointSources)
+        public RouteController(
+            IRouteService routeService,
+            ILogger<RouteController> logger,
+            IOrganizationRoleService organizationRoleService,
+            IEnumerable<EndpointDataSource> endpointSources
+        )
             : base(logger)
         {
             _routeService = routeService;

@@ -11,7 +11,7 @@ namespace Services.UserInOrganization.Dto
             RoleId = [];
         }
 
-        public HashSet<Guid> RoleId { get; set; }
-        public HashSet<string> Role { get; set; }
+        public List<Guid> RoleId { get; set; }
+        public List<string> Role { get; set; }
     }
 }

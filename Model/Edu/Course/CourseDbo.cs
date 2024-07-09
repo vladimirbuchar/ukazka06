@@ -5,9 +5,9 @@ using Model.CodeBook;
 using Model.Edu.Certificate;
 using Model.Edu.CourseMaterial;
 using Model.Edu.CourseTerm;
+using Model.Edu.Message;
 using Model.Edu.Note;
 using Model.Edu.Organization;
-using Model.Edu.SendMessage;
 using Model.Link;
 
 namespace Model.Edu.Course

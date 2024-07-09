@@ -18,7 +18,11 @@ namespace EduApi.Migrations
 
             migrationBuilder.DropIndex(name: "IX_Edu_CourseTerm_TimeToId", table: "Edu_CourseTerm");
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_OrganizationStudyHour_ActiveFromId", table: "Edu_OrganizationStudyHour", column: "ActiveFromId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_OrganizationStudyHour_ActiveFromId",
+                table: "Edu_OrganizationStudyHour",
+                column: "ActiveFromId"
+            );
 
             migrationBuilder.CreateIndex(name: "IX_Edu_OrganizationStudyHour_ActiveToId", table: "Edu_OrganizationStudyHour", column: "ActiveToId");
 
@@ -45,9 +49,19 @@ namespace EduApi.Migrations
 
             migrationBuilder.DropIndex(name: "IX_Edu_CourseTerm_TimeToId", table: "Edu_CourseTerm");
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_OrganizationStudyHour_ActiveFromId", table: "Edu_OrganizationStudyHour", column: "ActiveFromId", unique: true);
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_OrganizationStudyHour_ActiveFromId",
+                table: "Edu_OrganizationStudyHour",
+                column: "ActiveFromId",
+                unique: true
+            );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_OrganizationStudyHour_ActiveToId", table: "Edu_OrganizationStudyHour", column: "ActiveToId", unique: true);
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_OrganizationStudyHour_ActiveToId",
+                table: "Edu_OrganizationStudyHour",
+                column: "ActiveToId",
+                unique: true
+            );
 
             migrationBuilder.CreateIndex(name: "IX_Edu_CourseTermDate_TimeFromId", table: "Edu_CourseTermDate", column: "TimeFromId", unique: true);
 

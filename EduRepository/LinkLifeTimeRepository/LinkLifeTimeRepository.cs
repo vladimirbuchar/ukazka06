@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Linq.Expressions;
 using Core.Base.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
@@ -8,11 +9,13 @@ using Model.Edu.LinkLifeTime;
 
 namespace Repository.LinkLifeTimeRepository
 {
-    public class LinkLifeTimeRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<LinkLifeTimeDbo>(dbContext, memoryCache), ILinkLifeTimeRepository
+    public class LinkLifeTimeRepository(EduDbContext dbContext, IMemoryCache memoryCache)
+        : BaseRepository<LinkLifeTimeDbo>(dbContext, memoryCache),
+            ILinkLifeTimeRepository
     {
-        public override LinkLifeTimeDbo GetEntity(Guid id)
+        public override LinkLifeTimeDbo GetEntity(bool deleted, Expression<Func<LinkLifeTimeDbo, bool>> predicate = null)
         {
-            return _dbContext.Set<LinkLifeTimeDbo>().Include(x => x.User).FirstOrDefault(x => x.Id == id && x.IsDeleted == false);
+            return _dbContext.Set<LinkLifeTimeDbo>().Include(x => x.User).Where(x => x.IsDeleted == deleted).FirstOrDefault(predicate);
         }
     }
 }

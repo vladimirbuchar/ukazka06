@@ -78,7 +78,9 @@ namespace EduApi.Controllers.ClientZone.UserInOrganization
             try
             {
                 CheckOrganizationPermition(organizationId);
-                return SendResponse(_userInOrganizationService.GetDetail(x => x.UserId == userId && x.OrganizationId == organizationId, GetClientCulture()));
+                return SendResponse(
+                    _userInOrganizationService.GetDetail(x => x.UserId == userId && x.OrganizationId == organizationId, GetClientCulture())
+                );
             }
             catch (Exception e)
             {
@@ -147,7 +149,9 @@ namespace EduApi.Controllers.ClientZone.UserInOrganization
                 {
                     return SendResponse(_userInOrganizationService.CanShowStudentTestResult(objectId, GetLoggedUserId()));
                 }
-                return SendResponse(_userInOrganizationService.GetDetail(x => x.UserId == GetLoggedUserId() && x.OrganizationId == objectId, GetClientCulture()));
+                return SendResponse(
+                    _userInOrganizationService.GetDetail(x => x.UserId == GetLoggedUserId() && x.OrganizationId == objectId, GetClientCulture())
+                );
             }
             catch (Exception e)
             {

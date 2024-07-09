@@ -17,7 +17,11 @@ namespace EduApi.Controllers.ClientZone.Question
     {
         private readonly IQuestionService _questionService;
 
-        public QuestionController(IQuestionService questionService, ILogger<QuestionController> logger, IOrganizationRoleService organizationRoleService)
+        public QuestionController(
+            IQuestionService questionService,
+            ILogger<QuestionController> logger,
+            IOrganizationRoleService organizationRoleService
+        )
             : base(logger, organizationRoleService)
         {
             _questionService = questionService;

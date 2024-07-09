@@ -5,8 +5,9 @@ using Services.CourseMaterial.Dto;
 
 namespace Services.CourseMaterial.Convertor
 {
-    public interface ICourseMaterialConvertor : IBaseConvertor<CourseMaterialDbo, CourseMaterialCreateDto, CourseMaterialListDto, CourseMaterialDetailDto, CourseMaterialUpdateDto>
+    public interface ICourseMaterialConvertor
+        : IBaseConvertor<CourseMaterialDbo, CourseMaterialCreateDto, CourseMaterialListDto, CourseMaterialDetailDto, CourseMaterialUpdateDto>
     {
-        HashSet<CourseMaterialFileListDto> ConvertToWebModel(HashSet<CourseMaterialFileRepositoryDbo> getFiles);
+        List<CourseMaterialFileListDto> ConvertToWebModel(List<CourseMaterialFileRepositoryDbo> getFiles);
     }
 }

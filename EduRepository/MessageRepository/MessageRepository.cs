@@ -1,33 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using Core.Base.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
-using Model.Edu.SendMessage;
+using Model.Edu.Message;
 
 namespace Repository.MessageRepository
 {
-    public class MessageRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<MessageDbo>(dbContext, memoryCache), IMessageRepository
+    public class MessageRepository(EduDbContext dbContext, IMemoryCache memoryCache)
+        : BaseRepository<MessageDbo>(dbContext, memoryCache),
+            IMessageRepository
     {
-        public override MessageDbo GetEntity(Guid id)
+        protected override IQueryable<MessageDbo> PrepareDetailQuery()
         {
-            return _dbContext.Set<MessageDbo>().Include(x => x.SendMessageTranslations.Where(x => x.IsDeleted == false)).ThenInclude(x => x.Culture).FirstOrDefault(x => x.Id == id);
+            return _dbContext.Set<MessageDbo>().Include(x => x.SendMessageTranslations.Where(x => x.IsDeleted == false)).ThenInclude(x => x.Culture);
         }
 
-        public override HashSet<MessageDbo> GetEntities(
-            bool deleted,
-            Expression<Func<MessageDbo, bool>> predicate = null,
-            Expression<Func<MessageDbo, object>> orderBy = null,
-            Expression<Func<MessageDbo, object>> orderByDesc = null
-        )
+        protected override IQueryable<MessageDbo> PrepareListQuery()
         {
-            return
-            [
-                .. _dbContext.Set<MessageDbo>().Include(x => x.SendMessageTranslations.Where(x => x.IsDeleted == false)).ThenInclude(x => x.Culture).Where(predicate).Where(x => x.IsDeleted == deleted)
-            ];
+            return _dbContext.Set<MessageDbo>().Include(x => x.SendMessageTranslations.Where(x => x.IsDeleted == false)).ThenInclude(x => x.Culture);
         }
 
         public override Guid GetOrganizationId(Guid objectId)

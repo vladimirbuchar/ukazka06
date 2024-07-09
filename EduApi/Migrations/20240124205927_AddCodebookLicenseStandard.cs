@@ -27,7 +27,25 @@ namespace EduApi.Migrations
                 "MaximumUser"
             };
 
-            object[] dataStandard = new object[] { Guid.NewGuid(), false, true, true, "STANDARD", "STANDARD_LICENSE", "STANDARD_LICENSE", true, 25, 25, 199, 5, false, false, 3, 250 };
+            object[] dataStandard = new object[]
+            {
+                Guid.NewGuid(),
+                false,
+                true,
+                true,
+                "STANDARD",
+                "STANDARD_LICENSE",
+                "STANDARD_LICENSE",
+                true,
+                25,
+                25,
+                199,
+                5,
+                false,
+                false,
+                3,
+                250
+            };
 
             migrationBuilder.InsertData("Cb_License", columns, dataStandard);
         }

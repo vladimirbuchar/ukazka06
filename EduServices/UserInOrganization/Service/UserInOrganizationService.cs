@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using Core.Base.Repository.CodeBookRepository;
+﻿using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Service;
 using Core.Constants;
 using Core.DataTypes;
@@ -22,10 +18,15 @@ using Repository.RoleRepository;
 using Repository.UserInOrganizationRepository;
 using Repository.UserRepository;
 using Services.OrganizationRole.Dto;
-using Services.SystemService.SendMailService;
+using Services.SystemService.SendMailService.Service;
 using Services.UserInOrganization.Convertor;
 using Services.UserInOrganization.Dto;
+using Services.UserInOrganization.Filter;
 using Services.UserInOrganization.Validator;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace Services.UserInOrganization.Service
 {
@@ -52,7 +53,8 @@ namespace Services.UserInOrganization.Service
             UserInOrganizationCreateDto,
             UserInOrganizationListDto,
             UserInOrganizationDetailDto,
-            UserInOrganizationUpdateDto
+            UserInOrganizationUpdateDto,
+            UserInOrganizationFilter
         >(organizationRepository, organizationConvertor, validator),
             IUserInOrganizationService
     {
@@ -61,7 +63,7 @@ namespace Services.UserInOrganization.Service
         private readonly ISendMailService _sendMailService = sendMailService;
         private readonly IOrganizationRoleRepository _organizationRoleRepository = organizationRoleRepository;
         private readonly INotificationRepository _notificationRepository = notificationRepository;
-        private readonly HashSet<NotificationTypeDbo> _notificationTypes = notificationTypeCodebook.GetEntities(false);
+        private readonly List<NotificationTypeDbo> _notificationTypes = notificationTypeCodebook.GetEntities(false).Result;
         private readonly IUserRepository _userRepository = userRepository;
         private readonly IOrganizationSettingRepository _organizationSettingRepository = organizationSettingRepository;
         private readonly ICourseLectorRepository _courseLectorRepository = courseLectorRepository;
@@ -78,7 +80,9 @@ namespace Services.UserInOrganization.Service
                     user = _userRepository.GetEntity(false, x => x.UserEmail == email);
                     if (user == null)
                     {
-                        string defaultPassword = _organizationSettingRepository.GetEntity(false, x => x.OrganizationId == addObject.OrganizationId).UserDefaultPassword;
+                        string defaultPassword = _organizationSettingRepository
+                            .GetEntity(false, x => x.OrganizationId == addObject.OrganizationId)
+                            .UserDefaultPassword;
                         user = _userRepository.CreateEntity(
                             new UserDbo()
                             {
@@ -97,8 +101,21 @@ namespace Services.UserInOrganization.Service
                         );
 
                         Dictionary<string, string> replaceData =
-                            new() { { ConfigValue.ACTIVATION_LINK, string.Format("{0}/?id={1}", _configuration.GetSection(ConfigValue.CLIENT_URL_ACTIVATE).Value, user.Id) } };
-                        _sendMailService.AddEmailToQueue(EduEmail.REGISTRATION_USER, culture, new EmailAddress() { Email = email, Name = "" }, replaceData, addObject.OrganizationId, "");
+                            new()
+                            {
+                                {
+                                    ConfigValue.ACTIVATION_LINK,
+                                    string.Format("{0}/?id={1}", _configuration.GetSection(ConfigValue.CLIENT_URL_ACTIVATE).Value, user.Id)
+                                }
+                            };
+                        _sendMailService.AddEmailToQueue(
+                            EduEmail.REGISTRATION_USER,
+                            culture,
+                            new EmailAddress() { Email = email, Name = "" },
+                            replaceData,
+                            addObject.OrganizationId,
+                            ""
+                        );
                     }
                     foreach (Guid role in addObject.OrganizationRoleId)
                     {
@@ -117,7 +134,9 @@ namespace Services.UserInOrganization.Service
                         new NotificationDbo()
                         {
                             IsNew = true,
-                            NotificationTypeId = _notificationTypes.FirstOrDefault(x => x.SystemIdentificator == NotificationType.INVITE_TO_ORGANIZATION).Id,
+                            NotificationTypeId = _notificationTypes
+                                .FirstOrDefault(x => x.SystemIdentificator == NotificationType.INVITE_TO_ORGANIZATION)
+                                .Id,
                             OrganizationId = addObject.OrganizationId,
                             AddDate = DateTime.Now,
                             UserId = user.Id
@@ -127,18 +146,33 @@ namespace Services.UserInOrganization.Service
                 }
                 else
                 {
-                    result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.ADD_USER_TO_ORGANIZATION, MessageItem.EMAIL_IS_NOT_VALID, email, 0));
+                    result.AddResultStatus(
+                        new ValidationMessage(MessageType.ERROR, MessageCategory.ADD_USER_TO_ORGANIZATION, MessageItem.EMAIL_IS_NOT_VALID, email, 0)
+                    );
                 }
             }
-            return new Result<UserInOrganizationDetailDto>() { Data = GetDetail(x => x.UserId == user.Id && x.OrganizationId == addObject.OrganizationId) };
+            return new Result<UserInOrganizationDetailDto>()
+            {
+                Data = GetDetail(x => x.UserId == user.Id && x.OrganizationId == addObject.OrganizationId)
+            };
         }
 
-        public override Result<UserInOrganizationDetailDto> UpdateObject(UserInOrganizationUpdateDto update, Guid userId, string culture, Result<UserInOrganizationDetailDto> result = null)
+        public override Result<UserInOrganizationDetailDto> UpdateObject(
+            UserInOrganizationUpdateDto update,
+            Guid userId,
+            string culture,
+            Result<UserInOrganizationDetailDto> result = null
+        )
         {
-            HashSet<UserInOrganizationDbo> getUserOrganizationRoles = _repository.GetEntities(false, x => x.UserId == update.Id && x.OrganizationId == update.OrganizationId);
+            List<UserInOrganizationDbo> getUserOrganizationRoles = _repository
+                .GetEntities(false, x => x.UserId == update.Id && x.OrganizationId == update.OrganizationId)
+                .Result;
             if (getUserOrganizationRoles.Where(x => x.SystemIdentificator == Core.Constants.OrganizationRole.ORGANIZATION_OWNER).ToList().Count > 0)
             {
-                return new Result<UserInOrganizationDetailDto>() { Data = GetDetail(x => x.UserId == update.Id && x.OrganizationId == update.OrganizationId) };
+                return new Result<UserInOrganizationDetailDto>()
+                {
+                    Data = GetDetail(x => x.UserId == update.Id && x.OrganizationId == update.OrganizationId)
+                };
             }
             foreach (UserInOrganizationDbo item in getUserOrganizationRoles)
             {
@@ -167,23 +201,26 @@ namespace Services.UserInOrganization.Service
                     _repository.RestoreEntity(entity.Id, userId);
                 }
             }
-            return new Result<UserInOrganizationDetailDto>() { Data = GetDetail(x => x.UserId == update.Id && x.OrganizationId == update.OrganizationId) };
+            return new Result<UserInOrganizationDetailDto>()
+            {
+                Data = GetDetail(x => x.UserId == update.Id && x.OrganizationId == update.OrganizationId)
+            };
         }
 
-        public HashSet<OrganizationRoleListDto> GetOrganizationRoles()
+        public List<OrganizationRoleListDto> GetOrganizationRoles()
         {
-            return _convertor.ConvertToWebModel([.. _organizationRoleRepository.GetEntities(false, null, x => x.Priority)]);
+            return _convertor.ConvertToWebModel([.. _organizationRoleRepository.GetEntities(false, null, null, x => x.Priority).Result]);
         }
 
         public override UserInOrganizationDetailDto GetDetail(Expression<Func<UserInOrganizationDbo, bool>> predicate, string culture = "")
         {
-            HashSet<UserInOrganizationDbo> getUserOrganizationRoles = _repository.GetEntities(false, predicate);
+            List<UserInOrganizationDbo> getUserOrganizationRoles = _repository.GetEntities(false, predicate).Result;
             UserInOrganizationDetailDto result =
                 new()
                 {
-                    RoleId = getUserOrganizationRoles.Select(x => x.OrganizationRoleId).ToHashSet(),
+                    RoleId = getUserOrganizationRoles.Select(x => x.OrganizationRoleId).ToList(),
                     Id = getUserOrganizationRoles.FirstOrDefault().UserId,
-                    Role = getUserOrganizationRoles.Select(x => x.OrganizationRole.SystemIdentificator).ToHashSet(),
+                    Role = getUserOrganizationRoles.Select(x => x.OrganizationRole.SystemIdentificator).ToList(),
                 };
             return result;
         }
@@ -192,7 +229,7 @@ namespace Services.UserInOrganization.Service
         {
             UserInOrganizationDbo getAllUserInOrganizations = _repository
                 .GetEntities(false, x => x.OrganizationId == _repository.GetOrganizationId(courseId))
-                .FirstOrDefault(x =>
+                .Result.FirstOrDefault(x =>
                     x.UserId == userId
                     && (
                         x.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.COURSE_ADMINISTATOR
@@ -208,16 +245,25 @@ namespace Services.UserInOrganization.Service
                     IsCourseEditor = false,
                     IsOrganizationAdministrator = false,
                     IsOrganizationOwner = false,
-                    IsLector = _courseLectorRepository.GetEntities(false, x => x.UserInOrganization.UserId == userId).FirstOrDefault(x => x.Id == courseId) != null,
+                    IsLector =
+                        _courseLectorRepository
+                            .GetEntities(false, x => x.UserInOrganization.UserId == userId)
+                            .Result.FirstOrDefault(x => x.Id == courseId) != null,
                     IsStudent = _courseStudentRepository.GetStudentCourse(userId, false).FirstOrDefault(x => x.Id == courseId) != null
                 }
                 : new UserOrganizationRoleDetailDto()
                 {
-                    IsCourseAdministrator = getAllUserInOrganizations.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.COURSE_ADMINISTATOR,
+                    IsCourseAdministrator =
+                        getAllUserInOrganizations.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.COURSE_ADMINISTATOR,
                     IsCourseEditor = getAllUserInOrganizations.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.COURSE_EDITOR,
-                    IsOrganizationAdministrator = getAllUserInOrganizations.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.ORGANIZATION_ADMINISTRATOR,
-                    IsOrganizationOwner = getAllUserInOrganizations.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.ORGANIZATION_OWNER,
-                    IsLector = _courseLectorRepository.GetEntities(false, x => x.UserInOrganization.UserId == userId).FirstOrDefault(x => x.Id == courseId) != null,
+                    IsOrganizationAdministrator =
+                        getAllUserInOrganizations.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.ORGANIZATION_ADMINISTRATOR,
+                    IsOrganizationOwner =
+                        getAllUserInOrganizations.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.ORGANIZATION_OWNER,
+                    IsLector =
+                        _courseLectorRepository
+                            .GetEntities(false, x => x.UserInOrganization.UserId == userId)
+                            .Result.FirstOrDefault(x => x.Id == courseId) != null,
                     IsStudent = _courseStudentRepository.GetStudentCourse(userId, false).FirstOrDefault(x => x.Id == courseId) != null
                 };
         }
@@ -228,7 +274,10 @@ namespace Services.UserInOrganization.Service
             {
                 IsCourseAdministrator = false,
                 IsCourseEditor = false,
-                IsLector = _courseLectorRepository.GetEntities(false, x => x.UserInOrganization.UserId == userId).FirstOrDefault(x => x.Id == courseId) != null,
+                IsLector =
+                    _courseLectorRepository
+                        .GetEntities(false, x => x.UserInOrganization.UserId == userId)
+                        .Result.FirstOrDefault(x => x.Id == courseId) != null,
                 IsOrganizationAdministrator = false,
                 IsOrganizationOwner = false,
                 IsStudent = _courseStudentRepository.GetStudentCourse(userId, false).FirstOrDefault(x => x.Id == courseId) != null

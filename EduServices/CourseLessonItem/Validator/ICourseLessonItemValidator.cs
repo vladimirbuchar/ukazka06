@@ -5,5 +5,12 @@ using Services.CourseLessonItem.Dto;
 
 namespace Services.CourseLessonItem.Validator
 {
-    public interface ICourseLessonItemValidator : IBaseValidator<CourseLessonItemDbo, ICourseLessonItemRepository, CourseLessonItemCreateDto, CourseLessonItemDetailDto, CourseLessonItemUpdateDto> { }
+    public interface ICourseLessonItemValidator
+        : IBaseValidator<
+            CourseLessonItemDbo,
+            ICourseLessonItemRepository,
+            CourseLessonItemCreateDto,
+            CourseLessonItemDetailDto,
+            CourseLessonItemUpdateDto
+        > { }
 }

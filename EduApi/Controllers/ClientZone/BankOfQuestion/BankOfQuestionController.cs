@@ -14,7 +14,11 @@ namespace EduApi.Controllers.ClientZone.BankOfQuestion
     {
         private readonly IBankOfQuestionService _bankOfQuestionService;
 
-        public BankOfQuestionController(IBankOfQuestionService bankOfQuestionService, ILogger<BankOfQuestionController> logger, IOrganizationRoleService organizationRoleService)
+        public BankOfQuestionController(
+            IBankOfQuestionService bankOfQuestionService,
+            ILogger<BankOfQuestionController> logger,
+            IOrganizationRoleService organizationRoleService
+        )
             : base(logger, organizationRoleService) => _bankOfQuestionService = bankOfQuestionService;
 
         [HttpPost]

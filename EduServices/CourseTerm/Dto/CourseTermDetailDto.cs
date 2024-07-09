@@ -27,8 +27,8 @@ namespace Services.CourseTerm.Dto
         public int Sale { get; set; }
         public int MaximumStudent { get; set; }
         public int MinimumStudent { get; set; }
-        public HashSet<Guid> Lector { get; set; }
-        public HashSet<Guid> StudentGroup { get; set; }
+        public List<Guid> Lector { get; set; }
+        public List<Guid> StudentGroup { get; set; }
         public Guid? OrganizationStudyHourId { get; set; }
     }
 }

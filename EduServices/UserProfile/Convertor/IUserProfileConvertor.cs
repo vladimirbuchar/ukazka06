@@ -11,10 +11,10 @@ namespace Services.UserProfile.Convertor
 {
     public interface IUserProfileConvertor : IBaseConvertor
     {
-        HashSet<MyCertificateListDto> ConvertToWebModel(HashSet<UserCertificateDbo> getMyCertificates);
-        HashSet<MyCourseListDto> ConvertToWebModel(HashSet<CourseStudentDbo> getStudentCourses, string culture);
-        HashSet<MyCourseListDto> ConvertToWebModel(HashSet<CourseLectorDbo> getStudentCourses, string culture);
-        HashSet<MyOrganizationListDto> ConvertToWebModel(HashSet<UserInOrganizationDbo> getMyOrganizations);
-        HashSet<MyEvaluationListDto> ConvertToWebModel(HashSet<StudentEvaluationDbo> getStudentEvaluation);
+        List<MyCertificateListDto> ConvertToWebModel(List<UserCertificateDbo> getMyCertificates);
+        List<MyCourseListDto> ConvertToWebModel(List<CourseStudentDbo> getStudentCourses, string culture);
+        List<MyCourseListDto> ConvertToWebModel(List<CourseLectorDbo> getStudentCourses, string culture);
+        List<MyOrganizationListDto> ConvertToWebModel(List<UserInOrganizationDbo> getMyOrganizations);
+        List<MyEvaluationListDto> ConvertToWebModel(List<StudentEvaluationDbo> getStudentEvaluation);
     }
 }

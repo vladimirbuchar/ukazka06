@@ -598,7 +598,12 @@ namespace EduApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Edu_CourseTestEvaluation", x => x.Id);
-                    table.ForeignKey(name: "FK_Edu_CourseTestEvaluation_Edu_CourseTest_CourseTestId", column: x => x.CourseTestId, principalTable: "Edu_CourseTest", principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Edu_CourseTestEvaluation_Edu_CourseTest_CourseTestId",
+                        column: x => x.CourseTestId,
+                        principalTable: "Edu_CourseTest",
+                        principalColumn: "Id"
+                    );
                 }
             );
 
@@ -749,7 +754,13 @@ namespace EduApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Edu_User", x => x.Id);
-                    table.ForeignKey(name: "FK_Edu_User_Edu_Person_PersonId", column: x => x.PersonId, principalTable: "Edu_Person", principalColumn: "Id", onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Edu_User_Edu_Person_PersonId",
+                        column: x => x.PersonId,
+                        principalTable: "Edu_Person",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade
+                    );
                     table.ForeignKey(
                         name: "FK_Edu_User_Edu_UserRole_UserRoleId",
                         column: x => x.UserRoleId,
@@ -821,7 +832,12 @@ namespace EduApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Edu_BankOfQuestion", x => x.Id);
-                    table.ForeignKey(name: "FK_Edu_BankOfQuestion_Edu_Organization_OrganizationId", column: x => x.OrganizationId, principalTable: "Edu_Organization", principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Edu_BankOfQuestion_Edu_Organization_OrganizationId",
+                        column: x => x.OrganizationId,
+                        principalTable: "Edu_Organization",
+                        principalColumn: "Id"
+                    );
                 }
             );
 
@@ -856,8 +872,19 @@ namespace EduApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Edu_Branch", x => x.Id);
-                    table.ForeignKey(name: "FK_Edu_Branch_Cb_Country_CountryId", column: x => x.CountryId, principalTable: "Cb_Country", principalColumn: "Id", onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(name: "FK_Edu_Branch_Edu_Organization_OrganizationId", column: x => x.OrganizationId, principalTable: "Edu_Organization", principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Edu_Branch_Cb_Country_CountryId",
+                        column: x => x.CountryId,
+                        principalTable: "Cb_Country",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade
+                    );
+                    table.ForeignKey(
+                        name: "FK_Edu_Branch_Edu_Organization_OrganizationId",
+                        column: x => x.OrganizationId,
+                        principalTable: "Edu_Organization",
+                        principalColumn: "Id"
+                    );
                 }
             );
 
@@ -882,7 +909,12 @@ namespace EduApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Edu_Certificate", x => x.Id);
-                    table.ForeignKey(name: "FK_Edu_Certificate_Edu_Organization_OrganizationId", column: x => x.OrganizationId, principalTable: "Edu_Organization", principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Edu_Certificate_Edu_Organization_OrganizationId",
+                        column: x => x.OrganizationId,
+                        principalTable: "Edu_Organization",
+                        principalColumn: "Id"
+                    );
                 }
             );
 
@@ -906,7 +938,12 @@ namespace EduApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Edu_CourseMaterial", x => x.Id);
-                    table.ForeignKey(name: "FK_Edu_CourseMaterial_Edu_Organization_OrganizationId", column: x => x.OrganizationId, principalTable: "Edu_Organization", principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Edu_CourseMaterial_Edu_Organization_OrganizationId",
+                        column: x => x.OrganizationId,
+                        principalTable: "Edu_Organization",
+                        principalColumn: "Id"
+                    );
                 }
             );
 
@@ -951,7 +988,12 @@ namespace EduApi.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade
                     );
-                    table.ForeignKey(name: "FK_Edu_OrganizationAddress_Edu_Organization_OrganizationId", column: x => x.OrganizationId, principalTable: "Edu_Organization", principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Edu_OrganizationAddress_Edu_Organization_OrganizationId",
+                        column: x => x.OrganizationId,
+                        principalTable: "Edu_Organization",
+                        principalColumn: "Id"
+                    );
                 }
             );
 
@@ -1000,7 +1042,12 @@ namespace EduApi.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade
                     );
-                    table.ForeignKey(name: "FK_Edu_OrganizationSetting_Edu_Organization_OrganizationId", column: x => x.OrganizationId, principalTable: "Edu_Organization", principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Edu_OrganizationSetting_Edu_Organization_OrganizationId",
+                        column: x => x.OrganizationId,
+                        principalTable: "Edu_Organization",
+                        principalColumn: "Id"
+                    );
                 }
             );
 
@@ -1027,9 +1074,24 @@ namespace EduApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Edu_OrganizationStudyHour", x => x.Id);
-                    table.ForeignKey(name: "FK_Edu_OrganizationStudyHour_Cb_TimeTable_ActiveFromId", column: x => x.ActiveFromId, principalTable: "Cb_TimeTable", principalColumn: "Id");
-                    table.ForeignKey(name: "FK_Edu_OrganizationStudyHour_Cb_TimeTable_ActiveToId", column: x => x.ActiveToId, principalTable: "Cb_TimeTable", principalColumn: "Id");
-                    table.ForeignKey(name: "FK_Edu_OrganizationStudyHour_Edu_Organization_OrganizationId", column: x => x.OrganizationId, principalTable: "Edu_Organization", principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Edu_OrganizationStudyHour_Cb_TimeTable_ActiveFromId",
+                        column: x => x.ActiveFromId,
+                        principalTable: "Cb_TimeTable",
+                        principalColumn: "Id"
+                    );
+                    table.ForeignKey(
+                        name: "FK_Edu_OrganizationStudyHour_Cb_TimeTable_ActiveToId",
+                        column: x => x.ActiveToId,
+                        principalTable: "Cb_TimeTable",
+                        principalColumn: "Id"
+                    );
+                    table.ForeignKey(
+                        name: "FK_Edu_OrganizationStudyHour_Edu_Organization_OrganizationId",
+                        column: x => x.OrganizationId,
+                        principalTable: "Edu_Organization",
+                        principalColumn: "Id"
+                    );
                 }
             );
 
@@ -1062,7 +1124,12 @@ namespace EduApi.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade
                     );
-                    table.ForeignKey(name: "FK_Edu_OrganizationTranslation_Edu_Organization_OrganizationId", column: x => x.OrganizationId, principalTable: "Edu_Organization", principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Edu_OrganizationTranslation_Edu_Organization_OrganizationId",
+                        column: x => x.OrganizationId,
+                        principalTable: "Edu_Organization",
+                        principalColumn: "Id"
+                    );
                 }
             );
 
@@ -1095,7 +1162,12 @@ namespace EduApi.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade
                     );
-                    table.ForeignKey(name: "FK_Edu_SendMessage_Edu_Organization_OrganizationId", column: x => x.OrganizationId, principalTable: "Edu_Organization", principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Edu_SendMessage_Edu_Organization_OrganizationId",
+                        column: x => x.OrganizationId,
+                        principalTable: "Edu_Organization",
+                        principalColumn: "Id"
+                    );
                 }
             );
 
@@ -1119,7 +1191,12 @@ namespace EduApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Edu_StudentGroup", x => x.Id);
-                    table.ForeignKey(name: "FK_Edu_StudentGroup_Edu_Organization_OrganizationId", column: x => x.OrganizationId, principalTable: "Edu_Organization", principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Edu_StudentGroup_Edu_Organization_OrganizationId",
+                        column: x => x.OrganizationId,
+                        principalTable: "Edu_Organization",
+                        principalColumn: "Id"
+                    );
                 }
             );
 
@@ -1183,7 +1260,13 @@ namespace EduApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Edu_LinkLifeTime", x => x.Id);
-                    table.ForeignKey(name: "FK_Edu_LinkLifeTime_Edu_User_UserId", column: x => x.UserId, principalTable: "Edu_User", principalColumn: "Id", onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Edu_LinkLifeTime_Edu_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Edu_User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade
+                    );
                 }
             );
 
@@ -1220,8 +1303,19 @@ namespace EduApi.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict
                     );
-                    table.ForeignKey(name: "FK_Edu_Notification_Edu_Organization_OrganizationId", column: x => x.OrganizationId, principalTable: "Edu_Organization", principalColumn: "Id");
-                    table.ForeignKey(name: "FK_Edu_Notification_Edu_User_UserId", column: x => x.UserId, principalTable: "Edu_User", principalColumn: "Id", onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Edu_Notification_Edu_Organization_OrganizationId",
+                        column: x => x.OrganizationId,
+                        principalTable: "Edu_Organization",
+                        principalColumn: "Id"
+                    );
+                    table.ForeignKey(
+                        name: "FK_Edu_Notification_Edu_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Edu_User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade
+                    );
                 }
             );
 
@@ -1249,7 +1343,13 @@ namespace EduApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Edu_UserCertificate", x => x.Id);
-                    table.ForeignKey(name: "FK_Edu_UserCertificate_Edu_User_UserId", column: x => x.UserId, principalTable: "Edu_User", principalColumn: "Id", onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Edu_UserCertificate_Edu_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Edu_User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade
+                    );
                 }
             );
 
@@ -1278,7 +1378,13 @@ namespace EduApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_System_ObjectHistory", x => x.Id);
-                    table.ForeignKey(name: "FK_System_ObjectHistory_Edu_User_UserId", column: x => x.UserId, principalTable: "Edu_User", principalColumn: "Id", onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_System_ObjectHistory_Edu_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Edu_User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict
+                    );
                 }
             );
 
@@ -1357,7 +1463,12 @@ namespace EduApi.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade
                     );
-                    table.ForeignKey(name: "FK_Edu_TestQuestion_Edu_BankOfQuestion_BankOfQuestionId", column: x => x.BankOfQuestionId, principalTable: "Edu_BankOfQuestion", principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Edu_TestQuestion_Edu_BankOfQuestion_BankOfQuestionId",
+                        column: x => x.BankOfQuestionId,
+                        principalTable: "Edu_BankOfQuestion",
+                        principalColumn: "Id"
+                    );
                 }
             );
 
@@ -1429,7 +1540,12 @@ namespace EduApi.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade
                     );
-                    table.ForeignKey(name: "FK_Edu_BranchTranslation_Edu_Branch_BranchId", column: x => x.BranchId, principalTable: "Edu_Branch", principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Edu_BranchTranslation_Edu_Branch_BranchId",
+                        column: x => x.BranchId,
+                        principalTable: "Edu_Branch",
+                        principalColumn: "Id"
+                    );
                 }
             );
 
@@ -1456,7 +1572,12 @@ namespace EduApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Edu_ClassRoom", x => x.Id);
-                    table.ForeignKey(name: "FK_Edu_ClassRoom_Edu_Branch_BranchId", column: x => x.BranchId, principalTable: "Edu_Branch", principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Edu_ClassRoom_Edu_Branch_BranchId",
+                        column: x => x.BranchId,
+                        principalTable: "Edu_Branch",
+                        principalColumn: "Id"
+                    );
                 }
             );
 
@@ -1490,7 +1611,12 @@ namespace EduApi.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade
                     );
-                    table.ForeignKey(name: "FK_Edu_CertificateTranslation_Edu_Certificate_CertificateId", column: x => x.CertificateId, principalTable: "Edu_Certificate", principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Edu_CertificateTranslation_Edu_Certificate_CertificateId",
+                        column: x => x.CertificateId,
+                        principalTable: "Edu_Certificate",
+                        principalColumn: "Id"
+                    );
                 }
             );
 
@@ -1518,7 +1644,12 @@ namespace EduApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Edu_CourseLesson", x => x.Id);
-                    table.ForeignKey(name: "FK_Edu_CourseLesson_Edu_CourseMaterial_CourseMaterialId", column: x => x.CourseMaterialId, principalTable: "Edu_CourseMaterial", principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Edu_CourseLesson_Edu_CourseMaterial_CourseMaterialId",
+                        column: x => x.CourseMaterialId,
+                        principalTable: "Edu_CourseMaterial",
+                        principalColumn: "Id"
+                    );
                     table.ForeignKey(
                         name: "FK_Edu_CourseLesson_Edu_CourseTest_CourseTestId",
                         column: x => x.CourseTestId,
@@ -1622,8 +1753,18 @@ namespace EduApi.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade
                     );
-                    table.ForeignKey(name: "FK_Edu_Course_Edu_CourseMaterial_CourseMaterialId", column: x => x.CourseMaterialId, principalTable: "Edu_CourseMaterial", principalColumn: "Id");
-                    table.ForeignKey(name: "FK_Edu_Course_Edu_Organization_OrganizationId", column: x => x.OrganizationId, principalTable: "Edu_Organization", principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Edu_Course_Edu_CourseMaterial_CourseMaterialId",
+                        column: x => x.CourseMaterialId,
+                        principalTable: "Edu_CourseMaterial",
+                        principalColumn: "Id"
+                    );
+                    table.ForeignKey(
+                        name: "FK_Edu_Course_Edu_Organization_OrganizationId",
+                        column: x => x.OrganizationId,
+                        principalTable: "Edu_Organization",
+                        principalColumn: "Id"
+                    );
                     table.ForeignKey(
                         name: "FK_Edu_Course_Edu_SendMessage_SendMessageId",
                         column: x => x.SendMessageId,
@@ -1736,7 +1877,12 @@ namespace EduApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Link_UserInOrganization", x => x.Id);
-                    table.ForeignKey(name: "FK_Link_UserInOrganization_Edu_Organization_OrganizationId", column: x => x.OrganizationId, principalTable: "Edu_Organization", principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Link_UserInOrganization_Edu_Organization_OrganizationId",
+                        column: x => x.OrganizationId,
+                        principalTable: "Edu_Organization",
+                        principalColumn: "Id"
+                    );
                     table.ForeignKey(
                         name: "FK_Link_UserInOrganization_Edu_OrganizationRole_OrganizationRoleId",
                         column: x => x.OrganizationRoleId,
@@ -1751,7 +1897,13 @@ namespace EduApi.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict
                     );
-                    table.ForeignKey(name: "FK_Link_UserInOrganization_Edu_User_UserId", column: x => x.UserId, principalTable: "Edu_User", principalColumn: "Id", onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Link_UserInOrganization_Edu_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Edu_User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade
+                    );
                 }
             );
 
@@ -1863,7 +2015,12 @@ namespace EduApi.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade
                     );
-                    table.ForeignKey(name: "FK_Edu_ClassRoomTranslation_Edu_ClassRoom_ClassRoomId", column: x => x.ClassRoomId, principalTable: "Edu_ClassRoom", principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Edu_ClassRoomTranslation_Edu_ClassRoom_ClassRoomId",
+                        column: x => x.ClassRoomId,
+                        principalTable: "Edu_ClassRoom",
+                        principalColumn: "Id"
+                    );
                 }
             );
 
@@ -1897,7 +2054,12 @@ namespace EduApi.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade
                     );
-                    table.ForeignKey(name: "FK_Edu_CourseLessonItem_Edu_CourseLesson_CourseLessonId", column: x => x.CourseLessonId, principalTable: "Edu_CourseLesson", principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Edu_CourseLessonItem_Edu_CourseLesson_CourseLessonId",
+                        column: x => x.CourseLessonId,
+                        principalTable: "Edu_CourseLesson",
+                        principalColumn: "Id"
+                    );
                 }
             );
 
@@ -1930,7 +2092,12 @@ namespace EduApi.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade
                     );
-                    table.ForeignKey(name: "FK_Edu_CourseLessonTranslation_Edu_CourseLesson_CourseLessonId", column: x => x.CourseLessonId, principalTable: "Edu_CourseLesson", principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Edu_CourseLessonTranslation_Edu_CourseLesson_CourseLessonId",
+                        column: x => x.CourseLessonId,
+                        principalTable: "Edu_CourseLesson",
+                        principalColumn: "Id"
+                    );
                 }
             );
 
@@ -1973,8 +2140,18 @@ namespace EduApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Edu_CourseTerm", x => x.Id);
-                    table.ForeignKey(name: "FK_Edu_CourseTerm_Cb_TimeTable_TimeFromId", column: x => x.TimeFromId, principalTable: "Cb_TimeTable", principalColumn: "Id");
-                    table.ForeignKey(name: "FK_Edu_CourseTerm_Cb_TimeTable_TimeToId", column: x => x.TimeToId, principalTable: "Cb_TimeTable", principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Edu_CourseTerm_Cb_TimeTable_TimeFromId",
+                        column: x => x.TimeFromId,
+                        principalTable: "Cb_TimeTable",
+                        principalColumn: "Id"
+                    );
+                    table.ForeignKey(
+                        name: "FK_Edu_CourseTerm_Cb_TimeTable_TimeToId",
+                        column: x => x.TimeToId,
+                        principalTable: "Cb_TimeTable",
+                        principalColumn: "Id"
+                    );
                     table.ForeignKey(
                         name: "FK_Edu_CourseTerm_Edu_ClassRoom_ClassRoomId",
                         column: x => x.ClassRoomId,
@@ -1982,7 +2159,12 @@ namespace EduApi.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade
                     );
-                    table.ForeignKey(name: "FK_Edu_CourseTerm_Edu_Course_CourseId", column: x => x.CourseId, principalTable: "Edu_Course", principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Edu_CourseTerm_Edu_Course_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Edu_Course",
+                        principalColumn: "Id"
+                    );
                     table.ForeignKey(
                         name: "FK_Edu_CourseTerm_Edu_OrganizationStudyHour_OrganizationStudyHourId",
                         column: x => x.OrganizationStudyHourId,
@@ -2023,7 +2205,12 @@ namespace EduApi.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade
                     );
-                    table.ForeignKey(name: "FK_Edu_CourseTranslation_Edu_Course_CourseId", column: x => x.CourseId, principalTable: "Edu_Course", principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Edu_CourseTranslation_Edu_Course_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Edu_Course",
+                        principalColumn: "Id"
+                    );
                 }
             );
 
@@ -2052,9 +2239,26 @@ namespace EduApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Edu_Note", x => x.Id);
-                    table.ForeignKey(name: "FK_Edu_Note_Cb_NoteType_NoteTypeId", column: x => x.NoteTypeId, principalTable: "Cb_NoteType", principalColumn: "Id", onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(name: "FK_Edu_Note_Edu_Course_CourseId", column: x => x.CourseId, principalTable: "Edu_Course", principalColumn: "Id");
-                    table.ForeignKey(name: "FK_Edu_Note_Edu_User_UserId", column: x => x.UserId, principalTable: "Edu_User", principalColumn: "Id", onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Edu_Note_Cb_NoteType_NoteTypeId",
+                        column: x => x.NoteTypeId,
+                        principalTable: "Cb_NoteType",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade
+                    );
+                    table.ForeignKey(
+                        name: "FK_Edu_Note_Edu_Course_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Edu_Course",
+                        principalColumn: "Id"
+                    );
+                    table.ForeignKey(
+                        name: "FK_Edu_Note_Edu_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Edu_User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade
+                    );
                 }
             );
 
@@ -2099,7 +2303,13 @@ namespace EduApi.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade
                     );
-                    table.ForeignKey(name: "FK_Edu_StudentTestSummary_Edu_User_UserId", column: x => x.UserId, principalTable: "Edu_User", principalColumn: "Id", onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Edu_StudentTestSummary_Edu_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Edu_User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade
+                    );
                 }
             );
 
@@ -2240,14 +2450,25 @@ namespace EduApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Link_CourseBrowse", x => x.Id);
-                    table.ForeignKey(name: "FK_Link_CourseBrowse_Edu_Course_CourseId", column: x => x.CourseId, principalTable: "Edu_Course", principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Link_CourseBrowse_Edu_Course_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Edu_Course",
+                        principalColumn: "Id"
+                    );
                     table.ForeignKey(
                         name: "FK_Link_CourseBrowse_Edu_CourseLessonItem_CourseLessonItemId",
                         column: x => x.CourseLessonItemId,
                         principalTable: "Edu_CourseLessonItem",
                         principalColumn: "Id"
                     );
-                    table.ForeignKey(name: "FK_Link_CourseBrowse_Edu_User_UserId", column: x => x.UserId, principalTable: "Edu_User", principalColumn: "Id", onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Link_CourseBrowse_Edu_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Edu_User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade
+                    );
                 }
             );
 
@@ -2323,10 +2544,30 @@ namespace EduApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Edu_CourseTermDate", x => x.Id);
-                    table.ForeignKey(name: "FK_Edu_CourseTermDate_Cb_TimeTable_TimeFromId", column: x => x.TimeFromId, principalTable: "Cb_TimeTable", principalColumn: "Id");
-                    table.ForeignKey(name: "FK_Edu_CourseTermDate_Cb_TimeTable_TimeToId", column: x => x.TimeToId, principalTable: "Cb_TimeTable", principalColumn: "Id");
-                    table.ForeignKey(name: "FK_Edu_CourseTermDate_Edu_ClassRoom_ClassRoomId", column: x => x.ClassRoomId, principalTable: "Edu_ClassRoom", principalColumn: "Id");
-                    table.ForeignKey(name: "FK_Edu_CourseTermDate_Edu_CourseTerm_CourseTermId", column: x => x.CourseTermId, principalTable: "Edu_CourseTerm", principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Edu_CourseTermDate_Cb_TimeTable_TimeFromId",
+                        column: x => x.TimeFromId,
+                        principalTable: "Cb_TimeTable",
+                        principalColumn: "Id"
+                    );
+                    table.ForeignKey(
+                        name: "FK_Edu_CourseTermDate_Cb_TimeTable_TimeToId",
+                        column: x => x.TimeToId,
+                        principalTable: "Cb_TimeTable",
+                        principalColumn: "Id"
+                    );
+                    table.ForeignKey(
+                        name: "FK_Edu_CourseTermDate_Edu_ClassRoom_ClassRoomId",
+                        column: x => x.ClassRoomId,
+                        principalTable: "Edu_ClassRoom",
+                        principalColumn: "Id"
+                    );
+                    table.ForeignKey(
+                        name: "FK_Edu_CourseTermDate_Edu_CourseTerm_CourseTermId",
+                        column: x => x.CourseTermId,
+                        principalTable: "Edu_CourseTerm",
+                        principalColumn: "Id"
+                    );
                     table.ForeignKey(
                         name: "FK_Edu_CourseTermDate_Link_UserInOrganization_UserInOrganizationId",
                         column: x => x.UserInOrganizationId,
@@ -2360,8 +2601,19 @@ namespace EduApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Edu_Chat", x => x.Id);
-                    table.ForeignKey(name: "FK_Edu_Chat_Edu_CourseTerm_CourseTermId", column: x => x.CourseTermId, principalTable: "Edu_CourseTerm", principalColumn: "Id");
-                    table.ForeignKey(name: "FK_Edu_Chat_Edu_User_UserId", column: x => x.UserId, principalTable: "Edu_User", principalColumn: "Id", onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Edu_Chat_Edu_CourseTerm_CourseTermId",
+                        column: x => x.CourseTermId,
+                        principalTable: "Edu_CourseTerm",
+                        principalColumn: "Id"
+                    );
+                    table.ForeignKey(
+                        name: "FK_Edu_Chat_Edu_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Edu_User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade
+                    );
                 }
             );
 
@@ -2386,7 +2638,12 @@ namespace EduApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Link_CourseLector", x => x.Id);
-                    table.ForeignKey(name: "FK_Link_CourseLector_Edu_CourseTerm_CourseTermId", column: x => x.CourseTermId, principalTable: "Edu_CourseTerm", principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Link_CourseLector_Edu_CourseTerm_CourseTermId",
+                        column: x => x.CourseTermId,
+                        principalTable: "Edu_CourseTerm",
+                        principalColumn: "Id"
+                    );
                     table.ForeignKey(
                         name: "FK_Link_CourseLector_Link_UserInOrganization_UserInOrganizationId",
                         column: x => x.UserInOrganizationId,
@@ -2419,7 +2676,12 @@ namespace EduApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Link_CourseStudent", x => x.Id);
-                    table.ForeignKey(name: "FK_Link_CourseStudent_Edu_CourseTerm_CourseTermId", column: x => x.CourseTermId, principalTable: "Edu_CourseTerm", principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Link_CourseStudent_Edu_CourseTerm_CourseTermId",
+                        column: x => x.CourseTermId,
+                        principalTable: "Edu_CourseTerm",
+                        principalColumn: "Id"
+                    );
                     table.ForeignKey(
                         name: "FK_Link_CourseStudent_Link_UserInOrganization_UserInOrganizationId",
                         column: x => x.UserInOrganizationId,
@@ -2451,7 +2713,12 @@ namespace EduApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Link_StudentInGroupCourseTerm", x => x.Id);
-                    table.ForeignKey(name: "FK_Link_StudentInGroupCourseTerm_Edu_CourseTerm_CourseTermId", column: x => x.CourseTermId, principalTable: "Edu_CourseTerm", principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Link_StudentInGroupCourseTerm_Edu_CourseTerm_CourseTermId",
+                        column: x => x.CourseTermId,
+                        principalTable: "Edu_CourseTerm",
+                        principalColumn: "Id"
+                    );
                     table.ForeignKey(
                         name: "FK_Link_StudentInGroupCourseTerm_Edu_StudentGroup_StudentGroupId",
                         column: x => x.StudentGroupId,
@@ -2550,7 +2817,12 @@ namespace EduApi.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade
                     );
-                    table.ForeignKey(name: "FK_Edu_TestUserAnswer_Edu_TestQuestion_TestQuestionId", column: x => x.TestQuestionId, principalTable: "Edu_TestQuestion", principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Edu_TestUserAnswer_Edu_TestQuestion_TestQuestionId",
+                        column: x => x.TestQuestionId,
+                        principalTable: "Edu_TestQuestion",
+                        principalColumn: "Id"
+                    );
                     table.ForeignKey(
                         name: "FK_Edu_TestUserAnswer_Edu_TestQuestionAnswer_TestQuestionAnswerId",
                         column: x => x.TestQuestionAnswerId,
@@ -2582,7 +2854,12 @@ namespace EduApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Edu_AttendanceStudent", x => x.Id);
-                    table.ForeignKey(name: "FK_Edu_AttendanceStudent_Edu_CourseTerm_CourseTermId", column: x => x.CourseTermId, principalTable: "Edu_CourseTerm", principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Edu_AttendanceStudent_Edu_CourseTerm_CourseTermId",
+                        column: x => x.CourseTermId,
+                        principalTable: "Edu_CourseTerm",
+                        principalColumn: "Id"
+                    );
                     table.ForeignKey(
                         name: "FK_Edu_AttendanceStudent_Edu_CourseTermDate_CourseTermDateId",
                         column: x => x.CourseTermDateId,
@@ -2693,7 +2970,13 @@ namespace EduApi.Migrations
                 filter: "[SystemIdentificator] IS NOT NULL"
             );
 
-            migrationBuilder.CreateIndex(name: "IX_Cb_Country_SystemIdentificator", table: "Cb_Country", column: "SystemIdentificator", unique: true, filter: "[SystemIdentificator] IS NOT NULL");
+            migrationBuilder.CreateIndex(
+                name: "IX_Cb_Country_SystemIdentificator",
+                table: "Cb_Country",
+                column: "SystemIdentificator",
+                unique: true,
+                filter: "[SystemIdentificator] IS NOT NULL"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cb_CourseLessonItemTemplate_SystemIdentificator",
@@ -2719,9 +3002,21 @@ namespace EduApi.Migrations
                 filter: "[SystemIdentificator] IS NOT NULL"
             );
 
-            migrationBuilder.CreateIndex(name: "IX_Cb_Culture_SystemIdentificator", table: "Cb_Culture", column: "SystemIdentificator", unique: true, filter: "[SystemIdentificator] IS NOT NULL");
+            migrationBuilder.CreateIndex(
+                name: "IX_Cb_Culture_SystemIdentificator",
+                table: "Cb_Culture",
+                column: "SystemIdentificator",
+                unique: true,
+                filter: "[SystemIdentificator] IS NOT NULL"
+            );
 
-            migrationBuilder.CreateIndex(name: "IX_Cb_Email_SystemIdentificator", table: "Cb_Email", column: "SystemIdentificator", unique: true, filter: "[SystemIdentificator] IS NOT NULL");
+            migrationBuilder.CreateIndex(
+                name: "IX_Cb_Email_SystemIdentificator",
+                table: "Cb_Email",
+                column: "SystemIdentificator",
+                unique: true,
+                filter: "[SystemIdentificator] IS NOT NULL"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cb_GalleryItemType_SystemIdentificator",
@@ -2731,9 +3026,21 @@ namespace EduApi.Migrations
                 filter: "[SystemIdentificator] IS NOT NULL"
             );
 
-            migrationBuilder.CreateIndex(name: "IX_Cb_License_SystemIdentificator", table: "Cb_License", column: "SystemIdentificator", unique: true, filter: "[SystemIdentificator] IS NOT NULL");
+            migrationBuilder.CreateIndex(
+                name: "IX_Cb_License_SystemIdentificator",
+                table: "Cb_License",
+                column: "SystemIdentificator",
+                unique: true,
+                filter: "[SystemIdentificator] IS NOT NULL"
+            );
 
-            migrationBuilder.CreateIndex(name: "IX_Cb_NoteType_SystemIdentificator", table: "Cb_NoteType", column: "SystemIdentificator", unique: true, filter: "[SystemIdentificator] IS NOT NULL");
+            migrationBuilder.CreateIndex(
+                name: "IX_Cb_NoteType_SystemIdentificator",
+                table: "Cb_NoteType",
+                column: "SystemIdentificator",
+                unique: true,
+                filter: "[SystemIdentificator] IS NOT NULL"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cb_NotificationType_SystemIdentificator",
@@ -2759,11 +3066,21 @@ namespace EduApi.Migrations
                 filter: "[SystemIdentificator] IS NOT NULL"
             );
 
-            migrationBuilder.CreateIndex(name: "IX_Cb_TimeTable_SystemIdentificator", table: "Cb_TimeTable", column: "SystemIdentificator", unique: true, filter: "[SystemIdentificator] IS NOT NULL");
+            migrationBuilder.CreateIndex(
+                name: "IX_Cb_TimeTable_SystemIdentificator",
+                table: "Cb_TimeTable",
+                column: "SystemIdentificator",
+                unique: true,
+                filter: "[SystemIdentificator] IS NOT NULL"
+            );
 
             migrationBuilder.CreateIndex(name: "IX_Edu_AttendanceStudent_CourseStudentId", table: "Edu_AttendanceStudent", column: "CourseStudentId");
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_AttendanceStudent_CourseTermDateId", table: "Edu_AttendanceStudent", column: "CourseTermDateId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_AttendanceStudent_CourseTermDateId",
+                table: "Edu_AttendanceStudent",
+                column: "CourseTermDateId"
+            );
 
             migrationBuilder.CreateIndex(name: "IX_Edu_AttendanceStudent_CourseTermId", table: "Edu_AttendanceStudent", column: "CourseTermId");
 
@@ -2785,9 +3102,17 @@ namespace EduApi.Migrations
                 filter: "[SystemIdentificator] IS NOT NULL"
             );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_BankOfQuestionTranslation_BankOfQuestionId", table: "Edu_BankOfQuestionTranslation", column: "BankOfQuestionId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_BankOfQuestionTranslation_BankOfQuestionId",
+                table: "Edu_BankOfQuestionTranslation",
+                column: "BankOfQuestionId"
+            );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_BankOfQuestionTranslation_CultureId", table: "Edu_BankOfQuestionTranslation", column: "CultureId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_BankOfQuestionTranslation_CultureId",
+                table: "Edu_BankOfQuestionTranslation",
+                column: "CultureId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Edu_BankOfQuestionTranslation_SystemIdentificator",
@@ -2801,7 +3126,13 @@ namespace EduApi.Migrations
 
             migrationBuilder.CreateIndex(name: "IX_Edu_Branch_OrganizationId", table: "Edu_Branch", column: "OrganizationId");
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_Branch_SystemIdentificator", table: "Edu_Branch", column: "SystemIdentificator", unique: true, filter: "[SystemIdentificator] IS NOT NULL");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_Branch_SystemIdentificator",
+                table: "Edu_Branch",
+                column: "SystemIdentificator",
+                unique: true,
+                filter: "[SystemIdentificator] IS NOT NULL"
+            );
 
             migrationBuilder.CreateIndex(name: "IX_Edu_BranchTranslation_BranchId", table: "Edu_BranchTranslation", column: "BranchId");
 
@@ -2825,7 +3156,11 @@ namespace EduApi.Migrations
                 filter: "[SystemIdentificator] IS NOT NULL"
             );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_CertificateTranslation_CertificateId", table: "Edu_CertificateTranslation", column: "CertificateId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_CertificateTranslation_CertificateId",
+                table: "Edu_CertificateTranslation",
+                column: "CertificateId"
+            );
 
             migrationBuilder.CreateIndex(name: "IX_Edu_CertificateTranslation_CultureId", table: "Edu_CertificateTranslation", column: "CultureId");
 
@@ -2871,7 +3206,13 @@ namespace EduApi.Migrations
 
             migrationBuilder.CreateIndex(name: "IX_Edu_Course_SendMessageId", table: "Edu_Course", column: "SendMessageId");
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_Course_SystemIdentificator", table: "Edu_Course", column: "SystemIdentificator", unique: true, filter: "[SystemIdentificator] IS NOT NULL");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_Course_SystemIdentificator",
+                table: "Edu_Course",
+                column: "SystemIdentificator",
+                unique: true,
+                filter: "[SystemIdentificator] IS NOT NULL"
+            );
 
             migrationBuilder.CreateIndex(name: "IX_Edu_CourseLesson_CourseMaterialId", table: "Edu_CourseLesson", column: "CourseMaterialId");
 
@@ -2887,7 +3228,11 @@ namespace EduApi.Migrations
 
             migrationBuilder.CreateIndex(name: "IX_Edu_CourseLessonItem_CourseLessonId", table: "Edu_CourseLessonItem", column: "CourseLessonId");
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_CourseLessonItem_CourseLessonItemTemplateId", table: "Edu_CourseLessonItem", column: "CourseLessonItemTemplateId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_CourseLessonItem_CourseLessonItemTemplateId",
+                table: "Edu_CourseLessonItem",
+                column: "CourseLessonItemTemplateId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Edu_CourseLessonItem_SystemIdentificator",
@@ -2897,9 +3242,17 @@ namespace EduApi.Migrations
                 filter: "[SystemIdentificator] IS NOT NULL"
             );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_CourseLessonItemTranslation_CourseLessonItemId", table: "Edu_CourseLessonItemTranslation", column: "CourseLessonItemId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_CourseLessonItemTranslation_CourseLessonItemId",
+                table: "Edu_CourseLessonItemTranslation",
+                column: "CourseLessonItemId"
+            );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_CourseLessonItemTranslation_CultureId", table: "Edu_CourseLessonItemTranslation", column: "CultureId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_CourseLessonItemTranslation_CultureId",
+                table: "Edu_CourseLessonItemTranslation",
+                column: "CultureId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Edu_CourseLessonItemTranslation_SystemIdentificator",
@@ -2909,7 +3262,11 @@ namespace EduApi.Migrations
                 filter: "[SystemIdentificator] IS NOT NULL"
             );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_CourseLessonTranslation_CourseLessonId", table: "Edu_CourseLessonTranslation", column: "CourseLessonId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_CourseLessonTranslation_CourseLessonId",
+                table: "Edu_CourseLessonTranslation",
+                column: "CourseLessonId"
+            );
 
             migrationBuilder.CreateIndex(name: "IX_Edu_CourseLessonTranslation_CultureId", table: "Edu_CourseLessonTranslation", column: "CultureId");
 
@@ -2931,9 +3288,17 @@ namespace EduApi.Migrations
                 filter: "[SystemIdentificator] IS NOT NULL"
             );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_CourseMaterialTranslation_CourseMaterialId", table: "Edu_CourseMaterialTranslation", column: "CourseMaterialId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_CourseMaterialTranslation_CourseMaterialId",
+                table: "Edu_CourseMaterialTranslation",
+                column: "CourseMaterialId"
+            );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_CourseMaterialTranslation_CultureId", table: "Edu_CourseMaterialTranslation", column: "CultureId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_CourseMaterialTranslation_CultureId",
+                table: "Edu_CourseMaterialTranslation",
+                column: "CultureId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Edu_CourseMaterialTranslation_SystemIdentificator",
@@ -2947,7 +3312,11 @@ namespace EduApi.Migrations
 
             migrationBuilder.CreateIndex(name: "IX_Edu_CourseTerm_CourseId", table: "Edu_CourseTerm", column: "CourseId");
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_CourseTerm_OrganizationStudyHourId", table: "Edu_CourseTerm", column: "OrganizationStudyHourId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_CourseTerm_OrganizationStudyHourId",
+                table: "Edu_CourseTerm",
+                column: "OrganizationStudyHourId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Edu_CourseTerm_SystemIdentificator",
@@ -2977,7 +3346,11 @@ namespace EduApi.Migrations
 
             migrationBuilder.CreateIndex(name: "IX_Edu_CourseTermDate_TimeToId", table: "Edu_CourseTermDate", column: "TimeToId", unique: true);
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_CourseTermDate_UserInOrganizationId", table: "Edu_CourseTermDate", column: "UserInOrganizationId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_CourseTermDate_UserInOrganizationId",
+                table: "Edu_CourseTermDate",
+                column: "UserInOrganizationId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Edu_CourseTest_SystemIdentificator",
@@ -3019,7 +3392,13 @@ namespace EduApi.Migrations
 
             migrationBuilder.CreateIndex(name: "IX_Edu_Chat_CourseTermId", table: "Edu_Chat", column: "CourseTermId");
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_Chat_SystemIdentificator", table: "Edu_Chat", column: "SystemIdentificator", unique: true, filter: "[SystemIdentificator] IS NOT NULL");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_Chat_SystemIdentificator",
+                table: "Edu_Chat",
+                column: "SystemIdentificator",
+                unique: true,
+                filter: "[SystemIdentificator] IS NOT NULL"
+            );
 
             migrationBuilder.CreateIndex(name: "IX_Edu_Chat_UserId", table: "Edu_Chat", column: "UserId");
 
@@ -3037,7 +3416,13 @@ namespace EduApi.Migrations
 
             migrationBuilder.CreateIndex(name: "IX_Edu_Note_NoteTypeId", table: "Edu_Note", column: "NoteTypeId");
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_Note_SystemIdentificator", table: "Edu_Note", column: "SystemIdentificator", unique: true, filter: "[SystemIdentificator] IS NOT NULL");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_Note_SystemIdentificator",
+                table: "Edu_Note",
+                column: "SystemIdentificator",
+                unique: true,
+                filter: "[SystemIdentificator] IS NOT NULL"
+            );
 
             migrationBuilder.CreateIndex(name: "IX_Edu_Note_UserId", table: "Edu_Note", column: "UserId");
 
@@ -3069,7 +3454,11 @@ namespace EduApi.Migrations
 
             migrationBuilder.CreateIndex(name: "IX_Edu_OrganizationAddress_CountryId", table: "Edu_OrganizationAddress", column: "CountryId");
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_OrganizationAddress_OrganizationId", table: "Edu_OrganizationAddress", column: "OrganizationId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_OrganizationAddress_OrganizationId",
+                table: "Edu_OrganizationAddress",
+                column: "OrganizationId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Edu_OrganizationAddress_SystemIdentificator",
@@ -3087,7 +3476,11 @@ namespace EduApi.Migrations
                 filter: "[SystemIdentificator] IS NOT NULL"
             );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_OrganizationRolePermition_OrganizationRoleId", table: "Edu_OrganizationRolePermition", column: "OrganizationRoleId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_OrganizationRolePermition_OrganizationRoleId",
+                table: "Edu_OrganizationRolePermition",
+                column: "OrganizationRoleId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Edu_OrganizationRolePermition_SystemIdentificator",
@@ -3097,9 +3490,17 @@ namespace EduApi.Migrations
                 filter: "[SystemIdentificator] IS NOT NULL"
             );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_OrganizationRoleTranslation_CultureId", table: "Edu_OrganizationRoleTranslation", column: "CultureId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_OrganizationRoleTranslation_CultureId",
+                table: "Edu_OrganizationRoleTranslation",
+                column: "CultureId"
+            );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_OrganizationRoleTranslation_OrganizationRoleId", table: "Edu_OrganizationRoleTranslation", column: "OrganizationRoleId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_OrganizationRoleTranslation_OrganizationRoleId",
+                table: "Edu_OrganizationRoleTranslation",
+                column: "OrganizationRoleId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Edu_OrganizationRoleTranslation_SystemIdentificator",
@@ -3111,7 +3512,12 @@ namespace EduApi.Migrations
 
             migrationBuilder.CreateIndex(name: "IX_Edu_OrganizationSetting_LicenseOldId", table: "Edu_OrganizationSetting", column: "LicenseOldId");
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_OrganizationSetting_OrganizationId", table: "Edu_OrganizationSetting", column: "OrganizationId", unique: true);
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_OrganizationSetting_OrganizationId",
+                table: "Edu_OrganizationSetting",
+                column: "OrganizationId",
+                unique: true
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Edu_OrganizationSetting_SystemIdentificator",
@@ -3121,11 +3527,25 @@ namespace EduApi.Migrations
                 filter: "[SystemIdentificator] IS NOT NULL"
             );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_OrganizationStudyHour_ActiveFromId", table: "Edu_OrganizationStudyHour", column: "ActiveFromId", unique: true);
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_OrganizationStudyHour_ActiveFromId",
+                table: "Edu_OrganizationStudyHour",
+                column: "ActiveFromId",
+                unique: true
+            );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_OrganizationStudyHour_ActiveToId", table: "Edu_OrganizationStudyHour", column: "ActiveToId", unique: true);
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_OrganizationStudyHour_ActiveToId",
+                table: "Edu_OrganizationStudyHour",
+                column: "ActiveToId",
+                unique: true
+            );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_OrganizationStudyHour_OrganizationId", table: "Edu_OrganizationStudyHour", column: "OrganizationId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_OrganizationStudyHour_OrganizationId",
+                table: "Edu_OrganizationStudyHour",
+                column: "OrganizationId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Edu_OrganizationStudyHour_SystemIdentificator",
@@ -3137,7 +3557,11 @@ namespace EduApi.Migrations
 
             migrationBuilder.CreateIndex(name: "IX_Edu_OrganizationTranslation_CultureId", table: "Edu_OrganizationTranslation", column: "CultureId");
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_OrganizationTranslation_OrganizationId", table: "Edu_OrganizationTranslation", column: "OrganizationId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_OrganizationTranslation_OrganizationId",
+                table: "Edu_OrganizationTranslation",
+                column: "OrganizationId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Edu_OrganizationTranslation_SystemIdentificator",
@@ -3147,7 +3571,13 @@ namespace EduApi.Migrations
                 filter: "[SystemIdentificator] IS NOT NULL"
             );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_Person_SystemIdentificator", table: "Edu_Person", column: "SystemIdentificator", unique: true, filter: "[SystemIdentificator] IS NOT NULL");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_Person_SystemIdentificator",
+                table: "Edu_Person",
+                column: "SystemIdentificator",
+                unique: true,
+                filter: "[SystemIdentificator] IS NOT NULL"
+            );
 
             migrationBuilder.CreateIndex(name: "IX_Edu_PersonAddress_AddressTypeId", table: "Edu_PersonAddress", column: "AddressTypeId");
 
@@ -3177,7 +3607,11 @@ namespace EduApi.Migrations
 
             migrationBuilder.CreateIndex(name: "IX_Edu_SendMessageTranslation_CultureId", table: "Edu_SendMessageTranslation", column: "CultureId");
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_SendMessageTranslation_SendMessageId", table: "Edu_SendMessageTranslation", column: "SendMessageId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_SendMessageTranslation_SendMessageId",
+                table: "Edu_SendMessageTranslation",
+                column: "SendMessageId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Edu_SendMessageTranslation_SystemIdentificator",
@@ -3211,7 +3645,11 @@ namespace EduApi.Migrations
 
             migrationBuilder.CreateIndex(name: "IX_Edu_StudentGroupTranslation_CultureId", table: "Edu_StudentGroupTranslation", column: "CultureId");
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_StudentGroupTranslation_StudentGroupId", table: "Edu_StudentGroupTranslation", column: "StudentGroupId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_StudentGroupTranslation_StudentGroupId",
+                table: "Edu_StudentGroupTranslation",
+                column: "StudentGroupId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Edu_StudentGroupTranslation_SystemIdentificator",
@@ -3235,7 +3673,11 @@ namespace EduApi.Migrations
 
             migrationBuilder.CreateIndex(name: "IX_Edu_StudentTestSummary_UserId", table: "Edu_StudentTestSummary", column: "UserId");
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_StudentTestSummaryAnswer_StudentTestSummaryQuestionDboId", table: "Edu_StudentTestSummaryAnswer", column: "StudentTestSummaryQuestionDboId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_StudentTestSummaryAnswer_StudentTestSummaryQuestionDboId",
+                table: "Edu_StudentTestSummaryAnswer",
+                column: "StudentTestSummaryQuestionDboId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Edu_StudentTestSummaryAnswer_SystemIdentificator",
@@ -3245,13 +3687,29 @@ namespace EduApi.Migrations
                 filter: "[SystemIdentificator] IS NOT NULL"
             );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_StudentTestSummaryAnswer_TestQuestionAnswerId", table: "Edu_StudentTestSummaryAnswer", column: "TestQuestionAnswerId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_StudentTestSummaryAnswer_TestQuestionAnswerId",
+                table: "Edu_StudentTestSummaryAnswer",
+                column: "TestQuestionAnswerId"
+            );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_StudentTestSummaryQuestion_AnswerModeId", table: "Edu_StudentTestSummaryQuestion", column: "AnswerModeId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_StudentTestSummaryQuestion_AnswerModeId",
+                table: "Edu_StudentTestSummaryQuestion",
+                column: "AnswerModeId"
+            );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_StudentTestSummaryQuestion_QuestionModeId", table: "Edu_StudentTestSummaryQuestion", column: "QuestionModeId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_StudentTestSummaryQuestion_QuestionModeId",
+                table: "Edu_StudentTestSummaryQuestion",
+                column: "QuestionModeId"
+            );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_StudentTestSummaryQuestion_StudentTestSummaryId", table: "Edu_StudentTestSummaryQuestion", column: "StudentTestSummaryId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_StudentTestSummaryQuestion_StudentTestSummaryId",
+                table: "Edu_StudentTestSummaryQuestion",
+                column: "StudentTestSummaryId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Edu_StudentTestSummaryQuestion_SystemIdentificator",
@@ -3261,7 +3719,11 @@ namespace EduApi.Migrations
                 filter: "[SystemIdentificator] IS NOT NULL"
             );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_StudentTestSummaryQuestion_TestQuestionId", table: "Edu_StudentTestSummaryQuestion", column: "TestQuestionId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_StudentTestSummaryQuestion_TestQuestionId",
+                table: "Edu_StudentTestSummaryQuestion",
+                column: "TestQuestionId"
+            );
 
             migrationBuilder.CreateIndex(name: "IX_Edu_TestQuestion_AnswerModeId", table: "Edu_TestQuestion", column: "AnswerModeId");
 
@@ -3277,7 +3739,11 @@ namespace EduApi.Migrations
                 filter: "[SystemIdentificator] IS NOT NULL"
             );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_TestQuestionAnswer_FileRepositoryId", table: "Edu_TestQuestionAnswer", column: "FileRepositoryId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_TestQuestionAnswer_FileRepositoryId",
+                table: "Edu_TestQuestionAnswer",
+                column: "FileRepositoryId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Edu_TestQuestionAnswer_SystemIdentificator",
@@ -3289,7 +3755,11 @@ namespace EduApi.Migrations
 
             migrationBuilder.CreateIndex(name: "IX_Edu_TestQuestionAnswer_TestQuestionId", table: "Edu_TestQuestionAnswer", column: "TestQuestionId");
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_TestQuestionAnswerTanslation_CultureId", table: "Edu_TestQuestionAnswerTanslation", column: "CultureId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_TestQuestionAnswerTanslation_CultureId",
+                table: "Edu_TestQuestionAnswerTanslation",
+                column: "CultureId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Edu_TestQuestionAnswerTanslation_SystemIdentificator",
@@ -3299,7 +3769,11 @@ namespace EduApi.Migrations
                 filter: "[SystemIdentificator] IS NOT NULL"
             );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_TestQuestionAnswerTanslation_TestQuestionAnswerId", table: "Edu_TestQuestionAnswerTanslation", column: "TestQuestionAnswerId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_TestQuestionAnswerTanslation_TestQuestionAnswerId",
+                table: "Edu_TestQuestionAnswerTanslation",
+                column: "TestQuestionAnswerId"
+            );
 
             migrationBuilder.CreateIndex(name: "IX_Edu_TestQuestionTranslation_CultureId", table: "Edu_TestQuestionTranslation", column: "CultureId");
 
@@ -3311,9 +3785,17 @@ namespace EduApi.Migrations
                 filter: "[SystemIdentificator] IS NOT NULL"
             );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_TestQuestionTranslation_TestQuestionId", table: "Edu_TestQuestionTranslation", column: "TestQuestionId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_TestQuestionTranslation_TestQuestionId",
+                table: "Edu_TestQuestionTranslation",
+                column: "TestQuestionId"
+            );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_TestUserAnswer_StudentTestSummaryId", table: "Edu_TestUserAnswer", column: "StudentTestSummaryId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_TestUserAnswer_StudentTestSummaryId",
+                table: "Edu_TestUserAnswer",
+                column: "StudentTestSummaryId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Edu_TestUserAnswer_SystemIdentificator",
@@ -3323,15 +3805,31 @@ namespace EduApi.Migrations
                 filter: "[SystemIdentificator] IS NOT NULL"
             );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_TestUserAnswer_TestQuestionAnswerId", table: "Edu_TestUserAnswer", column: "TestQuestionAnswerId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_TestUserAnswer_TestQuestionAnswerId",
+                table: "Edu_TestUserAnswer",
+                column: "TestQuestionAnswerId"
+            );
 
             migrationBuilder.CreateIndex(name: "IX_Edu_TestUserAnswer_TestQuestionId", table: "Edu_TestUserAnswer", column: "TestQuestionId");
 
             migrationBuilder.CreateIndex(name: "IX_Edu_User_PersonId", table: "Edu_User", column: "PersonId");
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_User_SystemIdentificator", table: "Edu_User", column: "SystemIdentificator", unique: true, filter: "[SystemIdentificator] IS NOT NULL");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_User_SystemIdentificator",
+                table: "Edu_User",
+                column: "SystemIdentificator",
+                unique: true,
+                filter: "[SystemIdentificator] IS NOT NULL"
+            );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_User_UserEmail", table: "Edu_User", column: "UserEmail", unique: true, filter: "[UserEmail] IS NOT NULL");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_User_UserEmail",
+                table: "Edu_User",
+                column: "UserEmail",
+                unique: true,
+                filter: "[UserEmail] IS NOT NULL"
+            );
 
             migrationBuilder.CreateIndex(name: "IX_Edu_User_UserRoleId", table: "Edu_User", column: "UserRoleId");
 
@@ -3345,7 +3843,13 @@ namespace EduApi.Migrations
 
             migrationBuilder.CreateIndex(name: "IX_Edu_UserCertificate_UserId", table: "Edu_UserCertificate", column: "UserId");
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_UserRole_SystemIdentificator", table: "Edu_UserRole", column: "SystemIdentificator", unique: true, filter: "[SystemIdentificator] IS NOT NULL");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_UserRole_SystemIdentificator",
+                table: "Edu_UserRole",
+                column: "SystemIdentificator",
+                unique: true,
+                filter: "[SystemIdentificator] IS NOT NULL"
+            );
 
             migrationBuilder.CreateIndex(name: "IX_Edu_UserRoleTranslation_CultureId", table: "Edu_UserRoleTranslation", column: "CultureId");
 
@@ -3383,7 +3887,11 @@ namespace EduApi.Migrations
                 filter: "[SystemIdentificator] IS NOT NULL"
             );
 
-            migrationBuilder.CreateIndex(name: "IX_Link_CourseLector_UserInOrganizationId", table: "Link_CourseLector", column: "UserInOrganizationId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Link_CourseLector_UserInOrganizationId",
+                table: "Link_CourseLector",
+                column: "UserInOrganizationId"
+            );
 
             migrationBuilder.CreateIndex(name: "IX_Link_CourseStudent_CourseTermId", table: "Link_CourseStudent", column: "CourseTermId");
 
@@ -3395,11 +3903,19 @@ namespace EduApi.Migrations
                 filter: "[SystemIdentificator] IS NOT NULL"
             );
 
-            migrationBuilder.CreateIndex(name: "IX_Link_CourseStudent_UserInOrganizationId", table: "Link_CourseStudent", column: "UserInOrganizationId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Link_CourseStudent_UserInOrganizationId",
+                table: "Link_CourseStudent",
+                column: "UserInOrganizationId"
+            );
 
             migrationBuilder.CreateIndex(name: "IX_Link_CouseStudentMaterial_CourseId", table: "Link_CouseStudentMaterial", column: "CourseId");
 
-            migrationBuilder.CreateIndex(name: "IX_Link_CouseStudentMaterial_CourseLessonItemId", table: "Link_CouseStudentMaterial", column: "CourseLessonItemId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Link_CouseStudentMaterial_CourseLessonItemId",
+                table: "Link_CouseStudentMaterial",
+                column: "CourseLessonItemId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Link_CouseStudentMaterial_SystemIdentificator",
@@ -3413,7 +3929,11 @@ namespace EduApi.Migrations
 
             migrationBuilder.CreateIndex(name: "IX_Link_OrganizationCulture_CultureId", table: "Link_OrganizationCulture", column: "CultureId");
 
-            migrationBuilder.CreateIndex(name: "IX_Link_OrganizationCulture_OrganizationId", table: "Link_OrganizationCulture", column: "OrganizationId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Link_OrganizationCulture_OrganizationId",
+                table: "Link_OrganizationCulture",
+                column: "OrganizationId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Link_OrganizationCulture_SystemIdentificator",
@@ -3433,11 +3953,23 @@ namespace EduApi.Migrations
                 filter: "[SystemIdentificator] IS NOT NULL"
             );
 
-            migrationBuilder.CreateIndex(name: "IX_Link_StudentInGroup_UserInOrganizationId", table: "Link_StudentInGroup", column: "UserInOrganizationId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Link_StudentInGroup_UserInOrganizationId",
+                table: "Link_StudentInGroup",
+                column: "UserInOrganizationId"
+            );
 
-            migrationBuilder.CreateIndex(name: "IX_Link_StudentInGroupCourseTerm_CourseTermId", table: "Link_StudentInGroupCourseTerm", column: "CourseTermId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Link_StudentInGroupCourseTerm_CourseTermId",
+                table: "Link_StudentInGroupCourseTerm",
+                column: "CourseTermId"
+            );
 
-            migrationBuilder.CreateIndex(name: "IX_Link_StudentInGroupCourseTerm_StudentGroupId", table: "Link_StudentInGroupCourseTerm", column: "StudentGroupId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Link_StudentInGroupCourseTerm_StudentGroupId",
+                table: "Link_StudentInGroupCourseTerm",
+                column: "StudentGroupId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Link_StudentInGroupCourseTerm_SystemIdentificator",
@@ -3447,7 +3979,11 @@ namespace EduApi.Migrations
                 filter: "[SystemIdentificator] IS NOT NULL"
             );
 
-            migrationBuilder.CreateIndex(name: "IX_Link_TestBankOfQuestion_BankOfQuestionId", table: "Link_TestBankOfQuestion", column: "BankOfQuestionId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Link_TestBankOfQuestion_BankOfQuestionId",
+                table: "Link_TestBankOfQuestion",
+                column: "BankOfQuestionId"
+            );
 
             migrationBuilder.CreateIndex(name: "IX_Link_TestBankOfQuestion_CourseTestId", table: "Link_TestBankOfQuestion", column: "CourseTestId");
 
@@ -3459,11 +3995,23 @@ namespace EduApi.Migrations
                 filter: "[SystemIdentificator] IS NOT NULL"
             );
 
-            migrationBuilder.CreateIndex(name: "IX_Link_UserInOrganization_OrganizationId", table: "Link_UserInOrganization", column: "OrganizationId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Link_UserInOrganization_OrganizationId",
+                table: "Link_UserInOrganization",
+                column: "OrganizationId"
+            );
 
-            migrationBuilder.CreateIndex(name: "IX_Link_UserInOrganization_OrganizationRoleId", table: "Link_UserInOrganization", column: "OrganizationRoleId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Link_UserInOrganization_OrganizationRoleId",
+                table: "Link_UserInOrganization",
+                column: "OrganizationRoleId"
+            );
 
-            migrationBuilder.CreateIndex(name: "IX_Link_UserInOrganization_StudentGroupDboId", table: "Link_UserInOrganization", column: "StudentGroupDboId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Link_UserInOrganization_StudentGroupDboId",
+                table: "Link_UserInOrganization",
+                column: "StudentGroupDboId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Link_UserInOrganization_SystemIdentificator",

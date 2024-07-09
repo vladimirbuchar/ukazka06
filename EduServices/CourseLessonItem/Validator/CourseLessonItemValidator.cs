@@ -13,11 +13,21 @@ using Services.CourseLessonItem.Dto;
 
 namespace Services.CourseLessonItem.Validator
 {
-    public class CourseLessonItemValidator(ICourseLessonRepository courseLessonRepository, ICourseLessonItemRepository repository, ICodeBookRepository<CourseLessonItemTemplateDbo> codeBookRepository)
-        : BaseValidator<CourseLessonItemDbo, ICourseLessonItemRepository, CourseLessonItemCreateDto, CourseLessonItemDetailDto, CourseLessonItemUpdateDto>(repository),
+    public class CourseLessonItemValidator(
+        ICourseLessonRepository courseLessonRepository,
+        ICourseLessonItemRepository repository,
+        ICodeBookRepository<CourseLessonItemTemplateDbo> codeBookRepository
+    )
+        : BaseValidator<
+            CourseLessonItemDbo,
+            ICourseLessonItemRepository,
+            CourseLessonItemCreateDto,
+            CourseLessonItemDetailDto,
+            CourseLessonItemUpdateDto
+        >(repository),
             ICourseLessonItemValidator
     {
-        private readonly HashSet<CourseLessonItemTemplateDbo> _courseLessonItemTemplates = codeBookRepository.GetEntities(false);
+        private readonly List<CourseLessonItemTemplateDbo> _courseLessonItemTemplates = codeBookRepository.GetEntities(false).Result;
         private readonly ICourseLessonRepository _courseLessonRepository = courseLessonRepository;
 
         public override Result<CourseLessonItemDetailDto> IsValid(CourseLessonItemCreateDto create)
@@ -36,7 +46,9 @@ namespace Services.CourseLessonItem.Validator
         {
             if (_courseLessonItemTemplates.FirstOrDefault(x => x.Id == templateId).SystemIdentificator == CodebookValue.CODEBOOK_SELECT_VALUE)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.COURSE_LESSON_ITEM, Constants.COURSE_LESSON_ITEM_TEMPLATE_IS_EMPTY));
+                result.AddResultStatus(
+                    new ValidationMessage(MessageType.ERROR, MessageCategory.COURSE_LESSON_ITEM, Constants.COURSE_LESSON_ITEM_TEMPLATE_IS_EMPTY)
+                );
             }
         }
 

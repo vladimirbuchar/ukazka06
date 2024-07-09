@@ -18,20 +18,25 @@ namespace Services.UserProfile.Convertor
     {
         private readonly IConfiguration _configuration = configuration;
 
-        public HashSet<MyCertificateListDto> ConvertToWebModel(HashSet<UserCertificateDbo> getMyCertificates)
+        public List<MyCertificateListDto> ConvertToWebModel(List<UserCertificateDbo> getMyCertificates)
         {
             return getMyCertificates
                 .Select(x => new MyCertificateListDto()
                 {
                     ActiveFrom = x.ActiveFrom,
                     Description = "",
-                    FileName = string.Format("{0}{2}/{1}.pdf", _configuration.GetSection(ConfigValue.FILE_SERVER_URL).Value, x.FileName, ConfigValue.CERTIFICATE_PATH),
+                    FileName = string.Format(
+                        "{0}{2}/{1}.pdf",
+                        _configuration.GetSection(ConfigValue.FILE_SERVER_URL).Value,
+                        x.FileName,
+                        ConfigValue.CERTIFICATE_PATH
+                    ),
                     Name = x.Name
                 })
-                .ToHashSet();
+                .ToList();
         }
 
-        public HashSet<MyCourseListDto> ConvertToWebModel(HashSet<CourseStudentDbo> getStudentCourses, string culture)
+        public List<MyCourseListDto> ConvertToWebModel(List<CourseStudentDbo> getStudentCourses, string culture)
         {
             return getStudentCourses
                 .Select(item => new MyCourseListDto()
@@ -55,10 +60,10 @@ namespace Services.UserProfile.Convertor
                     CourseFinish = item.CourseFinish,
                     CourseTermId = item.CourseTermId
                 })
-                .ToHashSet();
+                .ToList();
         }
 
-        public HashSet<MyCourseListDto> ConvertToWebModel(HashSet<CourseLectorDbo> getStudentCourses, string culture)
+        public List<MyCourseListDto> ConvertToWebModel(List<CourseLectorDbo> getStudentCourses, string culture)
         {
             return getStudentCourses
                 .Select(item => new MyCourseListDto()
@@ -81,18 +86,18 @@ namespace Services.UserProfile.Convertor
                     OrganizationName = item.CourseTerm.ClassRoom.Branch.Organization.Name,
                     CourseTermId = item.CourseTermId
                 })
-                .ToHashSet();
+                .ToList();
         }
 
-        public HashSet<MyOrganizationListDto> ConvertToWebModel(HashSet<UserInOrganizationDbo> getMyOrganizations)
+        public List<MyOrganizationListDto> ConvertToWebModel(List<UserInOrganizationDbo> getMyOrganizations)
         {
-            HashSet<MyOrganizationListDto> data = [];
+            List<MyOrganizationListDto> data = [];
             foreach (UserInOrganizationDbo item in getMyOrganizations)
             {
                 MyOrganizationListDto find = data.FirstOrDefault(x => x.OrganizationId == item.Id);
                 if (find == null)
                 {
-                    _ = data.Add(
+                    data.Add(
                         new MyOrganizationListDto()
                         {
                             OrganizationId = item.Organization.Id,
@@ -101,11 +106,14 @@ namespace Services.UserProfile.Convertor
                             [
                                 new()
                                 {
-                                    IsOrganizationOwner = item.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.ORGANIZATION_OWNER,
-                                    IsCourseAdministrator = item.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.COURSE_ADMINISTATOR,
+                                    IsOrganizationOwner =
+                                        item.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.ORGANIZATION_OWNER,
+                                    IsCourseAdministrator =
+                                        item.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.COURSE_ADMINISTATOR,
                                     IsCourseEditor = item.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.COURSE_EDITOR,
                                     IsLector = item.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.LECTOR,
-                                    IsOrganizationAdministrator = item.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.ORGANIZATION_ADMINISTRATOR,
+                                    IsOrganizationAdministrator =
+                                        item.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.ORGANIZATION_ADMINISTRATOR,
                                     IsStudent = item.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.STUDENT,
                                     UserInOrganizationRoleId = item.Id
                                 }
@@ -122,7 +130,8 @@ namespace Services.UserProfile.Convertor
                             IsCourseAdministrator = item.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.COURSE_ADMINISTATOR,
                             IsCourseEditor = item.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.COURSE_EDITOR,
                             IsLector = item.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.LECTOR,
-                            IsOrganizationAdministrator = item.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.ORGANIZATION_ADMINISTRATOR,
+                            IsOrganizationAdministrator =
+                                item.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.ORGANIZATION_ADMINISTRATOR,
                             IsStudent = item.OrganizationRole.SystemIdentificator == Core.Constants.OrganizationRole.STUDENT,
                             UserInOrganizationRoleId = item.Id
                         }
@@ -132,9 +141,9 @@ namespace Services.UserProfile.Convertor
             return data;
         }
 
-        public HashSet<MyEvaluationListDto> ConvertToWebModel(HashSet<StudentEvaluationDbo> getStudentEvaluation)
+        public List<MyEvaluationListDto> ConvertToWebModel(List<StudentEvaluationDbo> getStudentEvaluation)
         {
-            return getStudentEvaluation.Select(x => new MyEvaluationListDto() { }).ToHashSet();
+            return getStudentEvaluation.Select(x => new MyEvaluationListDto() { }).ToList();
         }
     }
 }

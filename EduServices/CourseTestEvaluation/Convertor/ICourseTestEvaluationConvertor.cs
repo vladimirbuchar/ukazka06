@@ -5,5 +5,11 @@ using Services.CourseTestEvaluation.Dto;
 namespace Services.CourseTestEvaluation.Convertor
 {
     public interface ICourseTestEvaluationConvertor
-        : IBaseConvertor<CourseTestEvaluationDbo, CourseTestEvaluationCreateDto, CourseTestEvaluationListDto, CourseTestEvaluationDetailDto, CourseTestEvaluationUpdateDto> { }
+        : IBaseConvertor<
+            CourseTestEvaluationDbo,
+            CourseTestEvaluationCreateDto,
+            CourseTestEvaluationListDto,
+            CourseTestEvaluationDetailDto,
+            CourseTestEvaluationUpdateDto
+        > { }
 }

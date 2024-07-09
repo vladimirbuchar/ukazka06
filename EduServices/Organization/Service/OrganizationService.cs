@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Repository.FileRepository;
 using Core.Base.Service;
@@ -7,6 +9,7 @@ using Model.Edu.Organization;
 using Repository.OrganizationRepository;
 using Services.Organization.Convertor;
 using Services.Organization.Dto;
+using Services.Organization.Filter;
 using Services.Organization.Validator;
 
 namespace Services.Organization.Service
@@ -27,7 +30,8 @@ namespace Services.Organization.Service
             OrganizationListDto,
             OrganizationDetailDto,
             OrganizationUpdateDto,
-            OrganizationFileRepositoryDbo
+            OrganizationFileRepositoryDbo,
+            OrganizationFilter
         >(organizationRepository, organizationConvertor, validator, fileRepositoryDbo, culture),
             IOrganizationService
     {
@@ -38,7 +42,19 @@ namespace Services.Organization.Service
 
         protected override bool IsChanged(OrganizationDbo oldVersion, OrganizationUpdateDto newVersion, string culture)
         {
-            return oldVersion.Email != newVersion.Email || oldVersion.PhoneNumber != newVersion.PhoneNumber || oldVersion.WWW != newVersion.WWW || oldVersion.Name != newVersion.Name;
+            return oldVersion.Email != newVersion.Email
+                || oldVersion.PhoneNumber != newVersion.PhoneNumber
+                || oldVersion.WWW != newVersion.WWW
+                || oldVersion.Name != newVersion.Name;
+        }
+
+        protected override List<OrganizationDbo> PrepareMemoryFilter(List<OrganizationDbo> entities, OrganizationFilter filter, string culture)
+        {
+            if (!string.IsNullOrEmpty(filter.Name))
+            {
+                entities = entities.Where(x => x.Name == filter.Name).ToList();
+            }
+            return entities;
         }
     }
 }

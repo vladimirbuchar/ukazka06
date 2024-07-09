@@ -28,6 +28,6 @@ namespace Services.Chat.Dto
                 : SecondName.IsNullOrEmptyWithTrim()
                     ? string.Format("{0} {1}", FirstName.Trim(), LastName.Trim())
                     : string.Format("{0} {1} {2}", FirstName.Trim(), SecondName.Trim(), LastName.Trim());
-        public HashSet<ChatItemListDto> Answers { get; set; }
+        public List<ChatItemListDto> Answers { get; set; }
     }
 }

@@ -11,9 +11,12 @@ using Services.Note.Dto;
 
 namespace Services.Note.Validator
 {
-    public class NoteValidator(INoteRepository repository, ICodeBookRepository<NoteTypeDbo> noteType, ICourseRepository courseRepository, IUserRepository userRepository)
-        : BaseValidator<NoteDbo, INoteRepository, NoteCreateDto, NoteDetailDto, NoteUpdateDto>(repository),
-            INoteValidator
+    public class NoteValidator(
+        INoteRepository repository,
+        ICodeBookRepository<NoteTypeDbo> noteType,
+        ICourseRepository courseRepository,
+        IUserRepository userRepository
+    ) : BaseValidator<NoteDbo, INoteRepository, NoteCreateDto, NoteDetailDto, NoteUpdateDto>(repository), INoteValidator
     {
         private readonly ICodeBookRepository<NoteTypeDbo> _noteType = noteType;
         private readonly ICourseRepository _courseRepository = courseRepository;

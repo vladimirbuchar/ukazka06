@@ -7,18 +7,20 @@ using Core.Constants;
 using Core.DataTypes;
 using Core.Extension;
 using Model.CodeBook;
-using Model.Edu.SendMessage;
+using Model.Edu.Message;
 using Repository.MessageRepository;
 using Repository.OrganizationRepository;
 using Services.Message.Dto;
 
 namespace Services.Message.Validator
 {
-    public class MessageValidator(IOrganizationRepository organizationRepository, IMessageRepository repository, ICodeBookRepository<SendMessageTypeDbo> codeBookRepository)
-        : BaseValidator<MessageDbo, IMessageRepository, MessageCreateDto, MessageDetailDto, MessageUpdateDto>(repository),
-            IMessageValidator
+    public class MessageValidator(
+        IOrganizationRepository organizationRepository,
+        IMessageRepository repository,
+        ICodeBookRepository<SendMessageTypeDbo> codeBookRepository
+    ) : BaseValidator<MessageDbo, IMessageRepository, MessageCreateDto, MessageDetailDto, MessageUpdateDto>(repository), IMessageValidator
     {
-        private readonly HashSet<SendMessageTypeDbo> _sendMessageTypes = codeBookRepository.GetEntities(false);
+        private readonly List<SendMessageTypeDbo> _sendMessageTypes = codeBookRepository.GetEntities(false).Result;
         private readonly IOrganizationRepository _organizationRepository = organizationRepository;
 
         public override Result<MessageDetailDto> IsValid(MessageCreateDto create)
@@ -55,7 +57,9 @@ namespace Services.Message.Validator
                 }
                 if (!email.IsValidEmail())
                 {
-                    result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.SEND_MESSAGE, Constants.REPLY_EMAIL_IS_NOT_VALID));
+                    result.AddResultStatus(
+                        new ValidationMessage(MessageType.ERROR, MessageCategory.SEND_MESSAGE, Constants.REPLY_EMAIL_IS_NOT_VALID)
+                    );
                 }
             }
         }

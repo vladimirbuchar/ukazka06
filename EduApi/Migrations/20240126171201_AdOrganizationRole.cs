@@ -8,7 +8,15 @@ namespace EduApi.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            List<string> userRoles = new List<string> { "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR", "LECTOR", "COURSE_ADMINISTATOR", "STUDENT", "COURSE_EDITOR" };
+            List<string> userRoles = new List<string>
+            {
+                "ORGANIZATION_OWNER",
+                "ORGANIZATION_ADMINISTRATOR",
+                "LECTOR",
+                "COURSE_ADMINISTATOR",
+                "STUDENT",
+                "COURSE_EDITOR"
+            };
 
             string[] eduRole = new string[] { "Id", "IsDeleted", "IsSystemObject", "IsChanged", "SystemIdentificator", "Priority" };
 

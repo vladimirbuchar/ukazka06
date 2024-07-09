@@ -5,5 +5,6 @@ using Services.CourseTerm.Dto;
 
 namespace Services.CourseTerm.Validator
 {
-    public interface ICourseTermValidator : IBaseValidator<CourseTermDbo, ICourseTermRepository, CourseTermCreateDto, CourseTermDetailDto, CourseTermUpdateDto> { }
+    public interface ICourseTermValidator
+        : IBaseValidator<CourseTermDbo, ICourseTermRepository, CourseTermCreateDto, CourseTermDetailDto, CourseTermUpdateDto> { }
 }

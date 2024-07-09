@@ -7,6 +7,5 @@ namespace Services.ClassRoom.Dto
         public int Floor { get; set; }
         public int MaxCapacity { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
     }
 }

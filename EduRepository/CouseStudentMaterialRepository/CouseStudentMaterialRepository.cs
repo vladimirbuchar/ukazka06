@@ -5,5 +5,7 @@ using Model.Link;
 
 namespace Repository.CouseStudentMaterialRepository
 {
-    public class CouseStudentMaterialRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<CouseStudentMaterialDbo>(dbContext, memoryCache), ICouseStudentMaterialRepository { }
+    public class CouseStudentMaterialRepository(EduDbContext dbContext, IMemoryCache memoryCache)
+        : BaseRepository<CouseStudentMaterialDbo>(dbContext, memoryCache),
+            ICouseStudentMaterialRepository { }
 }

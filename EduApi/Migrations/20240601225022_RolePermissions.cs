@@ -72,7 +72,13 @@ namespace EduApi.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade
                     );
-                    table.ForeignKey(name: "FK_Permissions_Routes_RouteId", column: x => x.RouteId, principalTable: "Routes", principalColumn: "Id", onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Permissions_Routes_RouteId",
+                        column: x => x.RouteId,
+                        principalTable: "Routes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade
+                    );
                 }
             );
 
@@ -80,9 +86,21 @@ namespace EduApi.Migrations
 
             migrationBuilder.CreateIndex(name: "IX_Permissions_RouteId", table: "Permissions", column: "RouteId");
 
-            migrationBuilder.CreateIndex(name: "IX_Permissions_SystemIdentificator", table: "Permissions", column: "SystemIdentificator", unique: true, filter: "[SystemIdentificator] IS NOT NULL");
+            migrationBuilder.CreateIndex(
+                name: "IX_Permissions_SystemIdentificator",
+                table: "Permissions",
+                column: "SystemIdentificator",
+                unique: true,
+                filter: "[SystemIdentificator] IS NOT NULL"
+            );
 
-            migrationBuilder.CreateIndex(name: "IX_Routes_SystemIdentificator", table: "Routes", column: "SystemIdentificator", unique: true, filter: "[SystemIdentificator] IS NOT NULL");
+            migrationBuilder.CreateIndex(
+                name: "IX_Routes_SystemIdentificator",
+                table: "Routes",
+                column: "SystemIdentificator",
+                unique: true,
+                filter: "[SystemIdentificator] IS NOT NULL"
+            );
         }
 
         /// <inheritdoc />

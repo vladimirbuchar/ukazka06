@@ -7,7 +7,8 @@ using Services.OrganizationSetting.Dto;
 
 namespace Services.OrganizationSetting.Validator
 {
-    public interface IOrganizationSettingValidator : IBaseValidator<OrganizationDbo, IOrganizationRepository, OrganizationCreateDto, OrganizationDetailDto, OrganizationUpdateDto>
+    public interface IOrganizationSettingValidator
+        : IBaseValidator<OrganizationDbo, IOrganizationRepository, OrganizationCreateDto, OrganizationDetailDto, OrganizationUpdateDto>
     {
         Result IsValid(OrganizationSettingUpdateDto validate);
     }

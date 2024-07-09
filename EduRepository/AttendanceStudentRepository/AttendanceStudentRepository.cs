@@ -5,5 +5,7 @@ using Model.Edu.AttendanceStudent;
 
 namespace Repository.AttendanceStudentRepository
 {
-    public class AttendanceStudentRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<AttendanceStudentDbo>(dbContext, memoryCache), IAttendanceStudentRepository { }
+    public class AttendanceStudentRepository(EduDbContext dbContext, IMemoryCache memoryCache)
+        : BaseRepository<AttendanceStudentDbo>(dbContext, memoryCache),
+            IAttendanceStudentRepository { }
 }

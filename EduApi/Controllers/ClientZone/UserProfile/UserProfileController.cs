@@ -18,7 +18,11 @@ namespace EduApi.Controllers.ClientZone.UserProfile
     {
         private readonly IUserProfileService _userProfileService;
 
-        public UserProfileController(IUserProfileService userProfileService, ILogger<CertificateController> logger, IOrganizationRoleService organizationRoleService)
+        public UserProfileController(
+            IUserProfileService userProfileService,
+            ILogger<CertificateController> logger,
+            IOrganizationRoleService organizationRoleService
+        )
             : base(logger, organizationRoleService)
         {
             _userProfileService = userProfileService;

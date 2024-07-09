@@ -8,7 +8,10 @@ namespace Core.DataTypes
         private readonly string item;
 
         public string Code => Value.IsNullOrEmptyWithTrim() ? BasicCode : string.Format("{0}({1})", BasicCode, Value).ToUpper();
-        public string BasicCode => category.IsNullOrEmptyWithTrim() ? string.Format("{0}.{1}", Type, item.Trim()).ToUpper() : string.Format("{0}.{1}.{2}", Type, category, item).ToUpper();
+        public string BasicCode =>
+            category.IsNullOrEmptyWithTrim()
+                ? string.Format("{0}.{1}", Type, item.Trim()).ToUpper()
+                : string.Format("{0}.{1}.{2}", Type, category, item).ToUpper();
         public int Priority { get; private set; } = -1;
         public MessageType Type { get; }
         public string Value { get; }

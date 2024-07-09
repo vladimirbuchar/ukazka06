@@ -14,7 +14,11 @@ namespace EduApi.Controllers.ClientZone.CourseTermTimeTable
     {
         private readonly ICourseTermTimeTableService _courseTermTimeTableService;
 
-        public CourseTermTimeTableController(ICourseTermTimeTableService courseTermTimeTableService, ILogger<CourseTermTimeTableController> logger, IOrganizationRoleService organizationRoleService)
+        public CourseTermTimeTableController(
+            ICourseTermTimeTableService courseTermTimeTableService,
+            ILogger<CourseTermTimeTableController> logger,
+            IOrganizationRoleService organizationRoleService
+        )
             : base(logger, organizationRoleService)
         {
             _courseTermTimeTableService = courseTermTimeTableService;

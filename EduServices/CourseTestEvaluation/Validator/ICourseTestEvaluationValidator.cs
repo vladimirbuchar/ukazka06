@@ -6,5 +6,11 @@ using Services.CourseTestEvaluation.Dto;
 namespace Services.CourseTestEvaluation.Validator
 {
     public interface ICourseTestEvaluationValidator
-        : IBaseValidator<CourseTestEvaluationDbo, ICourseTestEvaluationRepository, CourseTestEvaluationCreateDto, CourseTestEvaluationDetailDto, CourseTestEvaluationUpdateDto> { }
+        : IBaseValidator<
+            CourseTestEvaluationDbo,
+            ICourseTestEvaluationRepository,
+            CourseTestEvaluationCreateDto,
+            CourseTestEvaluationDetailDto,
+            CourseTestEvaluationUpdateDto
+        > { }
 }

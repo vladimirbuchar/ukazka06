@@ -5,5 +5,11 @@ using Services.OrganizationCulture.Dto;
 namespace Services.OrganizationCulture.Convertor
 {
     public interface IOrganizationCultureConvertor
-        : IBaseConvertor<OrganizationCultureDbo, OrganizationCultureCreateDto, OrganizationCultureListDto, OrganizationCultureDetailDto, OrganizationCultureUpdateDto> { }
+        : IBaseConvertor<
+            OrganizationCultureDbo,
+            OrganizationCultureCreateDto,
+            OrganizationCultureListDto,
+            OrganizationCultureDetailDto,
+            OrganizationCultureUpdateDto
+        > { }
 }

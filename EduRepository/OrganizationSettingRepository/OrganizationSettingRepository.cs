@@ -9,7 +9,9 @@ using Model.Edu.OrganizationSetting;
 
 namespace Repository.OrganizationSettingRepository
 {
-    public class OrganizationSettingRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<OrganizationSettingDbo>(dbContext, memoryCache), IOrganizationSettingRepository
+    public class OrganizationSettingRepository(EduDbContext dbContext, IMemoryCache memoryCache)
+        : BaseRepository<OrganizationSettingDbo>(dbContext, memoryCache),
+            IOrganizationSettingRepository
     {
         public override OrganizationSettingDbo GetEntity(bool deleted, Expression<Func<OrganizationSettingDbo, bool>> predicate = null)
         {

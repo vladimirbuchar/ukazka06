@@ -12,23 +12,31 @@ namespace Services.Answer.Convertor
     public class AnswerConvertor(IConfiguration configuration, ICodeBookRepository<CultureDbo> codeBookService) : IAnswerConvertor
     {
         private readonly IConfiguration _configuration = configuration;
-        private readonly HashSet<CultureDbo> _cultureList = codeBookService.GetEntities(false);
+        private readonly List<CultureDbo> _cultureList = codeBookService.GetEntities(false).Result;
 
         public AnswerDbo ConvertToBussinessEntity(AnswerCreateDto addAnswerDto, string culture)
         {
             AnswerDbo test = new() { IsTrueAnswer = addAnswerDto.IsTrueAnswer, TestQuestionId = addAnswerDto.QuestionId };
-            test.TestQuestionAnswerTranslations = test.TestQuestionAnswerTranslations.PrepareTranslation(addAnswerDto.AnswerText, culture, _cultureList);
+            test.TestQuestionAnswerTranslations = test.TestQuestionAnswerTranslations.PrepareTranslation(
+                addAnswerDto.AnswerText,
+                culture,
+                _cultureList
+            );
             return test;
         }
 
         public AnswerDbo ConvertToBussinessEntity(AnswerUpdateDto updateAnswerDto, AnswerDbo entity, string culture)
         {
             entity.IsTrueAnswer = updateAnswerDto.IsTrueAnswer;
-            entity.TestQuestionAnswerTranslations = entity.TestQuestionAnswerTranslations.PrepareTranslation(updateAnswerDto.AnswerText, culture, _cultureList);
+            entity.TestQuestionAnswerTranslations = entity.TestQuestionAnswerTranslations.PrepareTranslation(
+                updateAnswerDto.AnswerText,
+                culture,
+                _cultureList
+            );
             return entity;
         }
 
-        public HashSet<AnswerListDto> ConvertToWebModel(HashSet<AnswerDbo> getAnswersInQuestions, string culture)
+        public List<AnswerListDto> ConvertToWebModel(List<AnswerDbo> getAnswersInQuestions, string culture)
         {
             return getAnswersInQuestions
                 .Select(item => new AnswerListDto()
@@ -48,7 +56,7 @@ namespace Services.Answer.Convertor
                                 item.AnswerFileRepository.FindTranslation(culture)?.FileName
                             )
                 })
-                .ToHashSet();
+                .ToList();
         }
 
         public AnswerDetailDto ConvertToWebModel(AnswerDbo answerDetail, string culture)

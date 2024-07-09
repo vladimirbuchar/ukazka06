@@ -14,7 +14,11 @@ namespace EduApi.Controllers.ClientZone.CodeBook
     {
         private readonly ICodeBookService _codeBookService;
 
-        public CodeBookController(ILogger<CodeBookController> logger, ICodeBookService codeBookService, IOrganizationRoleService organizationRoleService)
+        public CodeBookController(
+            ILogger<CodeBookController> logger,
+            ICodeBookService codeBookService,
+            IOrganizationRoleService organizationRoleService
+        )
             : base(logger, organizationRoleService)
         {
             _codeBookService = codeBookService;

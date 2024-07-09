@@ -11,9 +11,15 @@ namespace EduApi.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(name: "FK_Edu_StudentTestSummaryAnswer_Edu_StudentTestSummaryQuestion_StudentTestSummaryQuestionDboId", table: "Edu_StudentTestSummaryAnswer");
+            migrationBuilder.DropForeignKey(
+                name: "FK_Edu_StudentTestSummaryAnswer_Edu_StudentTestSummaryQuestion_StudentTestSummaryQuestionDboId",
+                table: "Edu_StudentTestSummaryAnswer"
+            );
 
-            migrationBuilder.DropIndex(name: "IX_Edu_StudentTestSummaryAnswer_StudentTestSummaryQuestionDboId", table: "Edu_StudentTestSummaryAnswer");
+            migrationBuilder.DropIndex(
+                name: "IX_Edu_StudentTestSummaryAnswer_StudentTestSummaryQuestionDboId",
+                table: "Edu_StudentTestSummaryAnswer"
+            );
 
             migrationBuilder.DropColumn(name: "StudentTestSummaryQuestionDboId", table: "Edu_StudentTestSummaryAnswer");
 
@@ -36,7 +42,11 @@ namespace EduApi.Migrations
                 defaultValue: new Guid("00000000-0000-0000-0000-000000000000")
             );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_StudentTestSummaryAnswer_StudentTestSummaryQuestionId", table: "Edu_StudentTestSummaryAnswer", column: "StudentTestSummaryQuestionId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_StudentTestSummaryAnswer_StudentTestSummaryQuestionId",
+                table: "Edu_StudentTestSummaryAnswer",
+                column: "StudentTestSummaryQuestionId"
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Edu_StudentTestSummaryAnswer_Edu_StudentTestSummaryQuestion_StudentTestSummaryQuestionId",
@@ -50,7 +60,10 @@ namespace EduApi.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(name: "FK_Edu_StudentTestSummaryAnswer_Edu_StudentTestSummaryQuestion_StudentTestSummaryQuestionId", table: "Edu_StudentTestSummaryAnswer");
+            migrationBuilder.DropForeignKey(
+                name: "FK_Edu_StudentTestSummaryAnswer_Edu_StudentTestSummaryQuestion_StudentTestSummaryQuestionId",
+                table: "Edu_StudentTestSummaryAnswer"
+            );
 
             migrationBuilder.DropIndex(name: "IX_Edu_StudentTestSummaryAnswer_StudentTestSummaryQuestionId", table: "Edu_StudentTestSummaryAnswer");
 
@@ -65,9 +78,18 @@ namespace EduApi.Migrations
                 oldType: "uniqueidentifier"
             );
 
-            migrationBuilder.AddColumn<Guid>(name: "StudentTestSummaryQuestionDboId", table: "Edu_StudentTestSummaryAnswer", type: "uniqueidentifier", nullable: true);
+            migrationBuilder.AddColumn<Guid>(
+                name: "StudentTestSummaryQuestionDboId",
+                table: "Edu_StudentTestSummaryAnswer",
+                type: "uniqueidentifier",
+                nullable: true
+            );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_StudentTestSummaryAnswer_StudentTestSummaryQuestionDboId", table: "Edu_StudentTestSummaryAnswer", column: "StudentTestSummaryQuestionDboId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_StudentTestSummaryAnswer_StudentTestSummaryQuestionDboId",
+                table: "Edu_StudentTestSummaryAnswer",
+                column: "StudentTestSummaryQuestionDboId"
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Edu_StudentTestSummaryAnswer_Edu_StudentTestSummaryQuestion_StudentTestSummaryQuestionDboId",

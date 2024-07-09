@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using Core.Base.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
@@ -10,29 +8,24 @@ using Model.Edu.StudentGroup;
 
 namespace Repository.StudentGroupRepository
 {
-    public class StudentGroupRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<StudentGroupDbo>(dbContext, memoryCache), IStudentGroupRepository
+    public class StudentGroupRepository(EduDbContext dbContext, IMemoryCache memoryCache)
+        : BaseRepository<StudentGroupDbo>(dbContext, memoryCache),
+            IStudentGroupRepository
     {
-        public override StudentGroupDbo GetEntity(Guid id)
+        protected override IQueryable<StudentGroupDbo> PrepareDetailQuery()
         {
-            return _dbContext.Set<StudentGroupDbo>().Include(x => x.StudentGroupTranslations.Where(x => x.IsDeleted == false)).ThenInclude(x => x.Culture).FirstOrDefault(x => x.Id == id);
+            return _dbContext
+                .Set<StudentGroupDbo>()
+                .Include(x => x.StudentGroupTranslations.Where(x => x.IsDeleted == false))
+                .ThenInclude(x => x.Culture);
         }
 
-        public override HashSet<StudentGroupDbo> GetEntities(
-            bool deleted,
-            Expression<Func<StudentGroupDbo, bool>> predicate = null,
-            Expression<Func<StudentGroupDbo, object>> orderBy = null,
-            Expression<Func<StudentGroupDbo, object>> orderByDesc = null
-        )
+        protected override IQueryable<StudentGroupDbo> PrepareListQuery()
         {
-            return
-            [
-                .. _dbContext
-                    .Set<StudentGroupDbo>()
-                    .Include(x => x.StudentGroupTranslations.Where(x => x.IsDeleted == false))
-                    .ThenInclude(x => x.Culture)
-                    .Where(predicate)
-                    .Where(x => x.IsDeleted == deleted)
-            ];
+            return _dbContext
+                .Set<StudentGroupDbo>()
+                .Include(x => x.StudentGroupTranslations.Where(x => x.IsDeleted == false))
+                .ThenInclude(x => x.Culture);
         }
 
         public override Guid GetOrganizationId(Guid objectId)

@@ -18,14 +18,20 @@ namespace Model.Edu.StudentGroup
             this ICollection<StudentGroupTranslationDbo> translations,
             string name,
             string culture,
-            HashSet<CultureDbo> cultureList
+            List<CultureDbo> cultureList
         )
         {
             translations ??= [];
             StudentGroupTranslationDbo translation = translations.FirstOrDefault(x => x.Culture.SystemIdentificator == culture);
             if (translation == null)
             {
-                translations.Add(new StudentGroupTranslationDbo() { CultureId = cultureList.FirstOrDefault(x => x.SystemIdentificator == culture).Id, Name = name, });
+                translations.Add(
+                    new StudentGroupTranslationDbo()
+                    {
+                        CultureId = cultureList.FirstOrDefault(x => x.SystemIdentificator == culture).Id,
+                        Name = name,
+                    }
+                );
             }
             else
             {

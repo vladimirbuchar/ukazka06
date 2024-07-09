@@ -1,4 +1,5 @@
-﻿using Core.Base.Service;
+﻿using Core.Base.Request;
+using Core.Base.Service;
 using Model.Edu.CourseTestEvaluation;
 using Repository.CourseTestEvaluationRepository;
 using Services.CourseTestEvaluation.Convertor;
@@ -7,7 +8,11 @@ using Services.CourseTestEvaluation.Validator;
 
 namespace Services.CourseTestEvaluation.Service
 {
-    public class CourseTestEvaluationService(ICourseTestEvaluationConvertor testConvertor, ICourseTestEvaluationRepository testRepository, ICourseTestEvaluationValidator validator)
+    public class CourseTestEvaluationService(
+        ICourseTestEvaluationConvertor testConvertor,
+        ICourseTestEvaluationRepository testRepository,
+        ICourseTestEvaluationValidator validator
+    )
         : BaseService<
             ICourseTestEvaluationRepository,
             CourseTestEvaluationDbo,
@@ -16,7 +21,8 @@ namespace Services.CourseTestEvaluation.Service
             CourseTestEvaluationCreateDto,
             CourseTestEvaluationListDto,
             CourseTestEvaluationDetailDto,
-            CourseTestEvaluationUpdateDto
+            CourseTestEvaluationUpdateDto,
+            FilterRequest
         >(testRepository, testConvertor, validator),
             ICourseTestEvaluationService { }
 }

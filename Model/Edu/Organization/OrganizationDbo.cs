@@ -8,12 +8,12 @@ using Model.Edu.Certificate;
 using Model.Edu.Course;
 using Model.Edu.CourseMaterial;
 using Model.Edu.LicenseChange;
+using Model.Edu.Message;
 using Model.Edu.Notification;
 using Model.Edu.OrganizationAddress;
 using Model.Edu.OrganizationSetting;
 using Model.Edu.OrganizationStudyHour;
 using Model.Edu.SendEmail;
-using Model.Edu.SendMessage;
 using Model.Edu.StudentGroup;
 using Model.Link;
 

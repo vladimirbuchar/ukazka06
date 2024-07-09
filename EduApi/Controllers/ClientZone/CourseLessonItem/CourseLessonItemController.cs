@@ -17,7 +17,11 @@ namespace EduApi.Controllers.ClientZone.CourseLessonItem
     {
         private readonly ICourseLessonItemService _courseLessonItemService;
 
-        public CourseLessonItemController(ILogger<CourseLessonItemController> logger, ICourseLessonItemService courseLessonItemSerice, IOrganizationRoleService organizationRoleService)
+        public CourseLessonItemController(
+            ILogger<CourseLessonItemController> logger,
+            ICourseLessonItemService courseLessonItemSerice,
+            IOrganizationRoleService organizationRoleService
+        )
             : base(logger, organizationRoleService)
         {
             _courseLessonItemService = courseLessonItemSerice;
@@ -179,7 +183,9 @@ namespace EduApi.Controllers.ClientZone.CourseLessonItem
         {
             try
             {
-                CheckOrganizationPermition(_courseLessonItemService.GetOrganizationIdByObjectId(Guid.Parse(updatePositionCourseLessonItemDto.Ids.First())));
+                CheckOrganizationPermition(
+                    _courseLessonItemService.GetOrganizationIdByObjectId(Guid.Parse(updatePositionCourseLessonItemDto.Ids.First()))
+                );
                 return SendResponse(_courseLessonItemService.UpdatePositionCourseLessonItem(updatePositionCourseLessonItemDto, GetLoggedUserId()));
             }
             catch (Exception e)

@@ -19,7 +19,7 @@ namespace Model.Edu.Branch
             string name,
             string descriprion,
             string culture,
-            HashSet<CultureDbo> cultureList
+            List<CultureDbo> cultureList
         )
         {
             translations ??= [];
@@ -40,7 +40,6 @@ namespace Model.Edu.Branch
                 translation.Name = name;
                 translation.Description = descriprion;
             }
-
             return translations;
         }
     }

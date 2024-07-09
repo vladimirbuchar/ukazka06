@@ -13,11 +13,32 @@ namespace EduApi.Migrations
 
             migrationBuilder.DropForeignKey(name: "FK_Edu_PersonAddress_Cb_Country_CountryId", table: "Edu_PersonAddress");
 
-            migrationBuilder.AlterColumn<Guid>(name: "CountryId", table: "Edu_PersonAddress", type: "uniqueidentifier", nullable: true, oldClrType: typeof(Guid), oldType: "uniqueidentifier");
+            migrationBuilder.AlterColumn<Guid>(
+                name: "CountryId",
+                table: "Edu_PersonAddress",
+                type: "uniqueidentifier",
+                nullable: true,
+                oldClrType: typeof(Guid),
+                oldType: "uniqueidentifier"
+            );
 
-            migrationBuilder.AlterColumn<Guid>(name: "CountryId", table: "Edu_OrganizationAddress", type: "uniqueidentifier", nullable: true, oldClrType: typeof(Guid), oldType: "uniqueidentifier");
+            migrationBuilder.AlterColumn<Guid>(
+                name: "CountryId",
+                table: "Edu_OrganizationAddress",
+                type: "uniqueidentifier",
+                nullable: true,
+                oldClrType: typeof(Guid),
+                oldType: "uniqueidentifier"
+            );
 
-            migrationBuilder.AlterColumn<Guid>(name: "CountryId", table: "Edu_Branch", type: "uniqueidentifier", nullable: true, oldClrType: typeof(Guid), oldType: "uniqueidentifier");
+            migrationBuilder.AlterColumn<Guid>(
+                name: "CountryId",
+                table: "Edu_Branch",
+                type: "uniqueidentifier",
+                nullable: true,
+                oldClrType: typeof(Guid),
+                oldType: "uniqueidentifier"
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Edu_Branch_Cb_Country_CountryId",

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.Course.Service;
 using Services.Organization.Dto;
+using Services.Organization.Filter;
 using Services.Organization.Service;
 using Services.OrganizationSetting.Dto;
 using Services.OrganizationSetting.Service;
@@ -76,11 +77,11 @@ namespace EduApi.Controllers.Web.Page
         [ProducesResponseType(typeof(void), 404)]
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
-        public ActionResult GetOrganizationList()
+        public ActionResult GetOrganizationList([FromQuery] OrganizationFilter filter)
         {
             try
             {
-                return SendResponse(_organizationService.GetList());
+                return SendResponse(_organizationService.GetList(GetClientCulture(), filter));
             }
             catch (Exception ex)
             {

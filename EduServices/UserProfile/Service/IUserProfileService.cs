@@ -10,12 +10,12 @@ namespace Services.UserProfile.Service
 {
     public interface IUserProfileService : IBaseService
     {
-        HashSet<MyCertificateListDto> GetMyCertificate(Guid userId);
-        HashSet<MyCourseListDto> GetMyCourse(Guid userId, bool hideFinishCourse, string culture);
+        List<MyCertificateListDto> GetMyCertificate(Guid userId);
+        List<MyCourseListDto> GetMyCourse(Guid userId, bool hideFinishCourse, string culture);
         List<MyTimeTableListDto> GetMyTimeTable(Guid userId, string culture);
-        HashSet<ManagedCourseListDto> GetManagedCourse(Guid userId);
-        HashSet<MyAttendanceListDto> GetMyAttendance(Guid userId, string culture);
-        HashSet<MyOrganizationListDto> GetMyOrganization(Guid userId);
-        HashSet<MyEvaluationListDto> GetMyEvaluation(Guid userId);
+        List<ManagedCourseListDto> GetManagedCourse(Guid userId);
+        List<MyAttendanceListDto> GetMyAttendance(Guid userId, string culture);
+        List<MyOrganizationListDto> GetMyOrganization(Guid userId);
+        List<MyEvaluationListDto> GetMyEvaluation(Guid userId);
     }
 }

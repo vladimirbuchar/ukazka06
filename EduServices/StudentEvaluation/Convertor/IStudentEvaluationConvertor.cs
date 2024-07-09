@@ -4,5 +4,6 @@ using Services.StudentEvaluation.Dto;
 
 namespace Services.StudentEvaluation.Convertor
 {
-    public interface IStudentEvaluationConvertor : IBaseConvertor<StudentEvaluationDbo, StudentEvaluationCreateDto, StudentEvaluationListDto, StudentEvaluationDetailDto> { }
+    public interface IStudentEvaluationConvertor
+        : IBaseConvertor<StudentEvaluationDbo, StudentEvaluationCreateDto, StudentEvaluationListDto, StudentEvaluationDetailDto> { }
 }

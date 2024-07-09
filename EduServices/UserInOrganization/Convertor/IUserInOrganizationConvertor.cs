@@ -7,8 +7,14 @@ using Services.UserInOrganization.Dto;
 namespace Services.UserInOrganization.Convertor
 {
     public interface IUserInOrganizationConvertor
-        : IBaseConvertor<UserInOrganizationDbo, UserInOrganizationCreateDto, UserInOrganizationListDto, UserInOrganizationDetailDto, UserInOrganizationUpdateDto>
+        : IBaseConvertor<
+            UserInOrganizationDbo,
+            UserInOrganizationCreateDto,
+            UserInOrganizationListDto,
+            UserInOrganizationDetailDto,
+            UserInOrganizationUpdateDto
+        >
     {
-        HashSet<OrganizationRoleListDto> ConvertToWebModel(HashSet<OrganizationRoleDbo> organizationRoles);
+        List<OrganizationRoleListDto> ConvertToWebModel(List<OrganizationRoleDbo> organizationRoles);
     }
 }

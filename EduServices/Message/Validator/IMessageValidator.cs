@@ -1,5 +1,5 @@
 ﻿using Core.Base.Validator;
-using Model.Edu.SendMessage;
+using Model.Edu.Message;
 using Repository.MessageRepository;
 using Services.Message.Dto;
 

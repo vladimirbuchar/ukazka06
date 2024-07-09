@@ -9,7 +9,14 @@ namespace EduApi.Migrations
         {
             migrationBuilder.DropForeignKey(name: "FK_Edu_OrganizationSetting_Cb_License_LicenseOldId", table: "Edu_OrganizationSetting");
 
-            migrationBuilder.AlterColumn<Guid>(name: "LicenseOldId", table: "Edu_OrganizationSetting", type: "uniqueidentifier", nullable: true, oldClrType: typeof(Guid), oldType: "uniqueidentifier");
+            migrationBuilder.AlterColumn<Guid>(
+                name: "LicenseOldId",
+                table: "Edu_OrganizationSetting",
+                type: "uniqueidentifier",
+                nullable: true,
+                oldClrType: typeof(Guid),
+                oldType: "uniqueidentifier"
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Edu_OrganizationSetting_Cb_License_LicenseOldId",

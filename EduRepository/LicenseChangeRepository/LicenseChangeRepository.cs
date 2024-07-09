@@ -5,5 +5,7 @@ using Model.Edu.LicenseChange;
 
 namespace Repository.LicenseChangeRepository
 {
-    public class LicenseChangeRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<LicenseChangeDbo>(dbContext, memoryCache), ILicenseChangeRepository { }
+    public class LicenseChangeRepository(EduDbContext dbContext, IMemoryCache memoryCache)
+        : BaseRepository<LicenseChangeDbo>(dbContext, memoryCache),
+            ILicenseChangeRepository { }
 }

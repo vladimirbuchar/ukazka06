@@ -17,7 +17,11 @@ namespace EduApi.Controllers.ClientZone.CourseLesson
     {
         private readonly ICourseLessonService _courseLessonService;
 
-        public CourseLessonController(ILogger<CourseLessonController> logger, ICourseLessonService courseLessonService, IOrganizationRoleService organizationRoleService)
+        public CourseLessonController(
+            ILogger<CourseLessonController> logger,
+            ICourseLessonService courseLessonService,
+            IOrganizationRoleService organizationRoleService
+        )
             : base(logger, organizationRoleService)
         {
             _courseLessonService = courseLessonService;

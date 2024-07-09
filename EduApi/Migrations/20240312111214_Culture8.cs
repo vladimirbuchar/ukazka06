@@ -7,10 +7,31 @@ namespace EduApi.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            string[] columns = new string[] { "Id", "IsDeleted", "IsSystemObject", "IsChanged", "SystemIdentificator", "Value", "Name", "IsDefault", "Priority", "IsActive", "IsEnvironmentCulture" };
+            string[] columns = new string[]
+            {
+                "Id",
+                "IsDeleted",
+                "IsSystemObject",
+                "IsChanged",
+                "SystemIdentificator",
+                "Value",
+                "Name",
+                "IsDefault",
+                "Priority",
+                "IsActive",
+                "IsEnvironmentCulture"
+            };
 
-            migrationBuilder.InsertData("Cb_Culture", columns, new object[] { Guid.NewGuid(), false, true, true, "gl", "Galician", "Galego", false, 100, true, false });
-            migrationBuilder.InsertData("Cb_Culture", columns, new object[] { Guid.NewGuid(), false, true, true, "ka", "Georgian", "ქართული", false, 100, true, false });
+            migrationBuilder.InsertData(
+                "Cb_Culture",
+                columns,
+                new object[] { Guid.NewGuid(), false, true, true, "gl", "Galician", "Galego", false, 100, true, false }
+            );
+            migrationBuilder.InsertData(
+                "Cb_Culture",
+                columns,
+                new object[] { Guid.NewGuid(), false, true, true, "ka", "Georgian", "ქართული", false, 100, true, false }
+            );
             /*migrationBuilder.InsertData("Cb_Culture", columns, new object[] { Guid.NewGuid(), false, true, true, "de", "German", "Deutsch", false, 100, true, false });
             migrationBuilder.InsertData("Cb_Culture", columns, new object[] { Guid.NewGuid(), false, true, true, "el", "Greek, Modern", "Ελληνικά", false, 100, true, false });
             migrationBuilder.InsertData("Cb_Culture", columns, new object[] { Guid.NewGuid(), false, true, true, "gn", "Guaraní", "Avañeẽ", false, 100, true, false });

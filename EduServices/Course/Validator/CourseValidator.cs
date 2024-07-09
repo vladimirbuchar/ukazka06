@@ -78,7 +78,9 @@ namespace Services.Course.Validator
             }
             if (defaultMinimumStudents > defaultMaximumStudents)
             {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.COURSE, Constants.MAXIMUM_STUDENT_IS_LESS_THAN_MINIMUM_STUDENT));
+                result.AddResultStatus(
+                    new ValidationMessage(MessageType.ERROR, MessageCategory.COURSE, Constants.MAXIMUM_STUDENT_IS_LESS_THAN_MINIMUM_STUDENT)
+                );
             }
             return result;
         }

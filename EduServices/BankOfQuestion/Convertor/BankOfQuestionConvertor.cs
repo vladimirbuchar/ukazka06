@@ -9,12 +9,16 @@ namespace Services.BankOfQuestion.Convertor
 {
     public class BankOfQuestionConvertor(ICodeBookRepository<CultureDbo> codeBookService) : IBankOfQuestionConvertor
     {
-        private readonly HashSet<CultureDbo> _cultureList = codeBookService.GetEntities(false);
+        private readonly List<CultureDbo> _cultureList = codeBookService.GetEntities(false).Result;
 
         public BankOfQuestionDbo ConvertToBussinessEntity(BankOfQuestionCreateDto addBankOfQuestionDto, string culture)
         {
             BankOfQuestionDbo bankOfQuestion = new() { OrganizationId = addBankOfQuestionDto.OrganizationId, IsDefault = false };
-            bankOfQuestion.BankOfQuestionsTranslations = bankOfQuestion.BankOfQuestionsTranslations.PrepareTranslation(addBankOfQuestionDto.Name, culture, _cultureList);
+            bankOfQuestion.BankOfQuestionsTranslations = bankOfQuestion.BankOfQuestionsTranslations.PrepareTranslation(
+                addBankOfQuestionDto.Name,
+                culture,
+                _cultureList
+            );
             return bankOfQuestion;
         }
 
@@ -24,7 +28,7 @@ namespace Services.BankOfQuestion.Convertor
             return entity;
         }
 
-        public HashSet<BankOfQuestionListDto> ConvertToWebModel(HashSet<BankOfQuestionDbo> getBankOfQuestionInOrganizations, string culture)
+        public List<BankOfQuestionListDto> ConvertToWebModel(List<BankOfQuestionDbo> getBankOfQuestionInOrganizations, string culture)
         {
             return getBankOfQuestionInOrganizations
                 .Select(item => new BankOfQuestionListDto()
@@ -33,7 +37,7 @@ namespace Services.BankOfQuestion.Convertor
                     Id = item.Id,
                     IsDefault = item.IsDefault
                 })
-                .ToHashSet();
+                .ToList();
         }
 
         public BankOfQuestionDetailDto ConvertToWebModel(BankOfQuestionDbo getBankOfQuestionDetail, string culture)

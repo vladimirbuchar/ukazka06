@@ -7,8 +7,25 @@ namespace EduApi.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            string[] columns = new string[] { "Id", "IsDeleted", "IsSystemObject", "IsChanged", "SystemIdentificator", "Value", "Name", "IsDefault", "Priority", "IsActive", "IsEnvironmentCulture" };
-            migrationBuilder.InsertData("Cb_Culture", columns, new object[] { Guid.NewGuid(), false, true, true, "ab", "Abkhaz", "аҧсуа", false, 100, true, false });
+            string[] columns = new string[]
+            {
+                "Id",
+                "IsDeleted",
+                "IsSystemObject",
+                "IsChanged",
+                "SystemIdentificator",
+                "Value",
+                "Name",
+                "IsDefault",
+                "Priority",
+                "IsActive",
+                "IsEnvironmentCulture"
+            };
+            migrationBuilder.InsertData(
+                "Cb_Culture",
+                columns,
+                new object[] { Guid.NewGuid(), false, true, true, "ab", "Abkhaz", "аҧсуа", false, 100, true, false }
+            );
             /*migrationBuilder.InsertData("Cb_Culture", columns, new object[] { Guid.NewGuid(), false, true, true, "aa", "Afar", "Afaraf", false, 100, true });
             migrationBuilder.InsertData("Cb_Culture", columns, new object[] { Guid.NewGuid(), false, true, true, "af", "Afrikaans", "Afrikaans", false, 100, true });
             migrationBuilder.InsertData("Cb_Culture", columns, new object[] { Guid.NewGuid(), false, true, true, "ak", "Akan", "Akan", false, 100, true });

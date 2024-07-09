@@ -9,7 +9,9 @@ using Model.Edu.CourseTest;
 
 namespace Repository.TestRepository
 {
-    public class TestRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<CourseTestDbo>(dbContext, memoryCache), ITestRepository
+    public class TestRepository(EduDbContext dbContext, IMemoryCache memoryCache)
+        : BaseRepository<CourseTestDbo>(dbContext, memoryCache),
+            ITestRepository
     {
         public override CourseTestDbo GetEntity(bool deleted, Expression<Func<CourseTestDbo, bool>> predicate = null)
         {

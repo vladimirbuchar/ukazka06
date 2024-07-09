@@ -8,7 +8,10 @@ namespace Services.OrganizationSetting.Convertor
     {
         public OrganizationSettingConvertor() { }
 
-        public OrganizationSettingDbo ConvertToBussinessEntity(OrganizationSettingUpdateDto saveOrganizationSettingDto, OrganizationSettingDbo setting)
+        public OrganizationSettingDbo ConvertToBussinessEntity(
+            OrganizationSettingUpdateDto saveOrganizationSettingDto,
+            OrganizationSettingDbo setting
+        )
         {
             setting.UserDefaultPassword = saveOrganizationSettingDto.UserDefaultPassword;
             //setting.LicenseOldId = saveOrganizationSettingDto.LicenseId;
@@ -48,7 +51,8 @@ namespace Services.OrganizationSetting.Convertor
                 SmtpServerUrl = getOrganizationSetting.SmtpServerUrl,
                 SmtpServerPort = getOrganizationSetting.SmtpServerPort,
                 SmtpServerPassword = getOrganizationSetting.SmtpServerPassword,
-                GoogleApiToken = getOrganizationSetting.GoogleApiToken
+                GoogleApiToken = getOrganizationSetting.GoogleApiToken,
+                Id = getOrganizationSetting.Id,
             };
         }
 

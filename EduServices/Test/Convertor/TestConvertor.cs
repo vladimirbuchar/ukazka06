@@ -39,7 +39,7 @@ namespace Services.Test.Convertor
                 Name = getCourseTestDetail.CourseLesson.CourseLessonTranslations.FindTranslation(culture).Name,
                 QuestionCountInTest = getCourseTestDetail.QuestionCountInTest,
                 TimeLimit = getCourseTestDetail.TimeLimit,
-                BankOfQuestion = getCourseTestDetail.CourseTestBankOfQuestions.Select(x => x.BankOfQuestionId).ToHashSet(),
+                BankOfQuestion = getCourseTestDetail.CourseTestBankOfQuestions.Select(x => x.BankOfQuestionId).ToList(),
                 MaxRepetition = getCourseTestDetail.MaxRepetition
             };
         }

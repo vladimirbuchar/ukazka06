@@ -27,7 +27,9 @@ namespace Core.Base.Validator
         }
     }
 
-    public class BaseValidator<Model, Repository, Create, Detail>(Repository repository) : BaseValidator<Model, Repository>(repository), IBaseValidator<Model, Repository, Create, Detail>
+    public class BaseValidator<Model, Repository, Create, Detail>(Repository repository)
+        : BaseValidator<Model, Repository>(repository),
+            IBaseValidator<Model, Repository, Create, Detail>
         where Model : TableModel
         where Repository : IBaseRepository<Model>
         where Create : CreateDto
@@ -175,13 +177,19 @@ namespace Core.Base.Validator
         /// <param name="category"></param>
         /// <param name="item"></param>
         /// <param name="value"></param>
-        protected virtual void IsExist(System.Linq.Expressions.Expression<Func<Model, bool>> predicate, Result result, string category, string item, string value = "")
+        protected virtual void IsExist(
+            System.Linq.Expressions.Expression<Func<Model, bool>> predicate,
+            Result result,
+            string category,
+            string item,
+            string value = ""
+        )
         {
-            if (_repository.GetEntities(false, predicate)?.Count > 0)
+            if (_repository.GetEntities(false, predicate).Result.Count > 0)
             {
                 result.AddResultStatus(new ValidationMessage(MessageType.ERROR, category, item, value));
             }
-            if (_repository.GetEntities(true, predicate)?.Count > 0)
+            if (_repository.GetEntities(true, predicate).Result.Count > 0)
             {
                 result.AddResultStatus(new ValidationMessage(MessageType.ERROR, category, item, value));
             }
@@ -207,7 +215,7 @@ namespace Core.Base.Validator
         )
             where T : TableModel
         {
-            if (codeBookData.GetEntities(false, predicate).Count == 0)
+            if (codeBookData.GetEntities(false, predicate).Result.Count == 0)
             {
                 result.AddResultStatus(new ValidationMessage(MessageType.ERROR, category, item, value));
             }

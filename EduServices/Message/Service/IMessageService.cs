@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using Core.Base.Service;
-using Model.Edu.SendMessage;
+﻿using Core.Base.Service;
+using Model.Edu.Message;
 using Services.Message.Dto;
+using Services.Message.Filter;
 
 namespace Services.Message.Service
 {
-    public interface IMessageService : IBaseService<MessageDbo, MessageCreateDto, MessageListDto, MessageDetailDto, MessageUpdateDto>
+    public interface IMessageService : IBaseService<MessageDbo, MessageCreateDto, MessageListDto, MessageDetailDto, MessageUpdateDto, MessageFilter>
     {
-        HashSet<MessageListDto> GetSendMessageInOrganizationEmail(Guid organizationId, string culture = "");
+
     }
 }

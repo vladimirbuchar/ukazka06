@@ -4,5 +4,6 @@ using Services.StudentGroup.Dto;
 
 namespace Services.StudentGroup.Convertor
 {
-    public interface IStudentGroupConvertor : IBaseConvertor<StudentGroupDbo, StudentGroupCreateDto, StudentGroupInOrganizationListDto, StudentGroupDetailDto, StudentGroupUpdateDto> { }
+    public interface IStudentGroupConvertor
+        : IBaseConvertor<StudentGroupDbo, StudentGroupCreateDto, StudentGroupInOrganizationListDto, StudentGroupDetailDto, StudentGroupUpdateDto> { }
 }

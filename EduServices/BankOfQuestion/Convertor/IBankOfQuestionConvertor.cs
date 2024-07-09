@@ -4,5 +4,6 @@ using Services.BankOfQuestion.Dto;
 
 namespace Services.BankOfQuestion.Convertor
 {
-    public interface IBankOfQuestionConvertor : IBaseConvertor<BankOfQuestionDbo, BankOfQuestionCreateDto, BankOfQuestionListDto, BankOfQuestionDetailDto, BankOfQuestionUpdateDto> { }
+    public interface IBankOfQuestionConvertor
+        : IBaseConvertor<BankOfQuestionDbo, BankOfQuestionCreateDto, BankOfQuestionListDto, BankOfQuestionDetailDto, BankOfQuestionUpdateDto> { }
 }

@@ -5,5 +5,7 @@ using Model.Edu.Chat;
 
 namespace Repository.ChatRepository
 {
-    public class ChatRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<ChatDbo>(dbContext, memoryCache), IChatRepository { }
+    public class ChatRepository(EduDbContext dbContext, IMemoryCache memoryCache)
+        : BaseRepository<ChatDbo>(dbContext, memoryCache),
+            IChatRepository { }
 }

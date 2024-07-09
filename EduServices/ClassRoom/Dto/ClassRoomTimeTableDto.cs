@@ -13,7 +13,7 @@ namespace Services.ClassRoom.Dto
             TimeTable = [];
         }
 
-        public HashSet<StudyHourListDto> StudyHours { get; set; }
-        public HashSet<TimeTableDto> TimeTable { get; set; }
+        public List<StudyHourListDto> StudyHours { get; set; }
+        public List<TimeTableDto> TimeTable { get; set; }
     }
 }

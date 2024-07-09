@@ -1,5 +1,6 @@
 ﻿using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Repository.FileRepository;
+using Core.Base.Request;
 using Core.Base.Service;
 using Model.CodeBook;
 using Model.Edu.Answer;
@@ -17,13 +18,18 @@ namespace Services.Answer.Service
         IFileUploadRepository<AnswerFileRepositoryDbo> fileUploadRepository,
         ICodeBookRepository<CultureDbo> codeBookRepository
     )
-        : BaseService<IAnswerRepository, AnswerDbo, IAnswerConvertor, IAnswerValidator, AnswerCreateDto, AnswerListDto, AnswerDetailDto, AnswerUpdateDto, AnswerFileRepositoryDbo>(
-            answerRepository,
-            answerConvertor,
-            answerValidator,
-            fileUploadRepository,
-            codeBookRepository
-        ),
+        : BaseService<
+            IAnswerRepository,
+            AnswerDbo,
+            IAnswerConvertor,
+            IAnswerValidator,
+            AnswerCreateDto,
+            AnswerListDto,
+            AnswerDetailDto,
+            AnswerUpdateDto,
+            AnswerFileRepositoryDbo,
+            FilterRequest
+        >(answerRepository, answerConvertor, answerValidator, fileUploadRepository, codeBookRepository),
             IAnswerService
     {
         protected override bool IsChanged(AnswerDbo oldVersion, AnswerUpdateDto newVersion, string culture)

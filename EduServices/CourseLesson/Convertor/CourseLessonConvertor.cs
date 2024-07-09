@@ -9,7 +9,7 @@ namespace Services.CourseLesson.Convertor
 {
     public class CourseLessonConvertor(ICodeBookRepository<CultureDbo> codeBookService) : ICourseLessonConvertor
     {
-        private readonly HashSet<CultureDbo> _cultureList = codeBookService.GetEntities(false);
+        private readonly List<CultureDbo> _cultureList = codeBookService.GetEntities(false).Result;
 
         public CourseLessonDbo ConvertToBussinessEntity(CourseLessonCreateDto addCourseLessonDto, string culture)
         {
@@ -20,7 +20,11 @@ namespace Services.CourseLesson.Convertor
                     //PowerPointFile = addCourseLessonDto.PowerPointFile,
                     CourseMaterialId = addCourseLessonDto.MaterialId
                 };
-            courseLesson.CourseLessonTranslations = courseLesson.CourseLessonTranslations.PrepareTranslation(addCourseLessonDto.Name, culture, _cultureList);
+            courseLesson.CourseLessonTranslations = courseLesson.CourseLessonTranslations.PrepareTranslation(
+                addCourseLessonDto.Name,
+                culture,
+                _cultureList
+            );
             return courseLesson;
         }
 
@@ -30,7 +34,7 @@ namespace Services.CourseLesson.Convertor
             return entity;
         }
 
-        public HashSet<CourseLessonListDto> ConvertToWebModel(HashSet<CourseLessonDbo> getAllLessonInCourses, string culture)
+        public List<CourseLessonListDto> ConvertToWebModel(List<CourseLessonDbo> getAllLessonInCourses, string culture)
         {
             return getAllLessonInCourses
                 .Select(item => new CourseLessonListDto()
@@ -40,7 +44,7 @@ namespace Services.CourseLesson.Convertor
                     Type = item.Type,
                     Position = item.Position,
                 })
-                .ToHashSet();
+                .ToList();
         }
 
         public CourseLessonDetailDto ConvertToWebModel(CourseLessonDbo getCourseLessonDetail, string culture)

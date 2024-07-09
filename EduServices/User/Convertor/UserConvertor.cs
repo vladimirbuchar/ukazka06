@@ -13,7 +13,7 @@ namespace Services.User.Convertor
     {
         public UserDbo ConvertToBussinessEntity(UserCreateDto webModel, string culture)
         {
-            HashSet<PersonAddressDbo> address = webModel
+            List<PersonAddressDbo> address = webModel
                 .Person.Address.Select(item => new PersonAddressDbo()
                 {
                     AddressTypeId = item.AddressTypeId,
@@ -24,7 +24,7 @@ namespace Services.User.Convertor
                     Street = item.Street,
                     ZipCode = item.ZipCode
                 })
-                .ToHashSet();
+                .ToList();
             return new UserDbo()
             {
                 UserEmail = webModel.UserEmail,
@@ -50,7 +50,7 @@ namespace Services.User.Convertor
                     addr.IsDeleted = true;
                 }
             }
-            HashSet<PersonAddressDbo> address = userUpdateDto
+            List<PersonAddressDbo> address = userUpdateDto
                 .Person.Address.Select(item => new PersonAddressDbo()
                 {
                     Id = item.Id,
@@ -62,7 +62,7 @@ namespace Services.User.Convertor
                     Street = item.Street,
                     ZipCode = item.ZipCode,
                 })
-                .ToHashSet();
+                .ToList();
             entity.Person = new PersonDbo()
             {
                 FirstName = userUpdateDto.Person.FirstName,
@@ -93,7 +93,7 @@ namespace Services.User.Convertor
             };
         }
 
-        public HashSet<UserListDto> ConvertToWebModel(HashSet<UserDbo> list, string culture)
+        public List<UserListDto> ConvertToWebModel(List<UserDbo> list, string culture)
         {
             return list.Select(item => new UserListDto()
                 {
@@ -112,7 +112,7 @@ namespace Services.User.Convertor
                                 Street = x.Street,
                                 ZipCode = x.ZipCode,
                             })
-                            .ToHashSet(),
+                            .ToList(),
                         AvatarUrl =
                             item.Person.AvatarUrl == null
                                 ? string.Format("{0}{1}", item.Person.FirstName.FirstOrDefault(), item.Person.LastName.FirstOrDefault())
@@ -124,12 +124,12 @@ namespace Services.User.Convertor
                         SecondName = item.Person.LastName,
                     }
                 })
-                .ToHashSet();
+                .ToList();
         }
 
         public UserDetailDto ConvertToWebModel(UserDbo detail, string culture)
         {
-            HashSet<Address> address = detail
+            List<Address> address = detail
                 .Person.PersonAddress.Select(item => new Address()
                 {
                     Id = item.Id,
@@ -141,7 +141,7 @@ namespace Services.User.Convertor
                     Street = item.Street,
                     ZipCode = item.ZipCode
                 })
-                .ToHashSet();
+                .ToList();
             return new UserDetailDto()
             {
                 Id = detail.Id,

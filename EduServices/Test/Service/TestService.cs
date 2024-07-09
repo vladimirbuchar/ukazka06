@@ -64,7 +64,10 @@ namespace Services.Test.Service
 
                 foreach (Guid bankOfQuestionId in addCourseTestDto.BankOfQuestion)
                 {
-                    _ = _courseTestBankOfQuestionRepository.CreateEntity(new CourseTestBankOfQuestionDbo() { CourseTestId = testId, BankOfQuestionId = bankOfQuestionId }, Guid.Empty);
+                    _ = _courseTestBankOfQuestionRepository.CreateEntity(
+                        new CourseTestBankOfQuestionDbo() { CourseTestId = testId, BankOfQuestionId = bankOfQuestionId },
+                        Guid.Empty
+                    );
                 }
 
                 return new Result<CourseTestDetailDto>() { Data = GetCourseTestDetail(courseLesson.Id, culture) };
@@ -116,7 +119,10 @@ namespace Services.Test.Service
                 {
                     if (!test.CourseTestBankOfQuestions.Select(x => x.BankOfQuestionId).Contains(bankOfQuestionId))
                     {
-                        _ = _courseTestBankOfQuestionRepository.CreateEntity(new CourseTestBankOfQuestionDbo() { CourseTestId = test.Id, BankOfQuestionId = bankOfQuestionId }, Guid.Empty);
+                        _ = _courseTestBankOfQuestionRepository.CreateEntity(
+                            new CourseTestBankOfQuestionDbo() { CourseTestId = test.Id, BankOfQuestionId = bankOfQuestionId },
+                            Guid.Empty
+                        );
                     }
                 }
                 test = _convertor.ConvertToBussinessEntity(updateCourseTestDto, test);

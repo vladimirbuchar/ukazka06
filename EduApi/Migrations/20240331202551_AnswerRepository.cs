@@ -112,7 +112,11 @@ namespace EduApi.Migrations
                 }
             );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_TestQuestionAnswer_FileRepositoryId", table: "Edu_TestQuestionAnswer", column: "FileRepositoryId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_TestQuestionAnswer_FileRepositoryId",
+                table: "Edu_TestQuestionAnswer",
+                column: "FileRepositoryId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Edu_FileRepository_SystemIdentificator",

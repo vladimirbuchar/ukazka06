@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Model;
 
 namespace Core.Base.Repository
@@ -17,7 +18,15 @@ namespace Core.Base.Repository
         Model GetEntity(bool deleted, Expression<Func<Model, bool>> predicate = null);
         Model CreateEntity(Model entity, Guid userId);
         Model UpdateEntity(Model entity, Guid userId);
-        HashSet<Model> GetEntities(bool deleted, Expression<Func<Model, bool>> predicate = null, Expression<Func<Model, object>> orderBy = null, Expression<Func<Model, object>> orderByDesc = null);
+        Task<List<Model>> GetEntities(
+            bool deleted,
+            Expression<Func<Model, bool>> predicate = null,
+            Expression<Func<Model, bool>> customPredicate = null,
+            Expression<Func<Model, object>> orderBy = null,
+            Expression<Func<Model, object>> orderByDesc = null,
+            int page = 0,
+            int itemCount = 0
+        );
         Guid GetOrganizationId(Guid objectId);
     }
 }

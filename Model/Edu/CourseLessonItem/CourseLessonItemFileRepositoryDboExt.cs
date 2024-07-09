@@ -5,7 +5,10 @@ namespace Model.Edu.CourseLessonItem
 {
     public static class CourseLessonItemFileRepositoryDboExt
     {
-        public static CourseLessonItemFileRepositoryDbo FindTranslation(this ICollection<CourseLessonItemFileRepositoryDbo> translations, string culture)
+        public static CourseLessonItemFileRepositoryDbo FindTranslation(
+            this ICollection<CourseLessonItemFileRepositoryDbo> translations,
+            string culture
+        )
         {
             CourseLessonItemFileRepositoryDbo translation = null;
             translation = translations.FirstOrDefault(x => x.Culture.SystemIdentificator == culture);

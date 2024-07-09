@@ -2,32 +2,32 @@
 using System.Linq;
 using Model.CodeBook;
 
-namespace Model.Edu.SendMessage
+namespace Model.Edu.Message
 {
-    public static class SendMessageTranslationDboExt
+    public static class MessageTranslationDboExt
     {
-        public static SendMessageTranslationDbo FindTranslation(this ICollection<SendMessageTranslationDbo> translations, string culture)
+        public static MessageTranslationDbo FindTranslation(this ICollection<MessageTranslationDbo> translations, string culture)
         {
-            SendMessageTranslationDbo translation = null;
+            MessageTranslationDbo translation = null;
             translation = translations.FirstOrDefault(x => x.Culture.SystemIdentificator == culture);
             translation ??= translations.FirstOrDefault();
             return translation;
         }
 
-        public static ICollection<SendMessageTranslationDbo> PrepareTranslation(
-            this ICollection<SendMessageTranslationDbo> translations,
+        public static ICollection<MessageTranslationDbo> PrepareTranslation(
+            this ICollection<MessageTranslationDbo> translations,
             string subject,
             string html,
             string culture,
-            HashSet<CultureDbo> cultureList
+            List<CultureDbo> cultureList
         )
         {
             translations ??= [];
-            SendMessageTranslationDbo translation = translations.FirstOrDefault(x => x.Culture.SystemIdentificator == culture);
+            MessageTranslationDbo translation = translations.FirstOrDefault(x => x.Culture.SystemIdentificator == culture);
             if (translation == null)
             {
                 translations.Add(
-                    new SendMessageTranslationDbo()
+                    new MessageTranslationDbo()
                     {
                         CultureId = cultureList.FirstOrDefault(x => x.SystemIdentificator == culture).Id,
                         Subject = subject,

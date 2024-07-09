@@ -5,5 +5,6 @@ using Services.ClassRoom.Dto;
 
 namespace Services.ClassRoom.Validator
 {
-    public interface IClassRoomValidator : IBaseValidator<ClassRoomDbo, IClassRoomRepository, ClassRoomCreateDto, ClassRoomDetailDto, ClassRoomUpdateDto> { }
+    public interface IClassRoomValidator
+        : IBaseValidator<ClassRoomDbo, IClassRoomRepository, ClassRoomCreateDto, ClassRoomDetailDto, ClassRoomUpdateDto> { }
 }

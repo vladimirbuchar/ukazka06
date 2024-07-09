@@ -39,11 +39,14 @@ namespace Services.CourseTerm.Convertor
                 TimeToId = addCourseTermDto.TimeToId,
                 Tuesday = addCourseTermDto.Tuesday,
                 Wednesday = addCourseTermDto.Wednesday,
-                OrganizationStudyHourId = addCourseTermDto.OrganizationStudyHourId.IsNullOrEmptyWithTrim() || organizationStudyHourId == Guid.Empty ? null : organizationStudyHourId
+                OrganizationStudyHourId =
+                    addCourseTermDto.OrganizationStudyHourId.IsNullOrEmptyWithTrim() || organizationStudyHourId == Guid.Empty
+                        ? null
+                        : organizationStudyHourId
             };
         }
 
-        public HashSet<CourseTermListDto> ConvertToWebModel(HashSet<CourseTermDbo> getTermInCourses, string culture)
+        public List<CourseTermListDto> ConvertToWebModel(List<CourseTermDbo> getTermInCourses, string culture)
         {
             return getTermInCourses
                 .Select(item => new CourseTermListDto()
@@ -67,7 +70,7 @@ namespace Services.CourseTerm.Convertor
                     ClassRoomId = item.ClassRoomId,
                     IsActive = item.IsActive.HasValue && item.IsActive.Value
                 })
-                .ToHashSet();
+                .ToList();
         }
 
         public CourseTermDetailDto ConvertToWebModel(CourseTermDbo getCourseTermDetail, string culture)
@@ -123,7 +126,10 @@ namespace Services.CourseTerm.Convertor
             entity.TimeToId = updateCourseTermDto.TimeToId;
             entity.Tuesday = updateCourseTermDto.Tuesday;
             entity.Wednesday = updateCourseTermDto.Wednesday;
-            entity.OrganizationStudyHourId = updateCourseTermDto.OrganizationStudyHourId.IsNullOrEmptyWithTrim() || organizationStudyHourId == Guid.Empty ? Guid.Empty : organizationStudyHourId;
+            entity.OrganizationStudyHourId =
+                updateCourseTermDto.OrganizationStudyHourId.IsNullOrEmptyWithTrim() || organizationStudyHourId == Guid.Empty
+                    ? Guid.Empty
+                    : organizationStudyHourId;
             return entity;
         }
     }

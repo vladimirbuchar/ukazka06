@@ -5,5 +5,7 @@ using Model.Edu.Notification;
 
 namespace Repository.NotificationRepository
 {
-    public class NotificationRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<NotificationDbo>(dbContext, memoryCache), INotificationRepository { }
+    public class NotificationRepository(EduDbContext dbContext, IMemoryCache memoryCache)
+        : BaseRepository<NotificationDbo>(dbContext, memoryCache),
+            INotificationRepository { }
 }

@@ -9,7 +9,11 @@ using Services.StudentEvaluation.Dto;
 
 namespace Services.StudentEvaluation.Validator
 {
-    public class StudentEvaluationValidator(IStudentEvaluationRepository repository, ICourseStudentRepository courseStudentRepository, ICourseTermRepository courseTermRepository)
+    public class StudentEvaluationValidator(
+        IStudentEvaluationRepository repository,
+        ICourseStudentRepository courseStudentRepository,
+        ICourseTermRepository courseTermRepository
+    )
         : BaseValidator<StudentEvaluationDbo, IStudentEvaluationRepository, StudentEvaluationCreateDto, StudentEvaluationDetailDto>(repository),
             IStudentEvaluationValidator
     {

@@ -8,10 +8,30 @@ namespace EduApi.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            string[] columns = new string[] { "Id", "IsDeleted", "IsSystemObject", "IsChanged", "SystemIdentificator", "IsDefault", "Priority", "Name" };
+            string[] columns = new string[]
+            {
+                "Id",
+                "IsDeleted",
+                "IsSystemObject",
+                "IsChanged",
+                "SystemIdentificator",
+                "IsDefault",
+                "Priority",
+                "Name"
+            };
             object[] PernamentAddress = new object[] { Guid.NewGuid(), false, true, true, "PERNAMENT_ADDRESS", false, 0, string.Empty };
             object[] MailingAddress = new object[] { Guid.NewGuid(), false, true, true, "MAILING_ADDRESS", false, 0, string.Empty };
-            object[] registeredOfficeAddress = new object[] { Guid.NewGuid(), false, true, true, "REGISTERED_OFFICE_ADDRESS", false, 0, string.Empty };
+            object[] registeredOfficeAddress = new object[]
+            {
+                Guid.NewGuid(),
+                false,
+                true,
+                true,
+                "REGISTERED_OFFICE_ADDRESS",
+                false,
+                0,
+                string.Empty
+            };
             object[] BillingAddress = new object[] { Guid.NewGuid(), false, true, true, "BILLING_ADDRESS", false, 0, string.Empty };
             object[] CbSelectValue = new object[] { Guid.NewGuid(), false, true, true, "CODEBOOK_SELECT_VALUE", false, 0, "CODEBOOK_SELECT_VALUE" };
 
@@ -43,7 +63,18 @@ namespace EduApi.Migrations
             {
                 migrationBuilder.InsertData(
                     "Cb_AnswerMode",
-                    new string[] { "Id", "IsDeleted", "IsSystemObject", "IsChanged", "SystemIdentificator", "Name", "Value", "IsDefault", "Priority" },
+                    new string[]
+                    {
+                        "Id",
+                        "IsDeleted",
+                        "IsSystemObject",
+                        "IsChanged",
+                        "SystemIdentificator",
+                        "Name",
+                        "Value",
+                        "IsDefault",
+                        "Priority"
+                    },
                     new object[] { Guid.NewGuid(), false, true, true, null, item, item, priority == -1, priority }
                 );
                 priority++;

@@ -12,7 +12,7 @@ namespace Services.Test.Dto
         public int QuestionCountInTest { get; set; }
         public int TimeLimit { get; set; }
         public int DesiredSuccess { get; set; }
-        public HashSet<Guid> BankOfQuestion { get; set; }
+        public List<Guid> BankOfQuestion { get; set; }
         public int MaxRepetition { get; set; }
     }
 }

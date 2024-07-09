@@ -210,9 +210,17 @@ namespace EduApi.Migrations
                 }
             );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_OrganizationFileRepository_CultureId", table: "Edu_OrganizationFileRepository", column: "CultureId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_OrganizationFileRepository_CultureId",
+                table: "Edu_OrganizationFileRepository",
+                column: "CultureId"
+            );
 
-            migrationBuilder.CreateIndex(name: "IX_Edu_OrganizationFileRepository_OrganizationId", table: "Edu_OrganizationFileRepository", column: "OrganizationId");
+            migrationBuilder.CreateIndex(
+                name: "IX_Edu_OrganizationFileRepository_OrganizationId",
+                table: "Edu_OrganizationFileRepository",
+                column: "OrganizationId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Edu_OrganizationFileRepository_SystemIdentificator",

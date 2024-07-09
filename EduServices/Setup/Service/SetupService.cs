@@ -41,7 +41,10 @@ namespace Services.Setup.Service
 
         public Result CreateAdministratorUser()
         {
-            UserDbo admin = _userRepository.GetEntity(false, x => x.UserEmail == _configuration.GetSection(ConfigValue.SETUP).GetSection(ConfigValue.USER_NAME).Value);
+            UserDbo admin = _userRepository.GetEntity(
+                false,
+                x => x.UserEmail == _configuration.GetSection(ConfigValue.SETUP).GetSection(ConfigValue.USER_NAME).Value
+            );
             if (admin == null)
             {
                 _ = _userRepository.CreateEntity(
@@ -63,7 +66,7 @@ namespace Services.Setup.Service
         {
             if (delete)
             {
-                HashSet<PermissionsDbo> permissions = _permissionsRepository.GetEntities(false);
+                List<PermissionsDbo> permissions = _permissionsRepository.GetEntities(false).Result;
                 foreach (PermissionsDbo permission in permissions)
                 {
                     _permissionsRepository.DeleteEntity(permission, Guid.Empty);
@@ -77,13 +80,18 @@ namespace Services.Setup.Service
                 foreach (string role in item.Roles)
                 {
                     string route = item.Route.Trim('/');
-                    if (_permissionsRepository.GetEntity(false, x => x.Route.Route == route && x.OrganizationRole.SystemIdentificator == role) == null)
+                    if (
+                        _permissionsRepository.GetEntity(false, x => x.Route.Route == route && x.OrganizationRole.SystemIdentificator == role) == null
+                    )
                     {
                         Guid? routeId = _routeRepository.GetEntity(false, x => x.Route == route)?.Id;
                         if (routeId != null)
                         {
                             Guid roleId = _organizationRoleRepository.GetEntity(false, x => x.SystemIdentificator == role).Id;
-                            _ = _permissionsRepository.CreateEntity(new PermissionsDbo() { RouteId = routeId.Value, OrganizationRoleId = roleId }, Guid.Empty);
+                            _ = _permissionsRepository.CreateEntity(
+                                new PermissionsDbo() { RouteId = routeId.Value, OrganizationRoleId = roleId },
+                                Guid.Empty
+                            );
                         }
                     }
                 }
@@ -93,7 +101,11 @@ namespace Services.Setup.Service
 
         public Result RegisterAllEndpoints()
         {
-            List<string> endpoints = _endpointSources.SelectMany(es => es.Endpoints).OfType<RouteEndpoint>().Select(x => x.RoutePattern.RawText).ToList();
+            List<string> endpoints = _endpointSources
+                .SelectMany(es => es.Endpoints)
+                .OfType<RouteEndpoint>()
+                .Select(x => x.RoutePattern.RawText)
+                .ToList();
             foreach (string endpoint in endpoints)
             {
                 if (_routeRepository.GetEntity(false, x => x.Route == endpoint) == null)
@@ -107,7 +119,14 @@ namespace Services.Setup.Service
         public bool CheckUser(SetupLoginDto setupLogin)
         {
             return _userRepository
-                    .GetEntity(false, x => x.UserEmail == setupLogin.UserEmail && x.UserPassword == setupLogin.Password.GetHashString() && x.IsActive == true && x.AllowCLassicLogin == true)
+                    .GetEntity(
+                        false,
+                        x =>
+                            x.UserEmail == setupLogin.UserEmail
+                            && x.UserPassword == setupLogin.Password.GetHashString()
+                            && x.IsActive == true
+                            && x.AllowCLassicLogin == true
+                    )
                     ?.UserRole?.SystemIdentificator == UserRole.ADMINISTRATOR;
         }
     }

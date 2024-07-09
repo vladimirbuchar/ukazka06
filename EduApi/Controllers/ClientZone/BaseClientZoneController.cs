@@ -36,7 +36,9 @@ namespace EduApi.Controllers.ClientZone
             authHeader = authHeader.Replace("Bearer ", "");
             var jsonToken = handler.ReadToken(authHeader);
             var tokenS = handler.ReadToken(authHeader) as JwtSecurityToken;
-            return JsonConvert.DeserializeObject<Dictionary<Guid, List<string>>>(tokenS.Claims.FirstOrDefault(x => x.Type == Constants.USER_ORGANIZATION_ROLE).Value);
+            return JsonConvert.DeserializeObject<Dictionary<Guid, List<string>>>(
+                tokenS.Claims.FirstOrDefault(x => x.Type == Constants.USER_ORGANIZATION_ROLE).Value
+            );
         }
 
         /// <summary>
@@ -49,7 +51,12 @@ namespace EduApi.Controllers.ClientZone
         {
             if (
                 _organizationRoleService != null
-                && !_organizationRoleService.CheckPermition(GetLoggedUserId(), organizationId, Request.Path, GetUserRoleInOrganization().GetValueOrDefault(organizationId))
+                && !_organizationRoleService.CheckPermition(
+                    GetLoggedUserId(),
+                    organizationId,
+                    Request.Path,
+                    GetUserRoleInOrganization().GetValueOrDefault(organizationId)
+                )
             )
             {
                 throw new PermitionDeniedException();

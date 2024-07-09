@@ -5,6 +5,7 @@ using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.Branch.Dto;
+using Services.Branch.Filter;
 using Services.Branch.Service;
 using Services.OrganizationRole.Service;
 
@@ -46,12 +47,19 @@ namespace EduApi.Controllers.ClientZone.Branch
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult List([FromQuery] ListDeletedRequestDto request)
+        public ActionResult List([FromQuery] ListDeletedRequestDto request, [FromQuery] BranchFilter filter)
         {
             try
             {
                 CheckOrganizationPermition(request.ParentId);
-                return SendResponse(_branchService.GetList(x => x.OrganizationId == request.ParentId && x.IsOnline == false, request.IsDeleted, GetClientCulture()));
+                return SendResponse(
+                    _branchService.GetList(
+                        x => x.OrganizationId == request.ParentId && x.IsOnline == false,
+                        request.IsDeleted,
+                        GetClientCulture(),
+                        filter
+                    )
+                );
             }
             catch (Exception e)
             {

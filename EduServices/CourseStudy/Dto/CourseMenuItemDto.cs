@@ -30,6 +30,6 @@ namespace Services.CourseStudy.Dto
                 }
             }
         }
-        public HashSet<CourseMenuSubItemDto> Items { get; set; }
+        public List<CourseMenuSubItemDto> Items { get; set; }
     }
 }

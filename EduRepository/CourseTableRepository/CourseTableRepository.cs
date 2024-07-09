@@ -6,7 +6,9 @@ using Model.Edu.CourseTable;
 
 namespace Repository.CourseTableRepository
 {
-    public class CourseTableRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<CourseTableDbo>(dbContext, memoryCache), ICourseTableRepository
+    public class CourseTableRepository(EduDbContext dbContext, IMemoryCache memoryCache)
+        : BaseRepository<CourseTableDbo>(dbContext, memoryCache),
+            ICourseTableRepository
     {
         public void UpdateActualTable(Guid courseTermid, string img)
         {

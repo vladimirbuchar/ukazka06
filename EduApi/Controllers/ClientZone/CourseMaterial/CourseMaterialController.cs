@@ -16,7 +16,11 @@ namespace EduApi.Controllers.ClientZone.CourseMaterial
     {
         private readonly ICourseMaterialService _courseMaterialService;
 
-        public CourseMaterialController(ICourseMaterialService courseMaterialService, ILogger<CourseMaterialController> logger, IOrganizationRoleService organizationRoleService)
+        public CourseMaterialController(
+            ICourseMaterialService courseMaterialService,
+            ILogger<CourseMaterialController> logger,
+            IOrganizationRoleService organizationRoleService
+        )
             : base(logger, organizationRoleService)
         {
             _courseMaterialService = courseMaterialService;

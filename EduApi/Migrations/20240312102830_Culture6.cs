@@ -7,18 +7,71 @@ namespace EduApi.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            string[] columns = new string[] { "Id", "IsDeleted", "IsSystemObject", "IsChanged", "SystemIdentificator", "Value", "Name", "IsDefault", "Priority", "IsActive", "IsEnvironmentCulture" };
+            string[] columns = new string[]
+            {
+                "Id",
+                "IsDeleted",
+                "IsSystemObject",
+                "IsChanged",
+                "SystemIdentificator",
+                "Value",
+                "Name",
+                "IsDefault",
+                "Priority",
+                "IsActive",
+                "IsEnvironmentCulture"
+            };
 
-            migrationBuilder.InsertData("Cb_Culture", columns, new object[] { Guid.NewGuid(), false, true, true, "dv", "Divehi; Dhivehi; Maldivian;", "ދިވެހި", false, 100, true, false });
-            migrationBuilder.InsertData("Cb_Culture", columns, new object[] { Guid.NewGuid(), false, true, true, "nl", "Dutch", "Nederlands, Vlaams", false, 100, true, false });
-            migrationBuilder.InsertData("Cb_Culture", columns, new object[] { Guid.NewGuid(), false, true, true, "en", "English", "English", false, 100, true, false });
-            migrationBuilder.InsertData("Cb_Culture", columns, new object[] { Guid.NewGuid(), false, true, true, "eo", "Esperanto", "Esperanto", false, 100, true, false });
-            migrationBuilder.InsertData("Cb_Culture", columns, new object[] { Guid.NewGuid(), false, true, true, "et", "Estonian", "eesti, eesti keel", false, 100, true, false });
-            migrationBuilder.InsertData("Cb_Culture", columns, new object[] { Guid.NewGuid(), false, true, true, "ee", "Ewe", "Eʋegbe", false, 100, true, false });
-            migrationBuilder.InsertData("Cb_Culture", columns, new object[] { Guid.NewGuid(), false, true, true, "fo", "Faroese", "føroyskt", false, 100, true, false });
-            migrationBuilder.InsertData("Cb_Culture", columns, new object[] { Guid.NewGuid(), false, true, true, "fj", "Fijian", "vosa Vakaviti", false, 100, true, false });
-            migrationBuilder.InsertData("Cb_Culture", columns, new object[] { Guid.NewGuid(), false, true, true, "fi", "Finnish", "suomi, suomen kieli", false, 100, true, false });
-            migrationBuilder.InsertData("Cb_Culture", columns, new object[] { Guid.NewGuid(), false, true, true, "fr", "French", "français, langue française", false, 100, true, false });
+            migrationBuilder.InsertData(
+                "Cb_Culture",
+                columns,
+                new object[] { Guid.NewGuid(), false, true, true, "dv", "Divehi; Dhivehi; Maldivian;", "ދިވެހި", false, 100, true, false }
+            );
+            migrationBuilder.InsertData(
+                "Cb_Culture",
+                columns,
+                new object[] { Guid.NewGuid(), false, true, true, "nl", "Dutch", "Nederlands, Vlaams", false, 100, true, false }
+            );
+            migrationBuilder.InsertData(
+                "Cb_Culture",
+                columns,
+                new object[] { Guid.NewGuid(), false, true, true, "en", "English", "English", false, 100, true, false }
+            );
+            migrationBuilder.InsertData(
+                "Cb_Culture",
+                columns,
+                new object[] { Guid.NewGuid(), false, true, true, "eo", "Esperanto", "Esperanto", false, 100, true, false }
+            );
+            migrationBuilder.InsertData(
+                "Cb_Culture",
+                columns,
+                new object[] { Guid.NewGuid(), false, true, true, "et", "Estonian", "eesti, eesti keel", false, 100, true, false }
+            );
+            migrationBuilder.InsertData(
+                "Cb_Culture",
+                columns,
+                new object[] { Guid.NewGuid(), false, true, true, "ee", "Ewe", "Eʋegbe", false, 100, true, false }
+            );
+            migrationBuilder.InsertData(
+                "Cb_Culture",
+                columns,
+                new object[] { Guid.NewGuid(), false, true, true, "fo", "Faroese", "føroyskt", false, 100, true, false }
+            );
+            migrationBuilder.InsertData(
+                "Cb_Culture",
+                columns,
+                new object[] { Guid.NewGuid(), false, true, true, "fj", "Fijian", "vosa Vakaviti", false, 100, true, false }
+            );
+            migrationBuilder.InsertData(
+                "Cb_Culture",
+                columns,
+                new object[] { Guid.NewGuid(), false, true, true, "fi", "Finnish", "suomi, suomen kieli", false, 100, true, false }
+            );
+            migrationBuilder.InsertData(
+                "Cb_Culture",
+                columns,
+                new object[] { Guid.NewGuid(), false, true, true, "fr", "French", "français, langue française", false, 100, true, false }
+            );
             /*migrationBuilder.InsertData("Cb_Culture", columns, new object[] { Guid.NewGuid(), false, true, true, "ff", "Fula; Fulah; Pulaar; Pular", "Fulfulde, Pulaar, Pular", false, 100, true, false });
             migrationBuilder.InsertData("Cb_Culture", columns, new object[] { Guid.NewGuid(), false, true, true, "gl", "Galician", "Galego", false, 100, true, false });
             migrationBuilder.InsertData("Cb_Culture", columns, new object[] { Guid.NewGuid(), false, true, true, "ka", "Georgian", "ქართული", false, 100, true, false });

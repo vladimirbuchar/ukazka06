@@ -1,5 +1,5 @@
 ﻿using Core.Base.Repository;
-using Model.Edu.SendMessage;
+using Model.Edu.Message;
 
 namespace Repository.MessageRepository
 {

@@ -18,14 +18,20 @@ namespace Model.Edu.Organization
             this ICollection<OrganizationTranslationDbo> translations,
             string description,
             string culture,
-            HashSet<CultureDbo> cultureList
+            List<CultureDbo> cultureList
         )
         {
             translations ??= [];
             OrganizationTranslationDbo translation = translations.FirstOrDefault(x => x.Culture.SystemIdentificator == culture);
             if (translation == null)
             {
-                translations.Add(new OrganizationTranslationDbo() { Culture = cultureList.FirstOrDefault(x => x.SystemIdentificator == culture), Description = description });
+                translations.Add(
+                    new OrganizationTranslationDbo()
+                    {
+                        Culture = cultureList.FirstOrDefault(x => x.SystemIdentificator == culture),
+                        Description = description
+                    }
+                );
             }
             else
             {

@@ -9,8 +9,8 @@ namespace Services.CourseStudy.Convertor
 {
     public interface ICourseStudyConvertor : IBaseConvertor<CourseDbo, CourseCreateDto, CourseListDto, CourseDetailDto, CourseUpdateDto>
     {
-        HashSet<StudentTestListDto> ConvertToWebModel(HashSet<StudentTestSummaryDbo> getStudentTests, string culture);
-        HashSet<StudentTestResultListDto> ConvertToWebModel2(HashSet<StudentTestSummaryDbo> getAllStudentTestResults, string culture);
+        List<StudentTestListDto> ConvertToWebModel(List<StudentTestSummaryDbo> getStudentTests, string culture);
+        List<StudentTestResultListDto> ConvertToWebModel2(List<StudentTestSummaryDbo> getAllStudentTestResults, string culture);
         ShowTestResultDto ConvertToWebModel(StudentTestSummaryDbo showTestResult);
     }
 }

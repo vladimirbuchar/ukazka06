@@ -9,7 +9,7 @@ namespace Services.CourseTermTimeTable.Convertor
 {
     public class CourseTermTimeTableConvertor : ICourseTermTimeTableConvertor
     {
-        public HashSet<CourseTermTimeTableListDto> ConvertToWebModel(HashSet<CourseTermDateDbo> getTimeTables, string culture)
+        public List<CourseTermTimeTableListDto> ConvertToWebModel(List<CourseTermDateDbo> getTimeTables, string culture)
         {
             return getTimeTables
                 .Select(x => new CourseTermTimeTableListDto()
@@ -21,12 +21,22 @@ namespace Services.CourseTermTimeTable.Convertor
                     TimeFrom = x.TimeFrom.Value,
                     TimeTo = x.TimeTo.Value,
                     ClassRoom = x.ClassRoom.ClassRoomTranslations.FindTranslation(culture).Name,
-                    Lector = string.Format("{0} {1} {2}", x.UserInOrganization.User.Person.FirstName, x.UserInOrganization.User.Person.SecondName, x.UserInOrganization.User.Person.LastName)
+                    Lector = string.Format(
+                            "{0} {1} {2}",
+                            x.UserInOrganization.User.Person.FirstName,
+                            x.UserInOrganization.User.Person.SecondName,
+                            x.UserInOrganization.User.Person.LastName
+                        )
                         .IsNullOrEmptyWithTrim()
                         ? x.UserInOrganization.User.UserEmail
-                        : string.Format("{0} {1} {2}", x.UserInOrganization.User.Person.FirstName, x.UserInOrganization.User.Person.SecondName, x.UserInOrganization.User.Person.LastName)
+                        : string.Format(
+                            "{0} {1} {2}",
+                            x.UserInOrganization.User.Person.FirstName,
+                            x.UserInOrganization.User.Person.SecondName,
+                            x.UserInOrganization.User.Person.LastName
+                        )
                 })
-                .ToHashSet();
+                .ToList();
         }
     }
 }

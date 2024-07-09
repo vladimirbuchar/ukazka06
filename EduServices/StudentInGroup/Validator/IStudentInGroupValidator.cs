@@ -5,5 +5,6 @@ using Services.StudentInGroup.Dto;
 
 namespace Services.StudentInGroup.Validator
 {
-    public interface IStudentInGroupValidator : IBaseValidator<StudentInGroupDbo, IStudentInGroupRepository, StudentInGroupCreateDto, StudentInGroupDetailDto> { }
+    public interface IStudentInGroupValidator
+        : IBaseValidator<StudentInGroupDbo, IStudentInGroupRepository, StudentInGroupCreateDto, StudentInGroupDetailDto> { }
 }

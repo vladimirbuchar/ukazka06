@@ -20,7 +20,13 @@ namespace EduApi.Migrations
         {
             migrationBuilder.DropColumn(name: "UserRole", table: "Edu_User");
 
-            migrationBuilder.AddColumn<Guid>(name: "UserRoleId", table: "Edu_User", type: "uniqueidentifier", nullable: false, defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
+            migrationBuilder.AddColumn<Guid>(
+                name: "UserRoleId",
+                table: "Edu_User",
+                type: "uniqueidentifier",
+                nullable: false,
+                defaultValue: new Guid("00000000-0000-0000-0000-000000000000")
+            );
 
             migrationBuilder.CreateIndex(name: "IX_Edu_User_UserRoleId", table: "Edu_User", column: "UserRoleId");
 

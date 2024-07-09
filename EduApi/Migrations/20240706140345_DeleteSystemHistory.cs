@@ -42,7 +42,12 @@ namespace EduApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_System_ObjectHistory", x => x.Id);
-                    table.ForeignKey(name: "FK_System_ObjectHistory_Edu_User_UserId", column: x => x.UserId, principalTable: "Edu_User", principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_System_ObjectHistory_Edu_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Edu_User",
+                        principalColumn: "Id"
+                    );
                 }
             );
 

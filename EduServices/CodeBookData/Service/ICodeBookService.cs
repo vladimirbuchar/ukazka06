@@ -6,6 +6,6 @@ namespace Services.CodeBookData.Service
 {
     public interface ICodeBookService : IBaseService
     {
-        HashSet<CodeBookListDto> GetCodeBookItems(string codeBookName, bool isLogged);
+        List<CodeBookListDto> GetCodeBookItems(string codeBookName, bool isLogged);
     }
 }

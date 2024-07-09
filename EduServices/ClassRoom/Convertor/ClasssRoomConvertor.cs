@@ -9,7 +9,7 @@ namespace Services.ClassRoom.Convertor
 {
     public class ClasssRoomConvertor(ICodeBookRepository<CultureDbo> codeBookService) : IClassRoomConvertor
     {
-        private readonly HashSet<CultureDbo> _cultureList = codeBookService.GetEntities(false);
+        private readonly List<CultureDbo> _cultureList = codeBookService.GetEntities(false).Result;
 
         public ClassRoomDbo ConvertToBussinessEntity(ClassRoomCreateDto addClassRoomDto, string culture)
         {
@@ -27,14 +27,17 @@ namespace Services.ClassRoom.Convertor
 
         public ClassRoomDbo ConvertToBussinessEntity(ClassRoomUpdateDto updateClassRoomDto, ClassRoomDbo entity, string culture)
         {
-            List<ClassRoomTranslationDbo> translations = [.. entity.ClassRoomTranslations.PrepareTranslation(updateClassRoomDto.Name, culture, _cultureList)];
+            List<ClassRoomTranslationDbo> translations =
+            [
+                .. entity.ClassRoomTranslations.PrepareTranslation(updateClassRoomDto.Name, culture, _cultureList)
+            ];
             entity.ClassRoomTranslations = translations;
             entity.Floor = updateClassRoomDto.Floor;
             entity.MaxCapacity = updateClassRoomDto.MaxCapacity;
             return entity;
         }
 
-        public HashSet<ClassRoomListDto> ConvertToWebModel(HashSet<ClassRoomDbo> getAllClassRoomInBranches, string culture)
+        public List<ClassRoomListDto> ConvertToWebModel(List<ClassRoomDbo> getAllClassRoomInBranches, string culture)
         {
             return getAllClassRoomInBranches
                 .Select(item => new ClassRoomListDto()
@@ -42,10 +45,9 @@ namespace Services.ClassRoom.Convertor
                     Floor = item.Floor,
                     Id = item.Id,
                     MaxCapacity = item.MaxCapacity,
-                    Name = item.ClassRoomTranslations?.FindTranslation(culture)?.Name,
-                    IsOnline = item.IsOnline
+                    Name = item.ClassRoomTranslations?.FindTranslation(culture)?.Name
                 })
-                .ToHashSet();
+                .ToList();
         }
 
         public ClassRoomDetailDto ConvertToWebModel(ClassRoomDbo getClassRoomDetail, string culture)

@@ -135,7 +135,8 @@ using Services.StudentInGroup.Convertor;
 using Services.StudentInGroup.Service;
 using Services.StudentInGroup.Validator;
 using Services.SystemService.License.Service;
-using Services.SystemService.SendMailService;
+using Services.SystemService.SendMailService.Convertor;
+using Services.SystemService.SendMailService.Service;
 using Services.Test.Convertor;
 using Services.Test.Service;
 using Services.User.Convertor;
@@ -202,6 +203,7 @@ namespace Services
         {
             _ = service.AddScoped<ISendEmailRepository, SendEmailRepository>();
             _ = service.AddScoped<ISendMailService, SendMailService>();
+            _ = service.AddScoped<ISendMailConvertor, SendMailConvertor>();
             _ = service.AddScoped<IPowerPointIntegration, PowerPointIntegration>();
         }
 

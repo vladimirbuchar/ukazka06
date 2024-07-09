@@ -6,6 +6,7 @@ using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.Message.Dto;
+using Services.Message.Filter;
 using Services.Message.Service;
 using Services.OrganizationRole.Service;
 
@@ -16,7 +17,11 @@ namespace EduApi.Controllers.ClientZone.SendMessage
     {
         private readonly IMessageService _sendMessageService;
 
-        public MessageController(IMessageService sendMessageService, ILogger<MessageController> logger, IOrganizationRoleService organizationRoleService)
+        public MessageController(
+            IMessageService sendMessageService,
+            ILogger<MessageController> logger,
+            IOrganizationRoleService organizationRoleService
+        )
             : base(logger, organizationRoleService)
         {
             _sendMessageService = sendMessageService;
@@ -47,12 +52,14 @@ namespace EduApi.Controllers.ClientZone.SendMessage
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult List([FromQuery] ListDeletedRequestDto request)
+        public ActionResult List([FromQuery] ListDeletedRequestDto request, [FromQuery] MessageFilter filter)
         {
             try
             {
                 CheckOrganizationPermition(request.ParentId);
-                return SendResponse(_sendMessageService.GetList(x => x.OrganizationId == request.ParentId, request.IsDeleted, GetClientCulture()));
+                return SendResponse(
+                    _sendMessageService.GetList(x => x.OrganizationId == request.ParentId, request.IsDeleted, GetClientCulture(), filter)
+                );
             }
             catch (Exception e)
             {
@@ -147,7 +154,9 @@ namespace EduApi.Controllers.ClientZone.SendMessage
             try
             {
                 CheckOrganizationPermition(organizationId);
-                return SendResponse(_sendMessageService.GetList(x => x.OrganizationId == organizationId && x.SystemIdentificator == SendMessageType.EMAIL, false));
+                return SendResponse(
+                    _sendMessageService.GetList(x => x.OrganizationId == organizationId && x.SystemIdentificator == SendMessageType.EMAIL, false)
+                );
             }
             catch (Exception e)
             {

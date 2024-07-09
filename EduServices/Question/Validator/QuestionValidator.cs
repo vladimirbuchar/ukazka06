@@ -20,8 +20,8 @@ namespace Services.Question.Validator
         ICodeBookRepository<QuestionModeDbo> questionMode
     ) : BaseValidator<QuestionDbo, IQuestionRepository, QuestionCreateDto, QuestionDetailDto, QuestionUpdateDto>(repository), IQuestionValidator
     {
-        private readonly HashSet<AnswerModeDbo> _answerModes = answerMode.GetEntities(false);
-        private readonly HashSet<QuestionModeDbo> _questionModes = questionMode.GetEntities(false);
+        private readonly List<AnswerModeDbo> _answerModes = answerMode.GetEntities(false).Result;
+        private readonly List<QuestionModeDbo> _questionModes = questionMode.GetEntities(false).Result;
         private readonly IBankOfQuestionRepository _bankOfQuestionRepository = bankOfQuestionRepository;
 
         public override Result<QuestionDetailDto> IsValid(QuestionCreateDto create)

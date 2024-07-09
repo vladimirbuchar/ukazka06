@@ -19,7 +19,7 @@ namespace Services.Permissions.Convertor
             return new PermissionsDbo() { RouteId = create.RouteId, OrganizationRoleId = create.OrganizationRoleId };
         }
 
-        public HashSet<PermissionsListDto> ConvertToWebModel(HashSet<PermissionsDbo> list, string culture)
+        public List<PermissionsListDto> ConvertToWebModel(List<PermissionsDbo> list, string culture)
         {
             return list.Select(x => new PermissionsListDto()
                 {
@@ -27,7 +27,7 @@ namespace Services.Permissions.Convertor
                     OrganizationRole = x.OrganizationRole.SystemIdentificator,
                     Route = x.Route.Route
                 })
-                .ToHashSet();
+                .ToList();
         }
 
         public PermissionsDetailDto ConvertToWebModel(PermissionsDbo detail, string culture)

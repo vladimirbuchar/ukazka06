@@ -5,5 +5,6 @@ using Services.Question.Dto;
 
 namespace Services.Question.Validator
 {
-    public interface IQuestionValidator : IBaseValidator<QuestionDbo, IQuestionRepository, QuestionCreateDto, QuestionDetailDto, QuestionUpdateDto> { }
+    public interface IQuestionValidator
+        : IBaseValidator<QuestionDbo, IQuestionRepository, QuestionCreateDto, QuestionDetailDto, QuestionUpdateDto> { }
 }

@@ -11,11 +11,32 @@ namespace EduApi.Migrations
 
             migrationBuilder.DropForeignKey(name: "FK_Edu_Course_Edu_SendMessage_SendMessageId", table: "Edu_Course");
 
-            migrationBuilder.AlterColumn<Guid>(name: "SendMessageId", table: "Edu_Course", type: "uniqueidentifier", nullable: true, oldClrType: typeof(Guid), oldType: "uniqueidentifier");
+            migrationBuilder.AlterColumn<Guid>(
+                name: "SendMessageId",
+                table: "Edu_Course",
+                type: "uniqueidentifier",
+                nullable: true,
+                oldClrType: typeof(Guid),
+                oldType: "uniqueidentifier"
+            );
 
-            migrationBuilder.AlterColumn<Guid>(name: "CourseMaterialId", table: "Edu_Course", type: "uniqueidentifier", nullable: true, oldClrType: typeof(Guid), oldType: "uniqueidentifier");
+            migrationBuilder.AlterColumn<Guid>(
+                name: "CourseMaterialId",
+                table: "Edu_Course",
+                type: "uniqueidentifier",
+                nullable: true,
+                oldClrType: typeof(Guid),
+                oldType: "uniqueidentifier"
+            );
 
-            migrationBuilder.AlterColumn<Guid>(name: "CertificateId", table: "Edu_Course", type: "uniqueidentifier", nullable: true, oldClrType: typeof(Guid), oldType: "uniqueidentifier");
+            migrationBuilder.AlterColumn<Guid>(
+                name: "CertificateId",
+                table: "Edu_Course",
+                type: "uniqueidentifier",
+                nullable: true,
+                oldClrType: typeof(Guid),
+                oldType: "uniqueidentifier"
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Edu_Course_Edu_Certificate_CertificateId",

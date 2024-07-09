@@ -5,5 +5,7 @@ using Model.Edu.OrganizationRole;
 
 namespace Repository.OrganizationRoleRepository
 {
-    public class OrganizationRoleRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<OrganizationRoleDbo>(dbContext, memoryCache), IOrganizationRoleRepository { }
+    public class OrganizationRoleRepository(EduDbContext dbContext, IMemoryCache memoryCache)
+        : BaseRepository<OrganizationRoleDbo>(dbContext, memoryCache),
+            IOrganizationRoleRepository { }
 }

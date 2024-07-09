@@ -9,7 +9,9 @@ using Services.CourseMaterial.Dto;
 namespace Services.CourseMaterial.Validator
 {
     public class CourseMaterialValidator(ICourseMaterialRepository repository, IOrganizationRepository organizationRepository)
-        : BaseValidator<CourseMaterialDbo, ICourseMaterialRepository, CourseMaterialCreateDto, CourseMaterialDetailDto, CourseMaterialUpdateDto>(repository),
+        : BaseValidator<CourseMaterialDbo, ICourseMaterialRepository, CourseMaterialCreateDto, CourseMaterialDetailDto, CourseMaterialUpdateDto>(
+            repository
+        ),
             ICourseMaterialValidator
     {
         private readonly IOrganizationRepository _organizationRepository = organizationRepository;

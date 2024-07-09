@@ -5,5 +5,6 @@ using Services.CourseMaterial.Dto;
 
 namespace Services.CourseMaterial.Validator
 {
-    public interface ICourseMaterialValidator : IBaseValidator<CourseMaterialDbo, ICourseMaterialRepository, CourseMaterialCreateDto, CourseMaterialDetailDto, CourseMaterialUpdateDto> { }
+    public interface ICourseMaterialValidator
+        : IBaseValidator<CourseMaterialDbo, ICourseMaterialRepository, CourseMaterialCreateDto, CourseMaterialDetailDto, CourseMaterialUpdateDto> { }
 }

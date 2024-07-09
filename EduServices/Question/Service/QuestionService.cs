@@ -1,5 +1,6 @@
 ﻿using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Repository.FileRepository;
+using Core.Base.Request;
 using Core.Base.Service;
 using Model.CodeBook;
 using Model.Edu.Question;
@@ -17,12 +18,17 @@ namespace Services.Question.Service
         IFileUploadRepository<QuestionFileRepositoryDbo> fileRepository,
         ICodeBookRepository<CultureDbo> codeBookRepository
     )
-        : BaseService<IQuestionRepository, QuestionDbo, IQuestionConvertor, IQuestionValidator, QuestionCreateDto, QuestionListDto, QuestionDetailDto, QuestionUpdateDto, QuestionFileRepositoryDbo>(
-            questionRepository,
-            questionConvertor,
-            validator,
-            fileRepository,
-            codeBookRepository
-        ),
+        : BaseService<
+            IQuestionRepository,
+            QuestionDbo,
+            IQuestionConvertor,
+            IQuestionValidator,
+            QuestionCreateDto,
+            QuestionListDto,
+            QuestionDetailDto,
+            QuestionUpdateDto,
+            QuestionFileRepositoryDbo,
+            FilterRequest
+        >(questionRepository, questionConvertor, validator, fileRepository, codeBookRepository),
             IQuestionService { }
 }

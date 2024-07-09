@@ -18,14 +18,20 @@ namespace Model.Edu.BankOfQuestions
             this ICollection<BankOfQuestionsTranslationDbo> translations,
             string name,
             string culture,
-            HashSet<CultureDbo> cultureList
+            List<CultureDbo> cultureList
         )
         {
             translations ??= [];
             BankOfQuestionsTranslationDbo translation = translations.FirstOrDefault(x => x.Culture.SystemIdentificator == culture);
             if (translation == null)
             {
-                translations.Add(new BankOfQuestionsTranslationDbo() { CultureId = cultureList.FirstOrDefault(x => x.SystemIdentificator == culture).Id, Name = name });
+                translations.Add(
+                    new BankOfQuestionsTranslationDbo()
+                    {
+                        CultureId = cultureList.FirstOrDefault(x => x.SystemIdentificator == culture).Id,
+                        Name = name
+                    }
+                );
             }
             else
             {

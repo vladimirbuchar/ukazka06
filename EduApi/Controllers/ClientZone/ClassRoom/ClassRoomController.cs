@@ -5,6 +5,7 @@ using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.ClassRoom.Dto;
+using Services.ClassRoom.Filter;
 using Services.ClassRoom.Service;
 using Services.OrganizationRole.Service;
 
@@ -15,7 +16,11 @@ namespace EduApi.Controllers.ClientZone.ClassRoom
     {
         private readonly IClassRoomService _classRoomService;
 
-        public ClassRoomController(ILogger<ClassRoomController> logger, IClassRoomService classRoomService, IOrganizationRoleService organizationRoleService)
+        public ClassRoomController(
+            ILogger<ClassRoomController> logger,
+            IClassRoomService classRoomService,
+            IOrganizationRoleService organizationRoleService
+        )
             : base(logger, organizationRoleService)
         {
             _classRoomService = classRoomService;
@@ -31,7 +36,7 @@ namespace EduApi.Controllers.ClientZone.ClassRoom
         {
             try
             {
-                CheckOrganizationPermition(_classRoomService.GetOrganizationIdByObjectId(addClassRoomDto.BranchId));
+                CheckOrganizationPermition(_classRoomService.GetOrganizationIdByParentId(addClassRoomDto.BranchId));
                 return SendResponse(_classRoomService.AddObject(addClassRoomDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
@@ -46,12 +51,19 @@ namespace EduApi.Controllers.ClientZone.ClassRoom
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult List([FromQuery] ListDeletedRequestDto request)
+        public ActionResult List([FromQuery] ListDeletedRequestDto request, [FromQuery] ClassRoomFilter filter)
         {
             try
             {
-                CheckOrganizationPermition(_classRoomService.GetOrganizationIdByObjectId(request.ParentId));
-                return SendResponse(_classRoomService.GetList(x => x.BranchId == request.ParentId, request.IsDeleted, GetClientCulture()));
+                CheckOrganizationPermition(_classRoomService.GetOrganizationIdByParentId(request.ParentId));
+                return SendResponse(
+                    _classRoomService.GetList(
+                        x => x.BranchId == request.ParentId && x.IsOnline == false,
+                        request.IsDeleted,
+                        GetClientCulture(),
+                        filter
+                    )
+                );
             }
             catch (Exception e)
             {
@@ -141,12 +153,12 @@ namespace EduApi.Controllers.ClientZone.ClassRoom
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult GetAllClassRoomInOrganization([FromQuery] ListRequestDto list)
+        public ActionResult GetAllClassRoomInOrganization([FromQuery] ListRequestDto list, [FromQuery] ClassRoomFilter filter)
         {
             try
             {
                 CheckOrganizationPermition(list.ParentId);
-                return SendResponse(_classRoomService.GetList(x => x.Branch.OrganizationId == list.ParentId, false, GetClientCulture()));
+                return SendResponse(_classRoomService.GetList(x => x.Branch.OrganizationId == list.ParentId, false, GetClientCulture(), filter));
             }
             catch (Exception e)
             {
@@ -165,7 +177,13 @@ namespace EduApi.Controllers.ClientZone.ClassRoom
             try
             {
                 CheckOrganizationPermition(_classRoomService.GetOrganizationIdByObjectId(requestDto.ParentId));
-                return SendResponse(_classRoomService.GetClassRoomTimeTable(requestDto.ParentId, _classRoomService.GetOrganizationIdByObjectId(requestDto.ParentId), GetClientCulture()));
+                return SendResponse(
+                    _classRoomService.GetClassRoomTimeTable(
+                        requestDto.ParentId,
+                        _classRoomService.GetOrganizationIdByObjectId(requestDto.ParentId),
+                        GetClientCulture()
+                    )
+                );
             }
             catch (Exception e)
             {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Core.Base.Request;
 using Core.Base.Service;
 using Core.DataTypes;
 using Model.Edu.CourseTerm;
@@ -26,11 +27,17 @@ namespace Services.CourseTerm.Service
         IClassRoomRepository classRoomRepository,
         ICourseTermValidator validator
     )
-        : BaseService<ICourseTermRepository, CourseTermDbo, ICourseTermConvertor, ICourseTermValidator, CourseTermCreateDto, CourseTermListDto, CourseTermDetailDto, CourseTermUpdateDto>(
-            courseTermRepository,
-            courseTermConvertor,
-            validator
-        ),
+        : BaseService<
+            ICourseTermRepository,
+            CourseTermDbo,
+            ICourseTermConvertor,
+            ICourseTermValidator,
+            CourseTermCreateDto,
+            CourseTermListDto,
+            CourseTermDetailDto,
+            CourseTermUpdateDto,
+            FilterRequest
+        >(courseTermRepository, courseTermConvertor, validator),
             ICourseTermService
     {
         private readonly IClassRoomRepository _classRoomRepository = classRoomRepository;
@@ -42,7 +49,9 @@ namespace Services.CourseTerm.Service
         {
             if (addObject.ClassRoomId == null)
             {
-                addObject.ClassRoomId = _classRoomRepository.GetEntity(false, x => x.IsOnline == true && x.Branch.OrganizationId == addObject.OrganizationId).Id;
+                addObject.ClassRoomId = _classRoomRepository
+                    .GetEntity(false, x => x.IsOnline == true && x.Branch.OrganizationId == addObject.OrganizationId)
+                    .Id;
             }
             Result<CourseTermDetailDto> result = _validator.IsValid(addObject);
             if (result.IsOk)
@@ -50,7 +59,9 @@ namespace Services.CourseTerm.Service
                 CourseTermDbo addCourseTerm = _convertor.ConvertToBussinessEntity(addObject, culture);
                 if (addCourseTerm.OrganizationStudyHourId != null)
                 {
-                    HashSet<OrganizationStudyHourDbo> getOrganizationSetting = _organizationStudyHoursRepository.GetEntities(false, x => x.OrganizationId == addObject.OrganizationId);
+                    List<OrganizationStudyHourDbo> getOrganizationSetting = _organizationStudyHoursRepository
+                        .GetEntities(false, x => x.OrganizationId == addObject.OrganizationId)
+                        .Result;
                     addCourseTerm.TimeFromId = getOrganizationSetting.FirstOrDefault(x => x.Id == addCourseTerm.OrganizationStudyHourId).ActiveFromId;
                     addCourseTerm.TimeToId = getOrganizationSetting.FirstOrDefault(x => x.Id == addCourseTerm.OrganizationStudyHourId).ActiveToId;
                 }
@@ -58,11 +69,17 @@ namespace Services.CourseTerm.Service
                 CourseTermDbo entity = _repository.CreateEntity(addCourseTerm, userId);
                 foreach (string item in addObject.Lector)
                 {
-                    _ = _courseLectorRepository.CreateEntity(new CourseLectorDbo() { CourseTermId = entity.Id, UserInOrganizationId = Guid.Parse(item) }, Guid.Empty);
+                    _ = _courseLectorRepository.CreateEntity(
+                        new CourseLectorDbo() { CourseTermId = entity.Id, UserInOrganizationId = Guid.Parse(item) },
+                        Guid.Empty
+                    );
                 }
                 foreach (string item in addObject.StudentGroup)
                 {
-                    _ = _studentInGroupCourseTermRepository.CreateEntity(new StudentInGroupCourseTermDbo() { CourseTermId = entity.Id, StudentGroupId = Guid.Parse(item) }, Guid.Empty);
+                    _ = _studentInGroupCourseTermRepository.CreateEntity(
+                        new StudentInGroupCourseTermDbo() { CourseTermId = entity.Id, StudentGroupId = Guid.Parse(item) },
+                        Guid.Empty
+                    );
                 }
                 return new Result<CourseTermDetailDto>() { Data = _convertor.ConvertToWebModel(entity, culture) };
             }

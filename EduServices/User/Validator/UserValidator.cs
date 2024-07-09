@@ -38,13 +38,20 @@ namespace EduServices.User.Validator
             return validate;
         }
 
-        private void ValidateAddress(HashSet<Address> addresses, Result result)
+        private void ValidateAddress(List<Address> addresses, Result result)
         {
             if (addresses != null && addresses.Count > 0)
             {
                 foreach (Address address in addresses)
                 {
-                    base.CodeBookValueExist(_country, x => x.Id == address.CountryId, result, AddressValidator.COUNTRY, AddressValidator.COUNTRY_NOT_EXIST, address.CountryId.ToString());
+                    base.CodeBookValueExist(
+                        _country,
+                        x => x.Id == address.CountryId,
+                        result,
+                        AddressValidator.COUNTRY,
+                        AddressValidator.COUNTRY_NOT_EXIST,
+                        address.CountryId.ToString()
+                    );
                     base.CodeBookValueExist(
                         _addressType,
                         x => x.Id == address.AddressTypeId,

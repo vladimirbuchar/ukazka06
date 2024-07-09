@@ -12,7 +12,7 @@ namespace Services.Organization.Dto
         public string PhoneNumber { get; set; }
         public string WWW { get; set; }
         public string Name { get; set; }
-        public HashSet<Address> Addresses { get; set; }
+        public List<Address> Addresses { get; set; }
         public string Logo { get; set; }
     }
 }

@@ -15,7 +15,11 @@ namespace EduApi.Controllers.ClientZone.StudentEvaluation
     {
         private readonly IStudentEvaluationService _studentEvaluationService;
 
-        public StudentEvaluationController(IStudentEvaluationService studentEvaluationService, ILogger<StudentEvaluationController> logger, IOrganizationRoleService organizationRoleService)
+        public StudentEvaluationController(
+            IStudentEvaluationService studentEvaluationService,
+            ILogger<StudentEvaluationController> logger,
+            IOrganizationRoleService organizationRoleService
+        )
             : base(logger, organizationRoleService)
         {
             _studentEvaluationService = studentEvaluationService;

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using Core.Base.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
@@ -10,21 +8,18 @@ using Model.Edu.Course;
 
 namespace Repository.CourseRepository
 {
-    public class CourseRepository(EduDbContext dbContext, IMemoryCache memoryCache) : BaseRepository<CourseDbo>(dbContext, memoryCache), ICourseRepository
+    public class CourseRepository(EduDbContext dbContext, IMemoryCache memoryCache)
+        : BaseRepository<CourseDbo>(dbContext, memoryCache),
+            ICourseRepository
     {
-        public override CourseDbo GetEntity(Guid id)
+        protected override IQueryable<CourseDbo> PrepareDetailQuery()
         {
-            return _dbContext.Set<CourseDbo>().Include(x => x.CourseTranslations.Where(x => x.IsDeleted == false)).ThenInclude(x => x.Culture).FirstOrDefault(x => x.Id == id);
+            return _dbContext.Set<CourseDbo>().Include(x => x.CourseTranslations.Where(x => x.IsDeleted == false)).ThenInclude(x => x.Culture);
         }
 
-        public override HashSet<CourseDbo> GetEntities(
-            bool deleted,
-            Expression<Func<CourseDbo, bool>> predicate = null,
-            Expression<Func<CourseDbo, object>> orderBy = null,
-            Expression<Func<CourseDbo, object>> orderByDesc = null
-        )
+        protected override IQueryable<CourseDbo> PrepareListQuery()
         {
-            return [.. _dbContext.Set<CourseDbo>().Include(x => x.CourseTranslations.Where(x => x.IsDeleted == false)).ThenInclude(x => x.Culture).Where(predicate).Where(x => x.IsDeleted == deleted)];
+            return dbContext.Set<CourseDbo>().Include(x => x.CourseTranslations.Where(x => x.IsDeleted == false)).ThenInclude(x => x.Culture);
         }
 
         public override Guid GetOrganizationId(Guid objectId)

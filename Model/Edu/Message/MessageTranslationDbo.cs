@@ -1,10 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Model.Edu.SendMessage
+namespace Model.Edu.Message
 {
     [Table("Edu_SendMessageTranslation")]
-    public class SendMessageTranslationDbo : TranslationTableModel
+    public class MessageTranslationDbo : TranslationTableModel
     {
         [Column("Html")]
         public virtual string Html { get; set; }

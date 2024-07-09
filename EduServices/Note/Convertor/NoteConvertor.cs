@@ -9,7 +9,11 @@ namespace Services.Note.Convertor
 {
     public class NoteConvertor(IConfiguration configuration) : INoteConvertor
     {
-        private readonly string _fileRepositoryPath = string.Format("{0}{1}/", configuration.GetSection(ConfigValue.FILE_SERVER_URL).Value, ConfigValue.NOTE);
+        private readonly string _fileRepositoryPath = string.Format(
+            "{0}{1}/",
+            configuration.GetSection(ConfigValue.FILE_SERVER_URL).Value,
+            ConfigValue.NOTE
+        );
 
         public NoteDbo ConvertToBussinessEntity(NoteCreateDto addNoteDto, string culture)
         {
@@ -29,7 +33,7 @@ namespace Services.Note.Convertor
             return entity;
         }
 
-        public HashSet<NoteListDto> ConvertToWebModel(HashSet<NoteDbo> getMyNotes, string culture)
+        public List<NoteListDto> ConvertToWebModel(List<NoteDbo> getMyNotes, string culture)
         {
             return getMyNotes
                 .Select(x => new NoteListDto()
@@ -38,7 +42,7 @@ namespace Services.Note.Convertor
                     NoteName = x.NoteName,
                     NoteType = x.NoteType.SystemIdentificator,
                 })
-                .ToHashSet();
+                .ToList();
         }
 
         public NoteDetailDto ConvertToWebModel(NoteDbo getNoteDetail, string culture)

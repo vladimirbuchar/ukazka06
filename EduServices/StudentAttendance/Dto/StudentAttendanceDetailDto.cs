@@ -13,8 +13,8 @@ namespace Services.StudentAttendance.Dto
             StudentAttendance = [];
         }
 
-        public HashSet<CourseTermTimeTableListDto> TimeTable { get; set; }
-        public HashSet<StudentInCourseTermDto> Student { get; set; }
-        public HashSet<StudentAttendanceDto> StudentAttendance { get; set; }
+        public List<CourseTermTimeTableListDto> TimeTable { get; set; }
+        public List<StudentInCourseTermDto> Student { get; set; }
+        public List<StudentAttendanceDto> StudentAttendance { get; set; }
     }
 }

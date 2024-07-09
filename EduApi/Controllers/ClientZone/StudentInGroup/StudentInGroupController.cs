@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.OrganizationRole.Service;
 using Services.StudentInGroup.Dto;
+using Services.StudentInGroup.Filter;
 using Services.StudentInGroup.Service;
 
 namespace EduApi.Controllers.ClientZone.StudentInGroup;
@@ -15,7 +16,11 @@ public class StudentInGroupController : BaseClientZoneController
 {
     private readonly IStudentInGroupService _studentInGroupService;
 
-    public StudentInGroupController(IStudentInGroupService studentInGroupService, ILogger<StudentInGroupController> logger, IOrganizationRoleService organizationRoleService)
+    public StudentInGroupController(
+        IStudentInGroupService studentInGroupService,
+        ILogger<StudentInGroupController> logger,
+        IOrganizationRoleService organizationRoleService
+    )
         : base(logger, organizationRoleService)
     {
         _studentInGroupService = studentInGroupService;
@@ -31,8 +36,8 @@ public class StudentInGroupController : BaseClientZoneController
     {
         try
         {
-            CheckOrganizationPermition(_studentInGroupService.GetOrganizationIdByObjectId(addStudentToGroupDto.StudentGroupId));
-            addStudentToGroupDto.OrganizationId = _studentInGroupService.GetOrganizationIdByObjectId(addStudentToGroupDto.StudentGroupId);
+            CheckOrganizationPermition(_studentInGroupService.GetOrganizationIdByParentId(addStudentToGroupDto.StudentGroupId));
+            addStudentToGroupDto.OrganizationId = _studentInGroupService.GetOrganizationIdByParentId(addStudentToGroupDto.StudentGroupId);
             return SendResponse(_studentInGroupService.AddObject(addStudentToGroupDto, GetLoggedUserId(), GetClientCulture()));
         }
         catch (Exception e)
@@ -47,12 +52,14 @@ public class StudentInGroupController : BaseClientZoneController
     [ProducesResponseType(typeof(SystemError), 500)]
     [ProducesResponseType(typeof(Result), 400)]
     [ProducesResponseType(typeof(void), 403)]
-    public ActionResult List([FromQuery] ListDeletedRequestDto requestDto)
+    public ActionResult List([FromQuery] ListDeletedRequestDto requestDto, [FromQuery] StudentInGroupFilter filter)
     {
         try
         {
-            CheckOrganizationPermition(_studentInGroupService.GetOrganizationIdByObjectId(requestDto.ParentId));
-            return SendResponse(_studentInGroupService.GetList(x => x.StudentGroupId == requestDto.ParentId, requestDto.IsDeleted));
+            CheckOrganizationPermition(_studentInGroupService.GetOrganizationIdByParentId(requestDto.ParentId));
+            return SendResponse(
+                _studentInGroupService.GetList(x => x.StudentGroupId == requestDto.ParentId, requestDto.IsDeleted, GetClientCulture(), filter)
+            );
         }
         catch (Exception e)
         {
@@ -66,7 +73,7 @@ public class StudentInGroupController : BaseClientZoneController
     [ProducesResponseType(typeof(SystemError), 500)]
     [ProducesResponseType(typeof(Result), 400)]
     [ProducesResponseType(typeof(void), 403)]
-    public ActionResult Delete(DeleteDto delete)
+    public ActionResult Delete([FromQuery] DeleteDto delete)
     {
         try
         {
