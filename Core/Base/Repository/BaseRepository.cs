@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
+using Model;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
-using Model;
+using System.Web.Helpers;
 
 namespace Core.Base.Repository
 {
@@ -172,8 +173,7 @@ namespace Core.Base.Repository
         /// <returns></returns>
         public virtual Model GetEntity(Guid id)
         {
-            IQueryable<Model> query = PrepareDetailQuery();
-            return query.FirstOrDefault(x => x.Id == id);
+            return PrepareDetailQuery().FirstOrDefault(x => x.Id == id);
         }
 
         /// <summary>
@@ -194,23 +194,25 @@ namespace Core.Base.Repository
         /// <returns></returns>
         public virtual Model GetEntity(bool deleted, Expression<Func<Model, bool>> predicate = null)
         {
-            IQueryable<Model> query = _dbContext.Set<Model>();
-            return query.Where(x => x.IsDeleted == deleted).FirstOrDefault(predicate);
+            return PrepareDetailQuery().Where(x => x.IsDeleted == deleted).FirstOrDefault(predicate);
         }
 
         protected IQueryable<Model> PrepareOrderBy(
             IQueryable<Model> query,
             Expression<Func<Model, object>> orderBy = null,
-            Expression<Func<Model, object>> orderByDesc = null
+            SortDirection sortDirection = SortDirection.Ascending
         )
         {
-            if (orderBy != null && orderByDesc == null)
+            if (orderBy != null)
             {
-                query = query.OrderBy(orderBy);
-            }
-            else if (orderByDesc != null && orderBy == null)
-            {
-                query = query.OrderByDescending(orderByDesc);
+                if (sortDirection == SortDirection.Ascending)
+                {
+                    query = query.OrderBy(orderBy);
+                }
+                if (sortDirection == SortDirection.Descending)
+                {
+                    query = query.OrderByDescending(orderBy);
+                }
             }
             return query;
         }
@@ -265,14 +267,14 @@ namespace Core.Base.Repository
             Expression<Func<Model, bool>> predicate = null,
             Expression<Func<Model, bool>> customPredicate = null,
             Expression<Func<Model, object>> orderBy = null,
-            Expression<Func<Model, object>> orderByDesc = null,
+            SortDirection sortDirection = SortDirection.Ascending,
             int page = 0,
             int itemCount = 0
         )
         {
             IQueryable<Model> query = PrepareListQuery();
             query = PrepareWhere(query, deleted, predicate, customPredicate);
-            query = PrepareOrderBy(query, orderBy, orderByDesc);
+            query = PrepareOrderBy(query, orderBy, sortDirection);
             query = PrepareLimit(query, page, itemCount);
             return await query.ToListAsync();
         }

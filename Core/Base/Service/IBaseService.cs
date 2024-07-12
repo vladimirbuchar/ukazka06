@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Web.Helpers;
 using Core.Base.Dto;
-using Core.Base.Request;
+using Core.Base.Filter;
+using Core.Base.Paging;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Http;
 using Model;
@@ -51,7 +53,15 @@ namespace Core.Base.Service
         Result<Detail> AddObject(Create addObject, Guid userId, string culture);
         Result DeleteObject(Guid objectId, Guid userId);
         Result MultipleDelete(Expression<Func<Model, bool>> predicate, Guid userId);
-        List<ObjectList> GetList(Expression<Func<Model, bool>> predicate = null, bool deleted = false, string culture = "", Filter filter = null);
+        List<ObjectList> GetList(
+            Expression<Func<Model, bool>> predicate = null,
+            bool deleted = false,
+            string culture = "",
+            Filter filter = null,
+            string sortColumn = "",
+            SortDirection sortDirection = SortDirection.Ascending,
+            BasePaging paging = null
+        );
         List<ObjectList> GetList();
         List<ObjectList> GetList(string culture = "", Filter filter = null);
         List<ObjectList> GetList(bool deleted = false, string culture = "");

@@ -1,5 +1,5 @@
-﻿using Core.Base.Dto;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Core.Base.Dto;
 
 namespace Services.SystemService.SendMailService.Dto
 {
@@ -19,9 +19,9 @@ namespace Services.SystemService.SendMailService.Dto
         public string PlainTextBody { get; set; }
         public List<SendMaiDetailAttachmentsDto> Attagments { get; set; } = [];
     }
+
     public class SendMaiDetailAttachmentsDto
     {
         public string Attachment { get; set; }
     }
-
 }

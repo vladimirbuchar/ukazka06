@@ -1,4 +1,7 @@
-﻿using Core.Base.Repository.CodeBookRepository;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Service;
 using Core.DataTypes;
 using Model.CodeBook;
@@ -7,15 +10,14 @@ using Model.Edu.SendEmailAttachment;
 using Repository.SendEmailRepository;
 using Services.SystemService.SendMailService.Convertor;
 using Services.SystemService.SendMailService.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.SystemService.SendMailService.Service
 {
-    public class SendMailService(ISendEmailRepository emailRepository, ICodeBookRepository<EduEmailDbo> codeBookRepository, ISendMailConvertor sendMailConvertor)
-        : BaseService<ISendEmailRepository, SendEmailDbo, ISendMailConvertor>(emailRepository, sendMailConvertor),
-            ISendMailService
+    public class SendMailService(
+        ISendEmailRepository emailRepository,
+        ICodeBookRepository<EduEmailDbo> codeBookRepository,
+        ISendMailConvertor sendMailConvertor
+    ) : BaseService<ISendEmailRepository, SendEmailDbo, ISendMailConvertor>(emailRepository, sendMailConvertor), ISendMailService
     {
         private readonly ICodeBookRepository<EduEmailDbo> _email = codeBookRepository;
 
@@ -81,6 +83,7 @@ namespace Services.SystemService.SendMailService.Service
                 );
             }
         }
+
         public List<SendMailListDto> GetList(Guid orgranizationId)
         {
             return _convertor.ConvertToWebModel(_repository.GetEntities(false, x => x.OrganizationId == orgranizationId).Result);

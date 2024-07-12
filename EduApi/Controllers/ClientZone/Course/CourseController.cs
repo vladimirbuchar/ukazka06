@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
+using Core.Base.Paging;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.Course.Dto;
+using Services.Course.Filter;
 using Services.Course.Service;
+using Services.Course.Sort;
 using Services.OrganizationRole.Service;
+using System;
+using System.Collections.Generic;
+using System.Web.Helpers;
 
 namespace EduApi.Controllers.ClientZone.Course
 {
@@ -45,12 +49,15 @@ namespace EduApi.Controllers.ClientZone.Course
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult List([FromQuery] ListDeletedRequestDto request)
+        public ActionResult List([FromQuery] ListDeletedRequestDto request, [FromQuery] CourseFilter filter,
+            [FromQuery] SortDirection sortDirection,
+            [FromQuery] CourseSort sortColum,
+            [FromQuery] BasePaging paging)
         {
             try
             {
                 CheckOrganizationPermition(request.ParentId);
-                return SendResponse(_courseService.GetList(x => x.OrganizationId == request.ParentId, request.IsDeleted, GetClientCulture()));
+                return SendResponse(_courseService.GetList(x => x.OrganizationId == request.ParentId, request.IsDeleted, GetClientCulture(), filter, sortColum.ToString(), sortDirection, paging));
             }
             catch (Exception e)
             {

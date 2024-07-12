@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web.Helpers;
 using Core.Base.Dto;
+using Core.Base.Paging;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.Certificate.Dto;
 using Services.Certificate.Filter;
 using Services.Certificate.Service;
+using Services.Certificate.Sort;
 using Services.OrganizationRole.Service;
 
 namespace EduApi.Controllers.ClientZone.Certificate
@@ -51,13 +54,27 @@ namespace EduApi.Controllers.ClientZone.Certificate
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult List([FromQuery] ListDeletedRequestDto request, [FromQuery] CertificateFilter filter)
+        public ActionResult List(
+            [FromQuery] ListDeletedRequestDto request,
+            [FromQuery] CertificateFilter filter,
+            [FromQuery] SortDirection sortDirection,
+            [FromQuery] CertificateSort sortColum,
+            [FromQuery] BasePaging paging
+        )
         {
             try
             {
                 CheckOrganizationPermition(request.ParentId);
                 return SendResponse(
-                    _certificateService.GetList(x => x.OrganizationId == request.ParentId, request.IsDeleted, GetClientCulture(), filter)
+                    _certificateService.GetList(
+                        x => x.OrganizationId == request.ParentId,
+                        request.IsDeleted,
+                        GetClientCulture(),
+                        filter,
+                        sortColum.ToString(),
+                        sortDirection,
+                        paging
+                    )
                 );
             }
             catch (Exception e)

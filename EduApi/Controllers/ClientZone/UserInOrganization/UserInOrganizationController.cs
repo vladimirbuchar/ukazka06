@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web.Helpers;
 using Core.Base.Dto;
+using Core.Base.Paging;
 using Core.Constants;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +11,9 @@ using Services.Course.Service;
 using Services.OrganizationRole.Dto;
 using Services.OrganizationRole.Service;
 using Services.UserInOrganization.Dto;
+using Services.UserInOrganization.Filter;
 using Services.UserInOrganization.Service;
+using Services.UserInOrganization.Sort;
 
 namespace EduApi.Controllers.ClientZone.UserInOrganization
 {
@@ -54,12 +58,28 @@ namespace EduApi.Controllers.ClientZone.UserInOrganization
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult List([FromQuery] ListDeletedRequestDto list)
+        public ActionResult List(
+            [FromQuery] ListDeletedRequestDto list,
+            [FromQuery] UserInOrganizationFilter filter,
+            [FromQuery] SortDirection sortDirection,
+            [FromQuery] UserInOrganizationSort sortColum,
+            [FromQuery] BasePaging paging
+        )
         {
             try
             {
                 CheckOrganizationPermition(list.ParentId);
-                return SendResponse(_userInOrganizationService.GetList(x => x.OrganizationId == list.ParentId, list.IsDeleted));
+                return SendResponse(
+                    _userInOrganizationService.GetList(
+                        x => x.OrganizationId == list.ParentId,
+                        list.IsDeleted,
+                        GetClientCulture(),
+                        filter,
+                        sortColum.ToString(),
+                        sortDirection,
+                        paging
+                    )
+                );
             }
             catch (Exception e)
             {

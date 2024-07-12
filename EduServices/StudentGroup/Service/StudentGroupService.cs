@@ -1,12 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Core.Base.Service;
+﻿using Core.Base.Service;
 using Model.Edu.StudentGroup;
 using Repository.StudentGroupRepository;
 using Services.StudentGroup.Convertor;
 using Services.StudentGroup.Dto;
 using Services.StudentGroup.Filter;
+using Services.StudentGroup.Sort;
 using Services.StudentGroup.Validator;
+using System;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace Services.StudentGroup.Service
 {
@@ -28,15 +30,42 @@ namespace Services.StudentGroup.Service
         >(studentGroupRepository, studentGroupConvertor, validator),
             IStudentGroupService
     {
-        protected override List<StudentGroupDbo> PrepareMemoryFilter(List<StudentGroupDbo> entities, StudentGroupFilter filter, string culture)
+        protected override Expression<Func<StudentGroupDbo, bool>> PrepareSqlFilter(StudentGroupFilter filter, string culture)
         {
-            if (!string.IsNullOrEmpty(filter.Name))
+            ParameterExpression parameter = Expression.Parameter(typeof(StudentGroupDbo), "studentGroup");
+            Expression expression = Expression.Constant(true); // Start with a true expression
+            expression = FilterTranslation<StudentGroupTranslationDbo>(
+                filter.Name,
+                culture,
+                parameter,
+                expression,
+                nameof(StudentGroupTranslationDbo.Name),
+                nameof(StudentGroupTranslationDbo.Culture),
+                nameof(StudentGroupDbo.StudentGroupTranslations)
+            );
+            return Expression.Lambda<Func<StudentGroupDbo, bool>>(expression, parameter);
+        }
+
+        protected override Expression<Func<StudentGroupDbo, object>> PrepareSort(string columnName, string culture)
+        {
+            if (columnName == StudentGroupSort.Name.ToString())
             {
-                entities = entities
-                    .Where(x => x.StudentGroupTranslations.Any(y => y.Name.Contains(filter.Name) && y.Culture.SystemIdentificator == culture))
-                    .ToList();
+                ParameterExpression parameter = Expression.Parameter(typeof(StudentGroupDbo), "x");
+                MemberExpression property = Expression.Property(parameter, nameof(StudentGroupDbo.StudentGroupTranslations));
+                MethodCallExpression anyCall = Expression.Call(
+                    typeof(Enumerable),
+                    nameof(Enumerable.FirstOrDefault),
+                    new Type[] { typeof(StudentGroupTranslationDbo) },
+                    property
+                );
+                MemberExpression nameProperty = Expression.Property(anyCall, nameof(StudentGroupTranslationDbo.Name));
+                Expression<Func<StudentGroupDbo, object>> lambda = Expression.Lambda<Func<StudentGroupDbo, object>>(
+                    Expression.Convert(nameProperty, typeof(object)),
+                    parameter
+                );
+                return lambda;
             }
-            return entities;
+            return base.PrepareSort(columnName, culture);
         }
     }
 }

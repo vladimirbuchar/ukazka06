@@ -1,7 +1,7 @@
-﻿using Core.Base.Convertor;
+﻿using System.Collections.Generic;
+using Core.Base.Convertor;
 using Model.Edu.SendEmail;
 using Services.SystemService.SendMailService.Dto;
-using System.Collections.Generic;
 
 namespace Services.SystemService.SendMailService.Convertor
 {

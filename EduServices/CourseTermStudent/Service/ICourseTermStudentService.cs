@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Core.Base.Request;
+using Core.Base.Filter;
 using Core.Base.Service;
 using Model.Link;
 using Services.CourseTermStudent.Dto;

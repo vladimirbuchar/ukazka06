@@ -7,9 +7,9 @@ using Services.CourseLessonItem.Dto;
 
 namespace Services.CourseLessonItem.Convertor
 {
-    public class CourseLessonItemConvertor(ICodeBookRepository<CultureDbo> codeBookService) : ICourseLessonItemConvertor
+    public class CourseLessonItemConvertor(ICodeBookRepository<CultureDbo> codeBookRepository) : ICourseLessonItemConvertor
     {
-        private readonly List<CultureDbo> _cultureList = codeBookService.GetEntities(false).Result;
+        private readonly List<CultureDbo> _cultureList = codeBookRepository.GetEntities(false).Result;
 
         public CourseLessonItemDbo ConvertToBussinessEntity(CourseLessonItemCreateDto addCourseLessonItemDto, string culture)
         {

@@ -1,20 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using Core.Constants;
+﻿using Core.Constants;
 using Core.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Services.OrganizationRole.Service;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 
 namespace EduApi.Controllers.ClientZone
 {
     [Route("api/clientzone/[controller]/[action]")]
     [Authorize(Policy = "ClientPolicy")]
-    [ApiExplorerSettings(GroupName = "ClientZone")]
+    [ApiExplorerSettings(GroupName = "Course")]
     public class BaseClientZoneController : BaseController
     {
         private readonly IOrganizationRoleService _organizationRoleService;

@@ -1,18 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Core.Base.Repository.CodeBookRepository;
-using Core.Constants;
-using Microsoft.Extensions.Configuration;
+﻿using Core.Base.Repository.CodeBookRepository;
 using Model.CodeBook;
 using Model.Edu.Answer;
 using Services.Answer.Dto;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Services.Answer.Convertor
 {
-    public class AnswerConvertor(IConfiguration configuration, ICodeBookRepository<CultureDbo> codeBookService) : IAnswerConvertor
+    public class AnswerConvertor(ICodeBookRepository<CultureDbo> codeBookRepository) : IAnswerConvertor
     {
-        private readonly IConfiguration _configuration = configuration;
-        private readonly List<CultureDbo> _cultureList = codeBookService.GetEntities(false).Result;
+        private readonly List<CultureDbo> _cultureList = codeBookRepository.GetEntities(false).Result;
 
         public AnswerDbo ConvertToBussinessEntity(AnswerCreateDto addAnswerDto, string culture)
         {
@@ -43,18 +40,7 @@ namespace Services.Answer.Convertor
                 {
                     Answer = item.TestQuestionAnswerTranslations.FindTranslation(culture)?.Answer,
                     Id = item.Id,
-                    IsTrueAnswer = item.IsTrueAnswer,
-                    FileId = item.AnswerFileRepository.FindTranslation(culture)?.Id,
-                    FileName = item.AnswerFileRepository.FindTranslation(culture)?.OriginalFileName,
-                    PreivewUrl =
-                        item.AnswerFileRepository == null
-                            ? ""
-                            : string.Format(
-                                "{0}{1}/{2}",
-                                _configuration.GetSection(ConfigValue.FILE_SERVER_URL).Value,
-                                item?.AnswerFileRepository?.FindTranslation(culture)?.Id,
-                                item.AnswerFileRepository.FindTranslation(culture)?.FileName
-                            )
+                    IsTrueAnswer = item.IsTrueAnswer
                 })
                 .ToList();
         }

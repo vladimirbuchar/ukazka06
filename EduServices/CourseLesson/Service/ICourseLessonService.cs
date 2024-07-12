@@ -1,5 +1,5 @@
 ﻿using System;
-using Core.Base.Request;
+using Core.Base.Filter;
 using Core.Base.Service;
 using Core.DataTypes;
 using Model.Edu.CourseLesson;

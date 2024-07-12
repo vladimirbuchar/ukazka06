@@ -34,7 +34,9 @@ namespace Repository.QuestionRepository
                 .ThenInclude(x => x.BankOfQuestionsTranslations.Where(x => x.IsDeleted == false))
                 .ThenInclude(x => x.Culture)
                 .Include(x => x.BankOfQuestion)
-                .ThenInclude(x => x.Organization);
+                .ThenInclude(x => x.Organization)
+                .Include(x => x.AnswerMode)
+                .Include(x => x.QuestionMode);
         }
 
         public override Guid GetOrganizationId(Guid objectId)

@@ -1,4 +1,4 @@
-﻿namespace Core.Base.Request
+﻿namespace Core.Base.Filter
 {
     public class FilterRequest { }
 }

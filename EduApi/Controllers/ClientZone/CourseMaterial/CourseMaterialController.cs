@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,9 +7,12 @@ using Model.Edu.CourseMaterial;
 using Services.CourseMaterial.Dto;
 using Services.CourseMaterial.Service;
 using Services.OrganizationRole.Service;
+using System;
+using System.Collections.Generic;
 
 namespace EduApi.Controllers.ClientZone.CourseMaterial
 {
+    [ApiExplorerSettings(GroupName = "CourseMaterial")]
     public class CourseMaterialController : BaseClientZoneController
     {
         private readonly ICourseMaterialService _courseMaterialService;

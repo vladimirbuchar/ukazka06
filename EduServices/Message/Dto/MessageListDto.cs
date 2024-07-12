@@ -7,6 +7,7 @@ namespace Services.Message.Dto
     {
         public string Name { get; set; }
         public Guid SendMessageTypeId { get; set; }
+        public string SendMessageTypeName { get; set; }
         public string Reply { get; set; }
     }
 }

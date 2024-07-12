@@ -1,4 +1,4 @@
-﻿using Core.Base.Request;
+﻿using Core.Base.Filter;
 using Core.Base.Service;
 using Model.Edu.StudentEvaluation;
 using Services.StudentEvaluation.Dto;

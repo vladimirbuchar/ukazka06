@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
+﻿using Core.Base.Paging;
 using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Service;
 using Core.DataTypes;
@@ -12,6 +9,11 @@ using Services.OrganizationStudyHour.Convertor;
 using Services.OrganizationStudyHour.Dto;
 using Services.OrganizationStudyHour.Filter;
 using Services.OrganizationStudyHour.Validator;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Web.Helpers;
 
 namespace Services.OrganizationStudyHour.Service
 {
@@ -54,12 +56,15 @@ namespace Services.OrganizationStudyHour.Service
             Expression<Func<OrganizationStudyHourDbo, bool>> predicate = null,
             bool deleted = false,
             string culture = "",
-            OrganizationStudyHourFilter filter = null
+            OrganizationStudyHourFilter filter = null,
+            string sortColumn = "",
+            SortDirection sortDirection = SortDirection.Ascending,
+            BasePaging paging = null
         )
         {
             return _convertor.ConvertToWebModel(
-                [.. _repository.GetEntities(deleted, predicate, PrepareSqlFilter(filter, culture), x => x.Position).Result],
-                string.Empty
+                [.. _repository.GetEntities(deleted, predicate, PrepareSqlFilter(filter, culture), PrepareSort(sortColumn, culture), sortDirection).Result],
+                culture
             );
         }
 

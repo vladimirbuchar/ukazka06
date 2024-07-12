@@ -8,9 +8,9 @@ using Services.Question.Dto;
 
 namespace Services.Question.Convertor
 {
-    public class QuestionConvertor(ICodeBookRepository<CultureDbo> codeBookService) : IQuestionConvertor
+    public class QuestionConvertor(ICodeBookRepository<CultureDbo> codeBookRepository) : IQuestionConvertor
     {
-        private readonly List<CultureDbo> _cultureList = codeBookService.GetEntities(false).Result;
+        private readonly List<CultureDbo> _cultureList = codeBookRepository.GetEntities(false).Result;
 
         public QuestionDbo ConvertToBussinessEntity(QuestionCreateDto addQuestionDto, string culture)
         {
@@ -39,11 +39,12 @@ namespace Services.Question.Convertor
             return getQuestionsInBanks
                 .Select(item => new QuestionListDto()
                 {
-                    AnswerMode = item.AnswerModeId,
+                    AnswerModeId = item.AnswerModeId,
                     Id = item.Id,
                     Question = item.TestQuestionTranslation?.FindTranslation(culture)?.Question,
-                    BankOfQuestionName = item.BankOfQuestion.BankOfQuestionsTranslations?.FindTranslation(culture)?.Name,
-                    BankOfQuestionId = item.BankOfQuestionId
+                    AnswerModeName = item.AnswerMode.Name,
+                    QuestionModeId = item.QuestionModeId,
+                    QuestionModeName = item.QuestionMode.Name
                 })
                 .ToList();
         }
@@ -57,16 +58,8 @@ namespace Services.Question.Convertor
                 Question = getQuestionDetail.TestQuestionTranslation.FindTranslation(culture).Question,
                 BankOfQuestionId = getQuestionDetail.BankOfQuestionId,
                 QuestionModeId = getQuestionDetail.QuestionModeId,
-                FileId = getQuestionDetail
-                    .QuestionFileRepositories.FirstOrDefault(x =>
-                        x.QuestionId == getQuestionDetail.Id && x.Culture.SystemIdentificator == culture && x.IsDeleted == false
-                    )
-                    .Id,
-                OriginalFileName = getQuestionDetail
-                    .QuestionFileRepositories.FirstOrDefault(x =>
-                        x.QuestionId == getQuestionDetail.Id && x.Culture.SystemIdentificator == culture && x.IsDeleted == false
-                    )
-                    .OriginalFileName
+                FileId = getQuestionDetail.QuestionFileRepositories.FindTranslation(culture)?.Id,
+                OriginalFileName = getQuestionDetail.QuestionFileRepositories.FindTranslation(culture)?.OriginalFileName
             };
         }
     }

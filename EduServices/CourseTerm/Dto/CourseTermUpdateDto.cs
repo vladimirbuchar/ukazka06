@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Core.Base.Dto;
+using System;
 using System.Collections.Generic;
-using Core.Base.Dto;
 
 namespace Services.CourseTerm.Dto
 {
@@ -24,9 +24,9 @@ namespace Services.CourseTerm.Dto
         public bool Sunday { get; set; }
         public Guid TimeFromId { get; set; }
         public Guid TimeToId { get; set; }
-        public List<string> Lector { get; set; }
-        public List<string> StudentGroup { get; set; }
-        public string OrganizationStudyHourId { get; set; }
+        public List<Guid> Lector { get; set; }
+        public List<Guid> StudentGroup { get; set; }
+        public Guid? OrganizationStudyHourId { get; set; }
         public Guid OrganizationId { get; set; }
     }
 }

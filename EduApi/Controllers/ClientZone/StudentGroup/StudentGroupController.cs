@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web.Helpers;
 using Core.Base.Dto;
+using Core.Base.Paging;
 using Core.DataTypes;
 using EduApi.Controllers.ClientZone.StudentInGroup;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +11,7 @@ using Services.OrganizationRole.Service;
 using Services.StudentGroup.Dto;
 using Services.StudentGroup.Filter;
 using Services.StudentGroup.Service;
+using Services.StudentGroup.Sort;
 
 namespace EduApi.Controllers.ClientZone.StudentGroup
 {
@@ -52,13 +55,27 @@ namespace EduApi.Controllers.ClientZone.StudentGroup
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult List([FromQuery] ListDeletedRequestDto reuest, [FromQuery] StudentGroupFilter filter)
+        public ActionResult List(
+            [FromQuery] ListDeletedRequestDto reuest,
+            [FromQuery] StudentGroupFilter filter,
+            [FromQuery] SortDirection sortDirection,
+            [FromQuery] StudentGroupSort sortColum,
+            [FromQuery] BasePaging paging
+        )
         {
             try
             {
                 CheckOrganizationPermition(reuest.ParentId);
                 return SendResponse(
-                    _studentGroupService.GetList(x => x.OrganizationId == reuest.ParentId, reuest.IsDeleted, GetClientCulture(), filter)
+                    _studentGroupService.GetList(
+                        x => x.OrganizationId == reuest.ParentId,
+                        reuest.IsDeleted,
+                        GetClientCulture(),
+                        filter,
+                        sortColum.ToString(),
+                        sortDirection,
+                        paging
+                    )
                 );
             }
             catch (Exception e)

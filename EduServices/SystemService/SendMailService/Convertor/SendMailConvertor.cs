@@ -1,7 +1,7 @@
-﻿using Model.Edu.SendEmail;
-using Services.SystemService.SendMailService.Dto;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Model.Edu.SendEmail;
+using Services.SystemService.SendMailService.Dto;
 
 namespace Services.SystemService.SendMailService.Convertor
 {
@@ -9,20 +9,22 @@ namespace Services.SystemService.SendMailService.Convertor
     {
         public List<SendMailListDto> ConvertToWebModel(List<SendEmailDbo> sendEmail)
         {
-            return sendEmail.Select(x => new SendMailListDto()
-            {
-                Id = x.Id,
-                EmailFrom = x.EmailFrom,
-                EmailTo = x.EmailTo,
-                EmailFromName = x.EmailFromName,
-                EmailToName = x.EmailToName,
-                ErrorMessage = x.ErrorMessage,
-                IsError = x.IsError,
-                IsHtml = x.IsHtml,
-                IsSended = x.IsSended,
-                Reply = x.Reply,
-                Subject = x.Subject
-            }).ToList();
+            return sendEmail
+                .Select(x => new SendMailListDto()
+                {
+                    Id = x.Id,
+                    EmailFrom = x.EmailFrom,
+                    EmailTo = x.EmailTo,
+                    EmailFromName = x.EmailFromName,
+                    EmailToName = x.EmailToName,
+                    ErrorMessage = x.ErrorMessage,
+                    IsError = x.IsError,
+                    IsHtml = x.IsHtml,
+                    IsSended = x.IsSended,
+                    Reply = x.Reply,
+                    Subject = x.Subject
+                })
+                .ToList();
         }
 
         public SendMaiDetailDto ConvertToWebModel(SendEmailDbo sendEmail)
@@ -41,10 +43,7 @@ namespace Services.SystemService.SendMailService.Convertor
                 Reply = sendEmail.Reply,
                 Subject = sendEmail.Subject,
                 Body = sendEmail.Body,
-                Attagments = sendEmail.SendEmailAttachments.Select(y => new SendMaiDetailAttachmentsDto()
-                {
-                    Attachment = y.Attachment
-                }).ToList(),
+                Attagments = sendEmail.SendEmailAttachments.Select(y => new SendMaiDetailAttachmentsDto() { Attachment = y.Attachment }).ToList(),
                 PlainTextBody = sendEmail.PlainTextBody
             };
         }

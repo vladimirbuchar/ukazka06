@@ -514,7 +514,6 @@ namespace Services.CourseStudy.Service
             evaluateTest.IsAutomatic = evaluateTestResult.IsAutomaticEvaluate;
             evaluateTest.IsSucess = evaluateTestResult.IsSucess;
             evaluateTest.Score = evaluateTestResult.Score;
-
             return evaluateTest;
         }
 

@@ -7,9 +7,9 @@ using Services.Certificate.Dto;
 
 namespace Services.Certificate.Convertor
 {
-    public class CertificateConvertor(ICodeBookRepository<CultureDbo> codeBookService) : ICertificateConvertor
+    public class CertificateConvertor(ICodeBookRepository<CultureDbo> codeBookRepository) : ICertificateConvertor
     {
-        private readonly List<CultureDbo> _cultureList = codeBookService.GetEntities(false).Result;
+        private readonly List<CultureDbo> _cultureList = codeBookRepository.GetEntities(false).Result;
 
         public CertificateDbo ConvertToBussinessEntity(CertificateCreateDto addCertificateDto, string culture)
         {

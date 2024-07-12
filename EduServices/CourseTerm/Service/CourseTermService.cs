@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Core.Base.Request;
+﻿using Core.Base.Filter;
 using Core.Base.Service;
 using Core.DataTypes;
 using Model.Edu.CourseTerm;
@@ -15,6 +12,9 @@ using Repository.StudentInGroupCourseTerm;
 using Services.CourseTerm.Convertor;
 using Services.CourseTerm.Dto;
 using Services.CourseTerm.Validator;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Services.CourseTerm.Service
 {
@@ -67,17 +67,17 @@ namespace Services.CourseTerm.Service
                 }
 
                 CourseTermDbo entity = _repository.CreateEntity(addCourseTerm, userId);
-                foreach (string item in addObject.Lector)
+                foreach (Guid item in addObject.Lector)
                 {
                     _ = _courseLectorRepository.CreateEntity(
-                        new CourseLectorDbo() { CourseTermId = entity.Id, UserInOrganizationId = Guid.Parse(item) },
+                        new CourseLectorDbo() { CourseTermId = entity.Id, UserInOrganizationId = item },
                         Guid.Empty
                     );
                 }
-                foreach (string item in addObject.StudentGroup)
+                foreach (Guid item in addObject.StudentGroup)
                 {
                     _ = _studentInGroupCourseTermRepository.CreateEntity(
-                        new StudentInGroupCourseTermDbo() { CourseTermId = entity.Id, StudentGroupId = Guid.Parse(item) },
+                        new StudentInGroupCourseTermDbo() { CourseTermId = entity.Id, StudentGroupId = item },
                         Guid.Empty
                     );
                 }

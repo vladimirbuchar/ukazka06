@@ -1,4 +1,10 @@
-﻿using Core.Base.Request;
+﻿using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
+using Core.Base.Filter;
 using Core.Base.Service;
 using Core.Constants;
 using Core.DataTypes;
@@ -21,12 +27,6 @@ using Services.SystemService.SendMailService.Service;
 using Services.User.Convertor;
 using Services.User.Dto;
 using Services.User.Validator;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
 
 namespace Services.User.Service
 {

@@ -22,11 +22,13 @@ using Repository.UserRepository;
 using Services.StudentInGroup.Convertor;
 using Services.StudentInGroup.Dto;
 using Services.StudentInGroup.Filter;
+using Services.StudentInGroup.Sort;
 using Services.StudentInGroup.Validator;
 using Services.SystemService.SendMailService.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace Services.StudentInGroup.Service
 {
@@ -39,7 +41,7 @@ namespace Services.StudentInGroup.Service
         IStudentInGroupValidator validator,
         ISendMailService sendMailService,
         IConfiguration configuration,
-        ICodeBookRepository<NotificationTypeDbo> codeBookService,
+        ICodeBookRepository<NotificationTypeDbo> codeBookRepository,
         INotificationRepository notificationRepository,
         IRoleRepository roleRepository,
         IStudentInGroupRepository studentInGroupRepository,
@@ -64,7 +66,7 @@ namespace Services.StudentInGroup.Service
         private readonly IOrganizationSettingRepository _organizationSettingRepository = organizationSettingService;
         private readonly IUserRepository _userRepository = userRepository;
         private readonly INotificationRepository _notificationRepository = notificationRepository;
-        private readonly List<NotificationTypeDbo> _notificationTypes = codeBookService.GetEntities(false).Result;
+        private readonly List<NotificationTypeDbo> _notificationTypes = codeBookRepository.GetEntities(false).Result;
         private readonly IRoleRepository _roleRepository = roleRepository;
         private readonly IOrganizationRoleRepository _organizationRoleRepository = organizationRoleRepository;
         private readonly IStudentInGroupCourseTermRepository _studentInGroupCourseTermRepository = studentInGroupCourseTermRepository;
@@ -185,25 +187,93 @@ namespace Services.StudentInGroup.Service
             return _studentGroupRepository.GetOrganizationId(objectId);
         }
 
-        protected override List<StudentInGroupDbo> PrepareMemoryFilter(List<StudentInGroupDbo> entities, StudentInGroupFilter filter, string culture)
+        protected override Expression<Func<StudentInGroupDbo, bool>> PrepareSqlFilter(StudentInGroupFilter filter, string culture)
         {
-            if (!string.IsNullOrEmpty(filter.FirstName))
+            ParameterExpression parameter = Expression.Parameter(typeof(StudentInGroupDbo), "StudentInGroup");
+            Expression expression = Expression.Constant(true); // Start with a true expression
+            expression = FilterString(
+                filter.FirstName,
+                parameter,
+                expression,
+                nameof(StudentInGroupDbo.UserInOrganization),
+                nameof(StudentInGroupDbo.UserInOrganization.User),
+                nameof(StudentInGroupDbo.UserInOrganization.User.Person),
+                nameof(StudentInGroupDbo.UserInOrganization.User.Person.FirstName)
+            );
+            expression = FilterString(
+                filter.SecondName,
+                parameter,
+                expression,
+                nameof(StudentInGroupDbo.UserInOrganization),
+                nameof(StudentInGroupDbo.UserInOrganization.User),
+                nameof(StudentInGroupDbo.UserInOrganization.User.Person),
+                nameof(StudentInGroupDbo.UserInOrganization.User.Person.SecondName)
+            );
+            expression = FilterString(
+                filter.LastName,
+                parameter,
+                expression,
+                nameof(StudentInGroupDbo.UserInOrganization),
+                nameof(StudentInGroupDbo.UserInOrganization.User),
+                nameof(StudentInGroupDbo.UserInOrganization.User.Person),
+                nameof(StudentInGroupDbo.UserInOrganization.User.Person.LastName)
+            );
+            expression = FilterString(
+                filter.Email,
+                parameter,
+                expression,
+                nameof(StudentInGroupDbo.UserInOrganization),
+                nameof(StudentInGroupDbo.UserInOrganization.User),
+                nameof(StudentInGroupDbo.UserInOrganization.User.UserEmail)
+            );
+            return Expression.Lambda<Func<StudentInGroupDbo, bool>>(expression, parameter);
+        }
+
+        protected override Expression<Func<StudentInGroupDbo, object>> PrepareSort(string columnName, string culture)
+        {
+            ParameterExpression parameter = Expression.Parameter(typeof(StudentInGroupDbo), "x");
+            MemberExpression property = Expression.Property(parameter, nameof(StudentInGroupDbo.UserInOrganization));
+            MemberExpression property1 = Expression.Property(property, nameof(StudentInGroupDbo.UserInOrganization.User));
+            if (columnName == StudentInGroupSort.FirstName.ToString())
             {
-                entities = entities.Where(x => x.UserInOrganization.User.Person.FirstName == filter.FirstName).ToList();
+                MemberExpression property2 = Expression.Property(property1, nameof(StudentInGroupDbo.UserInOrganization.User.Person));
+                MemberExpression property3 = Expression.Property(property2, nameof(StudentInGroupDbo.UserInOrganization.User.Person.FirstName));
+                Expression<Func<StudentInGroupDbo, object>> lambda = Expression.Lambda<Func<StudentInGroupDbo, object>>(
+                    Expression.Convert(property3, typeof(object)),
+                    parameter
+                );
+                return lambda;
             }
-            if (!string.IsNullOrEmpty(filter.SecondName))
+            if (columnName == StudentInGroupSort.SecondName.ToString())
             {
-                entities = entities.Where(x => x.UserInOrganization.User.Person.SecondName == filter.SecondName).ToList();
+                MemberExpression property2 = Expression.Property(property1, nameof(StudentInGroupDbo.UserInOrganization.User.Person));
+                MemberExpression property3 = Expression.Property(property2, nameof(StudentInGroupDbo.UserInOrganization.User.Person.SecondName));
+                Expression<Func<StudentInGroupDbo, object>> lambda = Expression.Lambda<Func<StudentInGroupDbo, object>>(
+                    Expression.Convert(property3, typeof(object)),
+                    parameter
+                );
+                return lambda;
             }
-            if (!string.IsNullOrEmpty(filter.LastName))
+            if (columnName == StudentInGroupSort.LastName.ToString())
             {
-                entities = entities.Where(x => x.UserInOrganization.User.Person.LastName == filter.LastName).ToList();
+                MemberExpression property2 = Expression.Property(property1, nameof(StudentInGroupDbo.UserInOrganization.User.Person));
+                MemberExpression property3 = Expression.Property(property2, nameof(StudentInGroupDbo.UserInOrganization.User.Person.LastName));
+                Expression<Func<StudentInGroupDbo, object>> lambda = Expression.Lambda<Func<StudentInGroupDbo, object>>(
+                    Expression.Convert(property3, typeof(object)),
+                    parameter
+                );
+                return lambda;
             }
-            if (!string.IsNullOrEmpty(filter.Email))
+            if (columnName == StudentInGroupSort.Email.ToString())
             {
-                entities = entities.Where(x => x.UserInOrganization.User.UserEmail == filter.Email).ToList();
+                MemberExpression property2 = Expression.Property(property1, nameof(StudentInGroupDbo.UserInOrganization.User.UserEmail));
+                Expression<Func<StudentInGroupDbo, object>> lambda = Expression.Lambda<Func<StudentInGroupDbo, object>>(
+                    Expression.Convert(property2, typeof(object)),
+                    parameter
+                );
+                return lambda;
             }
-            return entities;
+            return base.PrepareSort(columnName, culture);
         }
     }
 }

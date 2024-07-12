@@ -1,7 +1,7 @@
-﻿using Core.Base.Request;
-using Core.Base.Service;
+﻿using Core.Base.Service;
 using Model.Edu.BankOfQuestions;
 using Services.BankOfQuestion.Dto;
+using Services.BankOfQuestion.Filter;
 
 namespace Services.BankOfQuestion.Service
 {
@@ -12,6 +12,6 @@ namespace Services.BankOfQuestion.Service
             BankOfQuestionListDto,
             BankOfQuestionDetailDto,
             BankOfQuestionUpdateDto,
-            FilterRequest
+            BankOfQuestionFilter
         > { }
 }

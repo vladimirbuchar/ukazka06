@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web.Helpers;
 using Core.Base.Dto;
+using Core.Base.Paging;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.ClassRoom.Dto;
 using Services.ClassRoom.Filter;
 using Services.ClassRoom.Service;
+using Services.ClassRoom.Sort;
 using Services.OrganizationRole.Service;
 
 namespace EduApi.Controllers.ClientZone.ClassRoom
@@ -51,7 +54,13 @@ namespace EduApi.Controllers.ClientZone.ClassRoom
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult List([FromQuery] ListDeletedRequestDto request, [FromQuery] ClassRoomFilter filter)
+        public ActionResult List(
+            [FromQuery] ListDeletedRequestDto request,
+            [FromQuery] ClassRoomFilter filter,
+            [FromQuery] SortDirection sortDirection,
+            [FromQuery] ClassRoomSort sortColum,
+            [FromQuery] BasePaging paging
+        )
         {
             try
             {
@@ -61,7 +70,10 @@ namespace EduApi.Controllers.ClientZone.ClassRoom
                         x => x.BranchId == request.ParentId && x.IsOnline == false,
                         request.IsDeleted,
                         GetClientCulture(),
-                        filter
+                        filter,
+                        sortColum.ToString(),
+                        sortDirection,
+                        paging
                     )
                 );
             }
@@ -153,12 +165,28 @@ namespace EduApi.Controllers.ClientZone.ClassRoom
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult GetAllClassRoomInOrganization([FromQuery] ListRequestDto list, [FromQuery] ClassRoomFilter filter)
+        public ActionResult GetAllClassRoomInOrganization(
+            [FromQuery] ListRequestDto list,
+            [FromQuery] ClassRoomFilter filter,
+            [FromQuery] SortDirection sortDirection,
+            [FromQuery] ClassRoomSort sortColum,
+            [FromQuery] BasePaging paging
+        )
         {
             try
             {
                 CheckOrganizationPermition(list.ParentId);
-                return SendResponse(_classRoomService.GetList(x => x.Branch.OrganizationId == list.ParentId, false, GetClientCulture(), filter));
+                return SendResponse(
+                    _classRoomService.GetList(
+                        x => x.Branch.OrganizationId == list.ParentId,
+                        false,
+                        GetClientCulture(),
+                        filter,
+                        sortColum.ToString(),
+                        sortDirection,
+                        paging
+                    )
+                );
             }
             catch (Exception e)
             {

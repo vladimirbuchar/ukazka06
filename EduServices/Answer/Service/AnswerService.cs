@@ -1,13 +1,19 @@
 ﻿using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Repository.FileRepository;
-using Core.Base.Request;
 using Core.Base.Service;
 using Model.CodeBook;
 using Model.Edu.Answer;
+using Model.Edu.Branch;
 using Repository.AnswerRepository;
+using Repository.QuestionRepository;
 using Services.Answer.Convertor;
 using Services.Answer.Dto;
+using Services.Answer.Filter;
+using Services.Answer.Sort;
 using Services.Answer.Validator;
+using System;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace Services.Answer.Service
 {
@@ -16,7 +22,8 @@ namespace Services.Answer.Service
         IAnswerConvertor answerConvertor,
         IAnswerValidator answerValidator,
         IFileUploadRepository<AnswerFileRepositoryDbo> fileUploadRepository,
-        ICodeBookRepository<CultureDbo> codeBookRepository
+        ICodeBookRepository<CultureDbo> codeBookRepository,
+        IQuestionRepository questionRepository
     )
         : BaseService<
             IAnswerRepository,
@@ -28,15 +35,61 @@ namespace Services.Answer.Service
             AnswerDetailDto,
             AnswerUpdateDto,
             AnswerFileRepositoryDbo,
-            FilterRequest
+            AnswerFilter
         >(answerRepository, answerConvertor, answerValidator, fileUploadRepository, codeBookRepository),
             IAnswerService
     {
+        private readonly IQuestionRepository _questionRepository = questionRepository;
+
         protected override bool IsChanged(AnswerDbo oldVersion, AnswerUpdateDto newVersion, string culture)
         {
             return oldVersion.TestQuestionAnswerTranslations.FindTranslation(culture, true)?.Answer != newVersion.AnswerText
-                || newVersion.IsTrueAnswer != oldVersion.IsTrueAnswer
-                || newVersion.FileId != oldVersion.AnswerFileRepository.FindTranslation(culture, true)?.Id;
+                || newVersion.IsTrueAnswer != oldVersion.IsTrueAnswer;
+        }
+
+        public override Guid GetOrganizationIdByParentId(Guid objectId)
+        {
+            return _questionRepository.GetOrganizationId(objectId);
+        }
+
+        protected override Expression<Func<AnswerDbo, bool>> PrepareSqlFilter(AnswerFilter filter, string culture)
+        {
+            ParameterExpression parameter = Expression.Parameter(typeof(AnswerDbo), "answer");
+            Expression expression = Expression.Constant(true); // Start with a true expression
+            expression = FilterBool(filter.IsTrueAnswer, parameter, expression, nameof(AnswerDbo.IsTrueAnswer));
+            expression = FilterTranslation<AnswerTanslationDbo>(
+                filter.Answer,
+                culture,
+                parameter,
+                expression,
+                nameof(AnswerTanslationDbo.Answer),
+                nameof(AnswerTanslationDbo.Culture),
+                nameof(AnswerDbo.TestQuestionAnswerTranslations)
+            );
+            return Expression.Lambda<Func<AnswerDbo, bool>>(expression, parameter);
+        }
+
+        protected override Expression<Func<AnswerDbo, object>> PrepareSort(string columnName, string culture)
+        {
+            if (columnName == AnswerSort.Answer.ToString())
+            {
+                ParameterExpression parameter = Expression.Parameter(typeof(AnswerDbo), "x");
+                MemberExpression property = Expression.Property(parameter, nameof(AnswerDbo.TestQuestionAnswerTranslations));
+                MethodCallExpression anyCall = Expression.Call(
+                    typeof(Enumerable),
+                    nameof(Enumerable.FirstOrDefault),
+                    new Type[] { typeof(AnswerTanslationDbo) },
+                    property
+                );
+                MemberExpression nameProperty = Expression.Property(anyCall, nameof(AnswerTanslationDbo.Answer));
+                Expression<Func<AnswerDbo, object>> lambda = Expression.Lambda<Func<AnswerDbo, object>>(
+                    Expression.Convert(nameProperty, typeof(object)),
+                    parameter
+                );
+                return lambda;
+            }
+
+            return base.PrepareSort(columnName, culture);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Core.Base.Request;
+using Core.Base.Filter;
 
 namespace Services.Branch.Filter
 {

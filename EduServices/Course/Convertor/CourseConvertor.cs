@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Core.Base.Repository.CodeBookRepository;
+﻿using Core.Base.Repository.CodeBookRepository;
 using Model.CodeBook;
+using Model.Edu.Certificate;
 using Model.Edu.Course;
 using Model.Edu.CourseLesson;
-using Model.Edu.StudentTestSummary;
+using Model.Edu.CourseMaterial;
+using Model.Edu.Message;
 using Services.Course.Dto;
-using Services.CourseStudy.Dto;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Services.Course.Convertor
 {
@@ -70,7 +71,29 @@ namespace Services.Course.Convertor
         public List<CourseListDto> ConvertToWebModel(List<CourseDbo> getAllCourseInOrganizations, string culture)
         {
             return getAllCourseInOrganizations
-                .Select(item => new CourseListDto() { Id = item.Id, Name = item.CourseTranslations.FindTranslation(culture).Name, })
+                .Select(item => new CourseListDto()
+                {
+                    Id = item.Id,
+                    Name = item.CourseTranslations.FindTranslation(culture).Name,
+                    AutomaticGenerateCertificate = item.AutomaticGenerateCertificate,
+                    CertificateId = item.CertificateId.HasValue ? item.CertificateId.Value : null,
+                    CourseMaterialId = item.CourseMaterialId.HasValue ? item.CourseMaterialId.Value : null,
+                    CourseStatusId = item.CourseStatusId,
+                    CourseTypeId = item.CourseTypeId,
+                    CourseWithLector = item.CourseWithLector,
+                    IsPrivateCourse = item.IsPrivateCourse,
+                    MaximumStudent = item.MaximumStudent,
+                    MinimumStudent = item.MinimumStudent,
+                    Price = item.Price,
+                    Sale = item.Sale,
+                    SendEmail = item.SendEmail,
+                    SendMessageId = item.SendMessageId.HasValue ? item.SendMessageId.Value : null,
+                    CertificateName = item.Certificate?.CertificateTranslations.FindTranslation(culture).Name,
+                    CourseMaterialName = item.CourseMaterial?.CourseMaterialTranslation.FindTranslation(culture).Name,
+                    CourseTypeName = item.CourseType.Name,
+                    CouseStatusName = item.CourseStatus.Name,
+                    SendMessageName = item.SendMessage?.SendMessageTranslations.FindTranslation(culture).Subject
+                })
                 .ToList();
         }
 
@@ -99,21 +122,6 @@ namespace Services.Course.Convertor
             };
         }
 
-        public List<StudentTestListDto> ConvertToWebModel(List<StudentTestSummaryDbo> getStudentTests, string culture)
-        {
-            return getStudentTests
-                .Select(x => new StudentTestListDto()
-                {
-                    Finish = x.Finish.Value,
-                    Id = x.Id,
-                    Name = x.CourseTest.CourseLesson.CourseLessonTranslations.FindTranslation(culture).Name,
-                    Score = x.Score,
-                    TestCompleted = x.IsSucess,
-                    TestId = x.CourseTestId,
-                    CourseMaterialId = x.CourseTest.CourseLesson.CourseMaterialId,
-                    CourseId = x.CourseId
-                })
-                .ToList();
-        }
+
     }
 }

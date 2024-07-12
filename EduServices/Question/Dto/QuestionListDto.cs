@@ -6,8 +6,9 @@ namespace Services.Question.Dto
     public class QuestionListDto : ListDto
     {
         public string Question { get; set; }
-        public Guid AnswerMode { get; set; }
-        public string BankOfQuestionName { get; set; }
-        public Guid BankOfQuestionId { get; set; }
+        public Guid AnswerModeId { get; set; }
+        public string AnswerModeName { get; set; }
+        public Guid QuestionModeId { get; set; }
+        public string QuestionModeName { get; set; }
     }
 }

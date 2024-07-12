@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using System.Web.Helpers;
 using Model;
 
 namespace Core.Base.Repository
@@ -23,7 +24,7 @@ namespace Core.Base.Repository
             Expression<Func<Model, bool>> predicate = null,
             Expression<Func<Model, bool>> customPredicate = null,
             Expression<Func<Model, object>> orderBy = null,
-            Expression<Func<Model, object>> orderByDesc = null,
+            SortDirection sortDirection = SortDirection.Ascending,
             int page = 0,
             int itemCount = 0
         );

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Core.Base.Filter;
 using Core.Base.Repository.CodeBookRepository;
-using Core.Base.Request;
 using Core.Base.Service;
 using Core.Constants;
 using Core.DataTypes;
@@ -20,7 +20,7 @@ namespace Services.Note.Service
         INoteRepository noteRepository,
         INoteConvertor noteConvertor,
         IFileUploadService fileUploadService,
-        ICodeBookRepository<NoteTypeDbo> codeBookService,
+        ICodeBookRepository<NoteTypeDbo> codeBookRepository,
         INoteValidator validator
     )
         : BaseService<
@@ -37,7 +37,7 @@ namespace Services.Note.Service
             INoteService
     {
         private readonly IFileUploadService _fileUploadService = fileUploadService;
-        private readonly List<NoteTypeDbo> _noteType = codeBookService.GetEntities(false).Result;
+        private readonly List<NoteTypeDbo> _noteType = codeBookRepository.GetEntities(false).Result;
 
         public Result<NoteDetailDto> SaveTableAsNote(NoteCreateTableDto saveTableAsNoteDto, Guid userId, string culture)
         {

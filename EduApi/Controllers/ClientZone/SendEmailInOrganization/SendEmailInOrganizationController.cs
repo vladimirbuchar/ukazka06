@@ -1,12 +1,12 @@
-﻿using Core.Base.Dto;
+﻿using System;
+using System.Collections.Generic;
+using Core.Base.Dto;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.OrganizationRole.Service;
 using Services.SystemService.SendMailService.Dto;
 using Services.SystemService.SendMailService.Service;
-using System;
-using System.Collections.Generic;
 
 namespace EduApi.Controllers.ClientZone.SendMessage
 {
@@ -25,7 +25,6 @@ namespace EduApi.Controllers.ClientZone.SendMessage
             _sendMailService = sendMessageService;
         }
 
-
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<SendMailListDto>), 200)]
         [ProducesResponseType(typeof(void), 404)]
@@ -37,8 +36,7 @@ namespace EduApi.Controllers.ClientZone.SendMessage
             try
             {
                 CheckOrganizationPermition(listRequest.ParentId);
-                return SendResponse(
-                    _sendMailService.GetList(listRequest.ParentId));
+                return SendResponse(_sendMailService.GetList(listRequest.ParentId));
             }
             catch (Exception e)
             {
@@ -57,8 +55,7 @@ namespace EduApi.Controllers.ClientZone.SendMessage
             try
             {
                 CheckOrganizationPermition(_sendMailService.GetOrganizationIdByObjectId(detail.Id));
-                return SendResponse(
-                    _sendMailService.GetDetail(detail.Id));
+                return SendResponse(_sendMailService.GetDetail(detail.Id));
             }
             catch (Exception e)
             {
@@ -77,8 +74,7 @@ namespace EduApi.Controllers.ClientZone.SendMessage
             try
             {
                 CheckOrganizationPermition(_sendMailService.GetOrganizationIdByObjectId(update.Id));
-                return SendResponse(
-                    _sendMailService.Update(update, GetLoggedUserId()));
+                return SendResponse(_sendMailService.Update(update, GetLoggedUserId()));
             }
             catch (Exception e)
             {

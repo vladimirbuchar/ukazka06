@@ -7,21 +7,21 @@ using Services.Branch.Dto;
 
 namespace Services.Branch.Convertor
 {
-    public class BranchConvertor(ICodeBookRepository<CultureDbo> codeBookService) : IBranchConvertor
+    public class BranchConvertor(ICodeBookRepository<CultureDbo> codeBookRepository) : IBranchConvertor
     {
-        private readonly List<CultureDbo> _cultureList = codeBookService.GetEntities(false).Result;
+        private readonly List<CultureDbo> _cultureList = codeBookRepository.GetEntities(false).Result;
 
         public BranchDbo ConvertToBussinessEntity(BranchCreateDto addBranchDto, string culture)
         {
             BranchDbo branch =
                 new()
                 {
-                    City = addBranchDto?.City,
-                    Region = addBranchDto?.Region,
-                    CountryId = addBranchDto?.CountryId,
-                    HouseNumber = addBranchDto?.HouseNumber,
-                    Street = addBranchDto?.Street,
-                    ZipCode = addBranchDto?.ZipCode,
+                    City = addBranchDto.City,
+                    Region = addBranchDto.Region,
+                    CountryId = addBranchDto.CountryId,
+                    HouseNumber = addBranchDto.HouseNumber,
+                    Street = addBranchDto.Street,
+                    ZipCode = addBranchDto.ZipCode,
                     Email = addBranchDto.Email,
                     WWW = addBranchDto.WWW,
                     PhoneNumber = addBranchDto.PhoneNumber,
@@ -40,12 +40,12 @@ namespace Services.Branch.Convertor
 
         public BranchDbo ConvertToBussinessEntity(BranchUpdateDto updateBranchDto, BranchDbo entity, string culture)
         {
-            entity.City = updateBranchDto?.City;
-            entity.Region = updateBranchDto?.Region;
-            entity.CountryId = updateBranchDto?.CountryId;
-            entity.HouseNumber = updateBranchDto?.HouseNumber;
-            entity.Street = updateBranchDto?.Street;
-            entity.ZipCode = updateBranchDto?.ZipCode;
+            entity.City = updateBranchDto.City;
+            entity.Region = updateBranchDto.Region;
+            entity.CountryId = updateBranchDto.CountryId;
+            entity.HouseNumber = updateBranchDto.HouseNumber;
+            entity.Street = updateBranchDto.Street;
+            entity.ZipCode = updateBranchDto.ZipCode;
             entity.Email = updateBranchDto.Email;
             entity.WWW = updateBranchDto.WWW;
             entity.PhoneNumber = updateBranchDto.PhoneNumber;
@@ -66,6 +66,7 @@ namespace Services.Branch.Convertor
                 {
                     City = item.City,
                     CountryId = item.CountryId,
+                    CountryName = item.Country.Name,
                     HouseNumber = item.HouseNumber,
                     Region = item.Region,
                     Street = item.Street,

@@ -1,22 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using Core.DataTypes;
+﻿using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.CodeBookData.Dto;
 using Services.CodeBookData.Service;
 using Services.OrganizationRole.Service;
+using System;
+using System.Collections.Generic;
 
 namespace EduApi.Controllers.ClientZone.CodeBook
 {
     [ApiExplorerSettings(GroupName = "Codebook")]
     public class CodeBookController : BaseClientZoneController
     {
-        private readonly ICodeBookService _codeBookService;
+        private readonly ICodebookService _codeBookService;
 
         public CodeBookController(
             ILogger<CodeBookController> logger,
-            ICodeBookService codeBookService,
+            ICodebookService codeBookService,
             IOrganizationRoleService organizationRoleService
         )
             : base(logger, organizationRoleService)

@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Linq.Expressions;
 using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Repository.FileRepository;
 using Core.Base.Service;
@@ -48,13 +47,12 @@ namespace Services.Organization.Service
                 || oldVersion.Name != newVersion.Name;
         }
 
-        protected override List<OrganizationDbo> PrepareMemoryFilter(List<OrganizationDbo> entities, OrganizationFilter filter, string culture)
+        protected override Expression<Func<OrganizationDbo, bool>> PrepareSqlFilter(OrganizationFilter filter, string culture)
         {
-            if (!string.IsNullOrEmpty(filter.Name))
-            {
-                entities = entities.Where(x => x.Name == filter.Name).ToList();
-            }
-            return entities;
+            ParameterExpression parameter = Expression.Parameter(typeof(OrganizationDbo), "organization");
+            Expression expression = Expression.Constant(true); // Start with a true expression
+            expression = FilterString(filter.Name, parameter, expression, nameof(OrganizationDbo.Name));
+            return Expression.Lambda<Func<OrganizationDbo, bool>>(expression, parameter);
         }
     }
 }

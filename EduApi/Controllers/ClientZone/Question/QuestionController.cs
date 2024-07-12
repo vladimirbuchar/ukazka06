@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web.Helpers;
 using Core.Base.Dto;
+using Core.Base.Paging;
 using Core.DataTypes;
 //using EduServices.Answer.Permission;
 using Microsoft.AspNetCore.Http;
@@ -9,10 +11,13 @@ using Microsoft.Extensions.Logging;
 using Model.Edu.Question;
 using Services.OrganizationRole.Service;
 using Services.Question.Dto;
+using Services.Question.Filter;
 using Services.Question.Service;
+using Services.Question.Sort;
 
 namespace EduApi.Controllers.ClientZone.Question
 {
+    [ApiExplorerSettings(GroupName = "BankOfQuestion")]
     public class QuestionController : BaseClientZoneController
     {
         private readonly IQuestionService _questionService;
@@ -37,7 +42,7 @@ namespace EduApi.Controllers.ClientZone.Question
         {
             try
             {
-                CheckOrganizationPermition(_questionService.GetOrganizationIdByObjectId(addQuestionDto.BankOfQuestionId));
+                CheckOrganizationPermition(_questionService.GetOrganizationIdByParentId(addQuestionDto.BankOfQuestionId));
                 return SendResponse(_questionService.AddObject(addQuestionDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
@@ -52,12 +57,28 @@ namespace EduApi.Controllers.ClientZone.Question
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult List([FromQuery] ListDeletedRequestDto request)
+        public ActionResult List(
+            [FromQuery] ListDeletedRequestDto request,
+            [FromQuery] QuestionFilter filter,
+            [FromQuery] SortDirection sortDirection,
+            [FromQuery] QuestionSort sortColum,
+            [FromQuery] BasePaging paging
+        )
         {
             try
             {
-                CheckOrganizationPermition(_questionService.GetOrganizationIdByObjectId(request.ParentId));
-                return SendResponse(_questionService.GetList(x => x.BankOfQuestionId == request.ParentId, request.IsDeleted, GetClientCulture()));
+                CheckOrganizationPermition(_questionService.GetOrganizationIdByParentId(request.ParentId));
+                return SendResponse(
+                    _questionService.GetList(
+                        x => x.BankOfQuestionId == request.ParentId,
+                        request.IsDeleted,
+                        GetClientCulture(),
+                        filter,
+                        sortColum.ToString(),
+                        sortDirection,
+                        paging
+                    )
+                );
             }
             catch (Exception e)
             {

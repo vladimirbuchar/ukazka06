@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Core.Base.Filter;
 using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Repository.FileRepository;
-using Core.Base.Request;
 using Core.Base.Service;
 using Core.Constants;
 using Core.DataTypes;

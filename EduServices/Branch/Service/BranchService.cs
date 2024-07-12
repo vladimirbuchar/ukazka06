@@ -1,16 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using Core.Base.Service;
+﻿using Core.Base.Service;
 using Core.Constants;
 using Core.DataTypes;
+using Model.CodeBook;
 using Model.Edu.Branch;
 using Repository.BranchRepository;
 using Services.Branch.Convertor;
 using Services.Branch.Dto;
 using Services.Branch.Filter;
+using Services.Branch.Sort;
 using Services.Branch.Validator;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace Services.Branch.Service
 {
@@ -143,22 +145,50 @@ namespace Services.Branch.Service
             expression = FilterString(filter.Email, parameter, expression, nameof(BranchDbo.Email));
             expression = FilterString(filter.PhoneNumber, parameter, expression, nameof(BranchDbo.PhoneNumber));
             expression = FilterString(filter.WWW, parameter, expression, nameof(BranchDbo.WWW));
+            expression = FilterTranslation<BranchTranslationDbo>(
+                filter.Name,
+                culture,
+                parameter,
+                expression,
+                nameof(BranchTranslationDbo.Name),
+                nameof(BranchTranslationDbo.Culture),
+                nameof(BranchDbo.BranchTranslations)
+            );
+            expression = FilterGuid(filter.Country, parameter, expression, nameof(BranchDbo.CountryId));
             return Expression.Lambda<Func<BranchDbo, bool>>(expression, parameter);
         }
 
-        protected override List<BranchDbo> PrepareMemoryFilter(List<BranchDbo> entities, BranchFilter filter, string culture)
+        protected override Expression<Func<BranchDbo, object>> PrepareSort(string columnName, string culture)
         {
-            if (!string.IsNullOrEmpty(filter.Name))
+            if (columnName == BranchSort.Name.ToString())
             {
-                entities = entities
-                    .Where(x => x.BranchTranslations.Any(y => y.Name.Contains(filter.Name) && y.Culture.SystemIdentificator == culture))
-                    .ToList();
+                ParameterExpression parameter = Expression.Parameter(typeof(BranchDbo), "x");
+                MemberExpression property = Expression.Property(parameter, nameof(BranchDbo.BranchTranslations));
+                MethodCallExpression anyCall = Expression.Call(
+                    typeof(Enumerable),
+                    nameof(Enumerable.FirstOrDefault),
+                    new Type[] { typeof(BranchTranslationDbo) },
+                    property
+                );
+                MemberExpression nameProperty = Expression.Property(anyCall, nameof(BranchTranslationDbo.Name));
+                Expression<Func<BranchDbo, object>> lambda = Expression.Lambda<Func<BranchDbo, object>>(
+                    Expression.Convert(nameProperty, typeof(object)),
+                    parameter
+                );
+                return lambda;
             }
-            if (filter.Country.Count > 0)
+            else if (columnName == BranchSort.Country.ToString())
             {
-                entities = entities.Where(x => filter.Country.Contains(x.CountryId.Value)).ToList();
+                ParameterExpression parameter = Expression.Parameter(typeof(BranchDbo), "x");
+                MemberExpression property = Expression.Property(parameter, nameof(BranchDbo.Country));
+                MemberExpression nameProperty = Expression.Property(property, nameof(CountryDbo.Name));
+                Expression<Func<BranchDbo, object>> lambda = Expression.Lambda<Func<BranchDbo, object>>(
+                    Expression.Convert(nameProperty, typeof(object)),
+                    parameter
+                );
+                return lambda;
             }
-            return entities;
+            return base.PrepareSort(columnName, culture);
         }
     }
 }

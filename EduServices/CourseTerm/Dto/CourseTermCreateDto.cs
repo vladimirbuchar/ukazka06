@@ -1,14 +1,14 @@
-﻿using System;
+﻿using Core.Base.Dto;
+using System;
 using System.Collections.Generic;
-using Core.Base.Dto;
 
 namespace Services.CourseTerm.Dto
 {
     public class CourseTermCreateDto : CreateDto
     {
-        public List<string> Lector { get; set; }
-        public List<string> StudentGroup { get; set; }
-        public string OrganizationStudyHourId { get; set; }
+        public List<Guid> Lector { get; set; } = [];
+        public List<Guid> StudentGroup { get; set; } = [];
+        public Guid? OrganizationStudyHourId { get; set; } = null;
         public Guid OrganizationId { get; set; }
         public Guid CourseId { get; set; }
         public double Price { get; set; }

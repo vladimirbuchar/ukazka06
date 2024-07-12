@@ -5,8 +5,6 @@ using Services.Message.Filter;
 
 namespace Services.Message.Service
 {
-    public interface IMessageService : IBaseService<MessageDbo, MessageCreateDto, MessageListDto, MessageDetailDto, MessageUpdateDto, MessageFilter>
-    {
-
-    }
+    public interface IMessageService
+        : IBaseService<MessageDbo, MessageCreateDto, MessageListDto, MessageDetailDto, MessageUpdateDto, MessageFilter> { }
 }

@@ -9,10 +9,10 @@ using Services.CourseMaterial.Dto;
 
 namespace Services.CourseMaterial.Convertor
 {
-    public class CourseMaterialConvertor(IConfiguration configuration, ICodeBookRepository<CultureDbo> codeBookService) : ICourseMaterialConvertor
+    public class CourseMaterialConvertor(IConfiguration configuration, ICodeBookRepository<CultureDbo> codeBookRepository) : ICourseMaterialConvertor
     {
         private readonly IConfiguration _configuration = configuration;
-        private readonly List<CultureDbo> _cultureList = codeBookService.GetEntities(false).Result;
+        private readonly List<CultureDbo> _cultureList = codeBookRepository.GetEntities(false).Result;
 
         public List<CourseMaterialListDto> ConvertToWebModel(List<CourseMaterialDbo> getCourseMaterialInOrganizations, string culture)
         {

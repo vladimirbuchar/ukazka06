@@ -7,9 +7,9 @@ using Services.Message.Dto;
 
 namespace Services.Message.Convertor
 {
-    public class MessageConvertor(ICodeBookRepository<CultureDbo> codeBookService) : IMessageConvertor
+    public class MessageConvertor(ICodeBookRepository<CultureDbo> codeBookRepository) : IMessageConvertor
     {
-        private readonly List<CultureDbo> _cultureList = codeBookService.GetEntities(false).Result;
+        private readonly List<CultureDbo> _cultureList = codeBookRepository.GetEntities(false).Result;
 
         public List<MessageListDto> ConvertToWebModel(List<MessageDbo> getSendMessageInOrganizations, string culture)
         {
@@ -19,7 +19,8 @@ namespace Services.Message.Convertor
                     Id = x.Id,
                     Name = x.SendMessageTranslations.FindTranslation(culture)?.Subject,
                     Reply = x.Reply,
-                    SendMessageTypeId = x.SendMessageTypeId
+                    SendMessageTypeId = x.SendMessageTypeId,
+                    SendMessageTypeName = x.SendMessageType.Name
                 })
                 .ToList();
         }

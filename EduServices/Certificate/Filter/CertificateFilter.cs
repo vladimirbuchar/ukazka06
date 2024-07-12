@@ -1,4 +1,4 @@
-﻿using Core.Base.Request;
+﻿using Core.Base.Filter;
 
 namespace Services.Certificate.Filter
 {

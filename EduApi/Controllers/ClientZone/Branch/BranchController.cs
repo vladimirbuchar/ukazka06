@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web.Helpers;
 using Core.Base.Dto;
+using Core.Base.Paging;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.Branch.Dto;
 using Services.Branch.Filter;
 using Services.Branch.Service;
+using Services.Branch.Sort;
 using Services.OrganizationRole.Service;
 
 namespace EduApi.Controllers.ClientZone.Branch
@@ -47,7 +50,13 @@ namespace EduApi.Controllers.ClientZone.Branch
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult List([FromQuery] ListDeletedRequestDto request, [FromQuery] BranchFilter filter)
+        public ActionResult List(
+            [FromQuery] ListDeletedRequestDto request,
+            [FromQuery] BranchFilter filter,
+            [FromQuery] SortDirection sortDirection,
+            [FromQuery] BranchSort sortColum,
+            [FromQuery] BasePaging paging
+        )
         {
             try
             {
@@ -57,7 +66,10 @@ namespace EduApi.Controllers.ClientZone.Branch
                         x => x.OrganizationId == request.ParentId && x.IsOnline == false,
                         request.IsDeleted,
                         GetClientCulture(),
-                        filter
+                        filter,
+                        sortColum.ToString(),
+                        sortDirection,
+                        paging
                     )
                 );
             }

@@ -1,18 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using Core.Base.Convertor;
+﻿using Core.Base.Convertor;
 using Core.Base.Dto;
+using Core.Base.Filter;
+using Core.Base.Paging;
 using Core.Base.Repository;
 using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Repository.FileRepository;
-using Core.Base.Request;
 using Core.Base.Validator;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Http;
 using Model;
 using Model.CodeBook;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Web.Helpers;
 
 namespace Core.Base.Service
 {
@@ -225,11 +227,24 @@ namespace Core.Base.Service
             Expression<Func<Model, bool>> predicate = null,
             bool deleted = false,
             string culture = "",
-            Filter filter = null
+            Filter filter = null,
+            string sortColumn = "",
+            SortDirection sortDirection = SortDirection.Ascending,
+            BasePaging paging = null
         )
         {
-            List<Model> entities = _repository.GetEntities(deleted, predicate, PrepareSqlFilter(filter, culture)).Result;
-            entities = PrepareMemoryFilter(entities, filter, culture);
+            paging ??= new BasePaging();
+            List<Model> entities = _repository
+                .GetEntities(
+                    deleted,
+                    predicate,
+                    PrepareSqlFilter(filter, culture),
+                    PrepareSort(sortColumn, culture),
+                    sortDirection,
+                    paging.Page,
+                    paging.ItemCount
+                )
+                .Result;
             return _convertor.ConvertToWebModel(entities, culture);
         }
 
@@ -248,9 +263,19 @@ namespace Core.Base.Service
             return null;
         }
 
-        protected virtual List<Model> PrepareMemoryFilter(List<Model> entities, Filter filter, string culture)
+        protected virtual Expression<Func<Model, object>> PrepareSort(string columnName, string culture)
         {
-            return entities;
+            if (!string.IsNullOrEmpty(columnName))
+            {
+                ParameterExpression parameter = Expression.Parameter(typeof(Model), "x");
+                MemberExpression property = Expression.Property(parameter, columnName);
+                Expression<Func<Model, object>> lambda = Expression.Lambda<Func<Model, object>>(
+                    Expression.Convert(property, typeof(object)),
+                    parameter
+                );
+                return lambda;
+            }
+            return null;
         }
 
         /// <summary>
@@ -298,27 +323,195 @@ namespace Core.Base.Service
             }
             return expression;
         }
-
-        public Expression<Func<Guid, bool>> FilterGuid(Guid? value, ParameterExpression parameter, Expression expression, string columnName)
+        protected Expression FilterDouble(double? value, ParameterExpression parameter, Expression expression, string columnName)
         {
             if (value.HasValue)
             {
-                MemberExpression property = Expression.Property(parameter, columnName);
-                ConstantExpression constant = Expression.Constant(value.Value);
-                BinaryExpression equality = Expression.Equal(property, constant);
-                expression = Expression.AndAlso(expression, equality);
+                // Get the property type
+                Type propertyType = parameter.Type.GetProperty(columnName).PropertyType;
+
+                // If the property is an int, convert it to double before comparison
+                Expression left = Expression.Property(parameter, columnName);
+                if (propertyType == typeof(int))
+                {
+                    left = Expression.Convert(left, typeof(double));
+                }
+
+                // Create the comparison expression
+                expression = Expression.AndAlso(
+                    expression,
+                    Expression.Equal(left, Expression.Constant(value.Value))
+                );
             }
-            return Expression.Lambda<Func<Guid, bool>>(expression, parameter);
+            return expression;
         }
 
-        protected Expression FilterString(string value, ParameterExpression parameter, Expression expression, string columnName)
+        protected Expression FilterString(string value, ParameterExpression parameter, Expression expression, params string[] columnName)
         {
             if (!string.IsNullOrEmpty(value))
             {
+                if (columnName.Length == 1)
+                {
+                    MemberExpression property = Expression.Property(parameter, columnName[0]);
+                    System.Reflection.MethodInfo containsMethod = typeof(string).GetMethod("Contains", [typeof(string)]);
+                    MethodCallExpression containsExpression = Expression.Call(property, containsMethod, Expression.Constant(value));
+                    expression = Expression.AndAlso(expression, containsExpression);
+                }
+                else if (columnName.Length == 2)
+                {
+                    MemberExpression property = Expression.Property(parameter, columnName[0]);
+                    System.Reflection.MethodInfo containsMethod = typeof(string).GetMethod("Contains", [typeof(string)]);
+                    MemberExpression property1 = Expression.Property(property, columnName[1]);
+                    MethodCallExpression containsExpression = Expression.Call(property1, containsMethod, Expression.Constant(value));
+                    expression = Expression.AndAlso(expression, containsExpression);
+                }
+                else if (columnName.Length == 3)
+                {
+                    MemberExpression property = Expression.Property(parameter, columnName[0]);
+                    System.Reflection.MethodInfo containsMethod = typeof(string).GetMethod("Contains", [typeof(string)]);
+                    MemberExpression property1 = Expression.Property(property, columnName[1]);
+                    MemberExpression property2 = Expression.Property(property1, columnName[2]);
+                    MethodCallExpression containsExpression = Expression.Call(property2, containsMethod, Expression.Constant(value));
+                    expression = Expression.AndAlso(expression, containsExpression);
+                }
+                else if (columnName.Length == 4)
+                {
+                    MemberExpression property = Expression.Property(parameter, columnName[0]);
+                    System.Reflection.MethodInfo containsMethod = typeof(string).GetMethod("Contains", [typeof(string)]);
+                    MemberExpression property1 = Expression.Property(property, columnName[1]);
+                    MemberExpression property2 = Expression.Property(property1, columnName[2]);
+                    MemberExpression property3 = Expression.Property(property2, columnName[3]);
+                    MethodCallExpression containsExpression = Expression.Call(property3, containsMethod, Expression.Constant(value));
+                    expression = Expression.AndAlso(expression, containsExpression);
+                }
+            }
+            return expression;
+        }
+
+        private static bool IsNullableProperty(MemberExpression memberExpression)
+        {
+            // Get the type of the property
+            Type propertyType = memberExpression.Type;
+
+            // Check if the type is a nullable type
+            if (Nullable.GetUnderlyingType(propertyType) != null)
+            {
+                return true;
+            }
+
+            // Additionally, check if the property type is a reference type (which is nullable)
+            return !propertyType.IsValueType;
+        }
+
+        protected Expression FilterGuid(List<Guid> guids, ParameterExpression parameter, Expression expression, string columnName)
+        {
+            if (guids != null && guids.Any())
+            {
                 MemberExpression property = Expression.Property(parameter, columnName);
-                System.Reflection.MethodInfo containsMethod = typeof(string).GetMethod("Contains", [typeof(string)]);
-                MethodCallExpression containsExpression = Expression.Call(property, containsMethod, Expression.Constant(value));
-                expression = Expression.AndAlso(expression, containsExpression);
+                System.Reflection.MethodInfo containsMethod = typeof(List<Guid>).GetMethod("Contains", new[] { typeof(Guid) });
+
+                Expression containsExpression;
+                if (IsNullableProperty(property))
+                {
+                    // Handle nullable Guid property
+                    MemberExpression valueProperty = Expression.Property(property, "Value");
+                    MemberExpression hasValueProperty = Expression.Property(property, "HasValue");
+                    containsExpression = Expression.Call(Expression.Constant(guids), containsMethod, valueProperty);
+                    BinaryExpression condition = Expression.AndAlso(hasValueProperty, containsExpression);
+                    expression = Expression.AndAlso(expression, condition);
+                }
+                else
+                {
+                    // Handle non-nullable Guid property
+                    containsExpression = Expression.Call(Expression.Constant(guids), containsMethod, property);
+                    expression = Expression.AndAlso(expression, containsExpression);
+                }
+            }
+            return expression;
+        }
+
+        protected Expression FilterString(List<string> strings, ParameterExpression parameter, Expression expression, params string[] columnName)
+        {
+            if (strings != null && strings.Any())
+            {
+                if (columnName.Length == 1)
+                {
+                    MemberExpression property = Expression.Property(parameter, columnName[0]);
+                    System.Reflection.MethodInfo containsMethod = typeof(List<string>).GetMethod("Contains", new[] { typeof(string) });
+                    Expression containsExpression = Expression.Call(Expression.Constant(strings), containsMethod, property);
+                    expression = Expression.AndAlso(expression, containsExpression);
+                }
+                else if (columnName.Length == 2)
+                {
+                    MemberExpression property = Expression.Property(parameter, columnName[0]);
+                    System.Reflection.MethodInfo containsMethod = typeof(List<string>).GetMethod("Contains", new[] { typeof(string) });
+                    MemberExpression property1 = Expression.Property(property, columnName[1]);
+                    Expression containsExpression = Expression.Call(Expression.Constant(strings), containsMethod, property1);
+                    expression = Expression.AndAlso(expression, containsExpression);
+                }
+            }
+            return expression;
+        }
+
+        protected Expression FilterTranslation<T>(
+            string translationName,
+            string culture,
+            ParameterExpression parameter,
+            Expression expression,
+            string columnName,
+            string cultureColumn,
+            string translationsName
+        )
+            where T : TranslationTableModel
+        {
+            if (!string.IsNullOrEmpty(translationName) && !string.IsNullOrEmpty(culture))
+            {
+                MemberExpression translationsProperty = Expression.Property(parameter, translationsName);
+                ParameterExpression translationParameter = Expression.Parameter(typeof(T), "translation");
+
+                Expression nameContainsExpression = null;
+                Expression cultureEqualsExpression = null;
+
+                if (!string.IsNullOrEmpty(translationName))
+                {
+                    MemberExpression nameProperty = Expression.Property(translationParameter, columnName);
+                    ConstantExpression nameConstant = Expression.Constant(translationName);
+                    System.Reflection.MethodInfo containsMethod = typeof(string).GetMethod("Contains", new[] { typeof(string) });
+                    nameContainsExpression = Expression.Call(nameProperty, containsMethod, nameConstant);
+                }
+
+                if (!string.IsNullOrEmpty(culture))
+                {
+                    MemberExpression cultureProperty = Expression.Property(translationParameter, cultureColumn);
+                    MemberExpression systemIdentificatorProperty = Expression.Property(cultureProperty, "SystemIdentificator");
+                    ConstantExpression cultureConstant = Expression.Constant(culture);
+                    cultureEqualsExpression = Expression.Equal(systemIdentificatorProperty, cultureConstant);
+                }
+
+                Expression combinedExpression = null;
+                if (nameContainsExpression != null && cultureEqualsExpression != null)
+                {
+                    combinedExpression = Expression.AndAlso(nameContainsExpression, cultureEqualsExpression);
+                }
+                else if (nameContainsExpression != null)
+                {
+                    combinedExpression = nameContainsExpression;
+                }
+                else if (cultureEqualsExpression != null)
+                {
+                    combinedExpression = cultureEqualsExpression;
+                }
+
+                System.Reflection.MethodInfo anyMethod = typeof(Enumerable)
+                    .GetMethods()
+                    .First(m => m.Name == "Any" && m.GetParameters().Length == 2)
+                    .MakeGenericMethod(typeof(T));
+                MethodCallExpression anyExpression = Expression.Call(
+                    anyMethod,
+                    translationsProperty,
+                    Expression.Lambda<Func<T, bool>>(combinedExpression, translationParameter)
+                );
+                expression = Expression.AndAlso(expression, anyExpression);
             }
             return expression;
         }

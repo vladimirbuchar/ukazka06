@@ -91,7 +91,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Cb_AddressType");
+                    b.ToTable("Cb_AddressType", (string)null);
                 });
 
             modelBuilder.Entity("Model.CodeBook.AnswerModeDbo", b =>
@@ -159,7 +159,7 @@ namespace EduApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cb_AnswerMode");
+                    b.ToTable("Cb_AnswerMode", (string)null);
                 });
 
             modelBuilder.Entity("Model.CodeBook.CountryDbo", b =>
@@ -231,7 +231,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Cb_Country");
+                    b.ToTable("Cb_Country", (string)null);
                 });
 
             modelBuilder.Entity("Model.CodeBook.CourseLessonItemTemplateDbo", b =>
@@ -303,7 +303,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Cb_CourseLessonItemTemplate");
+                    b.ToTable("Cb_CourseLessonItemTemplate", (string)null);
                 });
 
             modelBuilder.Entity("Model.CodeBook.CourseStatusDbo", b =>
@@ -375,7 +375,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Cb_CourseStatus");
+                    b.ToTable("Cb_CourseStatus", (string)null);
                 });
 
             modelBuilder.Entity("Model.CodeBook.CourseTypeDbo", b =>
@@ -447,7 +447,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Cb_CourseType");
+                    b.ToTable("Cb_CourseType", (string)null);
                 });
 
             modelBuilder.Entity("Model.CodeBook.CultureDbo", b =>
@@ -523,7 +523,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Cb_Culture");
+                    b.ToTable("Cb_Culture", (string)null);
                 });
 
             modelBuilder.Entity("Model.CodeBook.EduEmailDbo", b =>
@@ -615,7 +615,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Cb_Email");
+                    b.ToTable("Cb_Email", (string)null);
                 });
 
             modelBuilder.Entity("Model.CodeBook.GalleryItemTypeDbo", b =>
@@ -687,7 +687,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Cb_GalleryItemType");
+                    b.ToTable("Cb_GalleryItemType", (string)null);
                 });
 
             modelBuilder.Entity("Model.CodeBook.LicenseDbo", b =>
@@ -767,7 +767,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Cb_License");
+                    b.ToTable("Cb_License", (string)null);
                 });
 
             modelBuilder.Entity("Model.CodeBook.NoteTypeDbo", b =>
@@ -839,7 +839,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Cb_NoteType");
+                    b.ToTable("Cb_NoteType", (string)null);
                 });
 
             modelBuilder.Entity("Model.CodeBook.NotificationTypeDbo", b =>
@@ -911,7 +911,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Cb_NotificationType");
+                    b.ToTable("Cb_NotificationType", (string)null);
                 });
 
             modelBuilder.Entity("Model.CodeBook.QuestionModeDbo", b =>
@@ -983,7 +983,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Cb_QuestionMode");
+                    b.ToTable("Cb_QuestionMode", (string)null);
                 });
 
             modelBuilder.Entity("Model.CodeBook.SendMessageTypeDbo", b =>
@@ -1055,7 +1055,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Cb_SendMessageType");
+                    b.ToTable("Cb_SendMessageType", (string)null);
                 });
 
             modelBuilder.Entity("Model.CodeBook.TimeTableDbo", b =>
@@ -1127,7 +1127,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Cb_TimeTable");
+                    b.ToTable("Cb_TimeTable", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.Answer.AnswerDbo", b =>
@@ -1197,7 +1197,7 @@ namespace EduApi.Migrations
 
                     b.HasIndex("TestQuestionId");
 
-                    b.ToTable("Edu_TestQuestionAnswer");
+                    b.ToTable("Edu_TestQuestionAnswer", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.Answer.AnswerFileRepositoryDbo", b =>
@@ -1275,7 +1275,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_AnswerFileRepository");
+                    b.ToTable("Edu_AnswerFileRepository", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.Answer.AnswerTanslationDbo", b =>
@@ -1345,7 +1345,7 @@ namespace EduApi.Migrations
 
                     b.HasIndex("TestQuestionAnswerId");
 
-                    b.ToTable("Edu_TestQuestionAnswerTanslation");
+                    b.ToTable("Edu_TestQuestionAnswerTanslation", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.AttendanceStudent.AttendanceStudentDbo", b =>
@@ -1416,7 +1416,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_AttendanceStudent");
+                    b.ToTable("Edu_AttendanceStudent", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.BankOfQuestions.BankOfQuestionDbo", b =>
@@ -1485,7 +1485,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_BankOfQuestion");
+                    b.ToTable("Edu_BankOfQuestion", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.BankOfQuestions.BankOfQuestionsTranslationDbo", b =>
@@ -1555,7 +1555,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_BankOfQuestionTranslation");
+                    b.ToTable("Edu_BankOfQuestionTranslation", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.Branch.BranchDbo", b =>
@@ -1661,7 +1661,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_Branch");
+                    b.ToTable("Edu_Branch", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.Branch.BranchTranslationDbo", b =>
@@ -1735,7 +1735,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_BranchTranslation");
+                    b.ToTable("Edu_BranchTranslation", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.Certificate.CertificateDbo", b =>
@@ -1800,7 +1800,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_Certificate");
+                    b.ToTable("Edu_Certificate", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.Certificate.CertificateTranslationDbo", b =>
@@ -1874,7 +1874,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_CertificateTranslation");
+                    b.ToTable("Edu_CertificateTranslation", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.Chat.ChatDbo", b =>
@@ -1948,7 +1948,7 @@ namespace EduApi.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Edu_Chat");
+                    b.ToTable("Edu_Chat", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.ClassRoom.ClassRoomDbo", b =>
@@ -2021,7 +2021,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_ClassRoom");
+                    b.ToTable("Edu_ClassRoom", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.ClassRoom.ClassRoomTranslationDbo", b =>
@@ -2091,7 +2091,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_ClassRoomTranslation");
+                    b.ToTable("Edu_ClassRoomTranslation", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.Course.CourseDbo", b =>
@@ -2209,7 +2209,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_Course");
+                    b.ToTable("Edu_Course", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.Course.CourseTranslationDbo", b =>
@@ -2283,7 +2283,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_CourseTranslation");
+                    b.ToTable("Edu_CourseTranslation", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.CourseLesson.CourseLessonDbo", b =>
@@ -2359,7 +2359,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_CourseLesson");
+                    b.ToTable("Edu_CourseLesson", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.CourseLesson.CourseLessonFileRepositoryDbo", b =>
@@ -2437,7 +2437,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_CourseLessonFileRepository");
+                    b.ToTable("Edu_CourseLessonFileRepository", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.CourseLesson.CourseLessonTranslationDbo", b =>
@@ -2507,7 +2507,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_CourseLessonTranslation");
+                    b.ToTable("Edu_CourseLessonTranslation", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.CourseLessonItem.CourseLessonItemDbo", b =>
@@ -2581,7 +2581,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_CourseLessonItem");
+                    b.ToTable("Edu_CourseLessonItem", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.CourseLessonItem.CourseLessonItemFileRepositoryDbo", b =>
@@ -2659,7 +2659,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_CourseLessonItemFileRepository");
+                    b.ToTable("Edu_CourseLessonItemFileRepository", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.CourseLessonItem.CourseLessonItemTranslationDbo", b =>
@@ -2733,7 +2733,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_CourseLessonItemTranslation");
+                    b.ToTable("Edu_CourseLessonItemTranslation", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.CourseMaterial.CourseMaterialDbo", b =>
@@ -2794,7 +2794,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_CourseMaterial");
+                    b.ToTable("Edu_CourseMaterial", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.CourseMaterial.CourseMaterialFileRepositoryDbo", b =>
@@ -2872,7 +2872,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_CourseMaterialileRepository");
+                    b.ToTable("Edu_CourseMaterialileRepository", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.CourseMaterial.CourseMaterialTranslationDbo", b =>
@@ -2946,7 +2946,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_CourseMaterialTranslation");
+                    b.ToTable("Edu_CourseMaterialTranslation", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.CourseTable.CourseTableDbo", b =>
@@ -3002,7 +3002,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_CourseTable");
+                    b.ToTable("Edu_CourseTable", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.CourseTerm.CourseTermDbo", b =>
@@ -3143,7 +3143,7 @@ namespace EduApi.Migrations
 
                     b.HasIndex("TimeToId");
 
-                    b.ToTable("Edu_CourseTerm");
+                    b.ToTable("Edu_CourseTerm", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.CourseTermDate.CourseTermDateDbo", b =>
@@ -3232,7 +3232,7 @@ namespace EduApi.Migrations
 
                     b.HasIndex("UserInOrganizationId");
 
-                    b.ToTable("Edu_CourseTermDate");
+                    b.ToTable("Edu_CourseTermDate", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.CourseTest.CourseTestDbo", b =>
@@ -3311,7 +3311,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_CourseTest");
+                    b.ToTable("Edu_CourseTest", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.CourseTestEvaluation.CourseTestEvaluationDbo", b =>
@@ -3384,7 +3384,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_CourseTestEvaluation");
+                    b.ToTable("Edu_CourseTestEvaluation", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.LicenseChange.LicenseChangeDbo", b =>
@@ -3454,7 +3454,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_LicenseChange");
+                    b.ToTable("Edu_LicenseChange", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.LinkLifeTime.LinkLifeTimeDbo", b =>
@@ -3519,7 +3519,7 @@ namespace EduApi.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Edu_LinkLifeTime");
+                    b.ToTable("Edu_LinkLifeTime", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.Note.NoteDbo", b =>
@@ -3602,7 +3602,7 @@ namespace EduApi.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Edu_Note");
+                    b.ToTable("Edu_Note", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.Notification.NotificationDbo", b =>
@@ -3686,7 +3686,7 @@ namespace EduApi.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Edu_Notification");
+                    b.ToTable("Edu_Notification", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.Organization.OrganizationDbo", b =>
@@ -3766,7 +3766,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_Organization");
+                    b.ToTable("Edu_Organization", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.Organization.OrganizationFileRepositoryDbo", b =>
@@ -3844,7 +3844,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_OrganizationFileRepository");
+                    b.ToTable("Edu_OrganizationFileRepository", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.Organization.OrganizationTranslationDbo", b =>
@@ -3914,7 +3914,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_OrganizationTranslation");
+                    b.ToTable("Edu_OrganizationTranslation", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.OrganizationAddress.OrganizationAddressDbo", b =>
@@ -4005,7 +4005,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_OrganizationAddress");
+                    b.ToTable("Edu_OrganizationAddress", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.OrganizationRole.OrganizationRoleDbo", b =>
@@ -4065,7 +4065,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_OrganizationRole");
+                    b.ToTable("Edu_OrganizationRole", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.OrganizationRolePermition.OrganizationRolePermitionDbo", b =>
@@ -4130,7 +4130,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_OrganizationRolePermition");
+                    b.ToTable("Edu_OrganizationRolePermition", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.OrganizationSetting.OrganizationSettingDbo", b =>
@@ -4253,7 +4253,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_OrganizationSetting");
+                    b.ToTable("Edu_OrganizationSetting", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.OrganizationStudyHour.OrganizationStudyHourDbo", b =>
@@ -4328,7 +4328,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_OrganizationStudyHour");
+                    b.ToTable("Edu_OrganizationStudyHour", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.Person.PersonDbo", b =>
@@ -4400,7 +4400,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_Person");
+                    b.ToTable("Edu_Person", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.PersonAddress.PersonAddressDbo", b =>
@@ -4491,7 +4491,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_PersonAddress");
+                    b.ToTable("Edu_PersonAddress", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.Question.QuestionDbo", b =>
@@ -4566,7 +4566,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_TestQuestion");
+                    b.ToTable("Edu_TestQuestion", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.Question.QuestionFileRepositoryDbo", b =>
@@ -4644,7 +4644,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_QuestionFileRepository");
+                    b.ToTable("Edu_QuestionFileRepository", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.Question.QuestionTranslationDbo", b =>
@@ -4714,7 +4714,7 @@ namespace EduApi.Migrations
 
                     b.HasIndex("TestQuestionId");
 
-                    b.ToTable("Edu_TestQuestionTranslation");
+                    b.ToTable("Edu_TestQuestionTranslation", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.SendEmail.SendEmailDbo", b =>
@@ -4811,7 +4811,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_SendEmail");
+                    b.ToTable("Edu_SendEmail", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.SendEmailAttachment.SendEmailAttachmentDbo", b =>
@@ -4876,7 +4876,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_SendEmailAttachment");
+                    b.ToTable("Edu_SendEmailAttachment", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.SendMessage.MessageDbo", b =>
@@ -4946,7 +4946,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_SendMessage");
+                    b.ToTable("Edu_SendMessage", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.SendMessage.SendMessageTranslationDbo", b =>
@@ -5020,7 +5020,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_SendMessageTranslation");
+                    b.ToTable("Edu_SendMessageTranslation", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.StudentEvaluation.StudentEvaluationDbo", b =>
@@ -5094,7 +5094,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_StudentEvaluation");
+                    b.ToTable("Edu_StudentEvaluation", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.StudentGroup.StudentGroupDbo", b =>
@@ -5155,7 +5155,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_StudentGroup");
+                    b.ToTable("Edu_StudentGroup", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.StudentGroup.StudentGroupTranslationDbo", b =>
@@ -5225,7 +5225,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_StudentGroupTranslation");
+                    b.ToTable("Edu_StudentGroupTranslation", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.StudentTestSummary.StudentTestSummaryDbo", b =>
@@ -5316,7 +5316,7 @@ namespace EduApi.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Edu_StudentTestSummary");
+                    b.ToTable("Edu_StudentTestSummary", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.StudentTestSummaryAnswer.StudentTestSummaryAnswerDbo", b =>
@@ -5414,7 +5414,7 @@ namespace EduApi.Migrations
 
                     b.HasIndex("TestQuestionAnswerId");
 
-                    b.ToTable("Edu_StudentTestSummaryAnswer");
+                    b.ToTable("Edu_StudentTestSummaryAnswer", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.StudentTestSummaryQuestion.StudentTestSummaryQuestionDbo", b =>
@@ -5514,7 +5514,7 @@ namespace EduApi.Migrations
 
                     b.HasIndex("TestQuestionId");
 
-                    b.ToTable("Edu_StudentTestSummaryQuestion");
+                    b.ToTable("Edu_StudentTestSummaryQuestion", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.TestUserAnswer.TestUserAnswerDbo", b =>
@@ -5585,7 +5585,7 @@ namespace EduApi.Migrations
 
                     b.HasIndex("TestQuestionId");
 
-                    b.ToTable("Edu_TestUserAnswer");
+                    b.ToTable("Edu_TestUserAnswer", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.User.UserDbo", b =>
@@ -5679,7 +5679,7 @@ namespace EduApi.Migrations
 
                     b.HasIndex("UserRoleId");
 
-                    b.ToTable("Edu_User");
+                    b.ToTable("Edu_User", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.UserCertificate.UserCertificateDbo", b =>
@@ -5756,7 +5756,7 @@ namespace EduApi.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Edu_UserCertificate");
+                    b.ToTable("Edu_UserCertificate", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.UserRole.UserRoleDbo", b =>
@@ -5812,7 +5812,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Edu_UserRole");
+                    b.ToTable("Edu_UserRole", (string)null);
                 });
 
             modelBuilder.Entity("Model.Link.CourseBrowseDbo", b =>
@@ -5883,7 +5883,7 @@ namespace EduApi.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Link_CourseBrowse");
+                    b.ToTable("Link_CourseBrowse", (string)null);
                 });
 
             modelBuilder.Entity("Model.Link.CourseLectorDbo", b =>
@@ -5949,7 +5949,7 @@ namespace EduApi.Migrations
 
                     b.HasIndex("UserInOrganizationId");
 
-                    b.ToTable("Link_CourseLector");
+                    b.ToTable("Link_CourseLector", (string)null);
                 });
 
             modelBuilder.Entity("Model.Link.CourseStudentDbo", b =>
@@ -6019,7 +6019,7 @@ namespace EduApi.Migrations
 
                     b.HasIndex("UserInOrganizationId");
 
-                    b.ToTable("Link_CourseStudent");
+                    b.ToTable("Link_CourseStudent", (string)null);
                 });
 
             modelBuilder.Entity("Model.Link.CourseTestBankOfQuestionDbo", b =>
@@ -6085,7 +6085,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Link_TestBankOfQuestion");
+                    b.ToTable("Link_TestBankOfQuestion", (string)null);
                 });
 
             modelBuilder.Entity("Model.Link.CouseStudentMaterialDbo", b =>
@@ -6156,7 +6156,7 @@ namespace EduApi.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Link_CouseStudentMaterial");
+                    b.ToTable("Link_CouseStudentMaterial", (string)null);
                 });
 
             modelBuilder.Entity("Model.Link.OrganizationCultureDbo", b =>
@@ -6226,7 +6226,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Link_OrganizationCulture");
+                    b.ToTable("Link_OrganizationCulture", (string)null);
                 });
 
             modelBuilder.Entity("Model.Link.StudentInGroupCourseTermDbo", b =>
@@ -6292,7 +6292,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Link_StudentInGroupCourseTerm");
+                    b.ToTable("Link_StudentInGroupCourseTerm", (string)null);
                 });
 
             modelBuilder.Entity("Model.Link.StudentInGroupDbo", b =>
@@ -6358,7 +6358,7 @@ namespace EduApi.Migrations
 
                     b.HasIndex("UserInOrganizationId");
 
-                    b.ToTable("Link_StudentInGroup");
+                    b.ToTable("Link_StudentInGroup", (string)null);
                 });
 
             modelBuilder.Entity("Model.Link.UserInOrganizationDbo", b =>
@@ -6434,7 +6434,7 @@ namespace EduApi.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Link_UserInOrganization");
+                    b.ToTable("Link_UserInOrganization", (string)null);
                 });
 
             modelBuilder.Entity("Model.System.PermissionsDbo", b =>
@@ -6500,7 +6500,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Permissions");
+                    b.ToTable("Permissions", (string)null);
                 });
 
             modelBuilder.Entity("Model.System.RouteDbo", b =>
@@ -6559,7 +6559,7 @@ namespace EduApi.Migrations
                         .IsUnique()
                         .HasFilter("[SystemIdentificator] IS NOT NULL");
 
-                    b.ToTable("Routes");
+                    b.ToTable("Routes", (string)null);
                 });
 
             modelBuilder.Entity("Model.Edu.Answer.AnswerDbo", b =>

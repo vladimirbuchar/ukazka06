@@ -20,7 +20,6 @@ namespace Services.UserInOrganization.Service
     {
         List<OrganizationRoleListDto> GetOrganizationRoles();
         UserOrganizationRoleDetailDto CanCourseBrowse(Guid courseId, Guid userId);
-
         UserOrganizationRoleDetailDto CanShowStudentTestResult(Guid courseId, Guid userId);
     }
 }

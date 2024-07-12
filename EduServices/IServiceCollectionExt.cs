@@ -194,7 +194,7 @@ namespace Services
 
         public static void RegistrationCodeBook(this IServiceCollection service)
         {
-            _ = service.AddScoped<ICodeBookService, CodeBookService>();
+            _ = service.AddScoped<ICodebookService, CodeBookRepository>();
             _ = service.AddScoped(typeof(ICodeBookRepository<>), typeof(CodeBookRepository<>));
             _ = service.AddScoped<ICodeBookConvertor, CodeBookConvertor>();
         }

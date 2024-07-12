@@ -1,10 +1,10 @@
-﻿using System;
-using System.Linq;
-using Core.Base.Repository;
+﻿using Core.Base.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
 using Model.Edu.Course;
+using System;
+using System.Linq;
 
 namespace Repository.CourseRepository
 {
@@ -19,7 +19,23 @@ namespace Repository.CourseRepository
 
         protected override IQueryable<CourseDbo> PrepareListQuery()
         {
-            return dbContext.Set<CourseDbo>().Include(x => x.CourseTranslations.Where(x => x.IsDeleted == false)).ThenInclude(x => x.Culture);
+            return dbContext.Set<CourseDbo>()
+                .Include(x => x.CourseTranslations.Where(x => x.IsDeleted == false))
+                .ThenInclude(x => x.Culture)
+                .Include(x => x.CourseStatus)
+                .Include(x => x.CourseType)
+                .Include(x => x.SendMessage)
+                        .ThenInclude(x => x.SendMessageTranslations)
+                    .ThenInclude(x => x.Culture)
+                .Include(x => x.Certificate)
+                    .ThenInclude(x => x.CertificateTranslations)
+                .ThenInclude(x => x.Culture)
+                .Include(x => x.CourseMaterial)
+                .ThenInclude(x => x.CourseMaterialTranslation)
+                .ThenInclude(x => x.Culture);
+
+
+
         }
 
         public override Guid GetOrganizationId(Guid objectId)

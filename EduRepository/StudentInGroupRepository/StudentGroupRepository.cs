@@ -1,10 +1,10 @@
-﻿using Core.Base.Repository;
+﻿using System;
+using System.Linq;
+using Core.Base.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
 using Model.Link;
-using System;
-using System.Linq;
 
 namespace Repository.StudentInGroupRepository
 {

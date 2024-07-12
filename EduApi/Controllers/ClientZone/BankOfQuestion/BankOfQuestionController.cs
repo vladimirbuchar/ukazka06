@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web.Helpers;
 using Core.Base.Dto;
+using Core.Base.Paging;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.BankOfQuestion.Dto;
+using Services.BankOfQuestion.Filter;
 using Services.BankOfQuestion.Service;
+using Services.BankOfQuestion.Sort;
 using Services.OrganizationRole.Service;
 
 namespace EduApi.Controllers.ClientZone.BankOfQuestion
 {
+    [ApiExplorerSettings(GroupName = "BankOfQuestion")]
     public class BankOfQuestionController : BaseClientZoneController
     {
         private readonly IBankOfQuestionService _bankOfQuestionService;
@@ -46,12 +51,28 @@ namespace EduApi.Controllers.ClientZone.BankOfQuestion
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult List([FromQuery] ListDeletedRequestDto request)
+        public ActionResult List(
+            [FromQuery] ListDeletedRequestDto request,
+            [FromQuery] BankOfQuestionFilter filter,
+            [FromQuery] SortDirection sortDirection,
+            [FromQuery] BankOfQuestionSort sortColum,
+            [FromQuery] BasePaging paging
+        )
         {
             try
             {
                 CheckOrganizationPermition(request.ParentId);
-                return SendResponse(_bankOfQuestionService.GetList(x => x.OrganizationId == request.ParentId, request.IsDeleted, GetClientCulture()));
+                return SendResponse(
+                    _bankOfQuestionService.GetList(
+                        x => x.OrganizationId == request.ParentId,
+                        request.IsDeleted,
+                        GetClientCulture(),
+                        filter,
+                        sortColum.ToString(),
+                        sortDirection,
+                        paging
+                    )
+                );
             }
             catch (Exception e)
             {

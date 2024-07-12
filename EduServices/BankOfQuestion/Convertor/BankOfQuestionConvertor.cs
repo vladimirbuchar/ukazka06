@@ -1,15 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Core.Base.Repository.CodeBookRepository;
+﻿using Core.Base.Repository.CodeBookRepository;
 using Model.CodeBook;
 using Model.Edu.BankOfQuestions;
 using Services.BankOfQuestion.Dto;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Services.BankOfQuestion.Convertor
 {
-    public class BankOfQuestionConvertor(ICodeBookRepository<CultureDbo> codeBookService) : IBankOfQuestionConvertor
+    public class BankOfQuestionConvertor(ICodeBookRepository<CultureDbo> codeBookRepository) : IBankOfQuestionConvertor
     {
-        private readonly List<CultureDbo> _cultureList = codeBookService.GetEntities(false).Result;
+        private readonly List<CultureDbo> _cultureList = codeBookRepository.GetEntities(false).Result;
 
         public BankOfQuestionDbo ConvertToBussinessEntity(BankOfQuestionCreateDto addBankOfQuestionDto, string culture)
         {

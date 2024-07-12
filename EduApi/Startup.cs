@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using Asp.Versioning;
+﻿using Asp.Versioning;
 using Core.Constants;
 using EduApi.Configuration.Hangfire;
 using EduApi.Configuration.Swagger;
@@ -17,10 +13,28 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using Model;
 using Services;
+using Services.Answer.Sort;
+using Services.BankOfQuestion.Sort;
+using Services.Branch.Sort;
+using Services.Certificate.Sort;
+using Services.ClassRoom.Sort;
+using Services.Course.Sort;
 using Services.HangfireJob;
+using Services.Message.Sort;
+using Services.OrganizationCulture.Sort;
+using Services.Question.Sort;
+using Services.StudentGroup.Sort;
+using Services.StudentInGroup.Sort;
+using Services.UserInOrganization.Sort;
+using System;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
+using System.Web.Helpers;
 
 namespace EduApi
 {
@@ -155,8 +169,152 @@ namespace EduApi
 
             services.AddSwaggerGen(c =>
             {
+                c.MapType<SortDirection>(
+                    () =>
+                        new OpenApiSchema
+                        {
+                            Type = "string",
+                            Enum = Enum.GetNames(typeof(SortDirection)).Select(name => new OpenApiString(name) as IOpenApiAny).ToList<IOpenApiAny>(),
+                            Default = new OpenApiString(SortDirection.Ascending.ToString())
+                        }
+                );
+
+                c.MapType<BranchSort>(
+                    () =>
+                        new OpenApiSchema
+                        {
+                            Type = "string",
+                            Enum = Enum.GetNames(typeof(BranchSort)).Select(name => new OpenApiString(name) as IOpenApiAny).ToList<IOpenApiAny>(),
+                            Default = new OpenApiString(BranchSort.Name.ToString())
+                        }
+                );
+
+                c.MapType<ClassRoomSort>(
+                    () =>
+                        new OpenApiSchema
+                        {
+                            Type = "string",
+                            Enum = Enum.GetNames(typeof(ClassRoomSort)).Select(name => new OpenApiString(name) as IOpenApiAny).ToList<IOpenApiAny>(),
+                            Default = new OpenApiString(ClassRoomSort.Name.ToString())
+                        }
+                );
+                c.MapType<CertificateSort>(
+                    () =>
+                        new OpenApiSchema
+                        {
+                            Type = "string",
+                            Enum = Enum.GetNames(typeof(CertificateSort))
+                                .Select(name => new OpenApiString(name) as IOpenApiAny)
+                                .ToList<IOpenApiAny>(),
+                            Default = new OpenApiString(CertificateSort.Name.ToString())
+                        }
+                );
+
+                c.MapType<MessageSort>(
+                    () =>
+                        new OpenApiSchema
+                        {
+                            Type = "string",
+                            Enum = Enum.GetNames(typeof(MessageSort)).Select(name => new OpenApiString(name) as IOpenApiAny).ToList<IOpenApiAny>(),
+                            Default = new OpenApiString(MessageSort.Name.ToString())
+                        }
+                );
+
+                c.MapType<OrganizationCultureSort>(
+                    () =>
+                        new OpenApiSchema
+                        {
+                            Type = "string",
+                            Enum = Enum.GetNames(typeof(OrganizationCultureSort))
+                                .Select(name => new OpenApiString(name) as IOpenApiAny)
+                                .ToList<IOpenApiAny>(),
+                            Default = new OpenApiString(OrganizationCultureSort.Name.ToString())
+                        }
+                );
+                c.MapType<StudentGroupSort>(
+                    () =>
+                        new OpenApiSchema
+                        {
+                            Type = "string",
+                            Enum = Enum.GetNames(typeof(StudentGroupSort))
+                                .Select(name => new OpenApiString(name) as IOpenApiAny)
+                                .ToList<IOpenApiAny>(),
+                            Default = new OpenApiString(StudentGroupSort.Name.ToString())
+                        }
+                );
+
+                c.MapType<StudentInGroupSort>(
+                    () =>
+                        new OpenApiSchema
+                        {
+                            Type = "string",
+                            Enum = Enum.GetNames(typeof(StudentInGroupSort))
+                                .Select(name => new OpenApiString(name) as IOpenApiAny)
+                                .ToList<IOpenApiAny>(),
+                            Default = new OpenApiString(StudentInGroupSort.LastName.ToString())
+                        }
+                );
+                c.MapType<UserInOrganizationSort>(
+                    () =>
+                        new OpenApiSchema
+                        {
+                            Type = "string",
+                            Enum = Enum.GetNames(typeof(UserInOrganizationSort))
+                                .Select(name => new OpenApiString(name) as IOpenApiAny)
+                                .ToList<IOpenApiAny>(),
+                            Default = new OpenApiString(UserInOrganizationSort.LastName.ToString())
+                        }
+                );
+
+                c.MapType<BankOfQuestionSort>(
+                    () =>
+                        new OpenApiSchema
+                        {
+                            Type = "string",
+                            Enum = Enum.GetNames(typeof(BankOfQuestionSort))
+                                .Select(name => new OpenApiString(name) as IOpenApiAny)
+                                .ToList<IOpenApiAny>(),
+                            Default = new OpenApiString(BankOfQuestionSort.Name.ToString())
+                        }
+                );
+
+                c.MapType<QuestionSort>(
+                    () =>
+                        new OpenApiSchema
+                        {
+                            Type = "string",
+                            Enum = Enum.GetNames(typeof(QuestionSort)).Select(name => new OpenApiString(name) as IOpenApiAny).ToList<IOpenApiAny>(),
+                            Default = new OpenApiString(QuestionSort.Question.ToString())
+                        }
+                );
+
+                c.MapType<AnswerSort>(
+                    () =>
+                        new OpenApiSchema
+                        {
+                            Type = "string",
+                            Enum = Enum.GetNames(typeof(AnswerSort)).Select(name => new OpenApiString(name) as IOpenApiAny).ToList<IOpenApiAny>(),
+                            Default = new OpenApiString(AnswerSort.Answer.ToString())
+                        }
+                );
+                c.MapType<CourseSort>(
+                    () =>
+                        new OpenApiSchema
+                        {
+                            Type = "string",
+                            Enum = Enum.GetNames(typeof(CourseSort)).Select(name => new OpenApiString(name) as IOpenApiAny).ToList<IOpenApiAny>(),
+                            Default = new OpenApiString(CourseSort.Name.ToString())
+                        }
+                );
+
+
                 c.SwaggerDoc("Public", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - internal public", Version = "v1" });
-                c.SwaggerDoc("ClientZone", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - internal course", Version = "v1" });
+                c.SwaggerDoc("Course", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - internal course", Version = "v1" });
+                c.SwaggerDoc("CourseMaterial", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - internal course material", Version = "v1" });
+                c.SwaggerDoc(
+                    "BankOfQuestion",
+                    new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - internal bank of question", Version = "v1" }
+                );
                 c.SwaggerDoc(
                     "Organization",
                     new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - internal organization", Version = "v1" }
@@ -281,7 +439,9 @@ namespace EduApi
             {
                 c.DocumentTitle = "FlexibleLMS";
                 c.SwaggerEndpoint("/swagger/Public/swagger.json", "FlexibleLMS API V1 - internal public");
-                c.SwaggerEndpoint("/swagger/ClientZone/swagger.json", "FlexibleLMS API V1 - internal course");
+                c.SwaggerEndpoint("/swagger/Course/swagger.json", "FlexibleLMS API V1 - internal course");
+                c.SwaggerEndpoint("/swagger/CourseMaterial/swagger.json", "FlexibleLMS API V1 - internal course material");
+                c.SwaggerEndpoint("/swagger/BankOfQuestion/swagger.json", "FlexibleLMS API V1 - internal bank of question");
                 c.SwaggerEndpoint("/swagger/Organization/swagger.json", "FlexibleLMS API V1 - internal organization");
                 c.SwaggerEndpoint("/swagger/User/swagger.json", "FlexibleLMS API V1 - internal user");
                 c.SwaggerEndpoint("/swagger/StudyZone/swagger.json", "FlexibleLMS API V1 - internal study zone");

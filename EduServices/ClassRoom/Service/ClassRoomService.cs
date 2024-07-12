@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using Core.Base.Service;
+﻿using Core.Base.Service;
 using Core.Constants;
 using Core.DataTypes;
 using Model.Edu.Branch;
+using Model.Edu.Certificate;
 using Model.Edu.ClassRoom;
 using Model.Edu.Course;
 using Model.Edu.CourseTermDate;
@@ -16,9 +13,14 @@ using Repository.OrganizationHoursRepository;
 using Services.ClassRoom.Convertor;
 using Services.ClassRoom.Dto;
 using Services.ClassRoom.Filter;
+using Services.ClassRoom.Sort;
 using Services.ClassRoom.Validator;
 using Services.OrganizationStudyHour.Dto;
 using Services.User.Dto;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace Services.ClassRoom.Service
 {
@@ -119,23 +121,43 @@ namespace Services.ClassRoom.Service
             Expression expression = Expression.Constant(true);
             expression = FilterInt(filter.MaxCapacity, parameter, expression, nameof(ClassRoomDbo.MaxCapacity));
             expression = FilterInt(filter.Floor, parameter, expression, nameof(ClassRoomDbo.Floor));
+            expression = FilterTranslation<ClassRoomTranslationDbo>(
+                filter.Name,
+                culture,
+                parameter,
+                expression,
+                nameof(ClassRoomTranslationDbo.Name),
+                nameof(ClassRoomTranslationDbo.Culture),
+                nameof(ClassRoomDbo.ClassRoomTranslations)
+            );
             return Expression.Lambda<Func<ClassRoomDbo, bool>>(expression, parameter);
-        }
-
-        protected override List<ClassRoomDbo> PrepareMemoryFilter(List<ClassRoomDbo> entities, ClassRoomFilter filter, string culture)
-        {
-            if (!string.IsNullOrEmpty(filter.Name))
-            {
-                entities = entities
-                    .Where(x => x.ClassRoomTranslations.Any(y => y.Name.Contains(filter.Name) && y.Culture.SystemIdentificator == culture))
-                    .ToList();
-            }
-            return entities;
         }
 
         public override Guid GetOrganizationIdByParentId(Guid objectId)
         {
             return _branchRepository.GetOrganizationId(objectId);
+        }
+
+        protected override Expression<Func<ClassRoomDbo, object>> PrepareSort(string columnName, string culture)
+        {
+            if (columnName == ClassRoomSort.Name.ToString())
+            {
+                ParameterExpression parameter = Expression.Parameter(typeof(ClassRoomDbo), "x");
+                MemberExpression property = Expression.Property(parameter, nameof(ClassRoomDbo.ClassRoomTranslations));
+                MethodCallExpression anyCall = Expression.Call(
+                    typeof(Enumerable),
+                    nameof(Enumerable.FirstOrDefault),
+                    new Type[] { typeof(ClassRoomTranslationDbo) },
+                    property
+                );
+                MemberExpression nameProperty = Expression.Property(anyCall, nameof(ClassRoomTranslationDbo.Name));
+                Expression<Func<ClassRoomDbo, object>> lambda = Expression.Lambda<Func<ClassRoomDbo, object>>(
+                    Expression.Convert(nameProperty, typeof(object)),
+                    parameter
+                );
+                return lambda;
+            }
+            return base.PrepareSort(columnName, culture);
         }
 
         protected override bool IsChanged(ClassRoomDbo oldVersion, ClassRoomUpdateDto newVersion, string culture)

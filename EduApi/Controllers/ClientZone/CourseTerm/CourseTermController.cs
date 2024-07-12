@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -8,14 +6,14 @@ using Services.Course.Service;
 using Services.CourseTerm.Dto;
 using Services.CourseTerm.Service;
 using Services.OrganizationRole.Service;
+using System;
+using System.Collections.Generic;
 
 namespace EduApi.Controllers.ClientZone.CourseTerm
 {
     public class CourseTermController : BaseClientZoneController
     {
         private readonly ICourseTermService _courseTermService;
-        private readonly ICourseService _courseService;
-
         public CourseTermController(
             ICourseTermService courseTermService,
             ILogger<CourseTermController> logger,
@@ -25,7 +23,6 @@ namespace EduApi.Controllers.ClientZone.CourseTerm
             : base(logger, organizationRoleService)
         {
             _courseTermService = courseTermService;
-            _courseService = courseService;
         }
 
         [HttpPost]
@@ -38,7 +35,7 @@ namespace EduApi.Controllers.ClientZone.CourseTerm
         {
             try
             {
-                CheckOrganizationPermition(_courseService.GetOrganizationIdByObjectId(addCourseTermDto.CourseId));
+                CheckOrganizationPermition(_courseTermService.GetOrganizationIdByParentId(addCourseTermDto.CourseId));
                 return SendResponse(_courseTermService.AddObject(addCourseTermDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
@@ -57,7 +54,7 @@ namespace EduApi.Controllers.ClientZone.CourseTerm
         {
             try
             {
-                CheckOrganizationPermition(_courseService.GetOrganizationIdByObjectId(request.ParentId));
+                CheckOrganizationPermition(_courseTermService.GetOrganizationIdByParentId(request.ParentId));
                 return SendResponse(_courseTermService.GetList(x => x.CourseId == request.ParentId, request.IsDeleted, GetClientCulture()));
             }
             catch (Exception e)

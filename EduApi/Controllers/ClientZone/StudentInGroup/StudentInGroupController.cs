@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web.Helpers;
 using Core.Base.Dto;
+using Core.Base.Paging;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -8,6 +10,7 @@ using Services.OrganizationRole.Service;
 using Services.StudentInGroup.Dto;
 using Services.StudentInGroup.Filter;
 using Services.StudentInGroup.Service;
+using Services.StudentInGroup.Sort;
 
 namespace EduApi.Controllers.ClientZone.StudentInGroup;
 
@@ -52,13 +55,27 @@ public class StudentInGroupController : BaseClientZoneController
     [ProducesResponseType(typeof(SystemError), 500)]
     [ProducesResponseType(typeof(Result), 400)]
     [ProducesResponseType(typeof(void), 403)]
-    public ActionResult List([FromQuery] ListDeletedRequestDto requestDto, [FromQuery] StudentInGroupFilter filter)
+    public ActionResult List(
+        [FromQuery] ListDeletedRequestDto requestDto,
+        [FromQuery] StudentInGroupFilter filter,
+        [FromQuery] SortDirection sortDirection,
+        [FromQuery] StudentInGroupSort sortColum,
+        [FromQuery] BasePaging paging
+    )
     {
         try
         {
             CheckOrganizationPermition(_studentInGroupService.GetOrganizationIdByParentId(requestDto.ParentId));
             return SendResponse(
-                _studentInGroupService.GetList(x => x.StudentGroupId == requestDto.ParentId, requestDto.IsDeleted, GetClientCulture(), filter)
+                _studentInGroupService.GetList(
+                    x => x.StudentGroupId == requestDto.ParentId,
+                    requestDto.IsDeleted,
+                    GetClientCulture(),
+                    filter,
+                    sortColum.ToString(),
+                    sortDirection,
+                    paging
+                )
             );
         }
         catch (Exception e)

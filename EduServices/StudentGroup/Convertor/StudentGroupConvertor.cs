@@ -7,9 +7,9 @@ using Services.StudentGroup.Dto;
 
 namespace Services.StudentGroup.Convertor
 {
-    public class StudentGroupConvertor(ICodeBookRepository<CultureDbo> codeBookService) : IStudentGroupConvertor
+    public class StudentGroupConvertor(ICodeBookRepository<CultureDbo> codeBookRepository) : IStudentGroupConvertor
     {
-        private readonly List<CultureDbo> _cultureList = codeBookService.GetEntities(false).Result;
+        private readonly List<CultureDbo> _cultureList = codeBookRepository.GetEntities(false).Result;
 
         public List<StudentGroupInOrganizationListDto> ConvertToWebModel(List<StudentGroupDbo> getStudentGroupInOrganizations, string culture)
         {

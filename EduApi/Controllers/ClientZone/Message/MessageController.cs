@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web.Helpers;
 using Core.Base.Dto;
+using Core.Base.Paging;
 using Core.Constants;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Services.Message.Dto;
 using Services.Message.Filter;
 using Services.Message.Service;
+using Services.Message.Sort;
 using Services.OrganizationRole.Service;
 
 namespace EduApi.Controllers.ClientZone.SendMessage
@@ -52,13 +55,27 @@ namespace EduApi.Controllers.ClientZone.SendMessage
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult List([FromQuery] ListDeletedRequestDto request, [FromQuery] MessageFilter filter)
+        public ActionResult List(
+            [FromQuery] ListDeletedRequestDto request,
+            [FromQuery] MessageFilter filter,
+            [FromQuery] SortDirection sortDirection,
+            [FromQuery] MessageSort sortColum,
+            [FromQuery] BasePaging paging
+        )
         {
             try
             {
                 CheckOrganizationPermition(request.ParentId);
                 return SendResponse(
-                    _sendMessageService.GetList(x => x.OrganizationId == request.ParentId, request.IsDeleted, GetClientCulture(), filter)
+                    _sendMessageService.GetList(
+                        x => x.OrganizationId == request.ParentId,
+                        request.IsDeleted,
+                        GetClientCulture(),
+                        filter,
+                        sortColum.ToString(),
+                        sortDirection,
+                        paging
+                    )
                 );
             }
             catch (Exception e)

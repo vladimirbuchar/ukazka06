@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Web.Helpers;
 using Core.Base.Dto;
+using Core.Base.Paging;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.OrganizationCulture.Dto;
 using Services.OrganizationCulture.Filter;
 using Services.OrganizationCulture.Service;
+using Services.OrganizationCulture.Sort;
 using Services.OrganizationRole.Service;
 
 namespace EduApi.Controllers.ClientZone.OrganizationCulture
@@ -13,16 +16,16 @@ namespace EduApi.Controllers.ClientZone.OrganizationCulture
     [ApiExplorerSettings(GroupName = "Organization")]
     public class OrganizationCultureController : BaseClientZoneController
     {
-        private readonly IOrganizationCultureService _organizationSettingService;
+        private readonly IOrganizationCultureService _organizationCultureService;
 
         public OrganizationCultureController(
             ILogger<OrganizationCultureController> logger,
-            IOrganizationCultureService organizationSettingService,
+            IOrganizationCultureService organizationCultureService,
             IOrganizationRoleService organizationRoleService
         )
             : base(logger, organizationRoleService)
         {
-            _organizationSettingService = organizationSettingService;
+            _organizationCultureService = organizationCultureService;
         }
 
         [HttpPost]
@@ -36,7 +39,7 @@ namespace EduApi.Controllers.ClientZone.OrganizationCulture
             try
             {
                 CheckOrganizationPermition(addCourseDto.OrganizationId);
-                return SendResponse(_organizationSettingService.AddObject(addCourseDto, GetLoggedUserId(), GetClientCulture()));
+                return SendResponse(_organizationCultureService.AddObject(addCourseDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
             {
@@ -50,17 +53,26 @@ namespace EduApi.Controllers.ClientZone.OrganizationCulture
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult List([FromQuery] ListDeletedRequestDto listRequest, [FromQuery] OrganizationCultureFilter filter)
+        public ActionResult List(
+            [FromQuery] ListDeletedRequestDto listRequest,
+            [FromQuery] OrganizationCultureFilter filter,
+            [FromQuery] SortDirection sortDirection,
+            [FromQuery] OrganizationCultureSort sortColum,
+            [FromQuery] BasePaging paging
+        )
         {
             try
             {
                 CheckOrganizationPermition(listRequest.ParentId);
                 return SendResponse(
-                    _organizationSettingService.GetList(
+                    _organizationCultureService.GetList(
                         x => x.OrganizationId == listRequest.ParentId,
                         listRequest.IsDeleted,
                         GetClientCulture(),
-                        filter
+                        filter,
+                        sortColum.ToString(),
+                        sortDirection,
+                        paging
                     )
                 );
             }
@@ -80,9 +92,9 @@ namespace EduApi.Controllers.ClientZone.OrganizationCulture
         {
             try
             {
-                update.OrganizationId = _organizationSettingService.GetOrganizationIdByObjectId(update.Id);
+                update.OrganizationId = _organizationCultureService.GetOrganizationIdByObjectId(update.Id);
                 CheckOrganizationPermition(update.OrganizationId);
-                return SendResponse(_organizationSettingService.UpdateObject(update, GetLoggedUserId(), GetClientCulture()));
+                return SendResponse(_organizationCultureService.UpdateObject(update, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
             {
@@ -100,8 +112,8 @@ namespace EduApi.Controllers.ClientZone.OrganizationCulture
         {
             try
             {
-                CheckOrganizationPermition(_organizationSettingService.GetOrganizationIdByObjectId(request.Id));
-                return SendResponse(_organizationSettingService.DeleteObject(request.Id, GetLoggedUserId()));
+                CheckOrganizationPermition(_organizationCultureService.GetOrganizationIdByObjectId(request.Id));
+                return SendResponse(_organizationCultureService.DeleteObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
             {
@@ -119,8 +131,8 @@ namespace EduApi.Controllers.ClientZone.OrganizationCulture
         {
             try
             {
-                CheckOrganizationPermition(_organizationSettingService.GetOrganizationIdByObjectId(request.Id));
-                return SendResponse(_organizationSettingService.RestoreObject(request.Id, GetLoggedUserId()));
+                CheckOrganizationPermition(_organizationCultureService.GetOrganizationIdByObjectId(request.Id));
+                return SendResponse(_organizationCultureService.RestoreObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
             {

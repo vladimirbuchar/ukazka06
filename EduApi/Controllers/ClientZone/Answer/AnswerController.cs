@@ -1,17 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web.Helpers;
 using Core.Base.Dto;
+using Core.Base.Paging;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Model.Edu.Answer;
 using Services.Answer.Dto;
+using Services.Answer.Filter;
 using Services.Answer.Service;
+using Services.Answer.Sort;
 using Services.OrganizationRole.Service;
 
 namespace EduApi.Controllers.ClientZone.Answer
 {
+    [ApiExplorerSettings(GroupName = "BankOfQuestion")]
     public class AnswerController : BaseClientZoneController
     {
         private readonly IAnswerService _answerService;
@@ -32,7 +37,7 @@ namespace EduApi.Controllers.ClientZone.Answer
         {
             try
             {
-                CheckOrganizationPermition(_answerService.GetOrganizationIdByObjectId(request.QuestionId));
+                CheckOrganizationPermition(_answerService.GetOrganizationIdByParentId(request.QuestionId));
                 return SendResponse(_answerService.AddObject(request, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
@@ -47,12 +52,28 @@ namespace EduApi.Controllers.ClientZone.Answer
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult List([FromQuery] ListDeletedRequestDto request)
+        public ActionResult List(
+            [FromQuery] ListDeletedRequestDto request,
+            [FromQuery] AnswerFilter filter,
+            [FromQuery] SortDirection sortDirection,
+            [FromQuery] AnswerSort sortColum,
+            [FromQuery] BasePaging paging
+        )
         {
             try
             {
-                CheckOrganizationPermition(_answerService.GetOrganizationIdByObjectId(request.ParentId));
-                return SendResponse(_answerService.GetList(x => x.TestQuestionId == request.ParentId, request.IsDeleted, GetClientCulture()));
+                CheckOrganizationPermition(_answerService.GetOrganizationIdByParentId(request.ParentId));
+                return SendResponse(
+                    _answerService.GetList(
+                        x => x.TestQuestionId == request.ParentId,
+                        request.IsDeleted,
+                        GetClientCulture(),
+                        filter,
+                        sortColum.ToString(),
+                        sortDirection,
+                        paging
+                    )
+                );
             }
             catch (Exception e)
             {
@@ -174,7 +195,7 @@ namespace EduApi.Controllers.ClientZone.Answer
         {
             try
             {
-                CheckOrganizationPermition(_answerService.GetOrganizationIdByObjectId(request.ParentId));
+                CheckOrganizationPermition(_answerService.GetOrganizationIdByParentId(request.ParentId));
                 return SendResponse(_answerService.MultipleDelete(x => x.TestQuestionId == request.ParentId, GetLoggedUserId()));
             }
             catch (Exception e)

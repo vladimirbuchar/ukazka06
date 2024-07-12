@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Core.Extension;
-using Model.Edu.Branch;
+﻿using Model.Edu.Branch;
 using Model.Edu.ClassRoom;
 using Model.Edu.CourseTerm;
 using Services.CourseTerm.Dto;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Services.CourseTerm.Convertor
 {
@@ -13,11 +12,6 @@ namespace Services.CourseTerm.Convertor
     {
         public CourseTermDbo ConvertToBussinessEntity(CourseTermCreateDto addCourseTermDto, string culture)
         {
-            Guid organizationStudyHourId = Guid.Empty;
-            if (!addCourseTermDto.OrganizationStudyHourId.IsNullOrEmptyWithTrim())
-            {
-                _ = Guid.TryParse(addCourseTermDto.OrganizationStudyHourId, out organizationStudyHourId);
-            }
             return new CourseTermDbo()
             {
                 ActiveFrom = addCourseTermDto.ActiveFrom,
@@ -39,10 +33,7 @@ namespace Services.CourseTerm.Convertor
                 TimeToId = addCourseTermDto.TimeToId,
                 Tuesday = addCourseTermDto.Tuesday,
                 Wednesday = addCourseTermDto.Wednesday,
-                OrganizationStudyHourId =
-                    addCourseTermDto.OrganizationStudyHourId.IsNullOrEmptyWithTrim() || organizationStudyHourId == Guid.Empty
-                        ? null
-                        : organizationStudyHourId
+                OrganizationStudyHourId = addCourseTermDto.OrganizationStudyHourId
             };
         }
 
@@ -103,11 +94,6 @@ namespace Services.CourseTerm.Convertor
 
         public CourseTermDbo ConvertToBussinessEntity(CourseTermUpdateDto updateCourseTermDto, CourseTermDbo entity, string culture)
         {
-            Guid organizationStudyHourId = Guid.Empty;
-            if (!updateCourseTermDto.OrganizationStudyHourId.IsNullOrEmptyWithTrim())
-            {
-                _ = Guid.TryParse(updateCourseTermDto.OrganizationStudyHourId, out organizationStudyHourId);
-            }
             entity.ActiveFrom = updateCourseTermDto.ActiveFrom;
             entity.ActiveTo = updateCourseTermDto.ActiveTo;
             entity.ClassRoomId = updateCourseTermDto.ClassRoomId ?? Guid.Empty;
@@ -126,10 +112,7 @@ namespace Services.CourseTerm.Convertor
             entity.TimeToId = updateCourseTermDto.TimeToId;
             entity.Tuesday = updateCourseTermDto.Tuesday;
             entity.Wednesday = updateCourseTermDto.Wednesday;
-            entity.OrganizationStudyHourId =
-                updateCourseTermDto.OrganizationStudyHourId.IsNullOrEmptyWithTrim() || organizationStudyHourId == Guid.Empty
-                    ? Guid.Empty
-                    : organizationStudyHourId;
+            entity.OrganizationStudyHourId = updateCourseTermDto.OrganizationStudyHourId;
             return entity;
         }
     }

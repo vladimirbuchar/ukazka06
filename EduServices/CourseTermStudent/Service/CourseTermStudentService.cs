@@ -1,5 +1,8 @@
-﻿using Core.Base.Repository.CodeBookRepository;
-using Core.Base.Request;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Core.Base.Filter;
+using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Service;
 using Core.Constants;
 using Core.DataTypes;
@@ -21,9 +24,6 @@ using Services.CourseTermStudent.Convertor;
 using Services.CourseTermStudent.Dto;
 using Services.CourseTermStudent.Validator;
 using Services.SystemService.SendMailService.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.CourseTermStudent.Service
 {

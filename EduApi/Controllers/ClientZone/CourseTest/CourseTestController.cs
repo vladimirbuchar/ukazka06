@@ -1,14 +1,15 @@
-﻿using System;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.OrganizationRole.Service;
 using Services.Test.Dto;
 using Services.Test.Service;
+using System;
 
 namespace EduApi.Controllers.ClientZone.CourseTest
 {
+    [ApiExplorerSettings(GroupName = "CourseMaterial")]
     public class CourseTestController : BaseClientZoneController
     {
         private readonly ITestService _testService;

@@ -7,9 +7,9 @@ using Services.ClassRoom.Dto;
 
 namespace Services.ClassRoom.Convertor
 {
-    public class ClasssRoomConvertor(ICodeBookRepository<CultureDbo> codeBookService) : IClassRoomConvertor
+    public class ClasssRoomConvertor(ICodeBookRepository<CultureDbo> codeBookRepository) : IClassRoomConvertor
     {
-        private readonly List<CultureDbo> _cultureList = codeBookService.GetEntities(false).Result;
+        private readonly List<CultureDbo> _cultureList = codeBookRepository.GetEntities(false).Result;
 
         public ClassRoomDbo ConvertToBussinessEntity(ClassRoomCreateDto addClassRoomDto, string culture)
         {

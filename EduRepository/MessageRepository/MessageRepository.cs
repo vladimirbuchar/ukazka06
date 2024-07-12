@@ -19,7 +19,11 @@ namespace Repository.MessageRepository
 
         protected override IQueryable<MessageDbo> PrepareListQuery()
         {
-            return _dbContext.Set<MessageDbo>().Include(x => x.SendMessageTranslations.Where(x => x.IsDeleted == false)).ThenInclude(x => x.Culture);
+            return _dbContext
+                .Set<MessageDbo>()
+                .Include(x => x.SendMessageTranslations.Where(x => x.IsDeleted == false))
+                .ThenInclude(x => x.Culture)
+                .Include(x => x.SendMessageType);
         }
 
         public override Guid GetOrganizationId(Guid objectId)

@@ -1,7 +1,7 @@
-﻿using Core.Base.Request;
-using Core.Base.Service;
+﻿using Core.Base.Service;
 using Model.Edu.Question;
 using Services.Question.Dto;
+using Services.Question.Filter;
 
 namespace Services.Question.Service
 {
@@ -13,6 +13,6 @@ namespace Services.Question.Service
             QuestionDetailDto,
             QuestionUpdateDto,
             QuestionFileRepositoryDbo,
-            FilterRequest
+            QuestionFilter
         > { }
 }

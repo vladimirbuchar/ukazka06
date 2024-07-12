@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using Core.Base.Service;
+﻿using Core.Base.Service;
 using Core.Constants;
 using Core.DataTypes;
+using Model.CodeBook;
 using Model.Link;
 using Repository.OrganizationCultureRepository;
 using Services.OrganizationCulture.Convertor;
 using Services.OrganizationCulture.Dto;
 using Services.OrganizationCulture.Filter;
+using Services.OrganizationCulture.Sort;
 using Services.OrganizationCulture.Validator;
+using System;
+using System.Linq.Expressions;
 
 namespace Services.OrganizationCulture.Service
 {
@@ -93,26 +93,36 @@ namespace Services.OrganizationCulture.Service
         {
             ParameterExpression parameter = Expression.Parameter(typeof(OrganizationCultureDbo), "OrganizationCulture");
             Expression expression = Expression.Constant(true); // Start with a true expression
+            expression = FilterString(
+                filter.Name,
+                parameter,
+                expression,
+                nameof(OrganizationCultureDbo.Culture),
+                nameof(OrganizationCultureDbo.Culture.Name)
+            );
             expression = FilterBool(filter.IsDefault, parameter, expression, nameof(OrganizationCultureDbo.IsDefault));
             return Expression.Lambda<Func<OrganizationCultureDbo, bool>>(expression, parameter);
-        }
-
-        protected override List<OrganizationCultureDbo> PrepareMemoryFilter(
-            List<OrganizationCultureDbo> entities,
-            OrganizationCultureFilter filter,
-            string culture
-        )
-        {
-            if (!string.IsNullOrEmpty(filter.Name))
-            {
-                entities = entities.Where(x => x.Culture.Name.Contains(filter.Name)).ToList();
-            }
-            return entities;
         }
 
         protected override bool IsChanged(OrganizationCultureDbo oldVersion, OrganizationCultureUpdateDto newVersion, string culture)
         {
             return oldVersion.IsDefault != newVersion.IsDefault;
+        }
+
+        protected override Expression<Func<OrganizationCultureDbo, object>> PrepareSort(string columnName, string culture)
+        {
+            if (columnName == OrganizationCultureSort.Name.ToString())
+            {
+                ParameterExpression parameter = Expression.Parameter(typeof(OrganizationCultureDbo), "x");
+                MemberExpression property = Expression.Property(parameter, nameof(OrganizationCultureDbo.Culture));
+                MemberExpression nameProperty = Expression.Property(property, nameof(CultureDbo.Name));
+                Expression<Func<OrganizationCultureDbo, object>> lambda = Expression.Lambda<Func<OrganizationCultureDbo, object>>(
+                    Expression.Convert(nameProperty, typeof(object)),
+                    parameter
+                );
+                return lambda;
+            }
+            return base.PrepareSort(columnName, culture);
         }
     }
 }
