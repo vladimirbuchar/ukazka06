@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using Core.Base.Service;
+﻿using Core.Base.Service;
 using Core.DataTypes;
 using Services.CourseTermTimeTable.Dto;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Services.CourseTermTimeTable.Service
 {
     public interface ICourseTermTimeTableService : IBaseService
     {
-        Result GenerateTimeTable(
+        Task<Result> GenerateTimeTable(
             DateTime activeFrom,
             DateTime activeTo,
             Guid timeFromId,
@@ -18,9 +19,9 @@ namespace Services.CourseTermTimeTable.Service
             List<string> lectors,
             Guid classRoomId
         );
-        List<CourseTermTimeTableListDto> GetTimeTable(Guid courseTermId, string culture);
-        Result CancelCourseTerm(Guid courseTermTimeTableId);
-        Result Restore(Guid courseTermTimeTableId);
-        Result GenerateTimeTable(Guid courseTermId);
+        Task<List<CourseTermTimeTableListDto>> GetTimeTable(Guid courseTermId, string culture);
+        Task<Result> CancelCourseTerm(Guid courseTermTimeTableId);
+        Task<Result> Restore(Guid courseTermTimeTableId);
+        Task<Result> GenerateTimeTable(Guid courseTermId);
     }
 }

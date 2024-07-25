@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Core.Base.Paging;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,10 +7,15 @@ using Services.Course.Service;
 using Services.Organization.Dto;
 using Services.Organization.Filter;
 using Services.Organization.Service;
+using Services.Organization.Sort;
 using Services.OrganizationSetting.Dto;
 using Services.OrganizationSetting.Service;
 using Services.Page.Dto;
 using Services.Page.Service;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Web.Helpers;
 
 namespace EduApi.Controllers.Web.Page
 {
@@ -43,15 +47,15 @@ namespace EduApi.Controllers.Web.Page
         [ProducesResponseType(typeof(void), 404)]
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
-        public ActionResult PriceList()
+        public async Task<ActionResult> PriceList()
         {
             try
             {
-                return SendResponse(_pageService.PriceList());
+                return await SendResponse(_pageService.PriceList());
             }
             catch (Exception ex)
             {
-                return SendSystemError(ex);
+                return await SendSystemError(ex);
             }
         }
 
@@ -60,15 +64,15 @@ namespace EduApi.Controllers.Web.Page
         [ProducesResponseType(typeof(void), 404)]
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
-        public ActionResult GetOrganizationDetail(Guid organizationId)
+        public async Task<ActionResult> GetOrganizationDetail(Guid organizationId)
         {
             try
             {
-                return SendResponse(_organizationService.GetOrganizationDetailWeb(organizationId));
+                return await SendResponse(await _organizationService.GetOrganizationDetailWeb(organizationId));
             }
             catch (Exception ex)
             {
-                return SendSystemError(ex);
+                return await SendSystemError(ex);
             }
         }
 
@@ -77,15 +81,15 @@ namespace EduApi.Controllers.Web.Page
         [ProducesResponseType(typeof(void), 404)]
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
-        public ActionResult GetOrganizationList([FromQuery] OrganizationFilter filter)
+        public async Task<ActionResult> GetOrganizationList([FromQuery] OrganizationFilter filter, [FromQuery] OrganizationSort sort, [FromQuery] SortDirection sortDirection, [FromQuery] BasePaging paging)
         {
             try
             {
-                return SendResponse(_organizationService.GetList(GetClientCulture(), filter));
+                return await SendResponse(await _organizationService.GetList(null, false, GetClientCulture(), filter, sort.ToString(), sortDirection, paging));
             }
             catch (Exception ex)
             {
-                return SendSystemError(ex);
+                return await SendSystemError(ex);
             }
         }
 
@@ -94,15 +98,15 @@ namespace EduApi.Controllers.Web.Page
         [ProducesResponseType(typeof(void), 404)]
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
-        public ActionResult GetOrganizationSettingByUrl(string url)
+        public async Task<ActionResult> GetOrganizationSettingByUrl(string url)
         {
             try
             {
-                return SendResponse(_organizationSettingService.GetOrganizationSettingByUrl(url));
+                return await SendResponse(await _organizationSettingService.GetOrganizationSettingByUrl(url));
             }
             catch (Exception ex)
             {
-                return SendSystemError(ex);
+                return await SendSystemError(ex);
             }
         }
     }

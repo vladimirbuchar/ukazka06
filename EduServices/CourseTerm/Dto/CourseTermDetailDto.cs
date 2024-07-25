@@ -1,15 +1,15 @@
-﻿using System;
+﻿using Core.Base.Dto;
+using System;
 using System.Collections.Generic;
-using Core.Base.Dto;
 
 namespace Services.CourseTerm.Dto
 {
     public class CourseTermDetailDto : DetailDto
     {
-        public DateTime ActiveFrom { get; set; }
-        public DateTime ActiveTo { get; set; }
-        public DateTime RegistrationFrom { get; set; }
-        public DateTime RegistrationTo { get; set; }
+        public DateTime? ActiveFrom { get; set; }
+        public DateTime? ActiveTo { get; set; }
+        public DateTime? RegistrationFrom { get; set; }
+        public DateTime? RegistrationTo { get; set; }
         public Guid ClassRoomId { get; set; }
         public Guid BranchId { get; set; }
         public bool Monday { get; set; }

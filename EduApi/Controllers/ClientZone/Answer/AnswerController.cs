@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web.Helpers;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
 using Core.Base.Paging;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Http;
@@ -13,6 +10,10 @@ using Services.Answer.Filter;
 using Services.Answer.Service;
 using Services.Answer.Sort;
 using Services.OrganizationRole.Service;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Web.Helpers;
 
 namespace EduApi.Controllers.ClientZone.Answer
 {
@@ -33,16 +34,18 @@ namespace EduApi.Controllers.ClientZone.Answer
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Create(AnswerCreateDto request)
+        public async Task<ActionResult> Create(AnswerCreateDto request)
         {
             try
             {
-                CheckOrganizationPermition(_answerService.GetOrganizationIdByParentId(request.QuestionId));
-                return SendResponse(_answerService.AddObject(request, GetLoggedUserId(), GetClientCulture()));
+                Guid orgasnizationId = await _answerService.GetOrganizationIdByParentId(request.QuestionId);
+                await CheckOrganizationPermition(orgasnizationId);
+                var result = await _answerService.AddObject(request, GetLoggedUserId(), GetClientCulture());
+                return await SendResponse(result);
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -52,7 +55,7 @@ namespace EduApi.Controllers.ClientZone.Answer
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult List(
+        public async Task<ActionResult> List(
             [FromQuery] ListDeletedRequestDto request,
             [FromQuery] AnswerFilter filter,
             [FromQuery] SortDirection sortDirection,
@@ -62,9 +65,9 @@ namespace EduApi.Controllers.ClientZone.Answer
         {
             try
             {
-                CheckOrganizationPermition(_answerService.GetOrganizationIdByParentId(request.ParentId));
-                return SendResponse(
-                    _answerService.GetList(
+                Guid organizationId = await _answerService.GetOrganizationIdByParentId(request.ParentId);
+                await CheckOrganizationPermition(organizationId);
+                var result = await _answerService.GetList(
                         x => x.TestQuestionId == request.ParentId,
                         request.IsDeleted,
                         GetClientCulture(),
@@ -72,12 +75,14 @@ namespace EduApi.Controllers.ClientZone.Answer
                         sortColum.ToString(),
                         sortDirection,
                         paging
-                    )
+                    );
+                return await SendResponse(
+                    result
                 );
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -87,16 +92,18 @@ namespace EduApi.Controllers.ClientZone.Answer
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Detail([FromQuery] DetailRequestDto request)
+        public async Task<ActionResult> Detail([FromQuery] DetailRequestDto request)
         {
             try
             {
-                CheckOrganizationPermition(_answerService.GetOrganizationIdByObjectId(request.Id));
-                return SendResponse(_answerService.GetDetail(request.Id, GetClientCulture()));
+                Guid organizationId = await _answerService.GetOrganizationIdByObjectId(request.Id);
+                await CheckOrganizationPermition(organizationId);
+                var result = await _answerService.GetDetail(request.Id, GetClientCulture());
+                return await SendResponse(result);
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -106,16 +113,18 @@ namespace EduApi.Controllers.ClientZone.Answer
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Update(AnswerUpdateDto request)
+        public async Task<ActionResult> Update(AnswerUpdateDto request)
         {
             try
             {
-                CheckOrganizationPermition(_answerService.GetOrganizationIdByObjectId(request.Id));
-                return SendResponse(_answerService.UpdateObject(request, GetLoggedUserId(), GetClientCulture()));
+                Guid organizationId = await _answerService.GetOrganizationIdByObjectId(request.Id);
+                await CheckOrganizationPermition(organizationId);
+                var result = await _answerService.UpdateObject(request, GetLoggedUserId(), GetClientCulture());
+                return await SendResponse(result);
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -125,16 +134,17 @@ namespace EduApi.Controllers.ClientZone.Answer
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Delete([FromQuery] DeleteDto request)
+        public async Task<ActionResult> Delete([FromQuery] DeleteDto request)
         {
             try
             {
-                CheckOrganizationPermition(_answerService.GetOrganizationIdByObjectId(request.Id));
-                return SendResponse(_answerService.DeleteObject(request.Id, GetLoggedUserId()));
+                await CheckOrganizationPermition(await _answerService.GetOrganizationIdByObjectId(request.Id));
+                var result = await _answerService.DeleteObject(request.Id, GetLoggedUserId());
+                return await SendResponse(result);
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -144,16 +154,17 @@ namespace EduApi.Controllers.ClientZone.Answer
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Restore([FromQuery] RestoreDto request)
+        public async Task<ActionResult> Restore([FromQuery] RestoreDto request)
         {
             try
             {
-                CheckOrganizationPermition(_answerService.GetOrganizationIdByObjectId(request.Id));
-                return SendResponse(_answerService.RestoreObject(request.Id, GetLoggedUserId()));
+                await CheckOrganizationPermition(await _answerService.GetOrganizationIdByObjectId(request.Id));
+                var result = await _answerService.RestoreObject(request.Id, GetLoggedUserId());
+                return await SendResponse(result);
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -163,25 +174,26 @@ namespace EduApi.Controllers.ClientZone.Answer
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult FileUpload([FromQuery] DetailRequestDto request, IFormFile file)
+        public async Task<ActionResult> FileUpload([FromQuery] DetailRequestDto request, IFormFile file)
         {
             try
             {
-                CheckOrganizationPermition(_answerService.GetOrganizationIdByObjectId(request.Id));
-                return SendResponse(
-                    _answerService.FileUpload(
+                await CheckOrganizationPermition(await _answerService.GetOrganizationIdByObjectId(request.Id));
+                var result = await _answerService.FileUpload(
                         request.Id,
                         GetClientCulture(),
                         GetLoggedUserId(),
                         new List<IFormFile>() { file },
                         new AnswerFileRepositoryDbo() { AnswerId = request.Id, },
                         x => x.AnswerId == request.Id && x.Culture.SystemIdentificator == GetClientCulture()
-                    )
+                    );
+                return await SendResponse(
+                    result
                 );
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -191,16 +203,17 @@ namespace EduApi.Controllers.ClientZone.Answer
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult DeleteAnswerInQuestion([FromQuery] DeleteByParentIdDto request)
+        public async Task<ActionResult> DeleteAnswerInQuestion([FromQuery] DeleteByParentIdDto request)
         {
             try
             {
-                CheckOrganizationPermition(_answerService.GetOrganizationIdByParentId(request.ParentId));
-                return SendResponse(_answerService.MultipleDelete(x => x.TestQuestionId == request.ParentId, GetLoggedUserId()));
+                await CheckOrganizationPermition(await _answerService.GetOrganizationIdByParentId(request.ParentId));
+                var result = await _answerService.MultipleDelete(x => x.TestQuestionId == request.ParentId, GetLoggedUserId());
+                return await SendResponse(result);
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
     }

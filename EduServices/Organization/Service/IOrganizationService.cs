@@ -1,8 +1,9 @@
-﻿using System;
-using Core.Base.Service;
+﻿using Core.Base.Service;
 using Model.Edu.Organization;
 using Services.Organization.Dto;
 using Services.Organization.Filter;
+using System;
+using System.Threading.Tasks;
 
 namespace Services.Organization.Service
 {
@@ -17,6 +18,6 @@ namespace Services.Organization.Service
             OrganizationFilter
         >
     {
-        OrganizationDetailWebDto GetOrganizationDetailWeb(Guid organizationId);
+        Task<OrganizationDetailWebDto> GetOrganizationDetailWeb(Guid organizationId);
     }
 }

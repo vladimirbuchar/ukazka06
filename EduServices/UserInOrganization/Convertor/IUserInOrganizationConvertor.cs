@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-using Core.Base.Convertor;
+﻿using Core.Base.Convertor;
 using Model.Edu.OrganizationRole;
 using Model.Link;
 using Services.UserInOrganization.Dto;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Services.UserInOrganization.Convertor
 {
@@ -15,6 +16,6 @@ namespace Services.UserInOrganization.Convertor
             UserInOrganizationUpdateDto
         >
     {
-        List<OrganizationRoleListDto> ConvertToWebModel(List<OrganizationRoleDbo> organizationRoles);
+        Task<List<OrganizationRoleListDto>> ConvertToWebModel(List<OrganizationRoleDbo> organizationRoles);
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -7,6 +6,8 @@ using Services.CourseTerm.Dto;
 using Services.CourseTermTimeTable.Dto;
 using Services.CourseTermTimeTable.Service;
 using Services.OrganizationRole.Service;
+using System;
+using System.Threading.Tasks;
 
 namespace EduApi.Controllers.ClientZone.CourseTermTimeTable
 {
@@ -30,16 +31,16 @@ namespace EduApi.Controllers.ClientZone.CourseTermTimeTable
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Create(CourseTermTimeTableGenerateDto generateTimeTableDto)
+        public async Task<ActionResult> Create(CourseTermTimeTableGenerateDto generateTimeTableDto)
         {
             try
             {
-                CheckOrganizationPermition(_courseTermTimeTableService.GetOrganizationIdByObjectId(generateTimeTableDto.CourseTermId));
-                return SendResponse(_courseTermTimeTableService.GenerateTimeTable(generateTimeTableDto.CourseTermId));
+                await CheckOrganizationPermition(await _courseTermTimeTableService.GetOrganizationIdByObjectId(generateTimeTableDto.CourseTermId));
+                return await SendResponse(await _courseTermTimeTableService.GenerateTimeTable(generateTimeTableDto.CourseTermId));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -49,10 +50,10 @@ namespace EduApi.Controllers.ClientZone.CourseTermTimeTable
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult List([FromQuery] ListRequestDto requestDto)
+        public async Task<ActionResult> List([FromQuery] ListRequestDto requestDto)
         {
-            CheckOrganizationPermition(_courseTermTimeTableService.GetOrganizationIdByObjectId(requestDto.ParentId));
-            return SendResponse(_courseTermTimeTableService.GetTimeTable(requestDto.ParentId, GetClientCulture()));
+            await CheckOrganizationPermition(await _courseTermTimeTableService.GetOrganizationIdByObjectId(requestDto.ParentId));
+            return await SendResponse(await _courseTermTimeTableService.GetTimeTable(requestDto.ParentId, GetClientCulture()));
         }
 
         [HttpPut]
@@ -61,16 +62,16 @@ namespace EduApi.Controllers.ClientZone.CourseTermTimeTable
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult CancelCourseTerm(CourseTermTimeTableCancelDto cancelCourseTermDto)
+        public async Task<ActionResult> CancelCourseTerm(CourseTermTimeTableCancelDto cancelCourseTermDto)
         {
             try
             {
-                CheckOrganizationPermition(_courseTermTimeTableService.GetOrganizationIdByObjectId(cancelCourseTermDto.CourseTermId));
-                return SendResponse(_courseTermTimeTableService.CancelCourseTerm(cancelCourseTermDto.Id));
+                await CheckOrganizationPermition(await _courseTermTimeTableService.GetOrganizationIdByObjectId(cancelCourseTermDto.CourseTermId));
+                return await SendResponse(await _courseTermTimeTableService.CancelCourseTerm(cancelCourseTermDto.Id));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -80,16 +81,16 @@ namespace EduApi.Controllers.ClientZone.CourseTermTimeTable
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult RestoreCourseTerm(CourseTermTimeTableRestoreDto restoreCourseTermDto)
+        public async Task<ActionResult> RestoreCourseTerm(CourseTermTimeTableRestoreDto restoreCourseTermDto)
         {
             try
             {
-                CheckOrganizationPermition(_courseTermTimeTableService.GetOrganizationIdByObjectId(restoreCourseTermDto.CourseTermId));
-                return SendResponse(_courseTermTimeTableService.Restore(restoreCourseTermDto.Id));
+                await CheckOrganizationPermition(await _courseTermTimeTableService.GetOrganizationIdByObjectId(restoreCourseTermDto.CourseTermId));
+                return await SendResponse(await _courseTermTimeTableService.Restore(restoreCourseTermDto.Id));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
     }

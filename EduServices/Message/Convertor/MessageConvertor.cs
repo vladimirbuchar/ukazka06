@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Core.Base.Repository.CodeBookRepository;
+﻿using Core.Base.Repository.CodeBookRepository;
 using Model.CodeBook;
 using Model.Edu.Message;
 using Services.Message.Dto;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Services.Message.Convertor
 {
@@ -11,9 +12,9 @@ namespace Services.Message.Convertor
     {
         private readonly List<CultureDbo> _cultureList = codeBookRepository.GetEntities(false).Result;
 
-        public List<MessageListDto> ConvertToWebModel(List<MessageDbo> getSendMessageInOrganizations, string culture)
+        public Task<List<MessageListDto>> ConvertToWebModel(List<MessageDbo> getSendMessageInOrganizations, string culture)
         {
-            return getSendMessageInOrganizations
+            return Task.FromResult(getSendMessageInOrganizations
                 .Select(x => new MessageListDto()
                 {
                     Id = x.Id,
@@ -22,22 +23,22 @@ namespace Services.Message.Convertor
                     SendMessageTypeId = x.SendMessageTypeId,
                     SendMessageTypeName = x.SendMessageType.Name
                 })
-                .ToList();
+                .ToList());
         }
 
-        public MessageDetailDto ConvertToWebModel(MessageDbo getSendMessageDetail, string culture)
+        public Task<MessageDetailDto> ConvertToWebModel(MessageDbo getSendMessageDetail, string culture)
         {
-            return new MessageDetailDto()
+            return Task.FromResult(new MessageDetailDto()
             {
                 Html = getSendMessageDetail.SendMessageTranslations.FindTranslation(culture).Html,
                 Id = getSendMessageDetail.Id,
                 Name = getSendMessageDetail.SendMessageTranslations.FindTranslation(culture).Subject,
                 Reply = getSendMessageDetail.Reply,
                 SendMessageType = getSendMessageDetail.SendMessageTypeId,
-            };
+            });
         }
 
-        public MessageDbo ConvertToBussinessEntity(MessageCreateDto addSendMessageDto, string clientCulture)
+        public Task<MessageDbo> ConvertToBussinessEntity(MessageCreateDto addSendMessageDto, string clientCulture)
         {
             MessageDbo sendMessage =
                 new()
@@ -52,10 +53,10 @@ namespace Services.Message.Convertor
                 clientCulture,
                 _cultureList
             );
-            return sendMessage;
+            return Task.FromResult(sendMessage);
         }
 
-        public MessageDbo ConvertToBussinessEntity(MessageUpdateDto updateSendMessageDto, MessageDbo entity, string culture)
+        public Task<MessageDbo> ConvertToBussinessEntity(MessageUpdateDto updateSendMessageDto, MessageDbo entity, string culture)
         {
             entity.SendMessageTranslations = entity.SendMessageTranslations.PrepareTranslation(
                 updateSendMessageDto.Name,
@@ -65,7 +66,7 @@ namespace Services.Message.Convertor
             );
             entity.Reply = updateSendMessageDto.Reply;
             entity.SendMessageTypeId = updateSendMessageDto.SendMessageTypeId;
-            return entity;
+            return Task.FromResult(entity);
         }
     }
 }

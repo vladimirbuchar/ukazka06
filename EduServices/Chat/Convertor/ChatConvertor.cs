@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Core.Extension;
+﻿using Core.Extension;
 using Model.Edu.Chat;
 using Services.Chat.Dto;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Services.Chat.Convertor
 {
@@ -10,25 +11,25 @@ namespace Services.Chat.Convertor
     {
         public ChatConvertor() { }
 
-        public ChatDbo ConvertToBussinessEntity(ChatItemCreateDto addChatItemDto, string culture)
+        public Task<ChatDbo> ConvertToBussinessEntity(ChatItemCreateDto addChatItemDto, string culture)
         {
-            return new ChatDbo()
+            return Task.FromResult(new ChatDbo()
             {
                 CourseTermId = addChatItemDto.CourseTermId,
                 Text = addChatItemDto.Text,
                 UserId = addChatItemDto.UserId
-            };
+            });
         }
 
-        public ChatDbo ConvertToBussinessEntity(ChatItemUpdateDto updateChatItemDto, ChatDbo entity, string culture)
+        public Task<ChatDbo> ConvertToBussinessEntity(ChatItemUpdateDto updateChatItemDto, ChatDbo entity, string culture)
         {
             entity.Text = updateChatItemDto.Text;
-            return entity;
+            return Task.FromResult(entity);
         }
 
-        public List<ChatItemListDto> ConvertToWebModel(List<ChatDbo> getAllChatItems, string culture)
+        public Task<List<ChatItemListDto>> ConvertToWebModel(List<ChatDbo> getAllChatItems, string culture)
         {
-            return getAllChatItems
+            return Task.FromResult(getAllChatItems
                 .Select(x => new ChatItemListDto()
                 {
                     Id = x.Id,
@@ -63,12 +64,12 @@ namespace Services.Chat.Convertor
     
                     }).ToHashSet()*/
                 })
-                .ToList();
+                .ToList());
         }
 
-        public ChatItemDetailDto ConvertToWebModel(ChatDbo detail, string culture)
+        public Task<ChatItemDetailDto> ConvertToWebModel(ChatDbo detail, string culture)
         {
-            return new ChatItemDetailDto()
+            return Task.FromResult(new ChatItemDetailDto()
             {
                 Avatar = detail.User.Person.AvatarUrl,
                 Answers = [],
@@ -79,7 +80,7 @@ namespace Services.Chat.Convertor
                 UserId = detail.UserId,
                 Text = detail.Text,
                 SecondName = detail.User.Person.SecondName
-            };
+            });
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Core.Base.Repository.CodeBookRepository;
+﻿using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Validator;
 using Core.Constants;
 using Core.DataTypes;
@@ -8,6 +7,8 @@ using Model.Edu.Organization;
 using Repository.OrganizationRepository;
 using Repository.UserRepository;
 using Services.Organization.Dto;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Services.Organization.Validator
 {
@@ -27,15 +28,15 @@ namespace Services.Organization.Validator
         private readonly IUserRepository _userRepository = userRepository;
         public bool ValidateUser { get; set; } = true;
 
-        public override Result<OrganizationDetailDto> IsValid(OrganizationCreateDto create)
+        public override async Task<Result> IsValid(OrganizationCreateDto create)
         {
             Result<OrganizationDetailDto> validate = new();
             IsValidEmail(create.Email, validate, MessageCategory.ORGANIZATION, MessageItem.EMAIL_IS_NOT_VALID);
             IsValidPhoneNumber(create.PhoneNumber, validate, MessageCategory.ORGANIZATION, MessageItem.IS_NOT_VALID_PHONE_NUMBER);
             IsValidUri(create.WWW, validate, MessageCategory.ORGANIZATION, MessageItem.IS_NOT_VALID_URI);
-            ValidateAddress(create.Addresses, validate);
+            await ValidateAddress(create.Addresses, validate);
             IsValidString(create.Name, validate, MessageCategory.ORGANIZATION, MessageItem.STRING_IS_EMPTY);
-            CodeBookValueExist(
+            await CodeBookValueExist(
                 _culture,
                 x => x.Id == create.DefaultCultureId,
                 validate,
@@ -43,31 +44,31 @@ namespace Services.Organization.Validator
                 MessageItem.NOT_EXISTS,
                 create.DefaultCultureId.ToString()
             );
-            if (ValidateUser && _userRepository.GetEntity(false, x => x.Id == create.UserId) == null)
+            if (ValidateUser && await _userRepository.GetEntity(false, x => x.Id == create.UserId) == null)
             {
                 validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.USER, MessageItem.NOT_EXISTS));
             }
             return validate;
         }
 
-        public override Result<OrganizationDetailDto> IsValid(OrganizationUpdateDto update)
+        public override async Task<Result<OrganizationDetailDto>> IsValid(OrganizationUpdateDto update)
         {
             Result<OrganizationDetailDto> validate = new();
             IsValidEmail(update.Email, validate, MessageCategory.ORGANIZATION, MessageItem.EMAIL_IS_NOT_VALID);
             IsValidPhoneNumber(update.PhoneNumber, validate, MessageCategory.ORGANIZATION, MessageItem.IS_NOT_VALID_PHONE_NUMBER);
             IsValidUri(update.WWW, validate, MessageCategory.ORGANIZATION, MessageItem.IS_NOT_VALID_URI);
-            ValidateAddress(update.Addresses, validate);
+            await ValidateAddress(update.Addresses, validate);
             IsValidString(update.Name, validate, MessageCategory.ORGANIZATION, MessageItem.STRING_IS_EMPTY);
             return validate;
         }
 
-        private void ValidateAddress(List<Address> addresses, Result result)
+        private async Task ValidateAddress(List<Address> addresses, Result result)
         {
             if (addresses != null && addresses.Count > 0)
             {
                 foreach (Address address in addresses)
                 {
-                    base.CodeBookValueExist(
+                    await base.CodeBookValueExist(
                         _country,
                         x => x.Id == address.CountryId,
                         result,
@@ -75,7 +76,7 @@ namespace Services.Organization.Validator
                         AddressValidator.COUNTRY_NOT_EXIST,
                         address.CountryId.ToString()
                     );
-                    base.CodeBookValueExist(
+                    await base.CodeBookValueExist(
                         _addressType,
                         x => x.Id == address.AddressTypeId,
                         result,

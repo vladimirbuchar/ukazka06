@@ -6,6 +6,7 @@ using Services.CodeBookData.Service;
 using Services.OrganizationRole.Service;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EduApi.Controllers.ClientZone.CodeBook
 {
@@ -29,15 +30,16 @@ namespace EduApi.Controllers.ClientZone.CodeBook
         [ProducesResponseType(typeof(void), 404)]
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
-        public ActionResult GetCodeBookItems(string codeBookName)
+        public async Task<ActionResult> GetCodeBookItems(string codeBookName)
         {
             try
             {
-                return SendResponse(_codeBookService.GetCodeBookItems(codeBookName, IsLogged()));
+                var result = await _codeBookService.GetCodeBookItems(codeBookName, IsLogged());
+                return await SendResponse(result);
             }
             catch (Exception ex)
             {
-                return SendSystemError(ex);
+                return await SendSystemError(ex);
             }
         }
     }

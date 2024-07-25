@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web.Helpers;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
 using Core.Base.Paging;
-using Core.Constants;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -12,6 +8,10 @@ using Services.Message.Filter;
 using Services.Message.Service;
 using Services.Message.Sort;
 using Services.OrganizationRole.Service;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Web.Helpers;
 
 namespace EduApi.Controllers.ClientZone.SendMessage
 {
@@ -36,16 +36,16 @@ namespace EduApi.Controllers.ClientZone.SendMessage
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Create(MessageCreateDto addSendMessageDto)
+        public async Task<ActionResult> Create(MessageCreateDto addSendMessageDto)
         {
             try
             {
-                CheckOrganizationPermition(addSendMessageDto.OrganizationId);
-                return SendResponse(_sendMessageService.AddObject(addSendMessageDto, GetLoggedUserId(), GetClientCulture()));
+                await CheckOrganizationPermition(addSendMessageDto.OrganizationId);
+                return await SendResponse(await _sendMessageService.AddObject(addSendMessageDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -55,7 +55,7 @@ namespace EduApi.Controllers.ClientZone.SendMessage
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult List(
+        public async Task<ActionResult> List(
             [FromQuery] ListDeletedRequestDto request,
             [FromQuery] MessageFilter filter,
             [FromQuery] SortDirection sortDirection,
@@ -65,9 +65,8 @@ namespace EduApi.Controllers.ClientZone.SendMessage
         {
             try
             {
-                CheckOrganizationPermition(request.ParentId);
-                return SendResponse(
-                    _sendMessageService.GetList(
+                await CheckOrganizationPermition(request.ParentId);
+                var result = await _sendMessageService.GetList(
                         x => x.OrganizationId == request.ParentId,
                         request.IsDeleted,
                         GetClientCulture(),
@@ -75,12 +74,14 @@ namespace EduApi.Controllers.ClientZone.SendMessage
                         sortColum.ToString(),
                         sortDirection,
                         paging
-                    )
+                    );
+                return await SendResponse(
+                    result
                 );
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -90,16 +91,16 @@ namespace EduApi.Controllers.ClientZone.SendMessage
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Detail([FromQuery] DetailRequestDto request)
+        public async Task<ActionResult> Detail([FromQuery] DetailRequestDto request)
         {
             try
             {
-                CheckOrganizationPermition(_sendMessageService.GetOrganizationIdByObjectId(request.Id));
-                return SendResponse(_sendMessageService.GetDetail(request.Id, GetClientCulture()));
+                await CheckOrganizationPermition(await _sendMessageService.GetOrganizationIdByObjectId(request.Id));
+                return await SendResponse(await _sendMessageService.GetDetail(request.Id, GetClientCulture()));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -109,16 +110,16 @@ namespace EduApi.Controllers.ClientZone.SendMessage
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Update(MessageUpdateDto updateSendMessageDto)
+        public async Task<ActionResult> Update(MessageUpdateDto updateSendMessageDto)
         {
             try
             {
-                CheckOrganizationPermition(_sendMessageService.GetOrganizationIdByObjectId(updateSendMessageDto.Id));
-                return SendResponse(_sendMessageService.UpdateObject(updateSendMessageDto, GetLoggedUserId(), GetClientCulture()));
+                await CheckOrganizationPermition(await _sendMessageService.GetOrganizationIdByObjectId(updateSendMessageDto.Id));
+                return await SendResponse(await _sendMessageService.UpdateObject(updateSendMessageDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -128,16 +129,16 @@ namespace EduApi.Controllers.ClientZone.SendMessage
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Delete([FromQuery] DeleteDto request)
+        public async Task<ActionResult> Delete([FromQuery] DeleteDto request)
         {
             try
             {
-                CheckOrganizationPermition(_sendMessageService.GetOrganizationIdByObjectId(request.Id));
-                return SendResponse(_sendMessageService.DeleteObject(request.Id, GetLoggedUserId()));
+                await CheckOrganizationPermition(await _sendMessageService.GetOrganizationIdByObjectId(request.Id));
+                return await SendResponse(_sendMessageService.DeleteObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -147,37 +148,16 @@ namespace EduApi.Controllers.ClientZone.SendMessage
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Restore([FromQuery] RestoreDto request)
+        public async Task<ActionResult> Restore([FromQuery] RestoreDto request)
         {
             try
             {
-                CheckOrganizationPermition(_sendMessageService.GetOrganizationIdByObjectId(request.Id));
-                return SendResponse(_sendMessageService.RestoreObject(request.Id, GetLoggedUserId()));
+                await CheckOrganizationPermition(await _sendMessageService.GetOrganizationIdByObjectId(request.Id));
+                return await SendResponse(await _sendMessageService.RestoreObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
-            }
-        }
-
-        [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<MessageListDto>), 200)]
-        [ProducesResponseType(typeof(void), 404)]
-        [ProducesResponseType(typeof(SystemError), 500)]
-        [ProducesResponseType(typeof(Result), 400)]
-        [ProducesResponseType(typeof(void), 403)]
-        public ActionResult GetSendMessageInOrganizationEmail([FromQuery] Guid organizationId)
-        {
-            try
-            {
-                CheckOrganizationPermition(organizationId);
-                return SendResponse(
-                    _sendMessageService.GetList(x => x.OrganizationId == organizationId && x.SystemIdentificator == SendMessageType.EMAIL, false)
-                );
-            }
-            catch (Exception e)
-            {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
     }

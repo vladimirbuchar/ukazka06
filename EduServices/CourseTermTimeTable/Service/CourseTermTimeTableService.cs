@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Core.Base.Service;
+﻿using Core.Base.Service;
 using Core.DataTypes;
 using Model.Edu.CourseTerm;
 using Model.Edu.CourseTermDate;
@@ -10,6 +7,10 @@ using Repository.CourseTermDateRepository;
 using Repository.CourseTermRepository;
 using Services.CourseTermTimeTable.Convertor;
 using Services.CourseTermTimeTable.Dto;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Services.CourseTermTimeTable.Service
 {
@@ -25,15 +26,14 @@ namespace Services.CourseTermTimeTable.Service
         private readonly ICourseLectorRepository _courseLectorRepository = courseLectorRepository;
         private readonly ICourseTermRepository _courseTermRepository = courseTermRepository;
 
-        public Result GenerateTimeTable(Guid courseTermId)
+        public async Task<Result> GenerateTimeTable(Guid courseTermId)
         {
-            CourseTermDbo getCourseTermDetail = _courseTermRepository.GetEntity(courseTermId);
-            List<CourseTermDateDbo> getTimeTables = _repository
-                .GetEntities(false, x => x.CourseTermId == courseTermId && x.Date >= DateTime.Now)
-                .Result;
+            CourseTermDbo getCourseTermDetail = await _courseTermRepository.GetEntity(courseTermId);
+            List<CourseTermDateDbo> getTimeTables = await _repository
+                .GetEntities(false, x => x.CourseTermId == courseTermId && x.Date >= DateTime.Now);
             foreach (CourseTermDateDbo item in getTimeTables)
             {
-                _repository.DeleteEntity(item.Id, Guid.Empty);
+                await _repository.DeleteEntity(item.Id, Guid.Empty);
             }
             DateTime activeFrom = getCourseTermDetail.ActiveFrom.Value.Date;
             if (activeFrom < DateTime.Now.Date)
@@ -56,16 +56,16 @@ namespace Services.CourseTermTimeTable.Service
                     getCourseTermDetail.Sunday
                 ],
                 courseTermId,
-                _courseLectorRepository
-                    .GetEntities(false, x => x.CourseTermId == courseTermId)
-                    .Result.Select(x => x.UserInOrganizationId.ToString())
+                (await _courseLectorRepository
+                    .GetEntities(false, x => x.CourseTermId == courseTermId))
+                    .Select(x => x.UserInOrganizationId.ToString())
                     .ToList(),
                 getCourseTermDetail.ClassRoomId
             );
             return new Result();
         }
 
-        public Result GenerateTimeTable(
+        public async Task<Result> GenerateTimeTable(
             DateTime activeFrom,
             DateTime activeTo,
             Guid timeFromId,
@@ -93,7 +93,7 @@ namespace Services.CourseTermTimeTable.Service
                 {
                     if (monday && nextDay.DayOfWeek == DayOfWeek.Monday)
                     {
-                        _ = _repository.CreateEntity(
+                        _ = await _repository.CreateEntity(
                             new CourseTermDateDbo()
                             {
                                 CourseTermId = courseTermId,
@@ -109,7 +109,7 @@ namespace Services.CourseTermTimeTable.Service
                     }
                     if (tuesday && nextDay.DayOfWeek == DayOfWeek.Tuesday)
                     {
-                        _ = _repository.CreateEntity(
+                        _ = await _repository.CreateEntity(
                             new CourseTermDateDbo()
                             {
                                 CourseTermId = courseTermId,
@@ -125,7 +125,7 @@ namespace Services.CourseTermTimeTable.Service
                     }
                     if (wednesday && nextDay.DayOfWeek == DayOfWeek.Wednesday)
                     {
-                        _ = _repository.CreateEntity(
+                        _ = await _repository.CreateEntity(
                             new CourseTermDateDbo()
                             {
                                 CourseTermId = courseTermId,
@@ -141,7 +141,7 @@ namespace Services.CourseTermTimeTable.Service
                     }
                     if (thursday && nextDay.DayOfWeek == DayOfWeek.Thursday)
                     {
-                        _ = _repository.CreateEntity(
+                        _ = await _repository.CreateEntity(
                             new CourseTermDateDbo()
                             {
                                 CourseTermId = courseTermId,
@@ -157,7 +157,7 @@ namespace Services.CourseTermTimeTable.Service
                     }
                     if (friday && nextDay.DayOfWeek == DayOfWeek.Friday)
                     {
-                        _ = _repository.CreateEntity(
+                        _ = await _repository.CreateEntity(
                             new CourseTermDateDbo()
                             {
                                 CourseTermId = courseTermId,
@@ -173,7 +173,7 @@ namespace Services.CourseTermTimeTable.Service
                     }
                     if (saturday && nextDay.DayOfWeek == DayOfWeek.Saturday)
                     {
-                        _ = _repository.CreateEntity(
+                        _ = await _repository.CreateEntity(
                             new CourseTermDateDbo()
                             {
                                 CourseTermId = courseTermId,
@@ -189,7 +189,7 @@ namespace Services.CourseTermTimeTable.Service
                     }
                     if (sunday && nextDay.DayOfWeek == DayOfWeek.Sunday)
                     {
-                        _ = _repository.CreateEntity(
+                        _ = await _repository.CreateEntity(
                             new CourseTermDateDbo()
                             {
                                 CourseTermId = courseTermId,
@@ -209,20 +209,20 @@ namespace Services.CourseTermTimeTable.Service
             return new Result();
         }
 
-        public List<CourseTermTimeTableListDto> GetTimeTable(Guid courseTermId, string culture)
+        public async Task<List<CourseTermTimeTableListDto>> GetTimeTable(Guid courseTermId, string culture)
         {
-            return _convertor.ConvertToWebModel([.. _repository.GetEntities(false, x => x.CourseTermId == courseTermId).Result], culture);
+            return _convertor.ConvertToWebModel([.. await _repository.GetEntities(false, x => x.CourseTermId == courseTermId)], culture);
         }
 
-        public Result CancelCourseTerm(Guid courseTermTimeTableId)
+        public async Task<Result> CancelCourseTerm(Guid courseTermTimeTableId)
         {
-            _repository.DeleteEntity(courseTermTimeTableId, Guid.Empty);
+            await _repository.DeleteEntity(courseTermTimeTableId, Guid.Empty);
             return new Result();
         }
 
-        public Result Restore(Guid courseTermTimeTableId)
+        public async Task<Result> Restore(Guid courseTermTimeTableId)
         {
-            _repository.RestoreEntity(courseTermTimeTableId, Guid.Empty);
+            await _repository.RestoreEntity(courseTermTimeTableId, Guid.Empty);
             return new Result();
         }
     }

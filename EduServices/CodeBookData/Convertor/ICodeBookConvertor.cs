@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using Core.Base.Convertor;
+﻿using Core.Base.Convertor;
 using Model.CodeBook;
 using Services.CodeBookData.Dto;
+using System.Collections.Generic;
 
 namespace Services.CodeBookData.Convertor
 {

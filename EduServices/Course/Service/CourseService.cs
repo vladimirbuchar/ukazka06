@@ -1,4 +1,5 @@
 ﻿using Core.Base.Service;
+using Core.Base.Sort;
 using Model.CodeBook;
 using Model.Edu.Certificate;
 using Model.Edu.Course;
@@ -11,8 +12,10 @@ using Services.Course.Filter;
 using Services.Course.Sort;
 using Services.Course.Validator;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Web.Helpers;
 
 namespace Services.Course.Service
 {
@@ -60,7 +63,7 @@ namespace Services.Course.Service
             return Expression.Lambda<Func<CourseDbo, bool>>(expression, parameter);
         }
 
-        protected override Expression<Func<CourseDbo, object>> PrepareSort(string columnName, string culture)
+        protected override List<BaseSort<CourseDbo>> PrepareSort(string columnName, string culture, SortDirection sortDirection = SortDirection.Ascending)
         {
 
             if (columnName == CourseSort.Name.ToString())
@@ -78,7 +81,14 @@ namespace Services.Course.Service
                     Expression.Convert(nameProperty, typeof(object)),
                     parameter
                 );
-                return lambda;
+                return
+                [
+                    new BaseSort<CourseDbo>()
+                    {
+                        Sort = lambda,
+                        SortDirection = sortDirection
+                    }
+                ];
             }
             else if (columnName == CourseSort.CourseType.ToString())
             {
@@ -89,7 +99,14 @@ namespace Services.Course.Service
                     Expression.Convert(nameProperty, typeof(object)),
                     parameter
                 );
-                return lambda;
+                return
+                [
+                    new BaseSort<CourseDbo>()
+                    {
+                        Sort = lambda,
+                        SortDirection = sortDirection
+                    }
+                ];
             }
 
             else if (columnName == CourseSort.CourseStatus.ToString())
@@ -101,7 +118,14 @@ namespace Services.Course.Service
                     Expression.Convert(nameProperty, typeof(object)),
                     parameter
                 );
-                return lambda;
+                return
+                [
+                    new BaseSort<CourseDbo>()
+                    {
+                        Sort = lambda,
+                        SortDirection = sortDirection
+                    }
+                ];
             }
             else if (columnName == CourseSort.Certificate.ToString())
             {
@@ -139,7 +163,14 @@ namespace Services.Course.Service
                     parameter
                 );
 
-                return lambda;
+                return
+                [
+                    new BaseSort<CourseDbo>()
+                    {
+                        Sort = lambda,
+                        SortDirection = sortDirection
+                    }
+                ];
             }
             else if (columnName == CourseSort.CourseMaterial.ToString())
             {
@@ -177,7 +208,14 @@ namespace Services.Course.Service
                     parameter
                 );
 
-                return lambda;
+                return
+                [
+                    new BaseSort<CourseDbo>()
+                    {
+                        Sort = lambda,
+                        SortDirection = sortDirection
+                    }
+                ];
             }
             else if (columnName == CourseSort.SendMessage.ToString())
             {
@@ -215,10 +253,16 @@ namespace Services.Course.Service
                     parameter
                 );
 
-                return lambda;
+                return
+                [
+                    new BaseSort<CourseDbo>()
+                    {
+                        Sort = lambda,
+                        SortDirection = sortDirection
+                    }
+                ];
             }
             return base.PrepareSort(columnName, culture);
         }
-
     }
 }

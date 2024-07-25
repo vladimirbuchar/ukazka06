@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.Note.Dto;
 using Services.Note.Service;
 using Services.OrganizationRole.Service;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EduApi.Controllers.ClientZone.Note
 {
@@ -27,7 +28,7 @@ namespace EduApi.Controllers.ClientZone.Note
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Create(NoteCreateDto addNoteDto)
+        public Task<ActionResult> Create(NoteCreateDto addNoteDto)
         {
             try
             {
@@ -46,15 +47,16 @@ namespace EduApi.Controllers.ClientZone.Note
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult List([FromQuery] ListDeletedRequestDto request)
+        public async Task<ActionResult> List([FromQuery] ListDeletedRequestDto request)
         {
             try
             {
-                return SendResponse(_noteService.GetList(x => x.UserId == GetLoggedUserId(), request.IsDeleted, GetClientCulture()));
+                var result = await _noteService.GetList(x => x.UserId == GetLoggedUserId(), request.IsDeleted, GetClientCulture());
+                return await SendResponse(result);
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -64,7 +66,7 @@ namespace EduApi.Controllers.ClientZone.Note
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Detail([FromQuery] DetailRequestDto request)
+        public Task<ActionResult> Detail([FromQuery] DetailRequestDto request)
         {
             try
             {
@@ -82,7 +84,7 @@ namespace EduApi.Controllers.ClientZone.Note
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Update(NoteUpdateDto updateNoteDto)
+        public Task<ActionResult> Update(NoteUpdateDto updateNoteDto)
         {
             try
             {
@@ -100,7 +102,7 @@ namespace EduApi.Controllers.ClientZone.Note
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Delete([FromQuery] DeleteDto request)
+        public Task<ActionResult> Delete([FromQuery] DeleteDto request)
         {
             try
             {
@@ -118,7 +120,7 @@ namespace EduApi.Controllers.ClientZone.Note
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Restore([FromQuery] RestoreDto request)
+        public Task<ActionResult> Restore([FromQuery] RestoreDto request)
         {
             try
             {
@@ -136,7 +138,7 @@ namespace EduApi.Controllers.ClientZone.Note
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult CreateImage(NoteCreateImageDto saveImageNoteDto)
+        public Task<ActionResult> CreateImage(NoteCreateImageDto saveImageNoteDto)
         {
             try
             {
@@ -154,7 +156,7 @@ namespace EduApi.Controllers.ClientZone.Note
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult UpdateImage(NoteUpdateImageDto updateNoteImageDto)
+        public Task<ActionResult> UpdateImage(NoteUpdateImageDto updateNoteImageDto)
         {
             try
             {
@@ -172,7 +174,7 @@ namespace EduApi.Controllers.ClientZone.Note
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult SaveTableAsNote(NoteCreateTableDto saveTableAsNoteDto)
+        public Task<ActionResult> SaveTableAsNote(NoteCreateTableDto saveTableAsNoteDto)
         {
             try
             {

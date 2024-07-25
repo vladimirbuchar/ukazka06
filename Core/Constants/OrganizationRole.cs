@@ -8,5 +8,6 @@
         public const string COURSE_EDITOR = "COURSE_EDITOR";
         public const string LECTOR = "LECTOR";
         public const string STUDENT = "STUDENT";
+        public const string WAITING_TO_APPROVE = "WAITING_TO_APPROVE";
     }
 }

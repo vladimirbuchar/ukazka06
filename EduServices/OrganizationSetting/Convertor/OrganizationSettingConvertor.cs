@@ -53,6 +53,7 @@ namespace Services.OrganizationSetting.Convertor
                 SmtpServerPassword = getOrganizationSetting.SmtpServerPassword,
                 GoogleApiToken = getOrganizationSetting.GoogleApiToken,
                 Id = getOrganizationSetting.Id,
+                LicenceId = getOrganizationSetting.Organization.LicenseId,
             };
         }
 

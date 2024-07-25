@@ -290,6 +290,13 @@
     "route": "/api/clientzone/CourseMaterial/FileDelete",
     "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
   },
+
+  {
+    "route": "/api/clientzone/CourseMaterial/GetFiles",
+    "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+
+  
   {
     "route": "/api/clientzone/CourseMaterial/GetFilesStudent",
     "roles": [ "ORGANIZATION_OWNER", "COURSE_ADMINISTATOR", "COURSE_EDITOR", "ORGANIZATION_ADMINISTRATOR" ]
@@ -585,6 +592,14 @@
   },
   {
     "route": "/api/clientzone/SendEmailInOrganization/Update",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/SendEmailInOrganization/List",
+    "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
+  },
+  {
+    "route": "/api/clientzone/SendEmailInOrganization/Detail",
     "roles": [ "ORGANIZATION_OWNER", "ORGANIZATION_ADMINISTRATOR" ]
   }
 ]

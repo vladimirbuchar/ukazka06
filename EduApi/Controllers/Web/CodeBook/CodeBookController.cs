@@ -5,6 +5,7 @@ using Services.CodeBookData.Dto;
 using Services.CodeBookData.Service;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EduApi.Controllers.Web.CodeBook
 {
@@ -23,15 +24,16 @@ namespace EduApi.Controllers.Web.CodeBook
         [ProducesResponseType(typeof(void), 404)]
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
-        public ActionResult GetCodeBookItems(string codeBookName)
+        public async Task<ActionResult> GetCodeBookItems(string codeBookName)
         {
             try
             {
-                return SendResponse(_codeBookService.GetCodeBookItems(codeBookName, IsLogged()));
+                var response = await _codeBookService.GetCodeBookItems(codeBookName, IsLogged());
+                return await SendResponse(response);
             }
             catch (Exception ex)
             {
-                return SendSystemError(ex);
+                return await SendSystemError(ex);
             }
         }
     }

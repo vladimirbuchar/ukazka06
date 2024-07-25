@@ -1,30 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using Model.Edu.AttendanceStudent;
+﻿using Model.Edu.AttendanceStudent;
 using Services.StudentAttendance.Dto;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Services.StudentAttendance.Convertor
 {
     public class StudentAttendanceConvertor : IStudentAttendanceConvertor
     {
-        public AttendanceStudentDbo ConvertToBussinessEntity(StudentAttendanceCreateDto create, string culture)
+        public Task<AttendanceStudentDbo> ConvertToBussinessEntity(StudentAttendanceCreateDto create, string culture)
         {
-            return new AttendanceStudentDbo()
+            return Task.FromResult(new AttendanceStudentDbo()
             {
                 CourseTermDateId = create.CourseTermDateId,
                 CourseStudentId = create.StudentId,
                 CourseTermId = create.CourseTermId,
-            };
+            });
         }
 
-        public List<StudentAttendanceListDto> ConvertToWebModel(List<AttendanceStudentDbo> list, string culture)
+        public Task<List<StudentAttendanceListDto>> ConvertToWebModel(List<AttendanceStudentDbo> list, string culture)
         {
             throw new NotImplementedException();
         }
 
-        public StudentAttendanceDetailDto ConvertToWebModel(AttendanceStudentDbo detail, string culture)
+        public Task<StudentAttendanceDetailDto> ConvertToWebModel(AttendanceStudentDbo detail, string culture)
         {
-            return new StudentAttendanceDetailDto();
+            return Task.FromResult(new StudentAttendanceDetailDto() { });
         }
     }
 }

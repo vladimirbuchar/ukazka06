@@ -1,5 +1,4 @@
-﻿using System;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
 using Core.DataTypes;
 using EduApi.Controllers.ClientZone.Organization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +6,8 @@ using Microsoft.Extensions.Logging;
 using Services.OrganizationRole.Service;
 using Services.OrganizationSetting.Dto;
 using Services.OrganizationSetting.Service;
+using System;
+using System.Threading.Tasks;
 
 namespace EduApi.Controllers.ClientZone.OrganizationSetting
 {
@@ -31,16 +32,16 @@ namespace EduApi.Controllers.ClientZone.OrganizationSetting
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Update(OrganizationSettingUpdateDto saveOrganizationSettingDto)
+        public async Task<ActionResult> Update(OrganizationSettingUpdateDto saveOrganizationSettingDto)
         {
             try
             {
-                CheckOrganizationPermition(saveOrganizationSettingDto.OrganizationId);
-                return SendResponse(_organizationSettingService.SaveOrganizationSetting(saveOrganizationSettingDto));
+                await CheckOrganizationPermition(saveOrganizationSettingDto.OrganizationId);
+                return await SendResponse(await _organizationSettingService.SaveOrganizationSetting(saveOrganizationSettingDto));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -50,16 +51,16 @@ namespace EduApi.Controllers.ClientZone.OrganizationSetting
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Detail([FromQuery] DetailRequestDto request)
+        public async Task<ActionResult> Detail([FromQuery] DetailRequestDto request)
         {
             try
             {
-                CheckOrganizationPermition(request.Id);
-                return SendResponse(_organizationSettingService.GetOrganizationSetting(request.Id));
+                await CheckOrganizationPermition(request.Id);
+                return await SendResponse(await _organizationSettingService.GetOrganizationSetting(request.Id));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
     }

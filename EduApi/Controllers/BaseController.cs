@@ -1,13 +1,15 @@
-﻿using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using Core.Constants;
+﻿using Core.Constants;
 using Core.DataTypes;
 using Core.Exceptions;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace EduApi.Controllers
 {
@@ -78,7 +80,7 @@ namespace EduApi.Controllers
         /// </summary>
         /// <param name="ex"></param>
         /// <returns></returns>
-        protected ActionResult SendSystemError(Exception ex)
+        protected async Task<ActionResult> SendSystemError(Exception ex)
         {
             Result validation = new Result();
             if (ex is PermitionDeniedException)
@@ -91,29 +93,30 @@ namespace EduApi.Controllers
             }
             if (validation.IsError)
             {
-                return SendResponse(validation);
+                return await SendResponse(validation);
             }
             _logger.LogCritical(SystemErrorItem.SYSTEM_EXCEPTION, ex);
             return StatusCode(500, new SystemError(SystemErrorItem.SYSTEM_EXCEPTION));
         }
+
 
         /// <summary>
         /// send response with result
         /// </summary>
         /// <param name="validation"></param>
         /// <r;eturns></returns>
-        protected ActionResult SendResponse(Result response)
+        protected async Task<ActionResult> SendResponse(Result response)
         {
             LogValidate(response);
             if (response.IsError && response.Contains(new ValidationMessage(MessageType.ERROR, SystemErrorItem.PERMITION_DENIED)))
             {
-                return StatusCode(403);
+                return await Task.FromResult(StatusCode(403));
             }
             else if (response.IsError)
             {
                 return BadRequest(response);
             }
-            return Ok(response);
+            return await Task.FromResult(Ok(response));
         }
 
         /// <summary>
@@ -122,8 +125,23 @@ namespace EduApi.Controllers
         /// <typeparam name="T"></typeparam>
         /// <param name="response"></param>
         /// <returns></returns>
-        protected ActionResult SendResponse<T>(T response)
+        protected async Task<ActionResult> SendResponse<T>(T response)
         {
+            if (response == null)
+            {
+                return await Task.FromResult(NotFound());
+            }
+
+            return await Task.FromResult(Ok(response));
+        }
+
+        protected async Task<ActionResult> SendResponse<T>(Task<List<T>> responseTask)
+        {
+            if (responseTask == null)
+            {
+                return NotFound();
+            }
+            var response = await responseTask;
             if (response == null)
             {
                 return NotFound();
@@ -131,7 +149,7 @@ namespace EduApi.Controllers
             return Ok(response);
         }
 
-        protected ActionResult SendResponse<T>(Result<T> response)
+        protected async Task<ActionResult> SendResponse<T>(Result<T> response)
         {
             LogValidate(response);
             if (response == null)
@@ -146,7 +164,8 @@ namespace EduApi.Controllers
             {
                 return BadRequest(response);
             }
-            return Ok(response);
+            return await Task.FromResult(Ok(response)
+                );
         }
     }
 }

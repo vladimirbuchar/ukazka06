@@ -1,5 +1,5 @@
-﻿using System;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
+using System;
 
 namespace Services.OrganizationSetting.Dto
 {
@@ -23,5 +23,6 @@ namespace Services.OrganizationSetting.Dto
         public string SmtpServerPassword { get; set; }
         public int SmtpServerPort { get; set; }
         public string GoogleApiToken { get; set; }
+        public Guid LicenceId { get; set; }
     }
 }

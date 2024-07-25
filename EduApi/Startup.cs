@@ -23,13 +23,16 @@ using Services.Branch.Sort;
 using Services.Certificate.Sort;
 using Services.ClassRoom.Sort;
 using Services.Course.Sort;
+using Services.CourseTerm.Sort;
 using Services.HangfireJob;
 using Services.Message.Sort;
+using Services.Organization.Sort;
 using Services.OrganizationCulture.Sort;
 using Services.Question.Sort;
 using Services.StudentGroup.Sort;
 using Services.StudentInGroup.Sort;
 using Services.UserInOrganization.Sort;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.Linq;
 using System.Security.Claims;
@@ -45,10 +48,11 @@ namespace EduApi
             Configuration = configuration;
         }
 
+
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        [Obsolete]
+       
         public void ConfigureServices(IServiceCollection services)
         {
             services.RegistrationCodeBook();
@@ -169,144 +173,22 @@ namespace EduApi
 
             services.AddSwaggerGen(c =>
             {
-                c.MapType<SortDirection>(
-                    () =>
-                        new OpenApiSchema
-                        {
-                            Type = "string",
-                            Enum = Enum.GetNames(typeof(SortDirection)).Select(name => new OpenApiString(name) as IOpenApiAny).ToList<IOpenApiAny>(),
-                            Default = new OpenApiString(SortDirection.Ascending.ToString())
-                        }
-                );
 
-                c.MapType<BranchSort>(
-                    () =>
-                        new OpenApiSchema
-                        {
-                            Type = "string",
-                            Enum = Enum.GetNames(typeof(BranchSort)).Select(name => new OpenApiString(name) as IOpenApiAny).ToList<IOpenApiAny>(),
-                            Default = new OpenApiString(BranchSort.Name.ToString())
-                        }
-                );
-
-                c.MapType<ClassRoomSort>(
-                    () =>
-                        new OpenApiSchema
-                        {
-                            Type = "string",
-                            Enum = Enum.GetNames(typeof(ClassRoomSort)).Select(name => new OpenApiString(name) as IOpenApiAny).ToList<IOpenApiAny>(),
-                            Default = new OpenApiString(ClassRoomSort.Name.ToString())
-                        }
-                );
-                c.MapType<CertificateSort>(
-                    () =>
-                        new OpenApiSchema
-                        {
-                            Type = "string",
-                            Enum = Enum.GetNames(typeof(CertificateSort))
-                                .Select(name => new OpenApiString(name) as IOpenApiAny)
-                                .ToList<IOpenApiAny>(),
-                            Default = new OpenApiString(CertificateSort.Name.ToString())
-                        }
-                );
-
-                c.MapType<MessageSort>(
-                    () =>
-                        new OpenApiSchema
-                        {
-                            Type = "string",
-                            Enum = Enum.GetNames(typeof(MessageSort)).Select(name => new OpenApiString(name) as IOpenApiAny).ToList<IOpenApiAny>(),
-                            Default = new OpenApiString(MessageSort.Name.ToString())
-                        }
-                );
-
-                c.MapType<OrganizationCultureSort>(
-                    () =>
-                        new OpenApiSchema
-                        {
-                            Type = "string",
-                            Enum = Enum.GetNames(typeof(OrganizationCultureSort))
-                                .Select(name => new OpenApiString(name) as IOpenApiAny)
-                                .ToList<IOpenApiAny>(),
-                            Default = new OpenApiString(OrganizationCultureSort.Name.ToString())
-                        }
-                );
-                c.MapType<StudentGroupSort>(
-                    () =>
-                        new OpenApiSchema
-                        {
-                            Type = "string",
-                            Enum = Enum.GetNames(typeof(StudentGroupSort))
-                                .Select(name => new OpenApiString(name) as IOpenApiAny)
-                                .ToList<IOpenApiAny>(),
-                            Default = new OpenApiString(StudentGroupSort.Name.ToString())
-                        }
-                );
-
-                c.MapType<StudentInGroupSort>(
-                    () =>
-                        new OpenApiSchema
-                        {
-                            Type = "string",
-                            Enum = Enum.GetNames(typeof(StudentInGroupSort))
-                                .Select(name => new OpenApiString(name) as IOpenApiAny)
-                                .ToList<IOpenApiAny>(),
-                            Default = new OpenApiString(StudentInGroupSort.LastName.ToString())
-                        }
-                );
-                c.MapType<UserInOrganizationSort>(
-                    () =>
-                        new OpenApiSchema
-                        {
-                            Type = "string",
-                            Enum = Enum.GetNames(typeof(UserInOrganizationSort))
-                                .Select(name => new OpenApiString(name) as IOpenApiAny)
-                                .ToList<IOpenApiAny>(),
-                            Default = new OpenApiString(UserInOrganizationSort.LastName.ToString())
-                        }
-                );
-
-                c.MapType<BankOfQuestionSort>(
-                    () =>
-                        new OpenApiSchema
-                        {
-                            Type = "string",
-                            Enum = Enum.GetNames(typeof(BankOfQuestionSort))
-                                .Select(name => new OpenApiString(name) as IOpenApiAny)
-                                .ToList<IOpenApiAny>(),
-                            Default = new OpenApiString(BankOfQuestionSort.Name.ToString())
-                        }
-                );
-
-                c.MapType<QuestionSort>(
-                    () =>
-                        new OpenApiSchema
-                        {
-                            Type = "string",
-                            Enum = Enum.GetNames(typeof(QuestionSort)).Select(name => new OpenApiString(name) as IOpenApiAny).ToList<IOpenApiAny>(),
-                            Default = new OpenApiString(QuestionSort.Question.ToString())
-                        }
-                );
-
-                c.MapType<AnswerSort>(
-                    () =>
-                        new OpenApiSchema
-                        {
-                            Type = "string",
-                            Enum = Enum.GetNames(typeof(AnswerSort)).Select(name => new OpenApiString(name) as IOpenApiAny).ToList<IOpenApiAny>(),
-                            Default = new OpenApiString(AnswerSort.Answer.ToString())
-                        }
-                );
-                c.MapType<CourseSort>(
-                    () =>
-                        new OpenApiSchema
-                        {
-                            Type = "string",
-                            Enum = Enum.GetNames(typeof(CourseSort)).Select(name => new OpenApiString(name) as IOpenApiAny).ToList<IOpenApiAny>(),
-                            Default = new OpenApiString(CourseSort.Name.ToString())
-                        }
-                );
-
+                MapEnumType(SortDirection.Ascending, c);
+                MapEnumType(BranchSort.Name, c);
+                MapEnumType(ClassRoomSort.Name, c);
+                MapEnumType(CertificateSort.Name, c);
+                MapEnumType(MessageSort.Name, c);
+                MapEnumType(OrganizationCultureSort.Name, c);
+                MapEnumType(StudentGroupSort.Name, c);
+                MapEnumType(StudentInGroupSort.LastName, c);
+                MapEnumType(UserInOrganizationSort.LastName, c);
+                MapEnumType(BankOfQuestionSort.Name, c);
+                MapEnumType(QuestionSort.Question, c);
+                MapEnumType(AnswerSort.Answer, c);
+                MapEnumType(CourseSort.Name, c);
+                MapEnumType(CourseTermSort.Monday, c);
+                MapEnumType(OrganizationSort.Name, c);
 
                 c.SwaggerDoc("Public", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - internal public", Version = "v1" });
                 c.SwaggerDoc("Course", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "FlexibleLMS - internal course", Version = "v1" });
@@ -407,7 +289,7 @@ namespace EduApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        [Obsolete]
+       
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseRouting();
@@ -486,6 +368,17 @@ namespace EduApi
             var jobActivator = new ScopedJobActivator(serviceScopeFactory);
             GlobalConfiguration.Configuration.UseActivator(jobActivator);
             RecurringJob.AddOrUpdate<SendEmailJob>(job => job.Execute(), Cron.Minutely);
+        }
+        private void MapEnumType<TEnum>(TEnum defaultValue, SwaggerGenOptions c) where TEnum : Enum
+        {
+            c.MapType<TEnum>(() => new OpenApiSchema
+            {
+                Type = "string",
+                Enum = Enum.GetNames(typeof(TEnum))
+                    .Select(name => new OpenApiString(name) as IOpenApiAny)
+                    .ToList<IOpenApiAny>(),
+                Default = new OpenApiString(defaultValue.ToString())
+            });
         }
     }
 }

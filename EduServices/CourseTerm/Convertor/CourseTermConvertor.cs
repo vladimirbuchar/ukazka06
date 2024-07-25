@@ -5,14 +5,15 @@ using Services.CourseTerm.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Services.CourseTerm.Convertor
 {
     public class CourseTermConvertor : ICourseTermConvertor
     {
-        public CourseTermDbo ConvertToBussinessEntity(CourseTermCreateDto addCourseTermDto, string culture)
+        public Task<CourseTermDbo> ConvertToBussinessEntity(CourseTermCreateDto addCourseTermDto, string culture)
         {
-            return new CourseTermDbo()
+            return Task.FromResult(new CourseTermDbo()
             {
                 ActiveFrom = addCourseTermDto.ActiveFrom,
                 ActiveTo = addCourseTermDto.ActiveTo,
@@ -34,22 +35,21 @@ namespace Services.CourseTerm.Convertor
                 Tuesday = addCourseTermDto.Tuesday,
                 Wednesday = addCourseTermDto.Wednesday,
                 OrganizationStudyHourId = addCourseTermDto.OrganizationStudyHourId
-            };
+            });
         }
 
-        public List<CourseTermListDto> ConvertToWebModel(List<CourseTermDbo> getTermInCourses, string culture)
+        public Task<List<CourseTermListDto>> ConvertToWebModel(List<CourseTermDbo> getTermInCourses, string culture)
         {
-            return getTermInCourses
+            List<CourseTermListDto> result = getTermInCourses
                 .Select(item => new CourseTermListDto()
                 {
                     Branch = item.ClassRoom.Branch.BranchTranslations.FindTranslation(culture).Name,
                     ClassRoom = item.ClassRoom.ClassRoomTranslations.FindTranslation(culture).Name,
-                    CourseId = item.CourseId,
                     Id = item.Id,
                     TimeFrom = item.TimeFrom.Value,
                     TimeTo = item.TimeTo.Value,
-                    ActiveFrom = item.ActiveFrom.Value,
-                    ActiveTo = item.ActiveTo.Value,
+                    ActiveFrom = item.ActiveFrom,
+                    ActiveTo = item.ActiveTo,
                     Monday = item.Monday,
                     Saturday = item.Saturday,
                     Sunday = item.Sunday,
@@ -58,20 +58,19 @@ namespace Services.CourseTerm.Convertor
                     Wednesday = item.Wednesday,
                     Friday = item.Friday,
                     BranchId = item.ClassRoom.BranchId,
-                    ClassRoomId = item.ClassRoomId,
-                    IsActive = item.IsActive.HasValue && item.IsActive.Value
-                })
-                .ToList();
+                    ClassRoomId = item.ClassRoomId
+                }).ToList();
+            return Task.FromResult(result);
         }
 
-        public CourseTermDetailDto ConvertToWebModel(CourseTermDbo getCourseTermDetail, string culture)
+        public Task<CourseTermDetailDto> ConvertToWebModel(CourseTermDbo getCourseTermDetail, string culture)
         {
-            return new CourseTermDetailDto()
+            return Task.FromResult(new CourseTermDetailDto()
             {
-                ActiveFrom = getCourseTermDetail.ActiveFrom.Value,
+                ActiveFrom = getCourseTermDetail.ActiveFrom,
                 Id = getCourseTermDetail.Id,
                 Wednesday = getCourseTermDetail.Wednesday,
-                ActiveTo = getCourseTermDetail.ActiveTo.Value,
+                ActiveTo = getCourseTermDetail.ActiveTo,
                 ClassRoomId = getCourseTermDetail.ClassRoomId,
                 BranchId = getCourseTermDetail.ClassRoom.BranchId,
                 Price = getCourseTermDetail.Price,
@@ -80,8 +79,8 @@ namespace Services.CourseTerm.Convertor
                 MaximumStudent = getCourseTermDetail.MaximumStudent,
                 MinimumStudent = getCourseTermDetail.MinimumStudent,
                 Monday = getCourseTermDetail.Monday,
-                RegistrationFrom = getCourseTermDetail.RegistrationFrom.Value,
-                RegistrationTo = getCourseTermDetail.RegistrationTo.Value,
+                RegistrationFrom = getCourseTermDetail.RegistrationFrom,
+                RegistrationTo = getCourseTermDetail.RegistrationTo,
                 Saturday = getCourseTermDetail.Saturday,
                 Sunday = getCourseTermDetail.Sunday,
                 Thursday = getCourseTermDetail.Thursday,
@@ -89,10 +88,10 @@ namespace Services.CourseTerm.Convertor
                 TimeToId = getCourseTermDetail.TimeToId,
                 Tuesday = getCourseTermDetail.Tuesday,
                 OrganizationStudyHourId = getCourseTermDetail.OrganizationStudyHourId
-            };
+            });
         }
 
-        public CourseTermDbo ConvertToBussinessEntity(CourseTermUpdateDto updateCourseTermDto, CourseTermDbo entity, string culture)
+        public Task<CourseTermDbo> ConvertToBussinessEntity(CourseTermUpdateDto updateCourseTermDto, CourseTermDbo entity, string culture)
         {
             entity.ActiveFrom = updateCourseTermDto.ActiveFrom;
             entity.ActiveTo = updateCourseTermDto.ActiveTo;
@@ -113,7 +112,7 @@ namespace Services.CourseTerm.Convertor
             entity.Tuesday = updateCourseTermDto.Tuesday;
             entity.Wednesday = updateCourseTermDto.Wednesday;
             entity.OrganizationStudyHourId = updateCourseTermDto.OrganizationStudyHourId;
-            return entity;
+            return Task.FromResult(entity);
         }
     }
 }

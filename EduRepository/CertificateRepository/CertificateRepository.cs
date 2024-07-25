@@ -1,10 +1,11 @@
-﻿using System;
-using System.Linq;
-using Core.Base.Repository;
+﻿using Core.Base.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
 using Model.Edu.Certificate;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Repository.CertificateRepository
 {
@@ -28,9 +29,9 @@ namespace Repository.CertificateRepository
                 .ThenInclude(x => x.Culture);
         }
 
-        public override Guid GetOrganizationId(Guid objectId)
+        public override async Task<Guid> GetOrganizationId(Guid objectId)
         {
-            return _dbContext.Set<CertificateDbo>().FirstOrDefault(x => x.Id == objectId).OrganizationId;
+            return (await _dbContext.Set<CertificateDbo>().FirstOrDefaultAsync(x => x.Id == objectId)).OrganizationId;
         }
     }
 }

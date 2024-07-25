@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
 using Services.OrganizationStudyHour.Dto;
-using Services.User.Dto;
+using System.Collections.Generic;
 
 namespace Services.ClassRoom.Dto
 {
@@ -10,10 +9,9 @@ namespace Services.ClassRoom.Dto
         public ClassRoomTimeTableDto()
         {
             StudyHours = [];
-            TimeTable = [];
         }
 
         public List<StudyHourListDto> StudyHours { get; set; }
-        public List<TimeTableDto> TimeTable { get; set; }
+
     }
 }

@@ -1,10 +1,11 @@
-﻿using System;
-using System.Linq;
-using Core.Base.Repository;
+﻿using Core.Base.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
 using Model.Edu.CourseLesson;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Repository.CourseLessonRepository
 {
@@ -25,13 +26,15 @@ namespace Repository.CourseLessonRepository
                 .ThenInclude(x => x.Culture);
         }
 
-        public override Guid GetOrganizationId(Guid objectId)
+        public override async Task<Guid> GetOrganizationId(Guid objectId)
         {
-            return _dbContext
+            return (await _dbContext
                 .Set<CourseLessonDbo>()
                 .Include(x => x.CourseMaterial)
-                .FirstOrDefault(x => x.Id == objectId)
+                .FirstOrDefaultAsync(x => x.Id == objectId))
                 .CourseMaterial.OrganizationId;
         }
+
+
     }
 }

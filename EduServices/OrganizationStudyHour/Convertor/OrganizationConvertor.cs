@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Core.Extension;
+﻿using Core.Extension;
 using Model.Edu.OrganizationStudyHour;
 using Services.OrganizationStudyHour.Dto;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Services.OrganizationStudyHour.Convertor
 {
@@ -11,7 +12,7 @@ namespace Services.OrganizationStudyHour.Convertor
     {
         public OrganizationStudyHourConvertor() { }
 
-        public OrganizationStudyHourDbo ConvertToBussinessEntity(StudyHourCreateDto addStudyHoursDto, string culture)
+        public Task<OrganizationStudyHourDbo> ConvertToBussinessEntity(StudyHourCreateDto addStudyHoursDto, string culture)
         {
             Guid activeFromId = Guid.Empty;
             Guid activeToId = Guid.Empty;
@@ -23,16 +24,16 @@ namespace Services.OrganizationStudyHour.Convertor
             {
                 _ = Guid.TryParse(addStudyHoursDto.ActiveToId, out activeToId);
             }
-            return new OrganizationStudyHourDbo()
+            return Task.FromResult(new OrganizationStudyHourDbo()
             {
                 ActiveFromId = activeFromId,
                 ActiveToId = activeToId,
                 OrganizationId = addStudyHoursDto.OrganizationId,
                 Position = addStudyHoursDto.Position,
-            };
+            });
         }
 
-        public OrganizationStudyHourDbo ConvertToBussinessEntity(
+        public Task<OrganizationStudyHourDbo> ConvertToBussinessEntity(
             StudyHourUpdateDto updateStudyHoursDto,
             OrganizationStudyHourDbo entity,
             string culture
@@ -55,26 +56,26 @@ namespace Services.OrganizationStudyHour.Convertor
             entity.Position = updateStudyHoursDto.Position;
             entity.ActiveFrom = null;
             entity.ActiveTo = null;
-            return entity;
+            return Task.FromResult(entity);
         }
 
-        public List<StudyHourListDto> ConvertToWebModel(List<OrganizationStudyHourDbo> list, string culture)
+        public Task<List<StudyHourListDto>> ConvertToWebModel(List<OrganizationStudyHourDbo> list, string culture)
         {
-            return list.Select(x => new StudyHourListDto()
-                {
-                    Position = x.Position,
-                    ActiveFrom = x.ActiveFrom.Value,
-                    ActiveFromId = x.ActiveFromId,
-                    ActiveTo = x.ActiveTo.Value,
-                    ActiveToId = x.ActiveToId,
-                    Id = x.Id
-                })
-                .ToList();
+            return Task.FromResult(list.Select(x => new StudyHourListDto()
+            {
+                Position = x.Position,
+                ActiveFrom = x.ActiveFrom.Value,
+                ActiveFromId = x.ActiveFromId,
+                ActiveTo = x.ActiveTo.Value,
+                ActiveToId = x.ActiveToId,
+                Id = x.Id
+            })
+                .ToList());
         }
 
-        public StudyHourDetailDto ConvertToWebModel(OrganizationStudyHourDbo detail, string culture)
+        public Task<StudyHourDetailDto> ConvertToWebModel(OrganizationStudyHourDbo detail, string culture)
         {
-            return new StudyHourDetailDto()
+            return Task.FromResult(new StudyHourDetailDto()
             {
                 Position = detail.Position,
                 ActiveFrom = detail.ActiveFrom.Value,
@@ -82,7 +83,7 @@ namespace Services.OrganizationStudyHour.Convertor
                 ActiveTo = detail.ActiveTo.Value,
                 ActiveToId = detail.ActiveToId,
                 Id = detail.Id
-            };
+            });
         }
     }
 }

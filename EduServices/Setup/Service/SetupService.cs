@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Core.Base.Service;
+﻿using Core.Base.Service;
 using Core.Constants;
 using Core.DataTypes;
 using Core.Extension;
@@ -18,6 +14,11 @@ using Repository.RoleRepository;
 using Repository.RouteRepository;
 using Repository.UserRepository;
 using Services.Setup.Dto;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Services.Setup.Service
 {
@@ -39,21 +40,21 @@ namespace Services.Setup.Service
         private readonly IPermissionsRepository _permissionsRepository = permissionsRepository;
         private readonly IEnumerable<EndpointDataSource> _endpointSources = endpointSources;
 
-        public Result CreateAdministratorUser()
+        public async Task<Result> CreateAdministratorUser()
         {
-            UserDbo admin = _userRepository.GetEntity(
+            UserDbo admin = await _userRepository.GetEntity(
                 false,
                 x => x.UserEmail == _configuration.GetSection(ConfigValue.SETUP).GetSection(ConfigValue.USER_NAME).Value
             );
             if (admin == null)
             {
-                _ = _userRepository.CreateEntity(
+                _ = await _userRepository.CreateEntity(
                     new UserDbo()
                     {
                         UserEmail = _configuration.GetSection(ConfigValue.SETUP).GetSection(ConfigValue.USER_NAME).Value,
                         UserPassword = _configuration.GetSection(ConfigValue.SETUP).GetSection(ConfigValue.USER_PASSWORD).Value.GetHashString(),
                         Person = new PersonDbo() { },
-                        UserRoleId = _roleRepository.GetEntity(false, x => x.SystemIdentificator == UserRole.ADMINISTRATOR).Id,
+                        UserRoleId = (await _roleRepository.GetEntity(false, x => x.SystemIdentificator == UserRole.ADMINISTRATOR)).Id,
                         IsActive = true
                     },
                     Guid.Empty
@@ -62,14 +63,14 @@ namespace Services.Setup.Service
             return new Result();
         }
 
-        public Result ImportDefaultPermitions(bool delete)
+        public async Task<Result> ImportDefaultPermitions(bool delete)
         {
             if (delete)
             {
-                List<PermissionsDbo> permissions = _permissionsRepository.GetEntities(false).Result;
+                List<PermissionsDbo> permissions = await _permissionsRepository.GetEntities(false);
                 foreach (PermissionsDbo permission in permissions)
                 {
-                    _permissionsRepository.DeleteEntity(permission, Guid.Empty);
+                    await _permissionsRepository.DeleteEntity(permission, Guid.Empty);
                 }
             }
             using StreamReader r = new("organizationRoleConfig.json");
@@ -81,14 +82,14 @@ namespace Services.Setup.Service
                 {
                     string route = item.Route.Trim('/');
                     if (
-                        _permissionsRepository.GetEntity(false, x => x.Route.Route == route && x.OrganizationRole.SystemIdentificator == role) == null
+                        await _permissionsRepository.GetEntity(false, x => x.Route.Route == route && x.OrganizationRole.SystemIdentificator == role) == null
                     )
                     {
-                        Guid? routeId = _routeRepository.GetEntity(false, x => x.Route == route)?.Id;
+                        Guid? routeId = (await _routeRepository.GetEntity(false, x => x.Route == route))?.Id;
                         if (routeId != null)
                         {
-                            Guid roleId = _organizationRoleRepository.GetEntity(false, x => x.SystemIdentificator == role).Id;
-                            _ = _permissionsRepository.CreateEntity(
+                            Guid roleId = (await _organizationRoleRepository.GetEntity(false, x => x.SystemIdentificator == role)).Id;
+                            _ = await _permissionsRepository.CreateEntity(
                                 new PermissionsDbo() { RouteId = routeId.Value, OrganizationRoleId = roleId },
                                 Guid.Empty
                             );
@@ -99,7 +100,7 @@ namespace Services.Setup.Service
             return new Result();
         }
 
-        public Result RegisterAllEndpoints()
+        public async Task<Result> RegisterAllEndpoints()
         {
             List<string> endpoints = _endpointSources
                 .SelectMany(es => es.Endpoints)
@@ -108,17 +109,17 @@ namespace Services.Setup.Service
                 .ToList();
             foreach (string endpoint in endpoints)
             {
-                if (_routeRepository.GetEntity(false, x => x.Route == endpoint) == null)
+                if (await _routeRepository.GetEntity(false, x => x.Route == endpoint) == null)
                 {
-                    _ = _routeRepository.CreateEntity(new RouteDbo() { Route = endpoint, }, Guid.Empty);
+                    _ = await _routeRepository.CreateEntity(new RouteDbo() { Route = endpoint, }, Guid.Empty);
                 }
             }
             return new Result();
         }
 
-        public bool CheckUser(SetupLoginDto setupLogin)
+        public async Task<bool> CheckUser(SetupLoginDto setupLogin)
         {
-            return _userRepository
+            UserDbo user = await _userRepository
                     .GetEntity(
                         false,
                         x =>
@@ -126,8 +127,11 @@ namespace Services.Setup.Service
                             && x.UserPassword == setupLogin.Password.GetHashString()
                             && x.IsActive == true
                             && x.AllowCLassicLogin == true
-                    )
-                    ?.UserRole?.SystemIdentificator == UserRole.ADMINISTRATOR;
+                    );
+            return
+                    user?.UserRole?.SystemIdentificator == UserRole.ADMINISTRATOR;
         }
+
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Core.Base.Service;
+using Core.Base.Sort;
 using Core.Constants;
 using Core.DataTypes;
 using Model.CodeBook;
@@ -10,10 +11,14 @@ using Services.OrganizationCulture.Filter;
 using Services.OrganizationCulture.Sort;
 using Services.OrganizationCulture.Validator;
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
+using System.Web.Helpers;
 
 namespace Services.OrganizationCulture.Service
 {
+   
     public class OrganizationCultureService(
         IOrganizationCultureRepository organizationRepository,
         IOrganizationCultureConvertor organizationSettingConvertor,
@@ -32,59 +37,70 @@ namespace Services.OrganizationCulture.Service
         >(organizationRepository, organizationSettingConvertor, validator),
             IOrganizationCultureService
     {
-        public override Result<OrganizationCultureDetailDto> AddObject(OrganizationCultureCreateDto addObject, Guid userId, string culture)
+        public override async Task<Result> AddObject(OrganizationCultureCreateDto addObject, Guid userId, string culture)
         {
-            Result<OrganizationCultureDetailDto> result = _validator.IsValid(addObject);
+            Result result = await _validator.IsValid(addObject);
             if (result.IsOk)
             {
                 if (addObject.IsDefault == true)
                 {
-                    OrganizationCultureDbo organizationCultureDbo = _repository.GetEntity(
+                    OrganizationCultureDbo organizationCultureDbo = await _repository.GetEntity(
                         false,
                         x => x.OrganizationId == addObject.OrganizationId && x.IsDefault == true
                     );
                     organizationCultureDbo.IsDefault = false;
-                    _ = _repository.UpdateEntity(organizationCultureDbo, userId);
+                    _ = await _repository.UpdateEntity(organizationCultureDbo, userId);
                 }
             }
-            return base.AddObject(addObject, userId, culture);
+            return await base.AddObject(addObject, userId, culture);
         }
 
-        public override Result DeleteObject(Guid objectId, Guid userId)
+        public override async Task<Result> DeleteObject(Guid objectId, Guid userId)
         {
-            OrganizationCultureDbo organizationCulture = _repository.GetEntity(objectId);
+            OrganizationCultureDbo organizationCulture = await _repository.GetEntity(objectId);
             if (organizationCulture.IsDefault == true)
             {
                 Result result = new();
                 result.AddResultStatus(
                     new ValidationMessage(MessageType.ERROR, MessageCategory.ORGANIZATION_CULTURE, Constants.CAN_NOT_DELETE_DEFAULT_CULTURE)
                 );
-                return result;
+                return await Task.FromResult(result);
             }
-            _repository.DeleteEntity(organizationCulture, userId);
-            return new Result();
+            await _repository.DeleteEntity(organizationCulture, userId);
+            return await Task.FromResult(new Result());
         }
 
-        public override Result<OrganizationCultureDetailDto> UpdateObject(
+        public override async Task<Result<OrganizationCultureDetailDto>> UpdateObject(
             OrganizationCultureUpdateDto update,
             Guid userId,
             string culture,
             Result<OrganizationCultureDetailDto> result = null
         )
         {
-            result = _validator.IsValid(update);
+            result = await _validator.IsValid(update);
             if (result.IsOk)
             {
-                if (update.IsDefault == true)
-                {
-                    OrganizationCultureDbo organizationCulture = _repository.GetEntity(
+                OrganizationCultureDbo organizationCulture = await _repository.GetEntity(
                         false,
                         x => x.OrganizationId == update.OrganizationId && x.IsDefault == true
                     );
-                    organizationCulture.IsDefault = false;
-                    _ = _repository.UpdateEntity(organizationCulture, userId);
+                if (update.IsDefault == true)
+                {
+                    if (organizationCulture != null)
+                    {
+                        organizationCulture.IsDefault = false;
+                        _ = await _repository.UpdateEntity(organizationCulture, userId);
+                    }
                 }
-                return base.UpdateObject(update, userId, culture, result);
+                else if (update.IsDefault == false)
+                {
+                    if (organizationCulture.IsDefault)
+                    {
+                        result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.ORGANIZATION_CULTURE, MessageItem.CAN_NOT_EDIT));
+                    }
+                }
+
+                return await base.UpdateObject(update, userId, culture, result);
             }
             return result;
         }
@@ -109,7 +125,7 @@ namespace Services.OrganizationCulture.Service
             return oldVersion.IsDefault != newVersion.IsDefault;
         }
 
-        protected override Expression<Func<OrganizationCultureDbo, object>> PrepareSort(string columnName, string culture)
+        protected override List<BaseSort<OrganizationCultureDbo>> PrepareSort(string columnName, string culture, SortDirection sortDirection = SortDirection.Ascending)
         {
             if (columnName == OrganizationCultureSort.Name.ToString())
             {
@@ -120,7 +136,14 @@ namespace Services.OrganizationCulture.Service
                     Expression.Convert(nameProperty, typeof(object)),
                     parameter
                 );
-                return lambda;
+                return
+                [
+                   new BaseSort<OrganizationCultureDbo>()
+                   {
+                       Sort = lambda,
+                       SortDirection = sortDirection
+                   }
+                ];
             }
             return base.PrepareSort(columnName, culture);
         }

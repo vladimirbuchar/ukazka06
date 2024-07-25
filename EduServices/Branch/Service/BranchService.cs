@@ -1,4 +1,5 @@
 ﻿using Core.Base.Service;
+using Core.Base.Sort;
 using Core.Constants;
 using Core.DataTypes;
 using Model.CodeBook;
@@ -13,9 +14,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
+using System.Web.Helpers;
 
 namespace Services.Branch.Service
 {
+
     public class BranchService(IBranchRepository repository, IBranchConvertor convertor, IBranchValidator validator)
         : BaseService<
             IBranchRepository,
@@ -46,49 +50,49 @@ namespace Services.Branch.Service
                 || oldVersion.CountryId != newVersion.CountryId;
         }
 
-        public override Result<BranchDetailDto> AddObject(BranchCreateDto addObject, Guid userId, string culture)
+        public override async Task<Result> AddObject(BranchCreateDto addObject, Guid userId, string culture)
         {
-            Result<BranchDetailDto> result = _validator.IsValid(addObject);
+            Result result = await _validator.IsValid(addObject);
             if (result.IsOk)
             {
                 if (addObject.IsMainBranch)
                 {
-                    BranchDbo mainBranch = _repository.GetEntity(false, x => x.OrganizationId == addObject.OrganizationId && x.IsMainBranch);
+                    BranchDbo mainBranch = await _repository.GetEntity(false, x => x.OrganizationId == addObject.OrganizationId && x.IsMainBranch);
                     if (mainBranch != null)
                     {
                         mainBranch.IsMainBranch = false;
-                        _ = _repository.UpdateEntity(mainBranch, userId);
+                        _ = await _repository.UpdateEntity(mainBranch, userId);
                     }
                 }
-                return base.AddObject(addObject, userId, culture);
+                return await base.AddObject(addObject, userId, culture);
             }
             return result;
         }
 
-        public override Result<BranchDetailDto> UpdateObject(
+        public override async Task<Result<BranchDetailDto>> UpdateObject(
             BranchUpdateDto update,
             Guid userId,
             string culture,
             Result<BranchDetailDto> result = null
         )
         {
-            BranchDbo oldEntity = _repository.GetEntity(update.Id) ?? throw new KeyNotFoundException(update.Id.ToString());
+            BranchDbo oldEntity = await _repository.GetEntity(update.Id) ?? throw new KeyNotFoundException(update.Id.ToString());
             if (oldEntity.IsOnline)
             {
                 result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.BRANCH, MessageItem.CAN_NOT_EDIT));
                 return result;
             }
-            result = _validator.IsValid(update);
+            result = await _validator.IsValid(update);
             if (result.IsOk)
             {
-                Guid organizationId = _repository.GetOrganizationId(update.Id);
-                BranchDbo mainBranch = _repository.GetEntity(false, x => x.OrganizationId == organizationId && x.IsMainBranch && x.Id != update.Id);
+                Guid organizationId = await _repository.GetOrganizationId(update.Id);
+                BranchDbo mainBranch = await _repository.GetEntity(false, x => x.OrganizationId == organizationId && x.IsMainBranch && x.Id != update.Id);
                 if (update.IsMainBranch)
                 {
                     if (mainBranch != null)
                     {
                         mainBranch.IsMainBranch = false;
-                        _ = _repository.UpdateEntity(mainBranch, userId);
+                        _ = await _repository.UpdateEntity(mainBranch, userId);
                     }
                 }
                 else
@@ -98,36 +102,36 @@ namespace Services.Branch.Service
                         result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.BRANCH, Constants.MUST_SET_MAIN_BRANCH));
                     }
                 }
-                return base.UpdateObject(update, userId, culture, result);
+                return await base.UpdateObject(update, userId, culture, result);
             }
             return result;
         }
 
-        public override Result DeleteObject(Guid objectId, Guid userId)
+        public override async Task<Result> DeleteObject(Guid objectId, Guid userId)
         {
-            BranchDbo branchDbo = _repository.GetEntity(objectId);
+            BranchDbo branchDbo = await _repository.GetEntity(objectId);
             if (branchDbo != null && (branchDbo.IsMainBranch || branchDbo.IsOnline))
             {
                 Result result = new();
                 result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.BRANCH, MessageItem.CAN_NOT_DELETE));
                 return result;
             }
-            return base.DeleteObject(objectId, userId);
+            return await base.DeleteObject(objectId, userId);
         }
 
-        public Result ChangeMainBranch(Guid organizationId, Guid newBranchId, Guid userId)
+        public async Task<Result> ChangeMainBranch(Guid organizationId, Guid newBranchId, Guid userId)
         {
-            BranchDbo branch = _repository.GetEntity(false, x => x.OrganizationId == organizationId && x.IsMainBranch);
+            BranchDbo branch = await _repository.GetEntity(false, x => x.OrganizationId == organizationId && x.IsMainBranch);
             if (branch != null)
             {
                 branch.IsMainBranch = false;
-                _ = _repository.UpdateEntity(branch, userId);
+                _ = await _repository.UpdateEntity(branch, userId);
             }
-            branch = _repository.GetEntity(false, x => x.Id == newBranchId && x.OrganizationId == organizationId);
+            branch = await _repository.GetEntity(false, x => x.Id == newBranchId && x.OrganizationId == organizationId);
             if (branch != null)
             {
                 branch.IsMainBranch = true;
-                _ = _repository.UpdateEntity(branch, userId);
+                _ = await _repository.UpdateEntity(branch, userId);
             }
             return new Result();
         }
@@ -158,7 +162,7 @@ namespace Services.Branch.Service
             return Expression.Lambda<Func<BranchDbo, bool>>(expression, parameter);
         }
 
-        protected override Expression<Func<BranchDbo, object>> PrepareSort(string columnName, string culture)
+        protected override List<BaseSort<BranchDbo>> PrepareSort(string columnName, string culture, SortDirection sortDirection = SortDirection.Ascending)
         {
             if (columnName == BranchSort.Name.ToString())
             {
@@ -175,7 +179,14 @@ namespace Services.Branch.Service
                     Expression.Convert(nameProperty, typeof(object)),
                     parameter
                 );
-                return lambda;
+                return
+                [
+                    new BaseSort<BranchDbo>()
+                    {
+                        Sort = lambda,
+                        SortDirection = sortDirection
+                    }
+                ];
             }
             else if (columnName == BranchSort.Country.ToString())
             {
@@ -186,7 +197,14 @@ namespace Services.Branch.Service
                     Expression.Convert(nameProperty, typeof(object)),
                     parameter
                 );
-                return lambda;
+                return
+                [
+                    new BaseSort<BranchDbo>()
+                    {
+                        Sort = lambda,
+                        SortDirection = sortDirection
+                    }
+                ];
             }
             return base.PrepareSort(columnName, culture);
         }

@@ -6,6 +6,7 @@ using Services.OrganizationRole.Service;
 using Services.Test.Dto;
 using Services.Test.Service;
 using System;
+using System.Threading.Tasks;
 
 namespace EduApi.Controllers.ClientZone.CourseTest
 {
@@ -26,16 +27,16 @@ namespace EduApi.Controllers.ClientZone.CourseTest
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Create(CourseTestCreateDto addCourseTestDto)
+        public async Task<ActionResult> Create(CourseTestCreateDto addCourseTestDto)
         {
             try
             {
-                CheckOrganizationPermition(_testService.GetOrganizationIdByObjectId(addCourseTestDto.CourseLesson.MaterialId));
-                return SendResponse(_testService.AddCourseTest(addCourseTestDto, GetClientCulture()));
+                await CheckOrganizationPermition(await _testService.GetOrganizationIdByObjectId(addCourseTestDto.CourseLesson.MaterialId));
+                return await SendResponse(await _testService.AddCourseTest(addCourseTestDto, GetClientCulture()));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -45,16 +46,16 @@ namespace EduApi.Controllers.ClientZone.CourseTest
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Detail([FromQuery] DetailRequestDto request)
+        public async Task<ActionResult> Detail([FromQuery] DetailRequestDto request)
         {
             try
             {
-                CheckOrganizationPermition(_testService.GetOrganizationIdByObjectId(request.Id));
-                return SendResponse(_testService.GetCourseTestDetail(request.Id, GetClientCulture()));
+                await CheckOrganizationPermition(await _testService.GetOrganizationIdByObjectId(request.Id));
+                return await SendResponse(await _testService.GetCourseTestDetail(request.Id, GetClientCulture()));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -64,16 +65,16 @@ namespace EduApi.Controllers.ClientZone.CourseTest
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Update(CourseTestUpdateDto updateCourseTestDto)
+        public async Task<ActionResult> Update(CourseTestUpdateDto updateCourseTestDto)
         {
             try
             {
-                CheckOrganizationPermition(_testService.GetOrganizationIdByObjectId(updateCourseTestDto.Id));
-                return SendResponse(_testService.UpdateCourseTest(updateCourseTestDto, GetClientCulture()));
+                await CheckOrganizationPermition(await _testService.GetOrganizationIdByObjectId(updateCourseTestDto.Id));
+                return await SendResponse(await _testService.UpdateCourseTest(updateCourseTestDto, GetClientCulture()));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
     }

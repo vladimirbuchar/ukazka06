@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Core.Base.Repository.CodeBookRepository;
+﻿using Core.Base.Repository.CodeBookRepository;
 using Model.CodeBook;
 using Model.Edu.ClassRoom;
 using Services.ClassRoom.Dto;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Services.ClassRoom.Convertor
 {
@@ -11,7 +12,7 @@ namespace Services.ClassRoom.Convertor
     {
         private readonly List<CultureDbo> _cultureList = codeBookRepository.GetEntities(false).Result;
 
-        public ClassRoomDbo ConvertToBussinessEntity(ClassRoomCreateDto addClassRoomDto, string culture)
+        public Task<ClassRoomDbo> ConvertToBussinessEntity(ClassRoomCreateDto addClassRoomDto, string culture)
         {
             ClassRoomDbo classRoom =
                 new()
@@ -22,10 +23,10 @@ namespace Services.ClassRoom.Convertor
                     IsOnline = addClassRoomDto.IsOnline
                 };
             classRoom.ClassRoomTranslations = classRoom.ClassRoomTranslations.PrepareTranslation(addClassRoomDto.Name, culture, _cultureList);
-            return classRoom;
+            return Task.FromResult(classRoom);
         }
 
-        public ClassRoomDbo ConvertToBussinessEntity(ClassRoomUpdateDto updateClassRoomDto, ClassRoomDbo entity, string culture)
+        public Task<ClassRoomDbo> ConvertToBussinessEntity(ClassRoomUpdateDto updateClassRoomDto, ClassRoomDbo entity, string culture)
         {
             List<ClassRoomTranslationDbo> translations =
             [
@@ -34,12 +35,12 @@ namespace Services.ClassRoom.Convertor
             entity.ClassRoomTranslations = translations;
             entity.Floor = updateClassRoomDto.Floor;
             entity.MaxCapacity = updateClassRoomDto.MaxCapacity;
-            return entity;
+            return Task.FromResult(entity);
         }
 
-        public List<ClassRoomListDto> ConvertToWebModel(List<ClassRoomDbo> getAllClassRoomInBranches, string culture)
+        public Task<List<ClassRoomListDto>> ConvertToWebModel(List<ClassRoomDbo> getAllClassRoomInBranches, string culture)
         {
-            return getAllClassRoomInBranches
+            return Task.FromResult(getAllClassRoomInBranches
                 .Select(item => new ClassRoomListDto()
                 {
                     Floor = item.Floor,
@@ -47,18 +48,18 @@ namespace Services.ClassRoom.Convertor
                     MaxCapacity = item.MaxCapacity,
                     Name = item.ClassRoomTranslations?.FindTranslation(culture)?.Name
                 })
-                .ToList();
+                .ToList());
         }
 
-        public ClassRoomDetailDto ConvertToWebModel(ClassRoomDbo getClassRoomDetail, string culture)
+        public Task<ClassRoomDetailDto> ConvertToWebModel(ClassRoomDbo getClassRoomDetail, string culture)
         {
-            return new ClassRoomDetailDto()
+            return Task.FromResult(new ClassRoomDetailDto()
             {
                 Floor = getClassRoomDetail.Floor,
                 Id = getClassRoomDetail.Id,
                 MaxCapacity = getClassRoomDetail.MaxCapacity,
                 Name = getClassRoomDetail.ClassRoomTranslations?.FindTranslation(culture)?.Name
-            };
+            });
         }
     }
 }

@@ -5,6 +5,7 @@ using Model.Edu.Certificate;
 using Repository.CertificateRepository;
 using Repository.OrganizationRepository;
 using Services.Certificate.Dto;
+using System.Threading.Tasks;
 
 namespace Services.Certificate.Validator
 {
@@ -14,10 +15,10 @@ namespace Services.Certificate.Validator
     {
         private readonly IOrganizationRepository _organizationRepository = organizationRepository;
 
-        public override Result<CertificateDetailDto> IsValid(CertificateCreateDto create)
+        public override async Task<Result> IsValid(CertificateCreateDto create)
         {
             Result<CertificateDetailDto> validate = new();
-            if (_organizationRepository.GetEntity(create.OrganizationId) == null)
+            if (await _organizationRepository.GetEntity(create.OrganizationId) == null)
             {
                 validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.ORGANIZATION, MessageItem.NOT_EXISTS));
             }
@@ -26,12 +27,12 @@ namespace Services.Certificate.Validator
             return validate;
         }
 
-        public override Result<CertificateDetailDto> IsValid(CertificateUpdateDto update)
+        public override Task<Result<CertificateDetailDto>> IsValid(CertificateUpdateDto update)
         {
             Result<CertificateDetailDto> validate = new();
             IsValidString(update.Name, validate, MessageCategory.CERTIFICATE, MessageItem.STRING_IS_EMPTY);
             IsValidPostiveNumber(update.CertificateValidTo, validate, MessageCategory.CERTIFICATE, Constants.CERTIFICATE_VALID_TO_IS_NOT_VALID);
-            return validate;
+            return Task.FromResult(validate);
         }
     }
 }

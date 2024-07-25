@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Core.Base.Repository.CodeBookRepository;
+﻿using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Validator;
 using Core.Constants;
 using Core.DataTypes;
@@ -11,6 +8,8 @@ using Model.Edu.Message;
 using Repository.MessageRepository;
 using Repository.OrganizationRepository;
 using Services.Message.Dto;
+using System;
+using System.Threading.Tasks;
 
 namespace Services.Message.Validator
 {
@@ -20,36 +19,36 @@ namespace Services.Message.Validator
         ICodeBookRepository<SendMessageTypeDbo> codeBookRepository
     ) : BaseValidator<MessageDbo, IMessageRepository, MessageCreateDto, MessageDetailDto, MessageUpdateDto>(repository), IMessageValidator
     {
-        private readonly List<SendMessageTypeDbo> _sendMessageTypes = codeBookRepository.GetEntities(false).Result;
+        private readonly ICodeBookRepository<SendMessageTypeDbo> _sendMessageTypes = codeBookRepository;
         private readonly IOrganizationRepository _organizationRepository = organizationRepository;
 
-        public override Result<MessageDetailDto> IsValid(MessageCreateDto create)
+        public override async Task<Result> IsValid(MessageCreateDto create)
         {
             Result<MessageDetailDto> result = new();
             IsValidString(create.Name, result, MessageCategory.SEND_MESSAGE, MessageItem.STRING_IS_EMPTY);
-            IsValidMessageType(create.SendMessageTypeId, create.Reply, result);
-            if (_organizationRepository.GetEntity(create.OrganizationId) == null)
+            await IsValidMessageType(create.SendMessageTypeId, create.Reply, result);
+            if (await _organizationRepository.GetEntity(create.OrganizationId) == null)
             {
                 result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.ORGANIZATION, MessageItem.NOT_EXISTS));
             }
             return result;
         }
 
-        public override Result<MessageDetailDto> IsValid(MessageUpdateDto update)
+        public override async Task<Result<MessageDetailDto>> IsValid(MessageUpdateDto update)
         {
             Result<MessageDetailDto> result = new();
             IsValidString(update.Name, result, MessageCategory.SEND_MESSAGE, MessageItem.STRING_IS_EMPTY);
-            IsValidMessageType(update.SendMessageTypeId, update.Reply, result);
-            return result;
+            await IsValidMessageType(update.SendMessageTypeId, update.Reply, result);
+            return await Task.FromResult(result);
         }
 
-        private void IsValidMessageType(Guid messageTypeId, string email, Result result)
+        private async Task IsValidMessageType(Guid messageTypeId, string email, Result result)
         {
-            if (messageTypeId == Guid.Empty || _sendMessageTypes.FirstOrDefault(x => x.Id == messageTypeId).IsDefault)
+            if (messageTypeId == Guid.Empty || (await _sendMessageTypes.GetEntity(false, x => x.Id == messageTypeId)).IsDefault)
             {
                 result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.SEND_MESSAGE, Constants.SELECT_MESSAGE_TYPE));
             }
-            if (_sendMessageTypes.FirstOrDefault(x => x.Id == messageTypeId).SystemIdentificator == SendMessageType.EMAIL)
+            if ((await _sendMessageTypes.GetEntity(false, x => x.Id == messageTypeId)).SystemIdentificator == SendMessageType.EMAIL)
             {
                 if (email.IsNullOrEmptyWithTrim())
                 {

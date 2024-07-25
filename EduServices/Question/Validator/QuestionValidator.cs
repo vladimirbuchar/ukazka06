@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Core.Base.Repository.CodeBookRepository;
+﻿using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Validator;
 using Core.Constants;
 using Core.DataTypes;
@@ -10,6 +7,7 @@ using Model.Edu.Question;
 using Repository.BankOfQuestionRepository;
 using Repository.QuestionRepository;
 using Services.Question.Dto;
+using System.Threading.Tasks;
 
 namespace Services.Question.Validator
 {
@@ -20,48 +18,30 @@ namespace Services.Question.Validator
         ICodeBookRepository<QuestionModeDbo> questionMode
     ) : BaseValidator<QuestionDbo, IQuestionRepository, QuestionCreateDto, QuestionDetailDto, QuestionUpdateDto>(repository), IQuestionValidator
     {
-        private readonly List<AnswerModeDbo> _answerModes = answerMode.GetEntities(false).Result;
-        private readonly List<QuestionModeDbo> _questionModes = questionMode.GetEntities(false).Result;
+        private readonly ICodeBookRepository<AnswerModeDbo> _answerModes = answerMode;
+        private readonly ICodeBookRepository<QuestionModeDbo> _questionModes = questionMode;
         private readonly IBankOfQuestionRepository _bankOfQuestionRepository = bankOfQuestionRepository;
 
-        public override Result<QuestionDetailDto> IsValid(QuestionCreateDto create)
+        public override async Task<Result> IsValid(QuestionCreateDto create)
         {
             Result<QuestionDetailDto> result = new();
             IsValidString(create.Question, result, MessageCategory.QUESTION, MessageItem.STRING_IS_EMPTY);
-            IsValidAnswerMode(create.AnswerModeId, result);
-            IsValidQuestionMode(create.QuestionModeId, result);
-            if (_bankOfQuestionRepository.GetEntity(create.BankOfQuestionId) == null)
+            await CodeBookValueExist<AnswerModeDbo>(_answerModes, x => x.Id == create.AnswerModeId, result, MessageCategory.QUESTION, Constants.SELECT_ANSWER_MODE);
+            await CodeBookValueExist<QuestionModeDbo>(_questionModes, x => x.Id == create.QuestionModeId, result, MessageCategory.QUESTION, Constants.SELECT_QUESTION_MODE);
+            if (await _bankOfQuestionRepository.GetEntity(create.BankOfQuestionId) == null)
             {
                 result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.BANK_OF_QUESTION, MessageItem.NOT_EXISTS));
             }
             return result;
         }
 
-        public override Result<QuestionDetailDto> IsValid(QuestionUpdateDto update)
+        public override async Task<Result<QuestionDetailDto>> IsValid(QuestionUpdateDto update)
         {
             Result<QuestionDetailDto> result = new();
             IsValidString(update.Question, result, MessageCategory.QUESTION, MessageItem.STRING_IS_EMPTY);
-            IsValidAnswerMode(update.AnswerModeId, result);
-            IsValidQuestionMode(update.QuestionModeId, result);
-            return result;
-        }
-
-        private void IsValidAnswerMode(Guid answerModeId, Result result)
-        {
-            AnswerModeDbo answerMode = _answerModes.FirstOrDefault(x => x.Id == answerModeId);
-            if (answerMode.SystemIdentificator == CodebookValue.CODEBOOK_SELECT_VALUE)
-            {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.QUESTION, Constants.SELECT_ANSWER_MODE));
-            }
-        }
-
-        private void IsValidQuestionMode(Guid questionMode, Result result)
-        {
-            QuestionModeDbo qmode = _questionModes.FirstOrDefault(x => x.Id == questionMode);
-            if (qmode.SystemIdentificator == CodebookValue.CODEBOOK_SELECT_VALUE)
-            {
-                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.QUESTION, Constants.SELECT_QUESTION_MODE));
-            }
+            await CodeBookValueExist<AnswerModeDbo>(_answerModes, x => x.Id == update.AnswerModeId, result, MessageCategory.QUESTION, Constants.SELECT_ANSWER_MODE);
+            await CodeBookValueExist<QuestionModeDbo>(_questionModes, x => x.Id == update.QuestionModeId, result, MessageCategory.QUESTION, Constants.SELECT_QUESTION_MODE);
+            return await Task.FromResult(result);
         }
     }
 }

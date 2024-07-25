@@ -1,5 +1,4 @@
-﻿using System;
-using Core.Base.Repository.CodeBookRepository;
+﻿using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Validator;
 using Core.Constants;
 using Core.DataTypes;
@@ -11,6 +10,8 @@ using Repository.CourseRepository;
 using Repository.MessageRepository;
 using Repository.OrganizationRepository;
 using Services.Course.Dto;
+using System;
+using System.Threading.Tasks;
 
 namespace Services.Course.Validator
 {
@@ -31,7 +32,7 @@ namespace Services.Course.Validator
         private readonly IMessageRepository _sendMessageRepository = sendMessageRepository;
         private readonly IOrganizationRepository _organizationRepository = organizationRepository;
 
-        public override Result<CourseDetailDto> IsValid(CourseCreateDto create)
+        public override async Task<Result> IsValid(CourseCreateDto create)
         {
             Result<CourseDetailDto> result = new();
             IsValidString(create.Name, result, MessageCategory.COURSE, MessageItem.STRING_IS_EMPTY);
@@ -43,7 +44,7 @@ namespace Services.Course.Validator
             _ = IsValidCertificate(create.CertificateId, result);
             _ = IsValidCourseMaterial(create.CourseMaterialId, result);
             _ = IsValidEmailTemplate(create.EmailTemplateId, result);
-            if (_organizationRepository.GetEntity(create.OrganizationId) == null)
+            if (await _organizationRepository.GetEntity(create.OrganizationId) == null)
             {
                 result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.ORGANIZATION, MessageItem.NOT_EXISTS));
             }
@@ -51,7 +52,7 @@ namespace Services.Course.Validator
             return result;
         }
 
-        public override Result<CourseDetailDto> IsValid(CourseUpdateDto update)
+        public override Task<Result<CourseDetailDto>> IsValid(CourseUpdateDto update)
         {
             Result<CourseDetailDto> result = new();
             IsValidString(update.Name, result, MessageCategory.COURSE, MessageItem.STRING_IS_EMPTY);
@@ -63,7 +64,7 @@ namespace Services.Course.Validator
             _ = IsValidCertificate(update.CertificateId, result);
             _ = IsValidCourseMaterial(update.CourseMaterialId, result);
             _ = IsValidEmailTemplate(update.EmailTemplateId, result);
-            return result;
+            return Task.FromResult(result);
         }
 
         private static Result IsValidStudentCount(int defaultMinimumStudents, int defaultMaximumStudents, Result result)
@@ -85,36 +86,36 @@ namespace Services.Course.Validator
             return result;
         }
 
-        private Result IsValidCertificate(Guid? certficateId, Result result)
+        private async Task<Result> IsValidCertificate(Guid? certficateId, Result result)
         {
-            if (certficateId.HasValue && _certificateRepository.GetEntity(certficateId.Value) == null)
+            if (certficateId.HasValue && await _certificateRepository.GetEntity(certficateId.Value) == null)
             {
                 result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.CERTIFICATE, MessageItem.NOT_EXISTS));
             }
             return result;
         }
 
-        private Result IsValidCourseMaterial(Guid? courseMaterialId, Result result)
+        private async Task<Result> IsValidCourseMaterial(Guid? courseMaterialId, Result result)
         {
-            if (courseMaterialId.HasValue && _courseMaterialRepository.GetEntity(courseMaterialId.Value) == null)
+            if (courseMaterialId.HasValue && await _courseMaterialRepository.GetEntity(courseMaterialId.Value) == null)
             {
                 result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.COURSE_MATERIAL, MessageItem.NOT_EXISTS));
             }
             return result;
         }
 
-        private Result IsValidEmailTemplate(Guid? templateId, Result result)
+        private async Task<Result> IsValidEmailTemplate(Guid? templateId, Result result)
         {
-            if (templateId.HasValue && _sendMessageRepository.GetEntity(templateId.Value) == null)
+            if (templateId.HasValue && await _sendMessageRepository.GetEntity(templateId.Value) == null)
             {
                 result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.COURSE, Constants.TEMPLATE_EMAIL_NOT_EXIST));
             }
             return result;
         }
 
-        private Result IsValidCourseStatus(Guid courseStatus, Result result)
+        private async Task<Result> IsValidCourseStatus(Guid courseStatus, Result result)
         {
-            CourseStatusDbo status = _courseStatusCodeBook.GetEntity(courseStatus);
+            CourseStatusDbo status = await _courseStatusCodeBook.GetEntity(courseStatus);
             if (status == null || status.SystemIdentificator == CodebookValue.CODEBOOK_SELECT_VALUE)
             {
                 result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.COURSE, Constants.INVALID_COURSE_STATUS));
@@ -122,9 +123,9 @@ namespace Services.Course.Validator
             return result;
         }
 
-        private Result IsValidCourseType(Guid courseType, Result result)
+        private async Task<Result> IsValidCourseType(Guid courseType, Result result)
         {
-            CourseTypeDbo type = _courseTypeCodeBook.GetEntity(courseType);
+            CourseTypeDbo type = await _courseTypeCodeBook.GetEntity(courseType);
             if (type == null || type.SystemIdentificator == CodebookValue.CODEBOOK_SELECT_VALUE)
             {
                 result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.COURSE, Constants.INVALID_COURSE_TYPE));

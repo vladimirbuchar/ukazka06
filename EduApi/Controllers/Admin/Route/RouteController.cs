@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -8,6 +6,9 @@ using Microsoft.Extensions.Logging;
 using Services.OrganizationRole.Service;
 using Services.Route.Dto;
 using Services.Route.Service;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EduApi.Controllers.Admin.Route
 {
@@ -34,15 +35,16 @@ namespace EduApi.Controllers.Admin.Route
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Create(RouteCreateDto request)
+        public async Task<ActionResult> Create(RouteCreateDto request)
         {
             try
             {
-                return SendResponse(_routeService.AddObject(request, GetLoggedUserId(), GetClientCulture()));
+                var result = await _routeService.AddObject(request, GetLoggedUserId(), GetClientCulture());
+                return await SendResponse(result);
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -52,15 +54,16 @@ namespace EduApi.Controllers.Admin.Route
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult List([FromQuery] ListDeletedRequestWithoutParentDto request)
+        public async Task<ActionResult> List([FromQuery] ListDeletedRequestWithoutParentDto request)
         {
             try
             {
-                return SendResponse(_routeService.GetList(request.IsDeleted, GetClientCulture()));
+                var result = await _routeService.GetList(request.IsDeleted, GetClientCulture());
+                return await SendResponse(result);
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -70,15 +73,16 @@ namespace EduApi.Controllers.Admin.Route
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Detail([FromQuery] DetailRequestDto request)
+        public async Task<ActionResult> Detail([FromQuery] DetailRequestDto request)
         {
             try
             {
-                return SendResponse(_routeService.GetDetail(request.Id, GetClientCulture()));
+                var result = await _routeService.GetDetail(request.Id, GetClientCulture());
+                return await SendResponse(result);
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -88,15 +92,16 @@ namespace EduApi.Controllers.Admin.Route
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Update(RouteUpdateDto request)
+        public async Task<ActionResult> Update(RouteUpdateDto request)
         {
             try
             {
-                return SendResponse(_routeService.UpdateObject(request, GetLoggedUserId(), GetClientCulture()));
+                var rewsult = await _routeService.UpdateObject(request, GetLoggedUserId(), GetClientCulture());
+                return await SendResponse(rewsult);
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -106,15 +111,16 @@ namespace EduApi.Controllers.Admin.Route
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Delete([FromQuery] DeleteDto request)
+        public async Task<ActionResult> Delete([FromQuery] DeleteDto request)
         {
             try
             {
-                return SendResponse(_routeService.DeleteObject(request.Id, GetLoggedUserId()));
+                var result = await _routeService.DeleteObject(request.Id, GetLoggedUserId());
+                return await SendResponse(result);
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -124,15 +130,16 @@ namespace EduApi.Controllers.Admin.Route
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Restore([FromQuery] RestoreDto request)
+        public async Task<ActionResult> Restore([FromQuery] RestoreDto request)
         {
             try
             {
-                return SendResponse(_routeService.RestoreObject(request.Id, GetLoggedUserId()));
+                var result = await _routeService.RestoreObject(request.Id, GetLoggedUserId());
+                return await SendResponse(result);
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
     }

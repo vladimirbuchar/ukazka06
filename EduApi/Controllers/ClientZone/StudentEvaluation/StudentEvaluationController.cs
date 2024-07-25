@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.OrganizationRole.Service;
 using Services.StudentEvaluation.Dto;
 using Services.StudentEvaluation.Service;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EduApi.Controllers.ClientZone.StudentEvaluation
 {
@@ -31,7 +32,7 @@ namespace EduApi.Controllers.ClientZone.StudentEvaluation
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Create(StudentEvaluationCreateDto addStudentEvaluationDto)
+        public Task<ActionResult> Create(StudentEvaluationCreateDto addStudentEvaluationDto)
         {
             try
             {
@@ -49,15 +50,16 @@ namespace EduApi.Controllers.ClientZone.StudentEvaluation
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult List([FromQuery] ListRequestDto request)
+        public async Task<ActionResult> List([FromQuery] ListRequestDto request)
         {
             try
             {
-                return SendResponse(_studentEvaluationService.GetList(x => x.CourseTermId == request.ParentId));
+                var result = await _studentEvaluationService.GetList(x => x.CourseTermId == request.ParentId);
+                return await SendResponse(result);
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -67,7 +69,7 @@ namespace EduApi.Controllers.ClientZone.StudentEvaluation
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Delete([FromQuery] Guid studentEvaluationId, [FromQuery] Guid courseTermId)
+        public Task<ActionResult> Delete([FromQuery] Guid studentEvaluationId, [FromQuery] Guid courseTermId)
         {
             try
             {

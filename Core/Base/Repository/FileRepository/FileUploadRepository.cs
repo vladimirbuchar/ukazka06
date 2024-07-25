@@ -1,11 +1,12 @@
-﻿using System;
-using System.IO;
-using Core.Constants;
+﻿using Core.Constants;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Model;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace Core.Base.Repository.FileRepository
 {
@@ -49,14 +50,14 @@ namespace Core.Base.Repository.FileRepository
         /// <param name="file"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public Model FileUpload(Model model, Guid parentId, IFormFile file, Guid userId)
+        public async Task<Model> FileUpload(Model model, Guid parentId, IFormFile file, Guid userId)
         {
             string extesion = Path.GetExtension(file.FileName);
             string fileName = string.Format("{0}{1}", Guid.NewGuid().ToString(), extesion);
             string filePath = string.Format("{0}{1}/{2}", _fileRepositoryPath, parentId, fileName);
             if (File.Exists(filePath))
             {
-                return FileUpload(model, parentId, file, userId);
+                return await FileUpload(model, parentId, file, userId);
             }
             using FileStream localFile = File.OpenWrite(filePath);
             using Stream uploadedFile = file.OpenReadStream();
@@ -70,7 +71,7 @@ namespace Core.Base.Repository.FileRepository
                 model.FileContent = File.ReadAllBytes(filePath);
             }
 
-            return CreateEntity(model, userId);
+            return await CreateEntity(model, userId);
         }
     }
 }

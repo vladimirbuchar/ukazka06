@@ -5,6 +5,7 @@ using Core.Base.Paging;
 using Core.Base.Repository;
 using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Repository.FileRepository;
+using Core.Base.Sort;
 using Core.Base.Validator;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Http;
@@ -14,10 +15,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using System.Web.Helpers;
 
 namespace Core.Base.Service
 {
+
     public class BaseService<Repository, Model, Convertor, Validator, Create, ObjectList, Detail, Update, FileModel, Filter>(
         Repository repository,
         Convertor convertor,
@@ -39,7 +42,7 @@ namespace Core.Base.Service
         where Filter : FilterRequest
     {
         protected readonly IFileUploadRepository<FileModel> _fileRepository = fileRepository;
-        private List<CultureDbo> Culture { get; set; } = codeBookRepository.GetEntities(false).Result;
+        private ICodeBookRepository<CultureDbo> Culture { get; set; } = codeBookRepository;
 
         /// <summary>
         /// file upload
@@ -50,7 +53,7 @@ namespace Core.Base.Service
         /// <param name="files"></param>
         /// <param name="model"></param>
         /// <param name="deleteFiles"></param>
-        public virtual Result FileUpload(
+        public virtual async Task<Result> FileUpload(
             Guid parentId,
             string culture,
             Guid userId,
@@ -62,17 +65,17 @@ namespace Core.Base.Service
             _fileRepository.CreateFileRepository(parentId);
             if (deleteFiles != null)
             {
-                List<FileModel> fileDelete = _fileRepository.GetEntities(false, deleteFiles).Result;
+                List<FileModel> fileDelete = await _fileRepository.GetEntities(false, deleteFiles);
                 foreach (FileModel item in fileDelete)
                 {
-                    _fileRepository.DeleteEntity(item, userId);
+                    await _fileRepository.DeleteEntity(item, userId);
                 }
             }
-            Guid cultureId = Culture.FirstOrDefault(x => x.SystemIdentificator == culture).Id;
+            Guid cultureId = (await Culture.GetEntity(false, x => x.SystemIdentificator == culture)).Id;
             model.CultureId = cultureId;
             foreach (IFormFile file in files)
             {
-                _ = _fileRepository.FileUpload(model, parentId, file, userId);
+                _ = await _fileRepository.FileUpload(model, parentId, file, userId);
             }
             return new Result();
         }
@@ -82,11 +85,12 @@ namespace Core.Base.Service
         /// </summary>
         /// <param name="id"></param>
         /// <param name="userId"></param>
-        public virtual Result FileDelete(Guid id, Guid userId)
+        public virtual async Task<Result> FileDelete(Guid id, Guid userId)
         {
-            _fileRepository.DeleteEntity(id, userId);
+            await _fileRepository.DeleteEntity(id, userId);
             return new Result();
         }
+
     }
 
     public class BaseService<Repository, Model, Convertor, Validator, Create, ObjectList, Detail, Update, Filter>(
@@ -114,19 +118,19 @@ namespace Core.Base.Service
         /// <param name="culture"></param>
         /// <returns></returns>
         /// <exception cref="KeyNotFoundException"></exception>
-        public virtual Result<Detail> UpdateObject(Update update, Guid userId, string culture, Result<Detail> result = null)
+        public virtual async Task<Result<Detail>> UpdateObject(Update update, Guid userId, string culture, Result<Detail> result = null)
         {
-            Model oldEntity = _repository.GetEntity(update.Id) ?? throw new KeyNotFoundException(update.Id.ToString());
-            result ??= _validator.IsValid(update);
+            Model oldEntity = await _repository.GetEntity(update.Id) ?? throw new KeyNotFoundException(update.Id.ToString());
+            result ??= await _validator.IsValid(update);
             if (result.IsOk)
             {
-                Model entity = _convertor.ConvertToBussinessEntity(update, oldEntity, culture);
-                if (IsChanged(_repository.GetEntity(update.Id), update, culture))
+                Model entity = await _convertor.ConvertToBussinessEntity(update, oldEntity, culture);
+                if (IsChanged(await _repository.GetEntity(update.Id), update, culture))
                 {
-                    entity = _repository.UpdateEntity(entity, userId);
+                    entity = await _repository.UpdateEntity(entity, userId);
                     result.DataChanged = true;
                 }
-                result.Data = _convertor.ConvertToWebModel(entity, culture);
+                result.Data = await _convertor.ConvertToWebModel(entity, culture);
             }
             return result;
         }
@@ -157,7 +161,7 @@ namespace Core.Base.Service
         where ObjectList : ListDto
         where Detail : DetailDto
         where Convertor : IBaseConvertor<Model, Create, ObjectList, Detail>
-        where Validator : IBaseValidator<Model, Repository, Create, Detail>
+        where Validator : IBaseValidatorCreate<Model, Repository, Create>
         where Filter : FilterRequest
     {
         /// <summary>
@@ -167,14 +171,14 @@ namespace Core.Base.Service
         /// <param name="userId"></param>
         /// <param name="culture"></param>
         /// <returns></returns>
-        public virtual Result<Detail> AddObject(Create addObject, Guid userId, string culture)
+        public virtual async Task<Result> AddObject(Create addObject, Guid userId, string culture)
         {
-            Result<Detail> result = _validator.IsValid(addObject);
+            Result result = await _validator.IsValid(addObject);
             if (result.IsOk)
             {
-                Model entity = _convertor.ConvertToBussinessEntity(addObject, culture);
-                entity = _repository.CreateEntity(entity, userId);
-                result.Data = _convertor.ConvertToWebModel(entity, culture);
+                Model entity = await _convertor.ConvertToBussinessEntity(addObject, culture);
+                _ = await _repository.CreateEntity(entity, userId);
+                //result.Data = await _convertor.ConvertToWebModel(entity, culture);
             }
             return result;
         }
@@ -184,9 +188,9 @@ namespace Core.Base.Service
         /// </summary>
         /// <param name="objectId"></param>
         /// <param name="userId"></param>
-        public virtual Result DeleteObject(Guid objectId, Guid userId)
+        public virtual async Task<Result> DeleteObject(Guid objectId, Guid userId)
         {
-            _repository.DeleteEntity(objectId, userId);
+            await _repository.DeleteEntity(objectId, userId);
             return new Result();
         }
 
@@ -195,24 +199,9 @@ namespace Core.Base.Service
         /// </summary>
         /// <param name="objectId"></param>
         /// <param name="userId"></param>
-        public virtual Result RestoreObject(Guid objectId, Guid userId)
+        public virtual async Task<Result> RestoreObject(Guid objectId, Guid userId)
         {
-            _repository.RestoreEntity(objectId, userId);
-            return new Result();
-        }
-
-        /// <summary>
-        /// delete objects by condition
-        /// </summary>
-        /// <param name="predicate"></param>
-        /// <param name="userId"></param>
-        public virtual Result MultipleDelete(Expression<Func<Model, bool>> predicate, Guid userId)
-        {
-            List<Guid> ids = _repository.GetEntities(false, predicate).Result.Select(x => x.Id).ToList();
-            foreach (Guid id in ids)
-            {
-                _repository.DeleteEntity(id, userId);
-            }
+            await _repository.RestoreEntity(objectId, userId);
             return new Result();
         }
 
@@ -223,7 +212,7 @@ namespace Core.Base.Service
         /// <param name="deleted"></param>
         /// <param name="culture"></param>
         /// <returns></returns>
-        public virtual List<ObjectList> GetList(
+        public virtual async Task<ResultTable<ObjectList>> GetList(
             Expression<Func<Model, bool>> predicate = null,
             bool deleted = false,
             string culture = "",
@@ -234,28 +223,32 @@ namespace Core.Base.Service
         )
         {
             paging ??= new BasePaging();
-            List<Model> entities = _repository
+            List<Model> entities = await _repository
                 .GetEntities(
                     deleted,
                     predicate,
                     PrepareSqlFilter(filter, culture),
-                    PrepareSort(sortColumn, culture),
-                    sortDirection,
-                    paging.Page,
-                    paging.ItemCount
-                )
-                .Result;
-            return _convertor.ConvertToWebModel(entities, culture);
+                    PrepareSort(sortColumn, culture, sortDirection),
+                    paging
+                );
+            List<ObjectList> data = await _convertor.ConvertToWebModel(entities, culture);
+            int count = await _repository.GetTotalCount(deleted, predicate, PrepareSqlFilter(filter, culture));
+            ResultTable<ObjectList> result = new()
+            {
+                Data = data,
+                TotalCount = count
+            };
+            return result;
         }
 
-        public virtual List<ObjectList> GetList(bool deleted = false, string culture = "")
+        public virtual async Task<ResultTable<ObjectList>> GetList(bool deleted = false, string culture = "")
         {
-            return GetList(null, deleted, culture);
+            return await GetList(null, deleted, culture);
         }
 
-        public virtual List<ObjectList> GetList()
+        public virtual async Task<ResultTable<ObjectList>> GetList()
         {
-            return GetList(null, false, string.Empty);
+            return await GetList(null, false, string.Empty);
         }
 
         protected virtual Expression<Func<Model, bool>> PrepareSqlFilter(Filter filter, string culture)
@@ -263,7 +256,7 @@ namespace Core.Base.Service
             return null;
         }
 
-        protected virtual Expression<Func<Model, object>> PrepareSort(string columnName, string culture)
+        protected virtual List<BaseSort<Model>> PrepareSort(string columnName, string culture, SortDirection sortDirection = SortDirection.Ascending)
         {
             if (!string.IsNullOrEmpty(columnName))
             {
@@ -273,7 +266,14 @@ namespace Core.Base.Service
                     Expression.Convert(property, typeof(object)),
                     parameter
                 );
-                return lambda;
+                return
+                [
+                    new BaseSort<Model>()
+                    {
+                        Sort = lambda,
+                        SortDirection = sortDirection
+                    }
+                ];
             }
             return null;
         }
@@ -284,9 +284,11 @@ namespace Core.Base.Service
         /// <param name="objectId"></param>
         /// <param name="culture"></param>
         /// <returns></returns>
-        public virtual Detail GetDetail(Guid objectId, string culture)
+        public virtual async Task<Detail> GetDetail(Guid objectId, string culture)
         {
-            return _convertor.ConvertToWebModel(_repository.GetEntity(objectId), culture);
+            Model model = await _repository.GetEntity(objectId);
+            Detail detail = await _convertor.ConvertToWebModel(model, culture);
+            return detail;
         }
 
         /// <summary>
@@ -295,9 +297,26 @@ namespace Core.Base.Service
         /// <param name="predicate"></param>
         /// <param name="culture"></param>
         /// <returns></returns>
-        public virtual Detail GetDetail(Expression<Func<Model, bool>> predicate, string culture)
+        public virtual async Task<Detail> GetDetail(Expression<Func<Model, bool>> predicate, string culture)
         {
-            return _convertor.ConvertToWebModel(_repository.GetEntity(false, predicate), culture);
+            Model entity = await _repository.GetEntity(false, predicate);
+            Detail detail = await _convertor.ConvertToWebModel(entity, culture);
+            return detail;
+        }
+
+        public async Task<ResultTable<ObjectList>> GetList(string culture = "", Filter filter = null)
+        {
+            return await GetList(null, false, culture, filter);
+        }
+
+        public async Task<Result> MultipleDelete(Expression<Func<Model, bool>> predicate, Guid userId)
+        {
+            List<Guid> ids = (await _repository.GetEntities(false, predicate)).Select(x => x.Id).ToList();
+            foreach (Guid id in ids)
+            {
+                await _repository.DeleteEntity(id, userId);
+            }
+            return new Result();
         }
 
         protected Expression FilterBool(bool? value, ParameterExpression parameter, Expression expression, string columnName)
@@ -312,17 +331,6 @@ namespace Core.Base.Service
             return expression;
         }
 
-        protected Expression FilterInt(int? value, ParameterExpression parameter, Expression expression, string columnName)
-        {
-            if (value.HasValue)
-            {
-                expression = Expression.AndAlso(
-                    expression,
-                    Expression.Equal(Expression.Property(parameter, columnName), Expression.Constant(value.Value))
-                );
-            }
-            return expression;
-        }
         protected Expression FilterDouble(double? value, ParameterExpression parameter, Expression expression, string columnName)
         {
             if (value.HasValue)
@@ -341,6 +349,18 @@ namespace Core.Base.Service
                 expression = Expression.AndAlso(
                     expression,
                     Expression.Equal(left, Expression.Constant(value.Value))
+                );
+            }
+            return expression;
+        }
+
+        protected Expression FilterInt(int? value, ParameterExpression parameter, Expression expression, string columnName)
+        {
+            if (value.HasValue)
+            {
+                expression = Expression.AndAlso(
+                    expression,
+                    Expression.Equal(Expression.Property(parameter, columnName), Expression.Constant(value.Value))
                 );
             }
             return expression;
@@ -387,7 +407,6 @@ namespace Core.Base.Service
             }
             return expression;
         }
-
         private static bool IsNullableProperty(MemberExpression memberExpression)
         {
             // Get the type of the property
@@ -403,11 +422,66 @@ namespace Core.Base.Service
             return !propertyType.IsValueType;
         }
 
-        protected Expression FilterGuid(List<Guid> guids, ParameterExpression parameter, Expression expression, string columnName)
+        protected Expression FilterDate(DateTime? dateTimeFrom, DateTime? dateTimeTo, ParameterExpression parameter, Expression expression, params string[] columnNames)
+        {
+            if (columnNames == null || columnNames.Length == 0)
+            {
+                throw new ArgumentException("At least one column name must be specified.", nameof(columnNames));
+            }
+
+            Expression combinedExpression = null;
+
+            foreach (string columnName in columnNames)
+            {
+                // Create the property access expression
+                MemberExpression property = Expression.Property(parameter, columnName);
+
+                // Ensure property is of type DateTime?
+                if (property.Type != typeof(DateTime?) && property.Type != typeof(DateTime))
+                {
+                    throw new ArgumentException($"The property '{columnName}' is not of type DateTime or DateTime?.", nameof(columnNames));
+                }
+
+                // Handle nullable DateTime by accessing the Value property and checking HasValue
+                MemberExpression hasValue = Expression.Property(property, "HasValue");
+                MemberExpression value = Expression.Property(property, "Value");
+
+                // Create the 'from' date comparison expression
+                ConstantExpression fromDate = Expression.Constant(dateTimeFrom, typeof(DateTime));
+                BinaryExpression fromComparison = Expression.GreaterThanOrEqual(value, fromDate);
+
+                // Create the 'to' date comparison expression
+                ConstantExpression toDate = Expression.Constant(dateTimeTo, typeof(DateTime));
+                BinaryExpression toComparison = Expression.LessThanOrEqual(value, toDate);
+
+                // Combine the 'from' and 'to' comparisons into one expression
+                BinaryExpression dateRangeExpression = Expression.AndAlso(fromComparison, toComparison);
+
+                // Only apply the date range if the property has a value
+                BinaryExpression condition = Expression.AndAlso(hasValue, dateRangeExpression);
+
+                // Combine with the existing expression
+                combinedExpression = combinedExpression == null ? condition : (Expression)Expression.AndAlso(combinedExpression, condition);
+            }
+
+            // Combine the new date range expressions with the existing expression
+            return expression == null ? combinedExpression : Expression.AndAlso(expression, combinedExpression);
+        }
+
+        protected Expression FilterGuid(List<Guid> guids, ParameterExpression parameter, Expression expression, params string[] columnName)
         {
             if (guids != null && guids.Any())
             {
-                MemberExpression property = Expression.Property(parameter, columnName);
+                MemberExpression property = null;
+                if (columnName.Length == 1)
+                {
+                    property = Expression.Property(parameter, columnName[0]);
+                }
+                if (columnName.Length == 2)
+                {
+                    property = Expression.Property(parameter, columnName[0]);
+                    property = Expression.Property(property, columnName[1]);
+                }
                 System.Reflection.MethodInfo containsMethod = typeof(List<Guid>).GetMethod("Contains", new[] { typeof(Guid) });
 
                 Expression containsExpression;
@@ -453,16 +527,8 @@ namespace Core.Base.Service
             return expression;
         }
 
-        protected Expression FilterTranslation<T>(
-            string translationName,
-            string culture,
-            ParameterExpression parameter,
-            Expression expression,
-            string columnName,
-            string cultureColumn,
-            string translationsName
-        )
-            where T : TranslationTableModel
+        protected Expression FilterTranslation<T>(string translationName, string culture, ParameterExpression parameter, Expression expression, string columnName, string cultureColumn, string translationsName)
+         where T : TranslationTableModel
         {
             if (!string.IsNullOrEmpty(translationName) && !string.IsNullOrEmpty(culture))
             {
@@ -502,23 +568,13 @@ namespace Core.Base.Service
                     combinedExpression = cultureEqualsExpression;
                 }
 
-                System.Reflection.MethodInfo anyMethod = typeof(Enumerable)
-                    .GetMethods()
+                System.Reflection.MethodInfo anyMethod = typeof(Enumerable).GetMethods()
                     .First(m => m.Name == "Any" && m.GetParameters().Length == 2)
                     .MakeGenericMethod(typeof(T));
-                MethodCallExpression anyExpression = Expression.Call(
-                    anyMethod,
-                    translationsProperty,
-                    Expression.Lambda<Func<T, bool>>(combinedExpression, translationParameter)
-                );
+                MethodCallExpression anyExpression = Expression.Call(anyMethod, translationsProperty, Expression.Lambda<Func<T, bool>>(combinedExpression, translationParameter));
                 expression = Expression.AndAlso(expression, anyExpression);
             }
             return expression;
-        }
-
-        public List<ObjectList> GetList(string culture = "", Filter filter = null)
-        {
-            return GetList(null, false, culture, filter);
         }
     }
 
@@ -540,15 +596,21 @@ namespace Core.Base.Service
         protected Convertor _convertor = convertor;
     }
 
+
     public abstract class BaseService<Repository, Model>(Repository repository) : BaseService()
         where Repository : IBaseRepository<Model>
         where Model : TableModel
     {
         protected Repository _repository = repository;
 
-        public override Guid GetOrganizationIdByObjectId(Guid objectId)
+        public override async Task<Guid> GetOrganizationIdByObjectId(Guid objectId)
         {
-            return _repository.GetOrganizationId(objectId);
+            return await _repository.GetOrganizationId(objectId);
+        }
+
+        public override async Task<Guid> GetOrganizationIdBFileId(Guid objectId)
+        {
+            return await _repository.GetOrganizationByFileId(objectId);
         }
     }
 
@@ -558,18 +620,23 @@ namespace Core.Base.Service
         protected Convertor _convertor = convertor;
     }
 
+
     public abstract class BaseService : IBaseService
     {
         public BaseService() { }
 
-        public virtual Guid GetOrganizationIdByObjectId(Guid objectId)
+        public virtual async Task<Guid> GetOrganizationIdByObjectId(Guid objectId)
         {
-            return Guid.Empty;
+            return await Task.FromResult(Guid.Empty);
         }
 
-        public virtual Guid GetOrganizationIdByParentId(Guid objectId)
+        public virtual async Task<Guid> GetOrganizationIdByParentId(Guid objectId)
         {
-            return Guid.Empty;
+            return await Task.FromResult(Guid.Empty);
+        }
+        public virtual async Task<Guid> GetOrganizationIdBFileId(Guid objectId)
+        {
+            return await Task.FromResult(Guid.Empty);
         }
     }
 }

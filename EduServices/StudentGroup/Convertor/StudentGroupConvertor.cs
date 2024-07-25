@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Core.Base.Repository.CodeBookRepository;
+﻿using Core.Base.Repository.CodeBookRepository;
 using Model.CodeBook;
 using Model.Edu.StudentGroup;
 using Services.StudentGroup.Dto;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Services.StudentGroup.Convertor
 {
@@ -11,23 +12,23 @@ namespace Services.StudentGroup.Convertor
     {
         private readonly List<CultureDbo> _cultureList = codeBookRepository.GetEntities(false).Result;
 
-        public List<StudentGroupInOrganizationListDto> ConvertToWebModel(List<StudentGroupDbo> getStudentGroupInOrganizations, string culture)
+        public Task<List<StudentGroupInOrganizationListDto>> ConvertToWebModel(List<StudentGroupDbo> getStudentGroupInOrganizations, string culture)
         {
-            return getStudentGroupInOrganizations
+            return Task.FromResult(getStudentGroupInOrganizations
                 .Select(x => new StudentGroupInOrganizationListDto() { Id = x.Id, Name = x.StudentGroupTranslations.FindTranslation(culture)?.Name, })
-                .ToList();
+                .ToList());
         }
 
-        public StudentGroupDetailDto ConvertToWebModel(StudentGroupDbo getStudentGroupDetail, string culture)
+        public Task<StudentGroupDetailDto> ConvertToWebModel(StudentGroupDbo getStudentGroupDetail, string culture)
         {
-            return new StudentGroupDetailDto()
+            return Task.FromResult(new StudentGroupDetailDto()
             {
                 Id = getStudentGroupDetail.Id,
                 Name = getStudentGroupDetail.StudentGroupTranslations.FindTranslation(culture)?.Name
-            };
+            });
         }
 
-        public StudentGroupDbo ConvertToBussinessEntity(StudentGroupCreateDto addStudentGroupDto, string culture)
+        public Task<StudentGroupDbo> ConvertToBussinessEntity(StudentGroupCreateDto addStudentGroupDto, string culture)
         {
             StudentGroupDbo studentgroup = new() { OrganizationId = addStudentGroupDto.OrganizationId };
             studentgroup.StudentGroupTranslations = studentgroup.StudentGroupTranslations.PrepareTranslation(
@@ -35,13 +36,13 @@ namespace Services.StudentGroup.Convertor
                 culture,
                 _cultureList
             );
-            return studentgroup;
+            return Task.FromResult(studentgroup);
         }
 
-        public StudentGroupDbo ConvertToBussinessEntity(StudentGroupUpdateDto updateStudentGroupDto, StudentGroupDbo entity, string culture)
+        public Task<StudentGroupDbo> ConvertToBussinessEntity(StudentGroupUpdateDto updateStudentGroupDto, StudentGroupDbo entity, string culture)
         {
             entity.StudentGroupTranslations = entity.StudentGroupTranslations.PrepareTranslation(updateStudentGroupDto.Name, culture, _cultureList);
-            return entity;
+            return Task.FromResult(entity);
         }
     }
 }

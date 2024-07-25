@@ -1,6 +1,7 @@
 ﻿using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Repository.FileRepository;
 using Core.Base.Service;
+using Core.Base.Sort;
 using Model.CodeBook;
 using Model.Edu.Question;
 using Repository.BankOfQuestionRepository;
@@ -11,8 +12,11 @@ using Services.Question.Filter;
 using Services.Question.Sort;
 using Services.Question.Validator;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
+using System.Web.Helpers;
 
 namespace Services.Question.Service
 {
@@ -40,9 +44,9 @@ namespace Services.Question.Service
     {
         private readonly IBankOfQuestionRepository _bankOfQuestionRepository = bankOfQuestionRepository;
 
-        public override Guid GetOrganizationIdByParentId(Guid objectId)
+        public override async Task<Guid> GetOrganizationIdByParentId(Guid objectId)
         {
-            return _bankOfQuestionRepository.GetOrganizationId(objectId);
+            return await _bankOfQuestionRepository.GetOrganizationId(objectId);
         }
 
         protected override Expression<Func<QuestionDbo, bool>> PrepareSqlFilter(QuestionFilter filter, string culture)
@@ -63,7 +67,7 @@ namespace Services.Question.Service
             return Expression.Lambda<Func<QuestionDbo, bool>>(expression, parameter);
         }
 
-        protected override Expression<Func<QuestionDbo, object>> PrepareSort(string columnName, string culture)
+        protected override List<BaseSort<QuestionDbo>> PrepareSort(string columnName, string culture, SortDirection sortDirection = SortDirection.Ascending)
         {
             if (columnName == QuestionSort.Question.ToString())
             {
@@ -80,7 +84,14 @@ namespace Services.Question.Service
                     Expression.Convert(nameProperty, typeof(object)),
                     parameter
                 );
-                return lambda;
+                return
+                [
+                    new BaseSort<QuestionDbo>()
+                    {
+                        Sort =lambda,
+                        SortDirection = sortDirection
+                    }
+                ];
             }
             else if (columnName == QuestionSort.AnswerMode.ToString())
             {
@@ -91,7 +102,14 @@ namespace Services.Question.Service
                     Expression.Convert(nameProperty, typeof(object)),
                     parameter
                 );
-                return lambda;
+                return
+                [
+                    new BaseSort<QuestionDbo>()
+                    {
+                        Sort =lambda,
+                        SortDirection = sortDirection
+                    }
+                ];
             }
             else if (columnName == QuestionSort.QuestionMode.ToString())
             {
@@ -102,7 +120,14 @@ namespace Services.Question.Service
                     Expression.Convert(nameProperty, typeof(object)),
                     parameter
                 );
-                return lambda;
+                return
+                [
+                    new BaseSort<QuestionDbo>()
+                    {
+                        Sort =lambda,
+                        SortDirection = sortDirection
+                    }
+                ];
             }
             return base.PrepareSort(columnName, culture);
         }

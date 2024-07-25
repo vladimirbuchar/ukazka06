@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Core.Base.Repository.CodeBookRepository;
+﻿using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Validator;
 using Core.Constants;
 using Core.DataTypes;
@@ -10,6 +7,8 @@ using Model.Edu.CourseLessonItem;
 using Repository.CourseLessonItemRepository;
 using Repository.CourseLessonRepository;
 using Services.CourseLessonItem.Dto;
+using System;
+using System.Threading.Tasks;
 
 namespace Services.CourseLessonItem.Validator
 {
@@ -27,24 +26,24 @@ namespace Services.CourseLessonItem.Validator
         >(repository),
             ICourseLessonItemValidator
     {
-        private readonly List<CourseLessonItemTemplateDbo> _courseLessonItemTemplates = codeBookRepository.GetEntities(false).Result;
+        private readonly ICodeBookRepository<CourseLessonItemTemplateDbo> _courseLessonItemTemplates = codeBookRepository;
         private readonly ICourseLessonRepository _courseLessonRepository = courseLessonRepository;
 
-        public override Result<CourseLessonItemDetailDto> IsValid(CourseLessonItemCreateDto create)
+        public override async Task<Result> IsValid(CourseLessonItemCreateDto create)
         {
             Result<CourseLessonItemDetailDto> result = new();
             IsValidString(create.Name, result, MessageCategory.COURSE_LESSON_ITEM, MessageItem.STRING_IS_EMPTY);
-            IsValidItemTemplate(create.TemplateId, result);
-            if (_courseLessonRepository.GetEntity(create.CourseLessonId) == null)
+            await IsValidItemTemplate(create.TemplateId, result);
+            if (await _courseLessonRepository.GetEntity(create.CourseLessonId) == null)
             {
                 result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.COURSE_LESSON, MessageItem.NOT_EXISTS));
             }
             return result;
         }
 
-        private void IsValidItemTemplate(Guid templateId, Result result)
+        private async Task IsValidItemTemplate(Guid templateId, Result result)
         {
-            if (_courseLessonItemTemplates.FirstOrDefault(x => x.Id == templateId).SystemIdentificator == CodebookValue.CODEBOOK_SELECT_VALUE)
+            if ((await _courseLessonItemTemplates.GetEntity(false, x => x.Id == templateId)).SystemIdentificator == CodebookValue.CODEBOOK_SELECT_VALUE)
             {
                 result.AddResultStatus(
                     new ValidationMessage(MessageType.ERROR, MessageCategory.COURSE_LESSON_ITEM, Constants.COURSE_LESSON_ITEM_TEMPLATE_IS_EMPTY)
@@ -52,12 +51,12 @@ namespace Services.CourseLessonItem.Validator
             }
         }
 
-        public override Result<CourseLessonItemDetailDto> IsValid(CourseLessonItemUpdateDto update)
+        public override async Task<Result<CourseLessonItemDetailDto>> IsValid(CourseLessonItemUpdateDto update)
         {
             Result<CourseLessonItemDetailDto> result = new();
             IsValidString(update.Name, result, MessageCategory.COURSE_LESSON_ITEM, MessageItem.STRING_IS_EMPTY);
-            IsValidItemTemplate(update.TemplateId, result);
-            return result;
+            await IsValidItemTemplate(update.TemplateId, result);
+            return await Task.FromResult(result);
         }
     }
 }

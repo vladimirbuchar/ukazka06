@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Core.Base.Repository.CodeBookRepository;
+﻿using Core.Base.Repository.CodeBookRepository;
 using Model.CodeBook;
 using Model.Edu.Certificate;
 using Services.Certificate.Dto;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Services.Certificate.Convertor
 {
@@ -11,7 +12,7 @@ namespace Services.Certificate.Convertor
     {
         private readonly List<CultureDbo> _cultureList = codeBookRepository.GetEntities(false).Result;
 
-        public CertificateDbo ConvertToBussinessEntity(CertificateCreateDto addCertificateDto, string culture)
+        public Task<CertificateDbo> ConvertToBussinessEntity(CertificateCreateDto addCertificateDto, string culture)
         {
             CertificateDbo certificate =
                 new() { OrganizationId = addCertificateDto.OrganizationId, CertificateValidTo = addCertificateDto.CertificateValidTo };
@@ -21,10 +22,10 @@ namespace Services.Certificate.Convertor
                 culture,
                 _cultureList
             );
-            return certificate;
+            return Task.FromResult(certificate);
         }
 
-        public CertificateDbo ConvertToBussinessEntity(CertificateUpdateDto updateCertificateDto, CertificateDbo entity, string culture)
+        public Task<CertificateDbo> ConvertToBussinessEntity(CertificateUpdateDto updateCertificateDto, CertificateDbo entity, string culture)
         {
             entity.CertificateTranslations = entity.CertificateTranslations.PrepareTranslation(
                 updateCertificateDto.Name,
@@ -33,30 +34,30 @@ namespace Services.Certificate.Convertor
                 _cultureList
             );
             entity.CertificateValidTo = updateCertificateDto.CertificateValidTo;
-            return entity;
+            return Task.FromResult(entity);
         }
 
-        public List<CertificateListDto> ConvertToWebModel(List<CertificateDbo> getCertificateInOrganizations, string culture)
+        public Task<List<CertificateListDto>> ConvertToWebModel(List<CertificateDbo> getCertificateInOrganizations, string culture)
         {
-            return getCertificateInOrganizations
+            return Task.FromResult(getCertificateInOrganizations
                 .Select(item => new CertificateListDto()
                 {
                     Id = item.Id,
                     Name = item.CertificateTranslations.FindTranslation(culture).Name,
                     CertificateValidTo = item.CertificateValidTo
                 })
-                .ToList();
+                .ToList());
         }
 
-        public CertificateDetailDto ConvertToWebModel(CertificateDbo getCertificateDetail, string culture)
+        public Task<CertificateDetailDto> ConvertToWebModel(CertificateDbo getCertificateDetail, string culture)
         {
-            return new CertificateDetailDto()
+            return Task.FromResult(new CertificateDetailDto()
             {
                 Html = getCertificateDetail.CertificateTranslations.FindTranslation(culture).Html,
                 Id = getCertificateDetail.Id,
                 Name = getCertificateDetail.CertificateTranslations.FindTranslation(culture).Name,
                 CertificateValidTo = getCertificateDetail.CertificateValidTo
-            };
+            });
         }
     }
 }

@@ -6,6 +6,7 @@ using Repository.ChatRepository;
 using Repository.CourseTermRepository;
 using Repository.UserRepository;
 using Services.Chat.Dto;
+using System.Threading.Tasks;
 
 namespace Services.Chat.Validator
 {
@@ -16,26 +17,26 @@ namespace Services.Chat.Validator
         private readonly IUserRepository _userRepository = userRepository;
         private readonly ICourseTermRepository _courseTermRepository = courseTermRepository;
 
-        public override Result<ChatItemDetailDto> IsValid(ChatItemCreateDto create)
+        public override async Task<Result> IsValid(ChatItemCreateDto create)
         {
             Result<ChatItemDetailDto> result = new();
             IsValidString(create.Text, result, MessageCategory.CHAT, MessageItem.STRING_IS_EMPTY);
-            if (_userRepository.GetEntity(create.UserId) == null)
+            if (await _userRepository.GetEntity(create.UserId) == null)
             {
                 result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.USER, MessageItem.NOT_EXISTS));
             }
-            if (_courseTermRepository.GetEntity(create.CourseTermId) == null)
+            if (await _courseTermRepository.GetEntity(create.CourseTermId) == null)
             {
                 result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.COURSE_TERM, MessageItem.NOT_EXISTS));
             }
             return result;
         }
 
-        public override Result<ChatItemDetailDto> IsValid(ChatItemUpdateDto update)
+        public override Task<Result<ChatItemDetailDto>> IsValid(ChatItemUpdateDto update)
         {
             Result<ChatItemDetailDto> result = new();
             IsValidString(update.Text, result, MessageCategory.CHAT, MessageItem.STRING_IS_EMPTY);
-            return result;
+            return Task.FromResult(result);
         }
     }
 }

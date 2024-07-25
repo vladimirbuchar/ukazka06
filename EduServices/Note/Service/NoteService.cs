@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Core.Base.Filter;
+﻿using Core.Base.Filter;
 using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Service;
 using Core.Constants;
@@ -13,9 +10,12 @@ using Services.Note.Convertor;
 using Services.Note.Dto;
 using Services.Note.Validator;
 using Services.SystemService.FileUpload;
+using System;
+using System.Threading.Tasks;
 
 namespace Services.Note.Service
 {
+   
     public class NoteService(
         INoteRepository noteRepository,
         INoteConvertor noteConvertor,
@@ -37,9 +37,9 @@ namespace Services.Note.Service
             INoteService
     {
         private readonly IFileUploadService _fileUploadService = fileUploadService;
-        private readonly List<NoteTypeDbo> _noteType = codeBookRepository.GetEntities(false).Result;
+        private readonly ICodeBookRepository<NoteTypeDbo> _noteType = codeBookRepository;
 
-        public Result<NoteDetailDto> SaveTableAsNote(NoteCreateTableDto saveTableAsNoteDto, Guid userId, string culture)
+        public async Task<Result> SaveTableAsNote(NoteCreateTableDto saveTableAsNoteDto, Guid userId, string culture)
         {
             Guid fileName = _fileUploadService.SaveFilePngFile(saveTableAsNoteDto.Img, "note");
             NoteCreateDto addNote =
@@ -48,26 +48,26 @@ namespace Services.Note.Service
                     CourseId = saveTableAsNoteDto.CourseLessonItem,
                     FileName = fileName,
                     NoteName = DateTime.Now.ToString(),
-                    NoteTypeId = _noteType.FirstOrDefault(x => x.SystemIdentificator == NoteType.NOTE_TYPE_DRAW).Id,
+                    NoteTypeId = (await _noteType.GetEntity(false, x => x.SystemIdentificator == NoteType.NOTE_TYPE_DRAW)).Id,
                     Text = "",
                     UserId = userId
                 };
-            return AddObject(addNote, userId, culture);
+            return await AddObject(addNote, userId, culture);
         }
 
-        public Result<NoteDetailDto> UpdateNoteImage(NoteUpdateImageDto updateNoteImageDto, Guid userId, string culture)
+        public async Task<Result> UpdateNoteImage(NoteUpdateImageDto updateNoteImageDto, Guid userId, string culture)
         {
             Guid fileName = _fileUploadService.SaveFilePngFile(updateNoteImageDto.Img, "note");
             updateNoteImageDto.FileName = fileName;
-            return UpdateObject(updateNoteImageDto, userId, culture);
+            return await UpdateObject(updateNoteImageDto, userId, culture);
         }
 
-        public Result<NoteDetailDto> SaveFile(NoteCreateImageDto saveImageNoteDto, Guid userId, string culture)
+        public async Task<Result> SaveFile(NoteCreateImageDto saveImageNoteDto, Guid userId, string culture)
         {
             Guid fileName = _fileUploadService.SaveFilePngFile(saveImageNoteDto.Img, "note");
             saveImageNoteDto.UserId = userId;
             saveImageNoteDto.FileName = fileName;
-            return AddObject(saveImageNoteDto, userId, culture);
+            return await AddObject(saveImageNoteDto, userId, culture);
         }
     }
 }

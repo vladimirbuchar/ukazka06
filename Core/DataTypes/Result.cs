@@ -40,4 +40,11 @@ namespace Core.DataTypes
     {
         public T Data { get; set; }
     }
+
+    public class ResultTable<T>
+    {
+        public List<T> Data { get; set; } = [];
+        public int TotalCount { get; set; }
+    }
+
 }

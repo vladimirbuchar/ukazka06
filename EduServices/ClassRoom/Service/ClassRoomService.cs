@@ -1,4 +1,5 @@
 ﻿using Core.Base.Service;
+using Core.Base.Sort;
 using Core.Constants;
 using Core.DataTypes;
 using Model.Edu.Branch;
@@ -16,14 +17,16 @@ using Services.ClassRoom.Filter;
 using Services.ClassRoom.Sort;
 using Services.ClassRoom.Validator;
 using Services.OrganizationStudyHour.Dto;
-using Services.User.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
+using System.Web.Helpers;
 
 namespace Services.ClassRoom.Service
 {
+
     public class ClassRoomService(
         IOrganizationStudyHourRepository organizationStudyHourRepository,
         IClassRoomRepository classRoomRepository,
@@ -47,14 +50,19 @@ namespace Services.ClassRoom.Service
         private readonly IOrganizationStudyHourRepository _organizationStudyHourRepository = organizationStudyHourRepository;
         private readonly IBranchRepository _branchRepository = branchRepository;
 
-        public ClassRoomTimeTableDto GetClassRoomTimeTable(Guid classRoomId, Guid organizationId, string culture)
+        public async Task<ClassRoomTimeTableDto> GetClassRoomTimeTable(Guid classRoomId, Guid organizationId, string culture)
         {
             ClassRoomTimeTableDto getClassRoomTimeTableDtos = new();
-            List<CourseTermDateDbo> getClassRoomTimeTables = [.. _repository.GetEntity(false, x => x.Id == classRoomId).CourseTermDates];
+            List<CourseTermDateDbo> getClassRoomTimeTables = (await _repository.GetEntity(false, x => x.Id == classRoomId)).CourseTermDates.ToList();
             List<OrganizationStudyHourDbo> getStudyHours =
+            await _organizationStudyHourRepository.GetEntities(false, x => x.OrganizationId == organizationId, null,
             [
-                .. _organizationStudyHourRepository.GetEntities(false, x => x.OrganizationId == organizationId, null, x => x.Position).Result
-            ];
+                new Core.Base.Sort.BaseSort<OrganizationStudyHourDbo>()
+                {
+                    Sort = x => x.Position
+                }
+            ]);
+
             getClassRoomTimeTableDtos.StudyHours = getStudyHours
                 .Select(x => new StudyHourListDto()
                 {
@@ -73,46 +81,20 @@ namespace Services.ClassRoom.Service
             List<CourseTermDateDbo> friday = getClassRoomTimeTables.Where(x => x.CourseTerm.Friday).ToList();
             List<CourseTermDateDbo> saturday = getClassRoomTimeTables.Where(x => x.CourseTerm.Saturday).ToList();
             List<CourseTermDateDbo> sunday = getClassRoomTimeTables.Where(x => x.CourseTerm.Sunday).ToList();
-            PrepareTimeTable(monday, getStudyHours, getClassRoomTimeTableDtos, Constants.TIME_TABLE_MONDAY, culture);
-            PrepareTimeTable(tuesday, getStudyHours, getClassRoomTimeTableDtos, Constants.TIME_TABLE_TUESDAY, culture);
-            PrepareTimeTable(wednesday, getStudyHours, getClassRoomTimeTableDtos, Constants.TIME_TABLE_WEDNESDAY, culture);
-            PrepareTimeTable(thursday, getStudyHours, getClassRoomTimeTableDtos, Constants.TIME_TABLE_THURSDAY, culture);
-            PrepareTimeTable(friday, getStudyHours, getClassRoomTimeTableDtos, Constants.TIME_TABLE_FRIDAY, culture);
-            PrepareTimeTable(saturday, getStudyHours, getClassRoomTimeTableDtos, Constants.TIME_TABLE_SATURDAY, culture);
-            PrepareTimeTable(sunday, getStudyHours, getClassRoomTimeTableDtos, Constants.TIME_TABLE_SUNDAY, culture);
             return getClassRoomTimeTableDtos;
         }
 
-        private static void PrepareTimeTable(
-            List<CourseTermDateDbo> day,
-            List<OrganizationStudyHourDbo> getStudyHours,
-            ClassRoomTimeTableDto timeTableItem,
-            string dayName,
-            string culture
-        )
-        {
-            TimeTableDto timeTableDto = new() { DayOfWeek = dayName };
-            foreach (OrganizationStudyHourDbo item in getStudyHours)
-            {
-                string courseName = "";
-                courseName = day.FirstOrDefault(x => x.TimeFromId == item.ActiveFromId && x.TimeToId == item.ActiveToId)
-                    ?.CourseTerm.Course.CourseTranslations.FindTranslation(culture)
-                    .Name;
-                timeTableDto.CourseTerm.Add(courseName);
-            }
-            timeTableItem.TimeTable.Add(timeTableDto);
-        }
 
-        public override Result DeleteObject(Guid objectId, Guid userId)
+        public override async Task<Result> DeleteObject(Guid objectId, Guid userId)
         {
-            ClassRoomDbo classRoomDbo = _repository.GetEntity(objectId);
+            ClassRoomDbo classRoomDbo = await _repository.GetEntity(objectId);
             if (classRoomDbo != null && classRoomDbo.IsOnline)
             {
                 Result result = new();
                 result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.CLASS_ROOM, MessageItem.CAN_NOT_DELETE));
                 return result;
             }
-            return base.DeleteObject(objectId, userId);
+            return await base.DeleteObject(objectId, userId);
         }
 
         protected override Expression<Func<ClassRoomDbo, bool>> PrepareSqlFilter(ClassRoomFilter filter, string culture)
@@ -133,12 +115,12 @@ namespace Services.ClassRoom.Service
             return Expression.Lambda<Func<ClassRoomDbo, bool>>(expression, parameter);
         }
 
-        public override Guid GetOrganizationIdByParentId(Guid objectId)
+        public override async Task<Guid> GetOrganizationIdByParentId(Guid objectId)
         {
-            return _branchRepository.GetOrganizationId(objectId);
+            return await _branchRepository.GetOrganizationId(objectId);
         }
 
-        protected override Expression<Func<ClassRoomDbo, object>> PrepareSort(string columnName, string culture)
+        protected override List<BaseSort<ClassRoomDbo>> PrepareSort(string columnName, string culture, SortDirection sortDirection = SortDirection.Ascending)
         {
             if (columnName == ClassRoomSort.Name.ToString())
             {
@@ -155,7 +137,14 @@ namespace Services.ClassRoom.Service
                     Expression.Convert(nameProperty, typeof(object)),
                     parameter
                 );
-                return lambda;
+                return
+                [
+                    new BaseSort<ClassRoomDbo>()
+                    {
+                        Sort = lambda,
+                        SortDirection = sortDirection
+                    }
+                ];
             }
             return base.PrepareSort(columnName, culture);
         }

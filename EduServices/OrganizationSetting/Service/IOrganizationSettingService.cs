@@ -1,14 +1,15 @@
-﻿using System;
-using Core.Base.Service;
+﻿using Core.Base.Service;
 using Core.DataTypes;
 using Services.OrganizationSetting.Dto;
+using System;
+using System.Threading.Tasks;
 
 namespace Services.OrganizationSetting.Service
 {
     public interface IOrganizationSettingService : IBaseService
     {
-        OrganizationSettingDetailDto GetOrganizationSetting(Guid organizationId);
-        OrganizationSettingByUrlDto GetOrganizationSettingByUrl(string url);
-        Result SaveOrganizationSetting(OrganizationSettingUpdateDto saveOrganizationSettingDto);
+        Task<OrganizationSettingDetailDto> GetOrganizationSetting(Guid organizationId);
+        Task<OrganizationSettingByUrlDto> GetOrganizationSettingByUrl(string url);
+        Task<Result> SaveOrganizationSetting(OrganizationSettingUpdateDto saveOrganizationSettingDto);
     }
 }

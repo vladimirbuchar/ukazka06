@@ -1,6 +1,7 @@
 ﻿using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Repository.FileRepository;
 using Core.Base.Service;
+using Core.Base.Sort;
 using Model.CodeBook;
 using Model.Edu.Answer;
 using Model.Edu.Branch;
@@ -12,8 +13,11 @@ using Services.Answer.Filter;
 using Services.Answer.Sort;
 using Services.Answer.Validator;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
+using System.Web.Helpers;
 
 namespace Services.Answer.Service
 {
@@ -47,9 +51,9 @@ namespace Services.Answer.Service
                 || newVersion.IsTrueAnswer != oldVersion.IsTrueAnswer;
         }
 
-        public override Guid GetOrganizationIdByParentId(Guid objectId)
+        public override async Task<Guid> GetOrganizationIdByParentId(Guid objectId)
         {
-            return _questionRepository.GetOrganizationId(objectId);
+            return await _questionRepository.GetOrganizationId(objectId);
         }
 
         protected override Expression<Func<AnswerDbo, bool>> PrepareSqlFilter(AnswerFilter filter, string culture)
@@ -69,7 +73,7 @@ namespace Services.Answer.Service
             return Expression.Lambda<Func<AnswerDbo, bool>>(expression, parameter);
         }
 
-        protected override Expression<Func<AnswerDbo, object>> PrepareSort(string columnName, string culture)
+        protected override List<BaseSort<AnswerDbo>> PrepareSort(string columnName, string culture, SortDirection sortDirection = SortDirection.Ascending)
         {
             if (columnName == AnswerSort.Answer.ToString())
             {
@@ -86,7 +90,14 @@ namespace Services.Answer.Service
                     Expression.Convert(nameProperty, typeof(object)),
                     parameter
                 );
-                return lambda;
+                return
+                [
+                    new BaseSort<AnswerDbo>()
+                    {
+                        Sort = lambda,
+                        SortDirection = sortDirection
+                    }
+                ];
             }
 
             return base.PrepareSort(columnName, culture);

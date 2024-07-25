@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Core.Base.Paging;
+using Core.Base.Sort;
+using Model;
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using System.Web.Helpers;
-using Model;
 
 namespace Core.Base.Repository
 {
@@ -12,22 +13,24 @@ namespace Core.Base.Repository
     public interface IBaseRepository<Model> : IBaseRepository
         where Model : TableModel
     {
-        void DeleteEntity(Guid guid, Guid userId);
-        void DeleteEntity(Model entity, Guid userId);
-        void RestoreEntity(Guid guid, Guid userId);
-        Model GetEntity(Guid id);
-        Model GetEntity(bool deleted, Expression<Func<Model, bool>> predicate = null);
-        Model CreateEntity(Model entity, Guid userId);
-        Model UpdateEntity(Model entity, Guid userId);
+        Task DeleteEntity(Guid guid, Guid userId);
+        Task DeleteEntity(Model entity, Guid userId);
+        Task RestoreEntity(Guid guid, Guid userId);
+        Task<Model> GetEntity(Guid id);
+        Task<Model> GetEntity(bool deleted, Expression<Func<Model, bool>> predicate = null);
+        Task<Model> CreateEntity(Model entity, Guid userId);
+        Task<Model> UpdateEntity(Model entity, Guid userId);
         Task<List<Model>> GetEntities(
             bool deleted,
             Expression<Func<Model, bool>> predicate = null,
             Expression<Func<Model, bool>> customPredicate = null,
-            Expression<Func<Model, object>> orderBy = null,
-            SortDirection sortDirection = SortDirection.Ascending,
-            int page = 0,
-            int itemCount = 0
-        );
-        Guid GetOrganizationId(Guid objectId);
+            List<BaseSort<Model>> orderBy = null,
+            BasePaging paging = null);
+
+        Task<Guid> GetOrganizationId(Guid objectId);
+        Task<int> GetTotalCount(bool deleted,
+            Expression<Func<Model, bool>> predicate = null,
+            Expression<Func<Model, bool>> customPredicate = null);
+        Task<Guid> GetOrganizationByFileId(Guid objectId);
     }
 }

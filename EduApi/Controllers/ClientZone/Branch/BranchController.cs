@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web.Helpers;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
 using Core.Base.Paging;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +8,10 @@ using Services.Branch.Filter;
 using Services.Branch.Service;
 using Services.Branch.Sort;
 using Services.OrganizationRole.Service;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Web.Helpers;
 
 namespace EduApi.Controllers.ClientZone.Branch
 {
@@ -31,16 +32,17 @@ namespace EduApi.Controllers.ClientZone.Branch
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Create(BranchCreateDto addBranchDto)
+        public async Task<ActionResult> Create(BranchCreateDto addBranchDto)
         {
             try
             {
-                CheckOrganizationPermition(addBranchDto.OrganizationId);
-                return SendResponse(_branchService.AddObject(addBranchDto, GetLoggedUserId(), GetClientCulture()));
+                await CheckOrganizationPermition(addBranchDto.OrganizationId);
+                var result = await _branchService.AddObject(addBranchDto, GetLoggedUserId(), GetClientCulture());
+                return await SendResponse(result);
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -50,7 +52,7 @@ namespace EduApi.Controllers.ClientZone.Branch
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult List(
+        public async Task<ActionResult> List(
             [FromQuery] ListDeletedRequestDto request,
             [FromQuery] BranchFilter filter,
             [FromQuery] SortDirection sortDirection,
@@ -60,9 +62,8 @@ namespace EduApi.Controllers.ClientZone.Branch
         {
             try
             {
-                CheckOrganizationPermition(request.ParentId);
-                return SendResponse(
-                    _branchService.GetList(
+                await CheckOrganizationPermition(request.ParentId);
+                var result = await _branchService.GetList(
                         x => x.OrganizationId == request.ParentId && x.IsOnline == false,
                         request.IsDeleted,
                         GetClientCulture(),
@@ -70,12 +71,12 @@ namespace EduApi.Controllers.ClientZone.Branch
                         sortColum.ToString(),
                         sortDirection,
                         paging
-                    )
-                );
+                    );
+                return await SendResponse(result);
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -85,16 +86,17 @@ namespace EduApi.Controllers.ClientZone.Branch
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Detail([FromQuery] DetailRequestDto request)
+        public async Task<ActionResult> Detail([FromQuery] DetailRequestDto request)
         {
             try
             {
-                CheckOrganizationPermition(_branchService.GetOrganizationIdByObjectId(request.Id));
-                return SendResponse(_branchService.GetDetail(request.Id, GetClientCulture()));
+                await CheckOrganizationPermition(await _branchService.GetOrganizationIdByObjectId(request.Id));
+                var result = await _branchService.GetDetail(request.Id, GetClientCulture());
+                return await SendResponse(result);
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -104,16 +106,17 @@ namespace EduApi.Controllers.ClientZone.Branch
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Update(BranchUpdateDto updateBranchDto)
+        public async Task<ActionResult> Update(BranchUpdateDto updateBranchDto)
         {
             try
             {
-                CheckOrganizationPermition(_branchService.GetOrganizationIdByObjectId(updateBranchDto.Id));
-                return SendResponse(_branchService.UpdateObject(updateBranchDto, GetLoggedUserId(), GetClientCulture()));
+                await CheckOrganizationPermition(await _branchService.GetOrganizationIdByObjectId(updateBranchDto.Id));
+                var result = await _branchService.UpdateObject(updateBranchDto, GetLoggedUserId(), GetClientCulture());
+                return await SendResponse(result);
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -123,16 +126,17 @@ namespace EduApi.Controllers.ClientZone.Branch
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Delete([FromQuery] DeleteDto request)
+        public async Task<ActionResult> Delete([FromQuery] DeleteDto request)
         {
             try
             {
-                CheckOrganizationPermition(_branchService.GetOrganizationIdByObjectId(request.Id));
-                return SendResponse(_branchService.DeleteObject(request.Id, GetLoggedUserId()));
+                await CheckOrganizationPermition(await _branchService.GetOrganizationIdByObjectId(request.Id));
+                var result = await _branchService.DeleteObject(request.Id, GetLoggedUserId());
+                return await SendResponse(result);
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -142,16 +146,17 @@ namespace EduApi.Controllers.ClientZone.Branch
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Restore([FromQuery] RestoreDto request)
+        public async Task<ActionResult> Restore([FromQuery] RestoreDto request)
         {
             try
             {
-                CheckOrganizationPermition(_branchService.GetOrganizationIdByObjectId(request.Id));
-                return SendResponse(_branchService.RestoreObject(request.Id, GetLoggedUserId()));
+                await CheckOrganizationPermition(await _branchService.GetOrganizationIdByObjectId(request.Id));
+                var result = await _branchService.RestoreObject(request.Id, GetLoggedUserId());
+                return await SendResponse(result);
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -161,16 +166,17 @@ namespace EduApi.Controllers.ClientZone.Branch
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult ChangeMainBranch(BranchChangeMainBranchDto updateBranchDto)
+        public async Task<ActionResult> ChangeMainBranch(BranchChangeMainBranchDto updateBranchDto)
         {
             try
             {
-                CheckOrganizationPermition(updateBranchDto.OrganizationId);
-                return SendResponse(_branchService.ChangeMainBranch(updateBranchDto.OrganizationId, updateBranchDto.BranchId, GetLoggedUserId()));
+                await CheckOrganizationPermition(updateBranchDto.OrganizationId);
+                var result = await _branchService.ChangeMainBranch(updateBranchDto.OrganizationId, updateBranchDto.BranchId, GetLoggedUserId());
+                return await SendResponse(result);
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
     }

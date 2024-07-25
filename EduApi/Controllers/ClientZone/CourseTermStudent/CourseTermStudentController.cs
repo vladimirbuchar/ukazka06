@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -8,6 +6,9 @@ using Services.CourseTerm.Service;
 using Services.CourseTermStudent.Dto;
 using Services.CourseTermStudent.Service;
 using Services.OrganizationRole.Service;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EduApi.Controllers.ClientZone.CourseTermStudent
 {
@@ -40,18 +41,18 @@ namespace EduApi.Controllers.ClientZone.CourseTermStudent
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Create(CourseTermStudentCreateDto addStudentToCourseDto)
+        public async Task<ActionResult> Create(CourseTermStudentCreateDto addStudentToCourseDto)
         {
             try
             {
-                Guid organizationId = _courseTermService.GetOrganizationIdByObjectId(addStudentToCourseDto.CourseTermId);
-                CheckOrganizationPermition(organizationId);
+                Guid organizationId = await _courseTermService.GetOrganizationIdByObjectId(addStudentToCourseDto.CourseTermId);
+                await CheckOrganizationPermition(organizationId);
                 addStudentToCourseDto.OrganizationId = organizationId;
-                return SendResponse(_courseStudentService.AddObject(addStudentToCourseDto, GetLoggedUserId(), GetClientCulture()));
+                return await SendResponse(await _courseStudentService.AddObject(addStudentToCourseDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -61,16 +62,16 @@ namespace EduApi.Controllers.ClientZone.CourseTermStudent
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult List([FromQuery] ListRequestDto request)
+        public async Task<ActionResult> List([FromQuery] ListRequestDto request)
         {
             try
             {
-                CheckOrganizationPermition(_courseTermService.GetOrganizationIdByObjectId(request.ParentId));
-                return SendResponse(_courseStudentService.GetAllStudentInCourseTerm(request.ParentId));
+                await CheckOrganizationPermition(await _courseTermService.GetOrganizationIdByObjectId(request.ParentId));
+                return await SendResponse(await _courseStudentService.GetAllStudentInCourseTerm(request.ParentId));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -80,16 +81,16 @@ namespace EduApi.Controllers.ClientZone.CourseTermStudent
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Delete(DeleteDto request)
+        public async Task<ActionResult> Delete(DeleteDto request)
         {
             try
             {
-                CheckOrganizationPermition(_courseStudentService.GetOrganizationIdByObjectId(request.Id));
-                return SendResponse(_courseStudentService.DeleteObject(request.Id, GetLoggedUserId()));
+                await CheckOrganizationPermition(await _courseStudentService.GetOrganizationIdByObjectId(request.Id));
+                return await SendResponse(await _courseStudentService.DeleteObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
     }

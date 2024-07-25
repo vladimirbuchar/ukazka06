@@ -1,10 +1,11 @@
-﻿using System;
-using System.Linq;
-using Core.Base.Repository;
+﻿using Core.Base.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
 using Model.Edu.CourseLessonItem;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Repository.CourseLessonItemRepository
 {
@@ -29,14 +30,25 @@ namespace Repository.CourseLessonItemRepository
                 .ThenInclude(x => x.Culture);
         }
 
-        public override Guid GetOrganizationId(Guid objectId)
+        public override async Task<Guid> GetOrganizationId(Guid objectId)
         {
-            return _dbContext
+            return (await _dbContext
                 .Set<CourseLessonItemDbo>()
                 .Include(x => x.CourseLesson)
                 .ThenInclude(x => x.CourseMaterial)
-                .FirstOrDefault(x => x.Id == objectId)
+                .FirstOrDefaultAsync(x => x.Id == objectId))
                 .CourseLesson.CourseMaterial.OrganizationId;
+        }
+
+        public override async Task<Guid> GetOrganizationByFileId(Guid objectId)
+        {
+            return (await _dbContext
+                .Set<CourseLessonItemFileRepositoryDbo>()
+                .Include(x => x.CourseLessonItem)
+                .ThenInclude(x => x.CourseLesson)
+                .ThenInclude(x => x.CourseMaterial)
+                .FirstOrDefaultAsync(x => x.Id == objectId))
+                .CourseLessonItem.CourseLesson.CourseMaterial.OrganizationId;
         }
     }
 }

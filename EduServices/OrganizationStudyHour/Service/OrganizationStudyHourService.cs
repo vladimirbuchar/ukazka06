@@ -1,5 +1,4 @@
-﻿using Core.Base.Paging;
-using Core.Base.Repository.CodeBookRepository;
+﻿using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Service;
 using Core.DataTypes;
 using Model.CodeBook;
@@ -11,12 +10,11 @@ using Services.OrganizationStudyHour.Filter;
 using Services.OrganizationStudyHour.Validator;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Web.Helpers;
+using System.Threading.Tasks;
 
 namespace Services.OrganizationStudyHour.Service
 {
+   
     public class OrganizationStudyHourService(
         IOrganizationStudyHourRepository organizationStudyHoursRepository,
         ICodeBookRepository<TimeTableDbo> timeTableCodebook,
@@ -36,51 +34,36 @@ namespace Services.OrganizationStudyHour.Service
         >(organizationStudyHoursRepository, organizationConvertor, validator),
             IOrganizationStudyHourService
     {
-        private readonly List<TimeTableDbo> _timeTables = timeTableCodebook.GetEntities(false).Result;
+        private readonly ICodeBookRepository<TimeTableDbo> _timeTables = timeTableCodebook;
 
-        public override Result<StudyHourDetailDto> UpdateObject(
+        public override async Task<Result<StudyHourDetailDto>> UpdateObject(
             StudyHourUpdateDto update,
             Guid userId,
             string culture,
             Result<StudyHourDetailDto> result = null
         )
         {
-            OrganizationStudyHourDbo organizationStudyHourDbo =
+            OrganizationStudyHourDbo organizationStudyHourDbo = await
                 _repository.GetEntity(update.Id) ?? throw new KeyNotFoundException(update.Id.ToString());
-            OrganizationStudyHourDbo updateStudyHours = _convertor.ConvertToBussinessEntity(update, organizationStudyHourDbo, culture);
-            result = new() { Data = _convertor.ConvertToWebModel(_repository.UpdateEntity(updateStudyHours, Guid.Empty), culture) };
+            OrganizationStudyHourDbo updateStudyHours = await _convertor.ConvertToBussinessEntity(update, organizationStudyHourDbo, culture);
+            result = new() { Data = await _convertor.ConvertToWebModel(await _repository.UpdateEntity(updateStudyHours, Guid.Empty), culture) };
             return result;
         }
 
-        public override List<StudyHourListDto> GetList(
-            Expression<Func<OrganizationStudyHourDbo, bool>> predicate = null,
-            bool deleted = false,
-            string culture = "",
-            OrganizationStudyHourFilter filter = null,
-            string sortColumn = "",
-            SortDirection sortDirection = SortDirection.Ascending,
-            BasePaging paging = null
-        )
-        {
-            return _convertor.ConvertToWebModel(
-                [.. _repository.GetEntities(deleted, predicate, PrepareSqlFilter(filter, culture), PrepareSort(sortColumn, culture), sortDirection).Result],
-                culture
-            );
-        }
 
-        public override Result<StudyHourDetailDto> AddObject(StudyHourCreateDto addObject, Guid userId, string culture)
+        public override async Task<Result> AddObject(StudyHourCreateDto addObject, Guid userId, string culture)
         {
-            OrganizationStudyHourDbo addStudyHours = _convertor.ConvertToBussinessEntity(addObject, culture);
+            OrganizationStudyHourDbo addStudyHours = await _convertor.ConvertToBussinessEntity(addObject, culture);
             if (addStudyHours.ActiveFromId != Guid.Empty && addStudyHours.ActiveToId == Guid.Empty && addObject.LessonLength > 0)
             {
-                TimeTableDbo timeTable = _timeTables.FirstOrDefault(x => x.Id == addStudyHours.ActiveFromId);
+                TimeTableDbo timeTable = await _timeTables.GetEntity(false, x => x.Id == addStudyHours.ActiveFromId);
                 if (timeTable != null)
                 {
-                    addStudyHours.ActiveToId = _timeTables.FirstOrDefault(x => x.Priority == timeTable.Priority + (addObject.LessonLength / 5)).Id;
+                    addStudyHours.ActiveToId = (await _timeTables.GetEntity(false, x => x.Priority == timeTable.Priority + (addObject.LessonLength / 5))).Id;
                 }
             }
             Result<StudyHourDetailDto> result =
-                new() { Data = _convertor.ConvertToWebModel(_repository.CreateEntity(addStudyHours, userId), culture) };
+                new() { Data = await _convertor.ConvertToWebModel(await _repository.CreateEntity(addStudyHours, userId), culture) };
             return result;
         }
     }

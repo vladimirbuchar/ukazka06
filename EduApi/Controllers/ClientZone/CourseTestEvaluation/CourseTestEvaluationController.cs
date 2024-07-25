@@ -6,6 +6,7 @@ using Services.CourseTestEvaluation.Dto;
 using Services.CourseTestEvaluation.Service;
 using Services.OrganizationRole.Service;
 using System;
+using System.Threading.Tasks;
 
 namespace EduApi.Controllers.ClientZone.CourseTestEvaluation
 {
@@ -30,16 +31,16 @@ namespace EduApi.Controllers.ClientZone.CourseTestEvaluation
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Create(CourseTestEvaluationCreateDto addEvaluationTest)
+        public async Task<ActionResult> Create(CourseTestEvaluationCreateDto addEvaluationTest)
         {
             try
             {
-                CheckOrganizationPermition(_courseTestEvaluationService.GetOrganizationIdByObjectId(addEvaluationTest.MaterialId));
-                return SendResponse(_courseTestEvaluationService.AddObject(addEvaluationTest, GetLoggedUserId(), GetClientCulture()));
+                await CheckOrganizationPermition(await _courseTestEvaluationService.GetOrganizationIdByObjectId(addEvaluationTest.MaterialId));
+                return await SendResponse(await _courseTestEvaluationService.AddObject(addEvaluationTest, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -49,16 +50,17 @@ namespace EduApi.Controllers.ClientZone.CourseTestEvaluation
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult List([FromQuery] ListDeletedRequestDto list)
+        public async Task<ActionResult> List([FromQuery] ListDeletedRequestDto list)
         {
             try
             {
-                CheckOrganizationPermition(_courseTestEvaluationService.GetOrganizationIdByObjectId(list.ParentId));
-                return SendResponse(_courseTestEvaluationService.GetList(x => x.CourseTestId == list.ParentId, list.IsDeleted));
+                await CheckOrganizationPermition(await _courseTestEvaluationService.GetOrganizationIdByObjectId(list.ParentId));
+                var result = await _courseTestEvaluationService.GetList(x => x.CourseTestId == list.ParentId, list.IsDeleted);
+                return await SendResponse(result);
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -68,16 +70,16 @@ namespace EduApi.Controllers.ClientZone.CourseTestEvaluation
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Update(CourseTestEvaluationUpdateDto updateEvaluationTestDto)
+        public async Task<ActionResult> Update(CourseTestEvaluationUpdateDto updateEvaluationTestDto)
         {
             try
             {
-                CheckOrganizationPermition(_courseTestEvaluationService.GetOrganizationIdByObjectId(updateEvaluationTestDto.Id));
-                return SendResponse(_courseTestEvaluationService.UpdateObject(updateEvaluationTestDto, GetLoggedUserId(), GetClientCulture()));
+                await CheckOrganizationPermition(await _courseTestEvaluationService.GetOrganizationIdByObjectId(updateEvaluationTestDto.Id));
+                return await SendResponse(await _courseTestEvaluationService.UpdateObject(updateEvaluationTestDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -87,7 +89,7 @@ namespace EduApi.Controllers.ClientZone.CourseTestEvaluation
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Delete([FromQuery] DeleteDto delete)
+        public Task<ActionResult> Delete([FromQuery] DeleteDto delete)
         {
             try
             {

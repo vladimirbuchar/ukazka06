@@ -7,6 +7,7 @@ using Model.Edu.Branch;
 using Repository.BranchRepository;
 using Repository.OrganizationRepository;
 using Services.Branch.Dto;
+using System.Threading.Tasks;
 
 namespace Services.Branch.Validator
 {
@@ -19,20 +20,20 @@ namespace Services.Branch.Validator
         private readonly ICodeBookRepository<CountryDbo> _country = country;
         private readonly IOrganizationRepository _organizationRepository = organizationRepository;
 
-        public override Result<BranchDetailDto> IsValid(BranchCreateDto create)
+        public override async Task<Result> IsValid(BranchCreateDto create)
         {
             Result<BranchDetailDto> validate = new();
             IsValidEmail(create.Email, validate, MessageCategory.BRANCH, MessageItem.EMAIL_IS_NOT_VALID);
             IsValidUri(create.WWW, validate, MessageCategory.BRANCH, MessageItem.IS_NOT_VALID_URI);
             IsValidPhoneNumber(create.PhoneNumber, validate, MessageCategory.BRANCH, MessageItem.IS_NOT_VALID_PHONE_NUMBER);
             IsValidString(create.Name, validate, MessageCategory.BRANCH, MessageItem.STRING_IS_EMPTY);
-            if (_organizationRepository.GetEntity(create.OrganizationId) == null)
+            if (await _organizationRepository.GetEntity(create.OrganizationId) == null)
             {
                 validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.ORGANIZATION, MessageItem.NOT_EXISTS));
             }
             if (create.CountryId.HasValue)
             {
-                base.CodeBookValueExist(
+                await base.CodeBookValueExist(
                     _country,
                     x => x.Id == create.CountryId,
                     validate,
@@ -45,7 +46,7 @@ namespace Services.Branch.Validator
             return validate;
         }
 
-        public override Result<BranchDetailDto> IsValid(BranchUpdateDto update)
+        public override async Task<Result<BranchDetailDto>> IsValid(BranchUpdateDto update)
         {
             Result<BranchDetailDto> validate = new();
             IsValidEmail(update.Email, validate, MessageCategory.BRANCH, MessageItem.EMAIL_IS_NOT_VALID);
@@ -54,7 +55,7 @@ namespace Services.Branch.Validator
             IsValidString(update.Name, validate, MessageCategory.BRANCH, MessageItem.STRING_IS_EMPTY);
             if (update.CountryId.HasValue)
             {
-                base.CodeBookValueExist(
+                await base.CodeBookValueExist(
                     _country,
                     x => x.Id == update.CountryId,
                     validate,
@@ -63,7 +64,6 @@ namespace Services.Branch.Validator
                     update.CountryId.ToString()
                 );
             }
-
             return validate;
         }
     }

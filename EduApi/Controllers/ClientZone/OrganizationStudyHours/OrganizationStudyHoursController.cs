@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
 using Core.DataTypes;
 using EduApi.Controllers.ClientZone.Organization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +6,9 @@ using Microsoft.Extensions.Logging;
 using Services.OrganizationRole.Service;
 using Services.OrganizationStudyHour.Dto;
 using Services.OrganizationStudyHour.Service;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EduApi.Controllers.ClientZone.OrganizationStudyHours
 {
@@ -32,16 +33,16 @@ namespace EduApi.Controllers.ClientZone.OrganizationStudyHours
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Create([FromBody] StudyHourCreateDto addOrganizationDto)
+        public async Task<ActionResult> Create([FromBody] StudyHourCreateDto addOrganizationDto)
         {
             try
             {
-                CheckOrganizationPermition(addOrganizationDto.OrganizationId);
-                return SendResponse(_organizationService.AddObject(addOrganizationDto, GetLoggedUserId(), GetClientCulture()));
+                await CheckOrganizationPermition(addOrganizationDto.OrganizationId);
+                return await SendResponse(await _organizationService.AddObject(addOrganizationDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -51,16 +52,17 @@ namespace EduApi.Controllers.ClientZone.OrganizationStudyHours
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult List([FromQuery] ListDeletedRequestDto request)
+        public async Task<ActionResult> List([FromQuery] ListDeletedRequestDto request)
         {
             try
             {
-                CheckOrganizationPermition(request.ParentId);
-                return SendResponse(_organizationService.GetList(x => x.OrganizationId == request.ParentId, request.IsDeleted));
+                await CheckOrganizationPermition(request.ParentId);
+                var result = await _organizationService.GetList(x => x.OrganizationId == request.ParentId, request.IsDeleted, GetClientCulture(), null, "position", System.Web.Helpers.SortDirection.Ascending);
+                return await SendResponse(result);
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -70,16 +72,16 @@ namespace EduApi.Controllers.ClientZone.OrganizationStudyHours
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Update([FromBody] StudyHourUpdateDto updateStudyHoursDto)
+        public async Task<ActionResult> Update([FromBody] StudyHourUpdateDto updateStudyHoursDto)
         {
             try
             {
-                CheckOrganizationPermition(_organizationService.GetOrganizationIdByObjectId(updateStudyHoursDto.Id));
-                return SendResponse(_organizationService.UpdateObject(updateStudyHoursDto, GetLoggedUserId(), GetClientCulture()));
+                await CheckOrganizationPermition(await _organizationService.GetOrganizationIdByObjectId(updateStudyHoursDto.Id));
+                return await SendResponse(await _organizationService.UpdateObject(updateStudyHoursDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -89,16 +91,16 @@ namespace EduApi.Controllers.ClientZone.OrganizationStudyHours
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Delete([FromQuery] DeleteDto delete)
+        public async Task<ActionResult> Delete([FromQuery] DeleteDto delete)
         {
             try
             {
-                CheckOrganizationPermition(_organizationService.GetOrganizationIdByObjectId(delete.Id));
-                return SendResponse(_organizationService.DeleteObject(delete.Id, GetLoggedUserId()));
+                await CheckOrganizationPermition(await _organizationService.GetOrganizationIdByObjectId(delete.Id));
+                return await SendResponse(await _organizationService.DeleteObject(delete.Id, GetLoggedUserId()));
             }
             catch (Exception ex)
             {
-                return SendSystemError(ex);
+                return await SendSystemError(ex);
             }
         }
 
@@ -108,16 +110,16 @@ namespace EduApi.Controllers.ClientZone.OrganizationStudyHours
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Restore([FromQuery] RestoreDto restoreDto)
+        public async Task<ActionResult> Restore([FromQuery] RestoreDto restoreDto)
         {
             try
             {
-                CheckOrganizationPermition(_organizationService.GetOrganizationIdByObjectId(restoreDto.Id));
-                return SendResponse(_organizationService.RestoreObject(restoreDto.Id, GetLoggedUserId()));
+                await CheckOrganizationPermition(await _organizationService.GetOrganizationIdByObjectId(restoreDto.Id));
+                return await SendResponse(await _organizationService.RestoreObject(restoreDto.Id, GetLoggedUserId()));
             }
             catch (Exception ex)
             {
-                return SendSystemError(ex);
+                return await SendSystemError(ex);
             }
         }
     }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq.Expressions;
-using Core.Base.Repository.CodeBookRepository;
+﻿using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Repository.FileRepository;
 using Core.Base.Service;
 using Model.CodeBook;
@@ -10,6 +8,9 @@ using Services.Organization.Convertor;
 using Services.Organization.Dto;
 using Services.Organization.Filter;
 using Services.Organization.Validator;
+using System;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Services.Organization.Service
 {
@@ -34,9 +35,9 @@ namespace Services.Organization.Service
         >(organizationRepository, organizationConvertor, validator, fileRepositoryDbo, culture),
             IOrganizationService
     {
-        public OrganizationDetailWebDto GetOrganizationDetailWeb(Guid organizationId)
+        public async Task<OrganizationDetailWebDto> GetOrganizationDetailWeb(Guid organizationId)
         {
-            return _convertor.ConvertToWebModelWeb(_repository.GetEntity(organizationId));
+            return _convertor.ConvertToWebModelWeb(await _repository.GetEntity(organizationId));
         }
 
         protected override bool IsChanged(OrganizationDbo oldVersion, OrganizationUpdateDto newVersion, string culture)

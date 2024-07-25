@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Core.Base.Paging;
+using Core.Base.Sort;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
 using System;
@@ -57,7 +59,7 @@ namespace Core.Base.Repository
         /// <typeparam name="T"></typeparam>
         /// <param name="obj"></param>
         /// <returns></returns>
-        private Model SaveEntity(Model obj, Guid userId)
+        private async Task<Model> SaveEntity(Model obj, Guid userId)
         {
             if (obj == null)
             {
@@ -69,21 +71,21 @@ namespace Core.Base.Repository
                 obj.CreatedTime = DateTime.Now;
                 obj.CreatedBy = userId;
                 _ = _dbContext.Add(obj);
-                _ = _dbContext.SaveChanges();
+                _ = await _dbContext.SaveChangesAsync();
             }
             else
             {
                 if (obj.IsDeleted || obj.IsSystemObject)
                 {
-                    return obj;
+                    return await GetEntity(obj.Id); ;
                 }
                 obj.UpdatedTime = DateTime.Now;
                 obj.UpdatedBy = userId;
                 _ = _dbContext.Update(obj);
-                _ = _dbContext.SaveChanges();
+                _ = await _dbContext.SaveChangesAsync();
             }
             _dbContext.ChangeTracker.Clear();
-            return GetEntity(obj.Id);
+            return await GetEntity(obj.Id);
         }
 
         /// <summary>
@@ -92,10 +94,10 @@ namespace Core.Base.Repository
         /// <param name="guid"></param>
         /// <param name="userId"></param>
         /// <exception cref="KeyNotFoundException"></exception>
-        public virtual void DeleteEntity(Guid guid, Guid userId)
+        public virtual async Task DeleteEntity(Guid guid, Guid userId)
         {
-            Model entity = GetEntityWithoutInclude(guid) ?? throw new KeyNotFoundException(guid.ToString());
-            DeleteEntity(entity, userId);
+            Model entity = await GetEntityWithoutInclude(guid) ?? throw new KeyNotFoundException(guid.ToString());
+            await DeleteEntity(entity, userId);
         }
 
         /// <summary>
@@ -104,14 +106,14 @@ namespace Core.Base.Repository
         /// <param name="guid"></param>
         /// <param name="userId"></param>
         /// <exception cref="KeyNotFoundException"></exception>
-        public virtual void RestoreEntity(Guid guid, Guid userId)
+        public virtual async Task RestoreEntity(Guid guid, Guid userId)
         {
-            Model entity = GetEntityWithoutInclude(guid) ?? throw new KeyNotFoundException(guid.ToString());
+            Model entity = await GetEntityWithoutInclude(guid) ?? throw new KeyNotFoundException(guid.ToString());
             entity.DeletedTime = null;
             entity.IsDeleted = false;
             entity.DeletedBy = null;
             _ = _dbContext.Update(entity);
-            _ = _dbContext.SaveChanges();
+            _ = await _dbContext.SaveChangesAsync();
             _dbContext.ChangeTracker.Clear();
         }
 
@@ -120,9 +122,14 @@ namespace Core.Base.Repository
         /// </summary>
         /// <param name="objectId"></param>
         /// <returns></returns>
-        public virtual Guid GetOrganizationId(Guid objectId)
+        public virtual async Task<Guid> GetOrganizationId(Guid objectId)
         {
-            return Guid.Empty;
+            return await Task.FromResult(Guid.Empty);
+        }
+
+        public virtual async Task<Guid> GetOrganizationByFileId(Guid objectId)
+        {
+            return await Task.FromResult(Guid.Empty);
         }
 
         /// <summary>
@@ -130,7 +137,7 @@ namespace Core.Base.Repository
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="userId"></param>
-        public virtual void DeleteEntity(Model entity, Guid userId)
+        public virtual async Task DeleteEntity(Model entity, Guid userId)
         {
             if (entity == null || entity.IsDeleted || entity.IsSystemObject)
             {
@@ -140,7 +147,7 @@ namespace Core.Base.Repository
             entity.IsDeleted = true;
             entity.DeletedBy = userId;
             _ = _dbContext.Update(entity);
-            _ = _dbContext.SaveChanges();
+            _ = await _dbContext.SaveChangesAsync();
             _dbContext.ChangeTracker.Clear();
         }
 
@@ -150,9 +157,9 @@ namespace Core.Base.Repository
         /// <param name="entity"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public virtual Model CreateEntity(Model entity, Guid userId)
+        public virtual async Task<Model> CreateEntity(Model entity, Guid userId)
         {
-            return SaveEntity(entity, userId);
+            return await SaveEntity(entity, userId);
         }
 
         /// <summary>
@@ -161,9 +168,9 @@ namespace Core.Base.Repository
         /// <param name="entity"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public virtual Model UpdateEntity(Model entity, Guid userId)
+        public virtual async Task<Model> UpdateEntity(Model entity, Guid userId)
         {
-            return SaveEntity(entity, userId);
+            return await SaveEntity(entity, userId);
         }
 
         /// <summary>
@@ -171,9 +178,10 @@ namespace Core.Base.Repository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public virtual Model GetEntity(Guid id)
+        public virtual async Task<Model> GetEntity(Guid id)
         {
-            return PrepareDetailQuery().FirstOrDefault(x => x.Id == id);
+            IQueryable<Model> query = PrepareDetailQuery();
+            return await query.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         /// <summary>
@@ -181,9 +189,9 @@ namespace Core.Base.Repository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        private Model GetEntityWithoutInclude(Guid id)
+        private async Task<Model> GetEntityWithoutInclude(Guid id)
         {
-            return _dbContext.Set<Model>().FirstOrDefault(x => x.Id == id);
+            return await _dbContext.Set<Model>().FirstOrDefaultAsync(x => x.Id == id);
         }
 
         /// <summary>
@@ -192,33 +200,33 @@ namespace Core.Base.Repository
         /// <param name="deleted"></param>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        public virtual Model GetEntity(bool deleted, Expression<Func<Model, bool>> predicate = null)
+        public virtual async Task<Model> GetEntity(bool deleted, Expression<Func<Model, bool>> predicate = null)
         {
-            return PrepareDetailQuery().Where(x => x.IsDeleted == deleted).FirstOrDefault(predicate);
+            return await PrepareDetailQuery().Where(x => x.IsDeleted == deleted).FirstOrDefaultAsync(predicate);
         }
 
         protected IQueryable<Model> PrepareOrderBy(
             IQueryable<Model> query,
-            Expression<Func<Model, object>> orderBy = null,
-            SortDirection sortDirection = SortDirection.Ascending
+            List<BaseSort<Model>> orderBy = null
         )
         {
-            if (orderBy != null)
+            if (orderBy != null && orderBy.Count > 0)
             {
-                if (sortDirection == SortDirection.Ascending)
+                IOrderedQueryable<Model> orderedQuery = orderBy[0].SortDirection == SortDirection.Ascending ? query.OrderBy(orderBy[0].Sort) : query.OrderByDescending(orderBy[0].Sort);
+                for (int i = 1; i < orderBy.Count; i++)
                 {
-                    query = query.OrderBy(orderBy);
+                    orderedQuery = orderBy[i].SortDirection == SortDirection.Ascending ? orderedQuery.ThenBy(orderBy[i].Sort) : orderedQuery.ThenByDescending(orderBy[i].Sort);
                 }
-                if (sortDirection == SortDirection.Descending)
-                {
-                    query = query.OrderByDescending(orderBy);
-                }
+                query = orderedQuery;
             }
             return query;
         }
 
-        protected IQueryable<Model> PrepareLimit(IQueryable<Model> query, int page = 0, int itemCount = 0)
+        protected IQueryable<Model> PrepareLimit(IQueryable<Model> query, BasePaging paging)
         {
+            paging ??= new BasePaging();
+            int page = paging.Page;
+            int itemCount = paging.ItemCount;
             if (page > 0 && itemCount > 0)
             {
                 query = query.Skip((page - 1) * itemCount);
@@ -266,17 +274,23 @@ namespace Core.Base.Repository
             bool deleted,
             Expression<Func<Model, bool>> predicate = null,
             Expression<Func<Model, bool>> customPredicate = null,
-            Expression<Func<Model, object>> orderBy = null,
-            SortDirection sortDirection = SortDirection.Ascending,
-            int page = 0,
-            int itemCount = 0
+            List<BaseSort<Model>> orderBy = null,
+            BasePaging paging = null
         )
+        {
+
+            IQueryable<Model> query = PrepareListQuery();
+            query = PrepareWhere(query, deleted, predicate, customPredicate);
+            query = PrepareOrderBy(query, orderBy);
+            query = PrepareLimit(query, paging);
+            return await query.ToListAsync();
+        }
+
+        public async Task<int> GetTotalCount(bool deleted, Expression<Func<Model, bool>> predicate = null, Expression<Func<Model, bool>> customPredicate = null)
         {
             IQueryable<Model> query = PrepareListQuery();
             query = PrepareWhere(query, deleted, predicate, customPredicate);
-            query = PrepareOrderBy(query, orderBy, sortDirection);
-            query = PrepareLimit(query, page, itemCount);
-            return await query.ToListAsync();
+            return await query.CountAsync();
         }
     }
 }

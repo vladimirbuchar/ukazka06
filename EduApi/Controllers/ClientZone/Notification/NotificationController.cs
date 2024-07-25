@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using Core.DataTypes;
+﻿using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.Notification.Dto;
 using Services.Notification.Service;
 using Services.OrganizationRole.Service;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EduApi.Controllers.ClientZone.Notification
 {
@@ -30,7 +31,7 @@ namespace EduApi.Controllers.ClientZone.Notification
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult GetMyNewNotification()
+        public Task<ActionResult> GetMyNewNotification()
         {
             try
             {
@@ -48,7 +49,7 @@ namespace EduApi.Controllers.ClientZone.Notification
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult GetMyNotification()
+        public Task<ActionResult> GetMyNotification()
         {
             try
             {
@@ -66,15 +67,15 @@ namespace EduApi.Controllers.ClientZone.Notification
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult SetIsNewNotificationToFalse()
+        public async Task<ActionResult> SetIsNewNotificationToFalse()
         {
             try
             {
-                return SendResponse(_notificationService.SetIsNewNotificationToFalse(GetLoggedUserId()));
+                return await SendResponse(await _notificationService.SetIsNewNotificationToFalse(GetLoggedUserId()));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
     }

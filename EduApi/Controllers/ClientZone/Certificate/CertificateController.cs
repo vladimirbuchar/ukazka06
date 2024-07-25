@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web.Helpers;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
 using Core.Base.Paging;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +8,10 @@ using Services.Certificate.Filter;
 using Services.Certificate.Service;
 using Services.Certificate.Sort;
 using Services.OrganizationRole.Service;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Web.Helpers;
 
 namespace EduApi.Controllers.ClientZone.Certificate
 {
@@ -35,16 +36,17 @@ namespace EduApi.Controllers.ClientZone.Certificate
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Create(CertificateCreateDto addCertificateDto)
+        public async Task<ActionResult> Create(CertificateCreateDto addCertificateDto)
         {
             try
             {
-                CheckOrganizationPermition(addCertificateDto.OrganizationId);
-                return SendResponse(_certificateService.AddObject(addCertificateDto, GetLoggedUserId(), GetClientCulture()));
+                await CheckOrganizationPermition(addCertificateDto.OrganizationId);
+                var result = await _certificateService.AddObject(addCertificateDto, GetLoggedUserId(), GetClientCulture());
+                return await SendResponse(result);
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -54,7 +56,7 @@ namespace EduApi.Controllers.ClientZone.Certificate
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult List(
+        public async Task<ActionResult> List(
             [FromQuery] ListDeletedRequestDto request,
             [FromQuery] CertificateFilter filter,
             [FromQuery] SortDirection sortDirection,
@@ -64,9 +66,8 @@ namespace EduApi.Controllers.ClientZone.Certificate
         {
             try
             {
-                CheckOrganizationPermition(request.ParentId);
-                return SendResponse(
-                    _certificateService.GetList(
+                await CheckOrganizationPermition(request.ParentId);
+                var result = await _certificateService.GetList(
                         x => x.OrganizationId == request.ParentId,
                         request.IsDeleted,
                         GetClientCulture(),
@@ -74,12 +75,14 @@ namespace EduApi.Controllers.ClientZone.Certificate
                         sortColum.ToString(),
                         sortDirection,
                         paging
-                    )
+                    );
+                return await SendResponse(
+                    result
                 );
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -89,16 +92,17 @@ namespace EduApi.Controllers.ClientZone.Certificate
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Detail([FromQuery] DetailRequestDto request)
+        public async Task<ActionResult> Detail([FromQuery] DetailRequestDto request)
         {
             try
             {
-                CheckOrganizationPermition(_certificateService.GetOrganizationIdByObjectId(request.Id));
-                return SendResponse(_certificateService.GetDetail(request.Id, GetClientCulture()));
+                await CheckOrganizationPermition(await _certificateService.GetOrganizationIdByObjectId(request.Id));
+                var result = await _certificateService.GetDetail(request.Id, GetClientCulture());
+                return await SendResponse(result);
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -108,16 +112,17 @@ namespace EduApi.Controllers.ClientZone.Certificate
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Update(CertificateUpdateDto updateCertificateDto)
+        public async Task<ActionResult> Update(CertificateUpdateDto updateCertificateDto)
         {
             try
             {
-                CheckOrganizationPermition(_certificateService.GetOrganizationIdByObjectId(updateCertificateDto.Id));
-                return SendResponse(_certificateService.UpdateObject(updateCertificateDto, GetLoggedUserId(), GetClientCulture()));
+                await CheckOrganizationPermition(await _certificateService.GetOrganizationIdByObjectId(updateCertificateDto.Id));
+                var result = await _certificateService.UpdateObject(updateCertificateDto, GetLoggedUserId(), GetClientCulture());
+                return await SendResponse(result);
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -127,16 +132,17 @@ namespace EduApi.Controllers.ClientZone.Certificate
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Delete([FromQuery] DeleteDto request)
+        public async Task<ActionResult> Delete([FromQuery] DeleteDto request)
         {
             try
             {
-                CheckOrganizationPermition(_certificateService.GetOrganizationIdByObjectId(request.Id));
-                return SendResponse(_certificateService.DeleteObject(request.Id, GetLoggedUserId()));
+                await CheckOrganizationPermition(await _certificateService.GetOrganizationIdByObjectId(request.Id));
+                var result = await _certificateService.DeleteObject(request.Id, GetLoggedUserId());
+                return await SendResponse(result);
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -146,16 +152,17 @@ namespace EduApi.Controllers.ClientZone.Certificate
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Restore([FromQuery] RestoreDto request)
+        public async Task<ActionResult> Restore([FromQuery] RestoreDto request)
         {
             try
             {
-                CheckOrganizationPermition(_certificateService.GetOrganizationIdByObjectId(request.Id));
-                return SendResponse(_certificateService.RestoreObject(request.Id, GetLoggedUserId()));
+                await CheckOrganizationPermition(await _certificateService.GetOrganizationIdByObjectId(request.Id));
+                var result = await _certificateService.RestoreObject(request.Id, GetLoggedUserId());
+                return await SendResponse(result);
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
     }

@@ -8,6 +8,7 @@ using Model.Edu.Message;
 using Services.Course.Dto;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Services.Course.Convertor
 {
@@ -17,7 +18,7 @@ namespace Services.Course.Convertor
 
         private readonly List<CultureDbo> _cultureList = culture.GetEntities(false).Result;
 
-        public CourseDbo ConvertToBussinessEntity(CourseCreateDto addCourseDto, string culture)
+        public Task<CourseDbo> ConvertToBussinessEntity(CourseCreateDto addCourseDto, string culture)
         {
             CourseDbo course =
                 new()
@@ -41,10 +42,10 @@ namespace Services.Course.Convertor
                 course.CourseTranslations =
                 _ =
                     course.CourseTranslations.PrepareTranslation(addCourseDto.Name, addCourseDto.Description, culture, _cultureList);
-            return course;
+            return Task.FromResult(course);
         }
 
-        public CourseDbo ConvertToBussinessEntity(CourseUpdateDto updateCourseDto, CourseDbo entity, string culture)
+        public Task<CourseDbo> ConvertToBussinessEntity(CourseUpdateDto updateCourseDto, CourseDbo entity, string culture)
         {
             entity.CourseTranslations = entity.CourseTranslations.PrepareTranslation(
                 updateCourseDto.Name,
@@ -65,12 +66,38 @@ namespace Services.Course.Convertor
             entity.SendEmail = updateCourseDto.SendEmail;
             entity.SendMessageId = updateCourseDto.EmailTemplateId;
             entity.CourseWithLector = updateCourseDto.CourseWithLector;
-            return entity;
+            return Task.FromResult(entity);
         }
 
-        public List<CourseListDto> ConvertToWebModel(List<CourseDbo> getAllCourseInOrganizations, string culture)
+
+        public Task<CourseDetailDto> ConvertToWebModel(CourseDbo getCourseDetail, string culture)
         {
-            return getAllCourseInOrganizations
+            return Task.FromResult(new CourseDetailDto()
+            {
+                CourseStatusId = getCourseDetail.CourseStatusId,
+                Description = getCourseDetail.CourseTranslations.FindTranslation(culture).Description,
+                Name = getCourseDetail.CourseTranslations.FindTranslation(culture).Name,
+                CourseTypeId = getCourseDetail.CourseTypeId,
+                FileName = "",
+                Id = getCourseDetail.Id,
+                IsPrivateCourse = getCourseDetail.IsPrivateCourse,
+                Price = getCourseDetail.Price,
+                Sale = getCourseDetail.Sale,
+                CourseType = _courseTypes.FirstOrDefault(x => x.Id == getCourseDetail.CourseTypeId).SystemIdentificator,
+                MaximumStudent = getCourseDetail.MaximumStudent,
+                MinimumStudent = getCourseDetail.MinimumStudent,
+                CertificateId = getCourseDetail.CertificateId,
+                AutomaticGenerateCertificate = getCourseDetail.AutomaticGenerateCertificate,
+                CourseMaterialId = getCourseDetail.CourseMaterialId,
+                SendEmail = getCourseDetail.SendEmail,
+                SendMessageId = getCourseDetail.SendMessageId,
+                CourseWithLector = getCourseDetail.CourseWithLector
+            });
+        }
+
+        public Task<List<CourseListDto>> ConvertToWebModel(List<CourseDbo> list, string culture)
+        {
+            return Task.FromResult(list
                 .Select(item => new CourseListDto()
                 {
                     Id = item.Id,
@@ -93,35 +120,7 @@ namespace Services.Course.Convertor
                     CourseTypeName = item.CourseType.Name,
                     CouseStatusName = item.CourseStatus.Name,
                     SendMessageName = item.SendMessage?.SendMessageTranslations.FindTranslation(culture).Subject
-                })
-                .ToList();
+                }).ToList());
         }
-
-        public CourseDetailDto ConvertToWebModel(CourseDbo getCourseDetail, string culture)
-        {
-            return new CourseDetailDto()
-            {
-                CourseStatusId = getCourseDetail.CourseStatusId,
-                Description = getCourseDetail.CourseTranslations.FindTranslation(culture).Description,
-                Name = getCourseDetail.CourseTranslations.FindTranslation(culture).Name,
-                CourseTypeId = getCourseDetail.CourseTypeId,
-                FileName = "",
-                Id = getCourseDetail.Id,
-                IsPrivateCourse = getCourseDetail.IsPrivateCourse,
-                Price = getCourseDetail.Price,
-                Sale = getCourseDetail.Sale,
-                CourseType = _courseTypes.FirstOrDefault(x => x.Id == getCourseDetail.CourseTypeId).SystemIdentificator,
-                MaximumStudent = getCourseDetail.MaximumStudent,
-                MinimumStudent = getCourseDetail.MinimumStudent,
-                CertificateId = getCourseDetail.CertificateId,
-                AutomaticGenerateCertificate = getCourseDetail.AutomaticGenerateCertificate,
-                CourseMaterialId = getCourseDetail.CourseMaterialId,
-                SendEmail = getCourseDetail.SendEmail,
-                SendMessageId = getCourseDetail.SendMessageId,
-                CourseWithLector = getCourseDetail.CourseWithLector
-            };
-        }
-
-
     }
 }

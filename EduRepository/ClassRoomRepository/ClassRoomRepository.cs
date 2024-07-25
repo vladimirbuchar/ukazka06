@@ -1,11 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Linq.Expressions;
-using Core.Base.Repository;
+﻿using Core.Base.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
 using Model.Edu.ClassRoom;
+using System;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Repository.ClassRoomRepository
 {
@@ -23,20 +24,20 @@ namespace Repository.ClassRoomRepository
             return _dbContext.Set<ClassRoomDbo>().Include(x => x.ClassRoomTranslations.Where(x => x.IsDeleted == false)).ThenInclude(x => x.Culture);
         }
 
-        public override Guid GetOrganizationId(Guid objectId)
+        public override async Task<Guid> GetOrganizationId(Guid objectId)
         {
-            return _dbContext.Set<ClassRoomDbo>().Where(x => x.Id == objectId).Include(x => x.Branch).FirstOrDefault().Branch.OrganizationId;
+            return (await _dbContext.Set<ClassRoomDbo>().Where(x => x.Id == objectId).Include(x => x.Branch).FirstOrDefaultAsync()).Branch.OrganizationId;
         }
 
-        public override ClassRoomDbo GetEntity(bool deleted, Expression<Func<ClassRoomDbo, bool>> predicate = null)
+        public override async Task<ClassRoomDbo> GetEntity(bool deleted, Expression<Func<ClassRoomDbo, bool>> predicate = null)
         {
-            return _dbContext
+            return await _dbContext
                 .Set<ClassRoomDbo>()
                 .Include(x => x.Branch)
                 .Include(x => x.CourseTermDates.Where(y => y.IsDeleted == false))
                 .ThenInclude(x => x.CourseTerm)
                 .Where(x => x.IsDeleted == deleted)
-                .FirstOrDefault(predicate);
+                .FirstOrDefaultAsync(predicate);
         }
     }
 }

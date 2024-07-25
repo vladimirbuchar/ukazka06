@@ -1,5 +1,6 @@
 ﻿using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Service;
+using Core.Base.Sort;
 using Core.Constants;
 using Core.DataTypes;
 using Core.Extension;
@@ -27,11 +28,13 @@ using Services.StudentInGroup.Validator;
 using Services.SystemService.SendMailService.Service;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
+using System.Web.Helpers;
 
 namespace Services.StudentInGroup.Service
 {
+   
     public class StudentInGroupService(
         ICourseStudentRepository courseStudentRepository,
         IOrganizationRoleRepository organizationRoleRepository,
@@ -66,7 +69,7 @@ namespace Services.StudentInGroup.Service
         private readonly IOrganizationSettingRepository _organizationSettingRepository = organizationSettingService;
         private readonly IUserRepository _userRepository = userRepository;
         private readonly INotificationRepository _notificationRepository = notificationRepository;
-        private readonly List<NotificationTypeDbo> _notificationTypes = codeBookRepository.GetEntities(false).Result;
+        private readonly ICodeBookRepository<NotificationTypeDbo> _notificationTypes = codeBookRepository;
         private readonly IRoleRepository _roleRepository = roleRepository;
         private readonly IOrganizationRoleRepository _organizationRoleRepository = organizationRoleRepository;
         private readonly IStudentInGroupCourseTermRepository _studentInGroupCourseTermRepository = studentInGroupCourseTermRepository;
@@ -74,20 +77,20 @@ namespace Services.StudentInGroup.Service
         private readonly ISendMailService _sendMailService = sendMailService;
         private readonly IStudentGroupRepository _studentGroupRepository = studentGroupRepository;
 
-        public override Result<StudentInGroupDetailDto> AddObject(StudentInGroupCreateDto addObject, Guid userId, string culture)
+        public override async Task<Result> AddObject(StudentInGroupCreateDto addObject, Guid userId, string culture)
         {
             Result<StudentInGroupDetailDto> result = new();
             string email = addObject.UserEmail;
 
             if (email.IsValidEmail())
             {
-                UserDbo user = _userRepository.GetEntity(false, x => x.UserEmail == email);
+                UserDbo user = await _userRepository.GetEntity(false, x => x.UserEmail == email);
                 if (user == null)
                 {
-                    string defaultPassword = _organizationSettingRepository
-                        .GetEntity(false, x => x.OrganizationId == addObject.OrganizationId)
+                    string defaultPassword = (await _organizationSettingRepository
+                        .GetEntity(false, x => x.OrganizationId == addObject.OrganizationId))
                         .UserDefaultPassword;
-                    _ = _userRepository.CreateEntity(
+                    _ = await _userRepository.CreateEntity(
                         new UserDbo()
                         {
                             UserEmail = email,
@@ -97,32 +100,32 @@ namespace Services.StudentInGroup.Service
                                 LastName = addObject.LastName,
                                 SecondName = "",
                             },
-                            UserRoleId = _roleRepository.GetEntity(false, x => x.SystemIdentificator == UserRole.REGISTERED_USER).Id,
+                            UserRoleId = (await _roleRepository.GetEntity(false, x => x.SystemIdentificator == UserRole.REGISTERED_USER)).Id,
                             UserPassword = defaultPassword.GetHashString()
                         },
                         Guid.Empty
                     );
-                    user = _userRepository.GetEntity(false, x => x.UserEmail == email);
+                    user = await _userRepository.GetEntity(false, x => x.UserEmail == email);
 
-                    Guid studentId = _userInOrganizationRepository
+                    Guid studentId = (await _userInOrganizationRepository
                         .CreateEntity(
                             new UserInOrganizationDbo()
                             {
                                 OrganizationId = addObject.OrganizationId,
-                                OrganizationRoleId = _organizationRoleRepository
+                                OrganizationRoleId = (await _organizationRoleRepository
                                     .GetEntity(false, x => x.SystemIdentificator == Core.Constants.OrganizationRole.STUDENT)
-                                    .Id,
+                                    ).Id,
                                 UserId = user.Id
                             },
                             Guid.Empty
-                        )
+                        ))
                         .Id;
-                    _ = _notificationRepository.CreateEntity(
+                    _ = await _notificationRepository.CreateEntity(
                         new NotificationDbo()
                         {
                             IsNew = true,
-                            NotificationTypeId = _notificationTypes
-                                .FirstOrDefault(x => x.SystemIdentificator == NotificationType.INVITE_TO_ORGANIZATION)
+                            NotificationTypeId = (await _notificationTypes
+                                .GetEntity(false, x => x.SystemIdentificator == NotificationType.INVITE_TO_ORGANIZATION))
                                 .Id,
                             OrganizationId = addObject.OrganizationId,
                             UserId = user.Id
@@ -137,36 +140,36 @@ namespace Services.StudentInGroup.Service
                                 string.Format("{0}/?id={1}", _configuration.GetSection(ConfigValue.CLIENT_URL_ACTIVATE).Value, user.Id)
                             }
                         };
-                    _sendMailService.AddEmailToQueue(
+                    await _sendMailService.AddEmailToQueue(
                         EduEmail.REGISTRATION_USER,
                         culture,
                         new EmailAddress() { Email = email, Name = "" },
                         replaceData
                     );
                 }
-                _ = _repository.CreateEntity(
+                _ = await _repository.CreateEntity(
                     new StudentInGroupDbo()
                     {
-                        UserInOrganizationId = _userInOrganizationRepository
-                            .GetEntities(false, x => x.OrganizationId == addObject.OrganizationId)
-                            .Result.FirstOrDefault(x => x.User.UserEmail == email)
+                        UserInOrganizationId = (await _userInOrganizationRepository
+                            .GetEntity(false, x => x.OrganizationId == addObject.OrganizationId && x.User.UserEmail == email)
+                            )
                             .Id,
                         StudentGroupId = addObject.StudentGroupId
                     },
                     Guid.Empty
                 );
-                List<StudentInGroupCourseTermDbo> getAllTermInGroups = _studentInGroupCourseTermRepository
+                List<StudentInGroupCourseTermDbo> getAllTermInGroups = await _studentInGroupCourseTermRepository
                     .GetEntities(false, x => x.StudentGroupId == addObject.StudentGroupId)
-                    .Result;
+                    ;
                 foreach (StudentInGroupCourseTermDbo item in getAllTermInGroups)
                 {
-                    _ = _courseStudentRepository.CreateEntity(
+                    _ = await _courseStudentRepository.CreateEntity(
                         new CourseStudentDbo()
                         {
                             CourseTermId = item.CourseTermId,
-                            UserInOrganizationId = _userInOrganizationRepository
-                                .GetEntities(false, x => x.OrganizationId == addObject.OrganizationId)
-                                .Result.FirstOrDefault(x => x.User.UserEmail == email)
+                            UserInOrganizationId = (await _userInOrganizationRepository
+                                .GetEntity(false, x => x.OrganizationId == addObject.OrganizationId && x.User.UserEmail == email)
+                                )
                                 .Id,
                         },
                         Guid.Empty
@@ -182,9 +185,9 @@ namespace Services.StudentInGroup.Service
             return result;
         }
 
-        public override Guid GetOrganizationIdByParentId(Guid objectId)
+        public override async Task<Guid> GetOrganizationIdByParentId(Guid objectId)
         {
-            return _studentGroupRepository.GetOrganizationId(objectId);
+            return await _studentGroupRepository.GetOrganizationId(objectId);
         }
 
         protected override Expression<Func<StudentInGroupDbo, bool>> PrepareSqlFilter(StudentInGroupFilter filter, string culture)
@@ -229,7 +232,7 @@ namespace Services.StudentInGroup.Service
             return Expression.Lambda<Func<StudentInGroupDbo, bool>>(expression, parameter);
         }
 
-        protected override Expression<Func<StudentInGroupDbo, object>> PrepareSort(string columnName, string culture)
+        protected override List<BaseSort<StudentInGroupDbo>> PrepareSort(string columnName, string culture, SortDirection sortDirection = SortDirection.Ascending)
         {
             ParameterExpression parameter = Expression.Parameter(typeof(StudentInGroupDbo), "x");
             MemberExpression property = Expression.Property(parameter, nameof(StudentInGroupDbo.UserInOrganization));
@@ -242,7 +245,14 @@ namespace Services.StudentInGroup.Service
                     Expression.Convert(property3, typeof(object)),
                     parameter
                 );
-                return lambda;
+                return
+                [
+                    new BaseSort<StudentInGroupDbo>()
+                    {
+                        Sort = lambda,
+                        SortDirection = sortDirection
+                    }
+                ];
             }
             if (columnName == StudentInGroupSort.SecondName.ToString())
             {
@@ -252,7 +262,14 @@ namespace Services.StudentInGroup.Service
                     Expression.Convert(property3, typeof(object)),
                     parameter
                 );
-                return lambda;
+                return
+                [
+                    new BaseSort<StudentInGroupDbo>()
+                    {
+                        Sort = lambda,
+                        SortDirection = sortDirection
+                    }
+                ];
             }
             if (columnName == StudentInGroupSort.LastName.ToString())
             {
@@ -262,7 +279,14 @@ namespace Services.StudentInGroup.Service
                     Expression.Convert(property3, typeof(object)),
                     parameter
                 );
-                return lambda;
+                return
+                [
+                    new BaseSort<StudentInGroupDbo>()
+                    {
+                        Sort = lambda,
+                        SortDirection = sortDirection
+                    }
+                ];
             }
             if (columnName == StudentInGroupSort.Email.ToString())
             {
@@ -271,7 +295,14 @@ namespace Services.StudentInGroup.Service
                     Expression.Convert(property2, typeof(object)),
                     parameter
                 );
-                return lambda;
+                return
+                [
+                    new BaseSort<StudentInGroupDbo>()
+                    {
+                        Sort = lambda,
+                        SortDirection = sortDirection
+                    }
+                ];
             }
             return base.PrepareSort(columnName, culture);
         }

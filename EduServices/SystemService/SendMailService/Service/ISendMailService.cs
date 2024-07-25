@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using Core.Base.Service;
+﻿using Core.Base.Service;
 using Core.DataTypes;
 using Services.SystemService.SendMailService.Dto;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Services.SystemService.SendMailService.Service
 {
     public interface ISendMailService : IBaseService
     {
-        void AddEmailToQueue(
+        Task AddEmailToQueue(
             string emailIdentificator,
             string culture,
             EmailAddress emailAddressTo,
@@ -16,9 +17,9 @@ namespace Services.SystemService.SendMailService.Service
             Guid? organizationId = null,
             string reply = ""
         );
-        void AddEmailToQueue(string subject, string html, List<string> attachment, EmailAddress emailAddressTo, Guid organizationId, string reply);
-        List<SendMailListDto> GetList(Guid orgranizationId);
-        SendMaiDetailDto GetDetail(Guid id);
-        SendMaiDetailDto Update(SendMailUpdateDto updateDto, Guid userId);
+        Task AddEmailToQueue(string subject, string html, List<string> attachment, EmailAddress emailAddressTo, Guid organizationId, string reply);
+        Task<List<SendMailListDto>> GetList(Guid orgranizationId);
+        Task<SendMaiDetailDto> GetDetail(Guid id);
+        Task<SendMaiDetailDto> Update(SendMailUpdateDto updateDto, Guid userId);
     }
 }

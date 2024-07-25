@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using Model.Edu.CourseLessonItem;
+﻿using Model.Edu.CourseLessonItem;
 using Model.Edu.CourseMaterial;
 using Model.Edu.CourseTest;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Model.Edu.CourseLesson
 {

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Core.Base.Repository.CodeBookRepository;
+﻿using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Validator;
 using Core.Constants;
 using Core.DataTypes;
@@ -11,6 +8,8 @@ using Model.Edu.CourseTerm;
 using Repository.ClassRoomRepository;
 using Repository.CourseTermRepository;
 using Services.CourseTerm.Dto;
+using System;
+using System.Threading.Tasks;
 
 namespace Services.CourseTerm.Validator
 {
@@ -22,22 +21,24 @@ namespace Services.CourseTerm.Validator
         : BaseValidator<CourseTermDbo, ICourseTermRepository, CourseTermCreateDto, CourseTermDetailDto, CourseTermUpdateDto>(repository),
             ICourseTermValidator
     {
-        private readonly List<TimeTableDbo> _timeTables = codeBookRepository.GetEntities(false).Result;
+        private readonly ICodeBookRepository<TimeTableDbo> _timeTables = codeBookRepository;
         private readonly IClassRoomRepository _classRoomRepository = classRoomRepository;
 
-        public override Result<CourseTermDetailDto> IsValid(CourseTermCreateDto create)
+        public override async Task<Result> IsValid(CourseTermCreateDto create)
         {
             Result<CourseTermDetailDto> validation = new();
             IsValidCourseDate(create.ActiveFrom, create.ActiveTo, create.RegistrationFrom, create.RegistrationTo, validation);
-            ClassRoomDbo classRoomDetail = _classRoomRepository.GetEntity(create.ClassRoomId.GetValueOrDefault());
+            ClassRoomDbo classRoomDetail = await _classRoomRepository.GetEntity(create.ClassRoomId.GetValueOrDefault());
             IsValidStudentCount(
                 create.MinimumStudents,
                 create.MaximumStudents,
                 classRoomDetail != null ? classRoomDetail.MaxCapacity : 0,
                 validation
             );
-            int priorityFrom = _timeTables.FirstOrDefault(x => x.Id == create.TimeFromId).Priority;
-            int priorityTo = _timeTables.FirstOrDefault(x => x.Id == create.TimeToId).Priority;
+            TimeTableDbo from = await _timeTables.GetEntity(false, x => x.Id == create.TimeFromId);
+            TimeTableDbo to = await _timeTables.GetEntity(false, x => x.Id == create.TimeToId);
+            int priorityFrom = from == null ? 0 : from.Priority;
+            int priorityTo = to == null ? 0 : to.Priority;
             if (priorityTo < priorityFrom)
             {
                 validation.AddResultStatus(
@@ -47,19 +48,21 @@ namespace Services.CourseTerm.Validator
             return validation;
         }
 
-        public override Result<CourseTermDetailDto> IsValid(CourseTermUpdateDto update)
+        public override async Task<Result<CourseTermDetailDto>> IsValid(CourseTermUpdateDto update)
         {
             Result<CourseTermDetailDto> validation = new();
             IsValidCourseDate(update.ActiveFrom, update.ActiveTo, update.RegistrationFrom, update.RegistrationTo, validation);
-            ClassRoomDbo classRoomDetail = _classRoomRepository.GetEntity(update.ClassRoomId.GetValueOrDefault());
+            ClassRoomDbo classRoomDetail = await _classRoomRepository.GetEntity(update.ClassRoomId.GetValueOrDefault());
             IsValidStudentCount(
                 update.MinimumStudents,
                 update.MaximumStudents,
                 classRoomDetail != null ? classRoomDetail.MaxCapacity : 0,
                 validation
             );
-            int priorityFrom = _timeTables.FirstOrDefault(x => x.Id == update.TimeFromId).Priority;
-            int priorityTo = _timeTables.FirstOrDefault(x => x.Id == update.TimeToId).Priority;
+            TimeTableDbo from = await _timeTables.GetEntity(false, x => x.Id == update.TimeFromId);
+            TimeTableDbo to = await _timeTables.GetEntity(false, x => x.Id == update.TimeToId);
+            int priorityFrom = from == null ? 0 : from.Priority;
+            int priorityTo = to == null ? 0 : to.Priority;
             if (priorityTo < priorityFrom)
             {
                 validation.AddResultStatus(

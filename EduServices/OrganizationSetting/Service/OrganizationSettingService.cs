@@ -1,5 +1,4 @@
-﻿using System;
-using Core.Base.Service;
+﻿using Core.Base.Service;
 using Core.DataTypes;
 using Model.Edu.LicenseChange;
 using Model.Edu.Organization;
@@ -10,6 +9,8 @@ using Repository.OrganizationSettingRepository;
 using Services.OrganizationSetting.Convertor;
 using Services.OrganizationSetting.Dto;
 using Services.OrganizationSetting.Validator;
+using System;
+using System.Threading.Tasks;
 
 namespace Services.OrganizationSetting.Service
 {
@@ -30,27 +31,27 @@ namespace Services.OrganizationSetting.Service
         private readonly IOrganizationRepository _organizationRepository = organizationRepository;
         private readonly ILicenseChangeRepository _licenseChangeRepository = licenseChangeRepository;
 
-        public OrganizationSettingDetailDto GetOrganizationSetting(Guid organizationId)
+        public async Task<OrganizationSettingDetailDto> GetOrganizationSetting(Guid organizationId)
         {
-            return _convertor.ConvertToWebModel(_repository.GetEntity(false, x => x.OrganizationId == organizationId));
+            return _convertor.ConvertToWebModel(await _repository.GetEntity(false, x => x.OrganizationId == organizationId));
         }
 
-        public OrganizationSettingByUrlDto GetOrganizationSettingByUrl(string url)
+        public async Task<OrganizationSettingByUrlDto> GetOrganizationSettingByUrl(string url)
         {
-            return _convertor.ConvertToWebModel2(_repository.GetEntity(false, x => x.ElearningUrl == url));
+            return _convertor.ConvertToWebModel2(await _repository.GetEntity(false, x => x.ElearningUrl == url));
         }
 
-        public Result SaveOrganizationSetting(OrganizationSettingUpdateDto saveOrganizationSettingDto)
+        public async Task<Result> SaveOrganizationSetting(OrganizationSettingUpdateDto saveOrganizationSettingDto)
         {
-            Result validate = _validator.IsValid(saveOrganizationSettingDto);
+            Result validate = await _validator.IsValid(saveOrganizationSettingDto);
             if (validate.IsOk)
             {
-                OrganizationSettingDbo setting = _repository.GetEntity(false, x => x.OrganizationId == saveOrganizationSettingDto.OrganizationId);
-                _ = _repository.UpdateEntity(_convertor.ConvertToBussinessEntity(saveOrganizationSettingDto, setting), Guid.Empty);
-                OrganizationDbo organization = _organizationRepository.GetEntity(saveOrganizationSettingDto.OrganizationId);
+                OrganizationSettingDbo setting = await _repository.GetEntity(false, x => x.OrganizationId == saveOrganizationSettingDto.OrganizationId);
+                _ = await _repository.UpdateEntity(_convertor.ConvertToBussinessEntity(saveOrganizationSettingDto, setting), Guid.Empty);
+                OrganizationDbo organization = await _organizationRepository.GetEntity(saveOrganizationSettingDto.OrganizationId);
                 if (organization.LicenseId != saveOrganizationSettingDto.LicenseId)
                 {
-                    _ = _licenseChangeRepository.CreateEntity(
+                    _ = await _licenseChangeRepository.CreateEntity(
                         new LicenseChangeDbo()
                         {
                             OrganizationId = saveOrganizationSettingDto.OrganizationId,
@@ -61,7 +62,7 @@ namespace Services.OrganizationSetting.Service
                     );
 
                     organization.LicenseId = saveOrganizationSettingDto.LicenseId;
-                    _ = _organizationRepository.UpdateEntity(organization, Guid.Empty);
+                    _ = await _organizationRepository.UpdateEntity(organization, Guid.Empty);
                 }
             }
             return validate;

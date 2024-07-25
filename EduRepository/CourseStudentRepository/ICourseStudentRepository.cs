@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using Core.Base.Repository;
+﻿using Core.Base.Repository;
 using Model.Link;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Repository.CourseStudentRepository
 {
     public interface ICourseStudentRepository : IBaseRepository<CourseStudentDbo>
     {
-        List<CourseStudentDbo> GetStudentCourse(Guid userId, bool hideFinishCourse);
+        Task<List<CourseStudentDbo>> GetStudentCourse(Guid userId, bool hideFinishCourse);
     }
 }

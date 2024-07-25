@@ -1,11 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Linq.Expressions;
-using Core.Base.Repository;
+﻿using Core.Base.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
 using Model.Edu.OrganizationSetting;
+using System;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Repository.OrganizationSettingRepository
 {
@@ -13,9 +14,9 @@ namespace Repository.OrganizationSettingRepository
         : BaseRepository<OrganizationSettingDbo>(dbContext, memoryCache),
             IOrganizationSettingRepository
     {
-        public override OrganizationSettingDbo GetEntity(bool deleted, Expression<Func<OrganizationSettingDbo, bool>> predicate = null)
+        public override async Task<OrganizationSettingDbo> GetEntity(bool deleted, Expression<Func<OrganizationSettingDbo, bool>> predicate = null)
         {
-            return _dbContext.Set<OrganizationSettingDbo>().Include(x => x.Organization).Where(x => x.IsDeleted == deleted).FirstOrDefault(predicate);
+            return await _dbContext.Set<OrganizationSettingDbo>().Include(x => x.Organization).Where(x => x.IsDeleted == deleted).FirstOrDefaultAsync(predicate);
         }
     }
 }

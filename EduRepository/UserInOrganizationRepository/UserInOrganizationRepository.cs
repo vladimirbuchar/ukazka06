@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using Core.Base.Repository;
+﻿using Core.Base.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
-using Model.Edu.Branch;
 using Model.Link;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Repository.UserInOrganizationRepository
 {
@@ -26,9 +23,9 @@ namespace Repository.UserInOrganizationRepository
                 .ThenInclude(x => x.Person);
         }
 
-        public override Guid GetOrganizationId(Guid objectId)
+        public override async Task<Guid> GetOrganizationId(Guid objectId)
         {
-            return _dbContext.Set<UserInOrganizationDbo>().FirstOrDefault(x => x.Id == objectId).OrganizationId;
+            return (await _dbContext.Set<UserInOrganizationDbo>().FirstOrDefaultAsync(x => x.Id == objectId)).OrganizationId;
         }
     }
 }

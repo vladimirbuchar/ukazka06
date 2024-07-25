@@ -1,10 +1,11 @@
-﻿using System;
-using System.Linq;
-using Core.Base.Repository;
+﻿using Core.Base.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
 using Model.Link;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Repository.StudentInGroupRepository
 {
@@ -17,9 +18,9 @@ namespace Repository.StudentInGroupRepository
             return _dbContext.Set<StudentInGroupDbo>().Include(x => x.UserInOrganization).ThenInclude(x => x.User).ThenInclude(x => x.Person);
         }
 
-        public override Guid GetOrganizationId(Guid objectId)
+        public override async Task<Guid> GetOrganizationId(Guid objectId)
         {
-            return _dbContext.Set<StudentInGroupDbo>().Include(x => x.StudentGroup).FirstOrDefault(x => x.Id == objectId).StudentGroup.OrganizationId;
+            return (await _dbContext.Set<StudentInGroupDbo>().Include(x => x.StudentGroup).FirstOrDefaultAsync(x => x.Id == objectId)).StudentGroup.OrganizationId;
         }
     }
 }

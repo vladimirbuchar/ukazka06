@@ -1,10 +1,11 @@
-﻿using System;
-using System.Linq;
-using Core.Base.Repository;
+﻿using Core.Base.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
 using Model.Edu.OrganizationStudyHour;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Repository.OrganizationHoursRepository
 {
@@ -22,9 +23,9 @@ namespace Repository.OrganizationHoursRepository
             return _dbContext.Set<OrganizationStudyHourDbo>().Include(x => x.ActiveFrom).Include(x => x.ActiveTo);
         }
 
-        public override Guid GetOrganizationId(Guid objectId)
+        public override async Task<Guid> GetOrganizationId(Guid objectId)
         {
-            return _dbContext.Set<OrganizationStudyHourDbo>().FirstOrDefault(x => x.Id == objectId).OrganizationId;
+            return (await _dbContext.Set<OrganizationStudyHourDbo>().FirstOrDefaultAsync(x => x.Id == objectId)).OrganizationId;
         }
     }
 }

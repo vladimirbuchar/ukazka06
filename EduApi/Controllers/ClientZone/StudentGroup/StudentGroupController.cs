@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web.Helpers;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
 using Core.Base.Paging;
 using Core.DataTypes;
 using EduApi.Controllers.ClientZone.StudentInGroup;
@@ -12,6 +9,10 @@ using Services.StudentGroup.Dto;
 using Services.StudentGroup.Filter;
 using Services.StudentGroup.Service;
 using Services.StudentGroup.Sort;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Web.Helpers;
 
 namespace EduApi.Controllers.ClientZone.StudentGroup
 {
@@ -36,16 +37,16 @@ namespace EduApi.Controllers.ClientZone.StudentGroup
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Create(StudentGroupCreateDto addStudentGroupDto)
+        public async Task<ActionResult> Create(StudentGroupCreateDto addStudentGroupDto)
         {
             try
             {
-                CheckOrganizationPermition(addStudentGroupDto.OrganizationId);
-                return SendResponse(_studentGroupService.AddObject(addStudentGroupDto, GetLoggedUserId(), GetClientCulture()));
+                await CheckOrganizationPermition(addStudentGroupDto.OrganizationId);
+                return await SendResponse(await _studentGroupService.AddObject(addStudentGroupDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -55,7 +56,7 @@ namespace EduApi.Controllers.ClientZone.StudentGroup
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult List(
+        public async Task<ActionResult> List(
             [FromQuery] ListDeletedRequestDto reuest,
             [FromQuery] StudentGroupFilter filter,
             [FromQuery] SortDirection sortDirection,
@@ -65,9 +66,8 @@ namespace EduApi.Controllers.ClientZone.StudentGroup
         {
             try
             {
-                CheckOrganizationPermition(reuest.ParentId);
-                return SendResponse(
-                    _studentGroupService.GetList(
+                await CheckOrganizationPermition(reuest.ParentId);
+                var result = await _studentGroupService.GetList(
                         x => x.OrganizationId == reuest.ParentId,
                         reuest.IsDeleted,
                         GetClientCulture(),
@@ -75,12 +75,14 @@ namespace EduApi.Controllers.ClientZone.StudentGroup
                         sortColum.ToString(),
                         sortDirection,
                         paging
-                    )
+                    );
+                return await SendResponse(
+                    result
                 );
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -90,16 +92,16 @@ namespace EduApi.Controllers.ClientZone.StudentGroup
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Detail([FromQuery] DetailRequestDto request)
+        public async Task<ActionResult> Detail([FromQuery] DetailRequestDto request)
         {
             try
             {
-                CheckOrganizationPermition(_studentGroupService.GetOrganizationIdByObjectId(request.Id));
-                return SendResponse(_studentGroupService.GetDetail(request.Id, GetClientCulture()));
+                await CheckOrganizationPermition(await _studentGroupService.GetOrganizationIdByObjectId(request.Id));
+                return await SendResponse(await _studentGroupService.GetDetail(request.Id, GetClientCulture()));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -109,16 +111,16 @@ namespace EduApi.Controllers.ClientZone.StudentGroup
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Update(StudentGroupUpdateDto updateStudentGroupDto)
+        public async Task<ActionResult> Update(StudentGroupUpdateDto updateStudentGroupDto)
         {
             try
             {
-                CheckOrganizationPermition(_studentGroupService.GetOrganizationIdByObjectId(updateStudentGroupDto.Id));
-                return SendResponse(_studentGroupService.UpdateObject(updateStudentGroupDto, GetLoggedUserId(), GetClientCulture()));
+                await CheckOrganizationPermition(await _studentGroupService.GetOrganizationIdByObjectId(updateStudentGroupDto.Id));
+                return await SendResponse(await _studentGroupService.UpdateObject(updateStudentGroupDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -128,16 +130,16 @@ namespace EduApi.Controllers.ClientZone.StudentGroup
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Delete([FromQuery] DeleteDto request)
+        public async Task<ActionResult> Delete([FromQuery] DeleteDto request)
         {
             try
             {
-                CheckOrganizationPermition(_studentGroupService.GetOrganizationIdByObjectId(request.Id));
-                return SendResponse(_studentGroupService.DeleteObject(request.Id, GetLoggedUserId()));
+                await CheckOrganizationPermition(await _studentGroupService.GetOrganizationIdByObjectId(request.Id));
+                return await SendResponse(await _studentGroupService.DeleteObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -147,16 +149,16 @@ namespace EduApi.Controllers.ClientZone.StudentGroup
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Restore([FromQuery] RestoreDto request)
+        public async Task<ActionResult> Restore([FromQuery] RestoreDto request)
         {
             try
             {
-                CheckOrganizationPermition(_studentGroupService.GetOrganizationIdByObjectId(request.Id));
-                return SendResponse(_studentGroupService.RestoreObject(request.Id, GetLoggedUserId()));
+                await CheckOrganizationPermition(await _studentGroupService.GetOrganizationIdByObjectId(request.Id));
+                return await SendResponse(await _studentGroupService.RestoreObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
     }

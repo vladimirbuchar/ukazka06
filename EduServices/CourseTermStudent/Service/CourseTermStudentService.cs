@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Core.Base.Filter;
+﻿using Core.Base.Filter;
 using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Service;
 using Core.Constants;
@@ -24,9 +21,14 @@ using Services.CourseTermStudent.Convertor;
 using Services.CourseTermStudent.Dto;
 using Services.CourseTermStudent.Validator;
 using Services.SystemService.SendMailService.Service;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Services.CourseTermStudent.Service
 {
+   
     public class CourseTermStudentService(
         ICourseStudentRepository studentRepository,
         ICourseTermStudentConvertor courseStudentConvertor,
@@ -57,56 +59,56 @@ namespace Services.CourseTermStudent.Service
         private readonly IRoleRepository _roleRepository = roleRepository;
         private readonly IOrganizationRoleRepository _organizationRoleRepository = organizationRoleRepository;
         private readonly INotificationRepository _notificationRepository = notificationService;
-        private readonly List<NotificationTypeDbo> _notificationTypes = codeBooService.GetEntities(false).Result;
+        private readonly ICodeBookRepository<NotificationTypeDbo> _notificationTypes = codeBooService;
         private readonly IOrganizationSettingRepository _organizationSettingRepository = organizationSettingRepository;
         private readonly ISendMailService _sendMailService = sendMailService;
         private readonly IConfiguration _configuration = configuration;
         private readonly IUserInOrganizationRepository _userInOrganizationRepository = userInOrganizationRepository;
 
-        public override Result<CourseTermStudentDetailDto> AddObject(CourseTermStudentCreateDto addObject, Guid userId, string culture)
+        public override async Task<Result> AddObject(CourseTermStudentCreateDto addObject, Guid userId, string culture)
         {
-            Result<CourseTermStudentDetailDto> result = _validator.IsValid(addObject);
+            Result result = await _validator.IsValid(addObject);
             if (result.IsOk)
             {
                 string email = addObject.UserEmail;
 
                 if (email.IsValidEmail())
                 {
-                    UserDbo user = _userRepository.GetEntity(false, x => x.UserEmail == email);
+                    UserDbo user = await _userRepository.GetEntity(false, x => x.UserEmail == email);
                     if (user == null)
                     {
-                        string defaultPassword = _organizationSettingRepository
-                            .GetEntity(false, x => x.OrganizationId == addObject.OrganizationId)
+                        string defaultPassword = (await _organizationSettingRepository
+                            .GetEntity(false, x => x.OrganizationId == addObject.OrganizationId))
                             .UserDefaultPassword;
-                        user = _userRepository.CreateEntity(
+                        user = await _userRepository.CreateEntity(
                             new UserDbo()
                             {
                                 UserEmail = email,
-                                UserRoleId = _roleRepository.GetEntity(false, x => x.SystemIdentificator == UserRole.REGISTERED_USER).Id,
+                                UserRoleId = (await _roleRepository.GetEntity(false, x => x.SystemIdentificator == UserRole.REGISTERED_USER)).Id,
                                 UserPassword = defaultPassword,
                                 Person = new PersonDbo() { FirstName = addObject.FirstName, LastName = addObject.LastName }
                             },
                             userId
                         );
 
-                        _ = _userInOrganizationRepository.CreateEntity(
+                        _ = await _userInOrganizationRepository.CreateEntity(
                             new UserInOrganizationDbo()
                             {
                                 OrganizationId = addObject.OrganizationId,
-                                OrganizationRoleId = _organizationRoleRepository
-                                    .GetEntity(false, x => x.SystemIdentificator == Core.Constants.OrganizationRole.STUDENT)
+                                OrganizationRoleId = (await _organizationRoleRepository
+                                    .GetEntity(false, x => x.SystemIdentificator == Core.Constants.OrganizationRole.STUDENT))
                                     .Id,
                                 UserId = user.Id
                             },
                             userId
                         );
 
-                        _ = _notificationRepository.CreateEntity(
+                        _ = await _notificationRepository.CreateEntity(
                             new NotificationDbo()
                             {
                                 IsNew = true,
-                                NotificationTypeId = _notificationTypes
-                                    .FirstOrDefault(x => x.SystemIdentificator == NotificationType.INVITE_TO_ORGANIZATION)
+                                NotificationTypeId = (await _notificationTypes
+                                    .GetEntity(false, x => x.SystemIdentificator == NotificationType.INVITE_TO_ORGANIZATION))
                                     .Id,
                                 OrganizationId = addObject.OrganizationId,
                                 UserId = user.Id
@@ -121,7 +123,7 @@ namespace Services.CourseTermStudent.Service
                                     string.Format("{0}/?id={1}", _configuration.GetSection(ConfigValue.CLIENT_URL_ACTIVATE).Value, user.Id)
                                 }
                             };
-                        _sendMailService.AddEmailToQueue(
+                        await _sendMailService.AddEmailToQueue(
                             EduEmail.REGISTRATION_USER,
                             culture,
                             new EmailAddress() { Email = email, Name = "" },
@@ -130,26 +132,25 @@ namespace Services.CourseTermStudent.Service
                             ""
                         );
                     }
-                    if (_repository.GetStudentCourse(user.Id, false).FirstOrDefault(x => x.CourseTermId == addObject.CourseTermId) == null)
+                    if ((await _repository.GetStudentCourse(user.Id, false)).FirstOrDefault(x => x.CourseTermId == addObject.CourseTermId) == null)
                     {
-                        _ = _repository.CreateEntity(
+                        _ = await _repository.CreateEntity(
                             new CourseStudentDbo()
                             {
                                 CourseTermId = addObject.CourseTermId,
-                                UserInOrganizationId = _userInOrganizationRepository
-                                    .GetEntities(false, x => x.OrganizationId == addObject.OrganizationId)
-                                    .Result.FirstOrDefault(x => x.User.UserEmail == email)
+                                UserInOrganizationId = (await _userInOrganizationRepository
+                                    .GetEntity(false, x => x.OrganizationId == addObject.OrganizationId && x.User.UserEmail == email))
                                     .Id
                             },
                             userId
                         );
 
-                        _ = _notificationRepository.CreateEntity(
+                        _ = await _notificationRepository.CreateEntity(
                             new NotificationDbo()
                             {
                                 IsNew = true,
-                                NotificationTypeId = _notificationTypes
-                                    .FirstOrDefault(x => x.SystemIdentificator == NotificationType.ADD_STUDENT_TO_COURSE_TERM)
+                                NotificationTypeId = (await _notificationTypes
+                                    .GetEntity(false, x => x.SystemIdentificator == NotificationType.ADD_STUDENT_TO_COURSE_TERM))
                                     .Id,
                                 CourseTermId = addObject.CourseTermId,
                                 UserId = user.Id
@@ -168,9 +169,9 @@ namespace Services.CourseTermStudent.Service
             return result;
         }
 
-        List<CourseTermStudentListDto> ICourseTermStudentService.GetAllStudentInCourseTerm(Guid courseTermId)
+        public async Task<List<CourseTermStudentListDto>> GetAllStudentInCourseTerm(Guid courseTermId)
         {
-            return _convertor.ConvertToWebModel(_repository.GetEntities(false, x => x.CourseTermId == courseTermId).Result, string.Empty);
+            return await _convertor.ConvertToWebModel(await _repository.GetEntities(false, x => x.CourseTermId == courseTermId), string.Empty);
         }
     }
 }

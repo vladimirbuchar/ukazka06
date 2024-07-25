@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web.Helpers;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
 using Core.Base.Paging;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +8,10 @@ using Services.ClassRoom.Filter;
 using Services.ClassRoom.Service;
 using Services.ClassRoom.Sort;
 using Services.OrganizationRole.Service;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Web.Helpers;
 
 namespace EduApi.Controllers.ClientZone.ClassRoom
 {
@@ -35,16 +36,16 @@ namespace EduApi.Controllers.ClientZone.ClassRoom
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
         [ProducesResponseType(typeof(void), 404)]
-        public ActionResult Create(ClassRoomCreateDto addClassRoomDto)
+        public async Task<ActionResult> Create(ClassRoomCreateDto addClassRoomDto)
         {
             try
             {
-                CheckOrganizationPermition(_classRoomService.GetOrganizationIdByParentId(addClassRoomDto.BranchId));
-                return SendResponse(_classRoomService.AddObject(addClassRoomDto, GetLoggedUserId(), GetClientCulture()));
+                await CheckOrganizationPermition(await _classRoomService.GetOrganizationIdByParentId(addClassRoomDto.BranchId));
+                return await SendResponse(await _classRoomService.AddObject(addClassRoomDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -54,7 +55,7 @@ namespace EduApi.Controllers.ClientZone.ClassRoom
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult List(
+        public async Task<ActionResult> List(
             [FromQuery] ListDeletedRequestDto request,
             [FromQuery] ClassRoomFilter filter,
             [FromQuery] SortDirection sortDirection,
@@ -64,9 +65,8 @@ namespace EduApi.Controllers.ClientZone.ClassRoom
         {
             try
             {
-                CheckOrganizationPermition(_classRoomService.GetOrganizationIdByParentId(request.ParentId));
-                return SendResponse(
-                    _classRoomService.GetList(
+                await CheckOrganizationPermition(await _classRoomService.GetOrganizationIdByParentId(request.ParentId));
+                var result = await _classRoomService.GetList(
                         x => x.BranchId == request.ParentId && x.IsOnline == false,
                         request.IsDeleted,
                         GetClientCulture(),
@@ -74,12 +74,14 @@ namespace EduApi.Controllers.ClientZone.ClassRoom
                         sortColum.ToString(),
                         sortDirection,
                         paging
-                    )
+                    );
+                return await SendResponse(
+                    result
                 );
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -89,16 +91,16 @@ namespace EduApi.Controllers.ClientZone.ClassRoom
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Detail([FromQuery] DetailRequestDto request)
+        public async Task<ActionResult> Detail([FromQuery] DetailRequestDto request)
         {
             try
             {
-                CheckOrganizationPermition(_classRoomService.GetOrganizationIdByObjectId(request.Id));
-                return SendResponse(_classRoomService.GetDetail(request.Id, GetClientCulture()));
+                await CheckOrganizationPermition(await _classRoomService.GetOrganizationIdByObjectId(request.Id));
+                return await SendResponse(await _classRoomService.GetDetail(request.Id, GetClientCulture()));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -108,16 +110,16 @@ namespace EduApi.Controllers.ClientZone.ClassRoom
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Update(ClassRoomUpdateDto updateClassRoomDto)
+        public async Task<ActionResult> Update(ClassRoomUpdateDto updateClassRoomDto)
         {
             try
             {
-                CheckOrganizationPermition(_classRoomService.GetOrganizationIdByObjectId(updateClassRoomDto.Id));
-                return SendResponse(_classRoomService.UpdateObject(updateClassRoomDto, GetLoggedUserId(), GetClientCulture()));
+                await CheckOrganizationPermition(await _classRoomService.GetOrganizationIdByObjectId(updateClassRoomDto.Id));
+                return await SendResponse(await _classRoomService.UpdateObject(updateClassRoomDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -127,16 +129,16 @@ namespace EduApi.Controllers.ClientZone.ClassRoom
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Delete([FromQuery] DeleteDto request)
+        public async Task<ActionResult> Delete([FromQuery] DeleteDto request)
         {
             try
             {
-                CheckOrganizationPermition(_classRoomService.GetOrganizationIdByObjectId(request.Id));
-                return SendResponse(_classRoomService.DeleteObject(request.Id, GetLoggedUserId()));
+                await CheckOrganizationPermition(await _classRoomService.GetOrganizationIdByObjectId(request.Id));
+                return await SendResponse(await _classRoomService.DeleteObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -146,16 +148,17 @@ namespace EduApi.Controllers.ClientZone.ClassRoom
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Restore([FromQuery] RestoreDto request)
+        public async Task<ActionResult> Restore([FromQuery] RestoreDto request)
         {
             try
             {
-                CheckOrganizationPermition(_classRoomService.GetOrganizationIdByObjectId(request.Id));
-                return SendResponse(_classRoomService.RestoreObject(request.Id, GetLoggedUserId()));
+                await CheckOrganizationPermition(await _classRoomService.GetOrganizationIdByObjectId(request.Id));
+                var result = await _classRoomService.RestoreObject(request.Id, GetLoggedUserId());
+                return await SendResponse(result);
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -165,7 +168,7 @@ namespace EduApi.Controllers.ClientZone.ClassRoom
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult GetAllClassRoomInOrganization(
+        public async Task<ActionResult> GetAllClassRoomInOrganization(
             [FromQuery] ListRequestDto list,
             [FromQuery] ClassRoomFilter filter,
             [FromQuery] SortDirection sortDirection,
@@ -175,9 +178,8 @@ namespace EduApi.Controllers.ClientZone.ClassRoom
         {
             try
             {
-                CheckOrganizationPermition(list.ParentId);
-                return SendResponse(
-                    _classRoomService.GetList(
+                await CheckOrganizationPermition(list.ParentId);
+                var result = await _classRoomService.GetList(
                         x => x.Branch.OrganizationId == list.ParentId,
                         false,
                         GetClientCulture(),
@@ -185,12 +187,14 @@ namespace EduApi.Controllers.ClientZone.ClassRoom
                         sortColum.ToString(),
                         sortDirection,
                         paging
-                    )
+                    );
+                return await SendResponse(
+                    result
                 );
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -200,22 +204,23 @@ namespace EduApi.Controllers.ClientZone.ClassRoom
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult GetClassRoomTimeTable([FromQuery] ListRequestDto requestDto)
+        public async Task<ActionResult> GetClassRoomTimeTable([FromQuery] ListRequestDto requestDto)
         {
             try
             {
-                CheckOrganizationPermition(_classRoomService.GetOrganizationIdByObjectId(requestDto.ParentId));
-                return SendResponse(
-                    _classRoomService.GetClassRoomTimeTable(
+                await CheckOrganizationPermition(await _classRoomService.GetOrganizationIdByObjectId(requestDto.ParentId));
+                var result = await _classRoomService.GetClassRoomTimeTable(
                         requestDto.ParentId,
-                        _classRoomService.GetOrganizationIdByObjectId(requestDto.ParentId),
+                        await _classRoomService.GetOrganizationIdByObjectId(requestDto.ParentId),
                         GetClientCulture()
-                    )
+                    );
+                return await SendResponse(
+                    result
                 );
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
     }

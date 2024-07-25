@@ -1,4 +1,5 @@
 ﻿using Core.Base.Service;
+using Core.Base.Sort;
 using Model.Edu.StudentGroup;
 using Repository.StudentGroupRepository;
 using Services.StudentGroup.Convertor;
@@ -7,8 +8,10 @@ using Services.StudentGroup.Filter;
 using Services.StudentGroup.Sort;
 using Services.StudentGroup.Validator;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Web.Helpers;
 
 namespace Services.StudentGroup.Service
 {
@@ -46,7 +49,7 @@ namespace Services.StudentGroup.Service
             return Expression.Lambda<Func<StudentGroupDbo, bool>>(expression, parameter);
         }
 
-        protected override Expression<Func<StudentGroupDbo, object>> PrepareSort(string columnName, string culture)
+        protected override List<BaseSort<StudentGroupDbo>> PrepareSort(string columnName, string culture, SortDirection sortDirection = SortDirection.Ascending)
         {
             if (columnName == StudentGroupSort.Name.ToString())
             {
@@ -63,7 +66,14 @@ namespace Services.StudentGroup.Service
                     Expression.Convert(nameProperty, typeof(object)),
                     parameter
                 );
-                return lambda;
+                return
+                [
+                    new BaseSort<StudentGroupDbo>()
+                    {
+                        Sort = lambda,
+                        SortDirection = sortDirection
+                    }
+                ];
             }
             return base.PrepareSort(columnName, culture);
         }

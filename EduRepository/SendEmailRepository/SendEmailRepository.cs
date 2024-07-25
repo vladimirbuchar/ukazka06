@@ -1,10 +1,11 @@
-﻿using System;
-using System.Linq;
-using Core.Base.Repository;
+﻿using Core.Base.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
 using Model.Edu.SendEmail;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Repository.SendEmailRepository
 {
@@ -22,9 +23,9 @@ namespace Repository.SendEmailRepository
             return _dbContext.Set<SendEmailDbo>().Include(x => x.SendEmailAttachments);
         }
 
-        public override Guid GetOrganizationId(Guid objectId)
+        public override async Task<Guid> GetOrganizationId(Guid objectId)
         {
-            return _dbContext.Set<SendEmailDbo>().FirstOrDefault(x => x.Id == objectId).OrganizationId.Value;
+            return (await _dbContext.Set<SendEmailDbo>().FirstOrDefaultAsync(x => x.Id == objectId)).OrganizationId.Value;
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Core.Base.Repository.CodeBookRepository;
+﻿using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Validator;
 using Core.Constants;
 using Core.DataTypes;
@@ -10,6 +8,7 @@ using Model.Edu.Question;
 using Repository.AnswerRepository;
 using Repository.QuestionRepository;
 using Services.Answer.Dto;
+using System.Threading.Tasks;
 
 namespace Services.Answer.Validator
 {
@@ -19,19 +18,19 @@ namespace Services.Answer.Validator
         ICodeBookRepository<AnswerModeDbo> codeBookRepository
     ) : BaseValidator<AnswerDbo, IAnswerRepository, AnswerCreateDto, AnswerDetailDto, AnswerUpdateDto>(repository), IAnswerValidator
     {
-        private readonly List<AnswerModeDbo> _answerModes = codeBookRepository.GetEntities(false).Result;
+        private readonly ICodeBookRepository<AnswerModeDbo> _answerModes = codeBookRepository;
         private readonly IQuestionRepository _questionRepository = questionRepository;
 
-        public override Result<AnswerDetailDto> IsValid(AnswerCreateDto create)
+        public override async Task<Result> IsValid(AnswerCreateDto create)
         {
             Result<AnswerDetailDto> result = new();
-            QuestionDbo testQuestion = _questionRepository.GetEntity(create.QuestionId);
+            QuestionDbo testQuestion = await _questionRepository.GetEntity(create.QuestionId);
             if (testQuestion == null)
             {
                 result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.QUESTION, MessageItem.NOT_EXISTS));
             }
             if (
-                _answerModes.FirstOrDefault(x => x.Id == testQuestion.AnswerModeId).SystemIdentificator
+                (await _answerModes.GetEntity(false, x => x.Id == testQuestion.AnswerModeId)).SystemIdentificator
                 is AnswerMode.SELECT_MANY
                     or AnswerMode.SELECT_ONE
             )
@@ -41,13 +40,13 @@ namespace Services.Answer.Validator
             return result;
         }
 
-        public override Result<AnswerDetailDto> IsValid(AnswerUpdateDto update)
+        public override async Task<Result<AnswerDetailDto>> IsValid(AnswerUpdateDto update)
         {
             Result<AnswerDetailDto> result = new();
-            AnswerDbo answer = _repository.GetEntity(update.Id);
+            AnswerDbo answer = await _repository.GetEntity(update.Id);
             QuestionDbo question = answer.TestQuestion;
             if (
-                _answerModes.FirstOrDefault(x => x.Id == question.AnswerModeId).SystemIdentificator is AnswerMode.SELECT_MANY or AnswerMode.SELECT_ONE
+                (await _answerModes.GetEntity(false, x => x.Id == question.AnswerModeId)).SystemIdentificator is AnswerMode.SELECT_MANY or AnswerMode.SELECT_ONE
             )
             {
                 IsValidString(update.AnswerText, result, MessageCategory.ANSWER, MessageItem.STRING_IS_EMPTY);

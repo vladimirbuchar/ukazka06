@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using Core.Base.Repository;
+﻿using Core.Base.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
-using Model.Edu.Branch;
 using Model.Link;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Repository.CourseStudentRepository
 {
@@ -40,11 +38,9 @@ namespace Repository.CourseStudentRepository
             ];
         }
 
-        public List<CourseStudentDbo> GetStudentCourse(Guid userId, bool hideFinishCourse)
+        public async Task<List<CourseStudentDbo>> GetStudentCourse(Guid userId, bool hideFinishCourse)
         {
-            List<CourseStudentDbo> courses =
-            [
-                .. _dbContext
+            List<CourseStudentDbo> courses = await _dbContext
                     .Set<CourseStudentDbo>()
                     .Include(x => x.CourseTerm)
                     .ThenInclude(x => x.ClassRoom)
@@ -64,22 +60,22 @@ namespace Repository.CourseStudentRepository
                     .Include(x => x.CourseTerm)
                     .ThenInclude(x => x.TimeTo)
                     .Include(x => x.UserInOrganization)
-                    .Where(x => x.UserInOrganization.UserId == userId)
-            ];
+                    .Where(x => x.UserInOrganization.UserId == userId).ToListAsync();
+
             if (hideFinishCourse)
             {
                 courses = courses.Where(x => x.CourseFinish == false).ToList();
             }
-            return [.. courses.OrderBy(x => x.CourseFinish)];
+            return courses.OrderBy(x => x.CourseFinish).ToList();
         }
 
-        public override Guid GetOrganizationId(Guid objectId)
+        public override async Task<Guid> GetOrganizationId(Guid objectId)
         {
-            return _dbContext
+            return (await _dbContext
                 .Set<CourseStudentDbo>()
                 .Include(x => x.CourseTerm)
                 .ThenInclude(x => x.Course)
-                .FirstOrDefault(x => x.Id == objectId)
+                .FirstOrDefaultAsync(x => x.Id == objectId))
                 .CourseTerm.Course.OrganizationId;
         }
     }

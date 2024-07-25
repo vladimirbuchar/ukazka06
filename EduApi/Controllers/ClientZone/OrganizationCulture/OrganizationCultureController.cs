@@ -1,6 +1,4 @@
-﻿using System;
-using System.Web.Helpers;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
 using Core.Base.Paging;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +8,9 @@ using Services.OrganizationCulture.Filter;
 using Services.OrganizationCulture.Service;
 using Services.OrganizationCulture.Sort;
 using Services.OrganizationRole.Service;
+using System;
+using System.Threading.Tasks;
+using System.Web.Helpers;
 
 namespace EduApi.Controllers.ClientZone.OrganizationCulture
 {
@@ -34,16 +35,16 @@ namespace EduApi.Controllers.ClientZone.OrganizationCulture
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Create(OrganizationCultureCreateDto addCourseDto)
+        public async Task<ActionResult> Create(OrganizationCultureCreateDto addCourseDto)
         {
             try
             {
-                CheckOrganizationPermition(addCourseDto.OrganizationId);
-                return SendResponse(_organizationCultureService.AddObject(addCourseDto, GetLoggedUserId(), GetClientCulture()));
+                await CheckOrganizationPermition(addCourseDto.OrganizationId);
+                return await SendResponse(await _organizationCultureService.AddObject(addCourseDto, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -53,7 +54,7 @@ namespace EduApi.Controllers.ClientZone.OrganizationCulture
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult List(
+        public async Task<ActionResult> List(
             [FromQuery] ListDeletedRequestDto listRequest,
             [FromQuery] OrganizationCultureFilter filter,
             [FromQuery] SortDirection sortDirection,
@@ -63,9 +64,8 @@ namespace EduApi.Controllers.ClientZone.OrganizationCulture
         {
             try
             {
-                CheckOrganizationPermition(listRequest.ParentId);
-                return SendResponse(
-                    _organizationCultureService.GetList(
+                await CheckOrganizationPermition(listRequest.ParentId);
+                var result = await _organizationCultureService.GetList(
                         x => x.OrganizationId == listRequest.ParentId,
                         listRequest.IsDeleted,
                         GetClientCulture(),
@@ -73,12 +73,14 @@ namespace EduApi.Controllers.ClientZone.OrganizationCulture
                         sortColum.ToString(),
                         sortDirection,
                         paging
-                    )
+                    );
+                return await SendResponse(
+                    result
                 );
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -88,17 +90,17 @@ namespace EduApi.Controllers.ClientZone.OrganizationCulture
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Update(OrganizationCultureUpdateDto update)
+        public async Task<ActionResult> Update(OrganizationCultureUpdateDto update)
         {
             try
             {
-                update.OrganizationId = _organizationCultureService.GetOrganizationIdByObjectId(update.Id);
-                CheckOrganizationPermition(update.OrganizationId);
-                return SendResponse(_organizationCultureService.UpdateObject(update, GetLoggedUserId(), GetClientCulture()));
+                update.OrganizationId = await _organizationCultureService.GetOrganizationIdByObjectId(update.Id);
+                await CheckOrganizationPermition(update.OrganizationId);
+                return await SendResponse(await _organizationCultureService.UpdateObject(update, GetLoggedUserId(), GetClientCulture()));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -108,16 +110,16 @@ namespace EduApi.Controllers.ClientZone.OrganizationCulture
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Delete([FromQuery] DeleteDto request)
+        public async Task<ActionResult> Delete([FromQuery] DeleteDto request)
         {
             try
             {
-                CheckOrganizationPermition(_organizationCultureService.GetOrganizationIdByObjectId(request.Id));
-                return SendResponse(_organizationCultureService.DeleteObject(request.Id, GetLoggedUserId()));
+                await CheckOrganizationPermition(await _organizationCultureService.GetOrganizationIdByObjectId(request.Id));
+                return await SendResponse(await _organizationCultureService.DeleteObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -127,16 +129,16 @@ namespace EduApi.Controllers.ClientZone.OrganizationCulture
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Restore([FromQuery] RestoreDto request)
+        public async Task<ActionResult> Restore([FromQuery] RestoreDto request)
         {
             try
             {
-                CheckOrganizationPermition(_organizationCultureService.GetOrganizationIdByObjectId(request.Id));
-                return SendResponse(_organizationCultureService.RestoreObject(request.Id, GetLoggedUserId()));
+                await CheckOrganizationPermition(await _organizationCultureService.GetOrganizationIdByObjectId(request.Id));
+                return await SendResponse(await _organizationCultureService.RestoreObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
     }

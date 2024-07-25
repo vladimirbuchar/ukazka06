@@ -6,5 +6,6 @@ using Services.StudentEvaluation.Dto;
 namespace Services.StudentEvaluation.Validator
 {
     public interface IStudentEvaluationValidator
-        : IBaseValidator<StudentEvaluationDbo, IStudentEvaluationRepository, StudentEvaluationCreateDto, StudentEvaluationDetailDto> { }
+        : IBaseValidatorCreate<StudentEvaluationDbo, IStudentEvaluationRepository, StudentEvaluationCreateDto>
+    { }
 }

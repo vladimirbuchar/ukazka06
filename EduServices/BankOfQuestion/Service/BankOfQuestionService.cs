@@ -1,4 +1,5 @@
 ﻿using Core.Base.Service;
+using Core.Base.Sort;
 using Core.DataTypes;
 using Model.Edu.BankOfQuestions;
 using Model.Edu.Question;
@@ -13,6 +14,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
+using System.Web.Helpers;
 
 namespace Services.BankOfQuestion.Service
 {
@@ -37,17 +40,17 @@ namespace Services.BankOfQuestion.Service
     {
         private readonly IQuestionRepository _questionRepository = questionRepository;
 
-        public override Result DeleteObject(Guid objectId, Guid userId)
+        public override async Task<Result> DeleteObject(Guid objectId, Guid userId)
         {
-            List<QuestionDbo> getQuestionsInBanks = _questionRepository.GetEntities(false, x => x.BankOfQuestionId == objectId).Result;
-            Guid organizationId = _repository.GetEntity(objectId).OrganizationId;
-            Guid defaultBankOfQuestion = _repository.GetEntity(false, x => x.OrganizationId == organizationId && x.IsDefault).Id;
+            List<QuestionDbo> getQuestionsInBanks = await _questionRepository.GetEntities(false, x => x.BankOfQuestionId == objectId);
+            Guid organizationId = (await _repository.GetEntity(objectId)).OrganizationId;
+            Guid defaultBankOfQuestion = (await _repository.GetEntity(false, x => x.OrganizationId == organizationId && x.IsDefault)).Id;
             foreach (QuestionDbo item in getQuestionsInBanks)
             {
                 item.BankOfQuestionId = defaultBankOfQuestion;
-                _ = _questionRepository.UpdateEntity(item, userId);
+                _ = await _questionRepository.UpdateEntity(item, userId);
             }
-            _repository.DeleteEntity(objectId, userId);
+            await _repository.DeleteEntity(objectId, userId);
             return new Result();
         }
 
@@ -68,7 +71,7 @@ namespace Services.BankOfQuestion.Service
             return Expression.Lambda<Func<BankOfQuestionDbo, bool>>(expression, parameter);
         }
 
-        protected override Expression<Func<BankOfQuestionDbo, object>> PrepareSort(string columnName, string culture)
+        protected override List<BaseSort<BankOfQuestionDbo>> PrepareSort(string columnName, string culture, SortDirection sortDirection = SortDirection.Ascending)
         {
             if (columnName == BankOfQuestionSort.Name.ToString())
             {
@@ -85,7 +88,14 @@ namespace Services.BankOfQuestion.Service
                     Expression.Convert(nameProperty, typeof(object)),
                     parameter
                 );
-                return lambda;
+                return
+                [
+                    new BaseSort<BankOfQuestionDbo>()
+                    {
+                        Sort = lambda,
+                        SortDirection = sortDirection
+                    }
+                ];
             }
             return base.PrepareSort(columnName, culture);
         }

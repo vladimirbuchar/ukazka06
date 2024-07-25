@@ -6,6 +6,7 @@ using Repository.CourseMaterialRepository;
 using Repository.CourseTestEvaluationRepository;
 using Repository.TestRepository;
 using Services.CourseTestEvaluation.Dto;
+using System.Threading.Tasks;
 
 namespace Services.CourseTestEvaluation.Validator
 {
@@ -26,14 +27,14 @@ namespace Services.CourseTestEvaluation.Validator
         private readonly ITestRepository _testRepository = testRepository;
         private readonly ICourseMaterialRepository _courseMaterialRepository = courseMaterialRepository;
 
-        public override Result<CourseTestEvaluationDetailDto> IsValid(CourseTestEvaluationCreateDto create)
+        public override async Task<Result> IsValid(CourseTestEvaluationCreateDto create)
         {
             Result<CourseTestEvaluationDetailDto> result = new();
-            if (_testRepository.GetEntity(create.TestId) == null)
+            if (await _testRepository.GetEntity(create.TestId) == null)
             {
                 result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.COURSE_TEST, MessageItem.NOT_EXISTS));
             }
-            if (_courseMaterialRepository.GetEntity(create.MaterialId) == null)
+            if (await _courseMaterialRepository.GetEntity(create.MaterialId) == null)
             {
                 result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.COURSE_MATERIAL, MessageItem.NOT_EXISTS));
             }

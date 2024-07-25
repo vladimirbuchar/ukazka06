@@ -1,6 +1,7 @@
 ﻿using Core.Base.Dto;
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Services.CourseTerm.Dto
 {
@@ -27,6 +28,7 @@ namespace Services.CourseTerm.Dto
         public List<Guid> Lector { get; set; }
         public List<Guid> StudentGroup { get; set; }
         public Guid? OrganizationStudyHourId { get; set; }
+        [JsonIgnore]
         public Guid OrganizationId { get; set; }
     }
 }

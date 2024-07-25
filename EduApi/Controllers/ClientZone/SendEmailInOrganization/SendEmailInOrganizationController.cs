@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.OrganizationRole.Service;
 using Services.SystemService.SendMailService.Dto;
 using Services.SystemService.SendMailService.Service;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EduApi.Controllers.ClientZone.SendMessage
 {
@@ -31,16 +32,17 @@ namespace EduApi.Controllers.ClientZone.SendMessage
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult GetList([FromQuery] ListRequestDto listRequest)
+        public async Task<ActionResult> List([FromQuery] ListRequestDto listRequest)
         {
             try
             {
-                CheckOrganizationPermition(listRequest.ParentId);
-                return SendResponse(_sendMailService.GetList(listRequest.ParentId));
+                await CheckOrganizationPermition(listRequest.ParentId);
+                return await SendResponse(_sendMailService.GetList(listRequest.ParentId));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
+
             }
         }
 
@@ -50,16 +52,16 @@ namespace EduApi.Controllers.ClientZone.SendMessage
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult GetDetail([FromQuery] DetailDto detail)
+        public async Task<ActionResult> Detail([FromQuery] DetailDto detail)
         {
             try
             {
-                CheckOrganizationPermition(_sendMailService.GetOrganizationIdByObjectId(detail.Id));
-                return SendResponse(_sendMailService.GetDetail(detail.Id));
+                await CheckOrganizationPermition(await _sendMailService.GetOrganizationIdByObjectId(detail.Id));
+                return await SendResponse(await _sendMailService.GetDetail(detail.Id));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -69,16 +71,16 @@ namespace EduApi.Controllers.ClientZone.SendMessage
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Update(SendMailUpdateDto update)
+        public async Task<ActionResult> Update(SendMailUpdateDto update)
         {
             try
             {
-                CheckOrganizationPermition(_sendMailService.GetOrganizationIdByObjectId(update.Id));
-                return SendResponse(_sendMailService.Update(update, GetLoggedUserId()));
+                await CheckOrganizationPermition(await _sendMailService.GetOrganizationIdByObjectId(update.Id));
+                return await SendResponse(await _sendMailService.Update(update, GetLoggedUserId()));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
     }

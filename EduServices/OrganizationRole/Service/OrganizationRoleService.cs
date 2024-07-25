@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Core.Base.Service;
+﻿using Core.Base.Service;
 using Model.Edu.OrganizationRole;
-using Model.System;
 using Repository.OrganizationRoleRepository;
 using Repository.PermissionsRepository;
 using Services.OrganizationRole.Convertor;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Services.OrganizationRole.Service
 {
@@ -20,24 +20,23 @@ namespace Services.OrganizationRole.Service
     {
         private readonly IPermissionsRepository _permissionsRepository = permissionsRepository;
 
-        public bool CheckPermition(Guid userId, Guid organizationId, string route, List<string> roles)
+        public async Task<bool> CheckPermition(Guid userId, Guid organizationId, string route, List<string> roles)
         {
             if (roles == null)
             {
                 return false;
             }
 
-            List<PermissionsDbo> permissions = _permissionsRepository
-                .GetEntities(
+            int permissions = await _permissionsRepository
+                .GetTotalCount(
                     false,
                     x =>
                         x.Route.Route == route.Trim('/')
                         && x.OrganizationRole.UserInOrganizations.Any(y => y.OrganizationId == organizationId)
                         && x.OrganizationRole.UserInOrganizations.Any(y => y.UserId == userId)
                         && roles.Contains(x.OrganizationRole.SystemIdentificator)
-                )
-                .Result;
-            return permissions.Count > 0;
+                );
+            return permissions > 0;
         }
     }
 }

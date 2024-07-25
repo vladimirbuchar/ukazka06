@@ -5,6 +5,7 @@ using Model.Edu.StudentGroup;
 using Repository.OrganizationRepository;
 using Repository.StudentGroupRepository;
 using Services.StudentGroup.Dto;
+using System.Threading.Tasks;
 
 namespace Services.StudentGroup.Validator
 {
@@ -14,22 +15,22 @@ namespace Services.StudentGroup.Validator
     {
         private readonly IOrganizationRepository _organizationRepository = organizationRepository;
 
-        public override Result<StudentGroupDetailDto> IsValid(StudentGroupCreateDto create)
+        public override async Task<Result> IsValid(StudentGroupCreateDto create)
         {
             Result<StudentGroupDetailDto> result = new();
-            if (_organizationRepository.GetEntity(create.OrganizationId) == null)
+            if (await _organizationRepository.GetEntity(create.OrganizationId) == null)
             {
                 result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.ORGANIZATION, MessageItem.NOT_EXISTS));
             }
             IsValidString(create.Name, result, MessageCategory.STUDENT_GROUP, MessageItem.STRING_IS_EMPTY);
-            return result;
+            return await Task.FromResult(result);
         }
 
-        public override Result<StudentGroupDetailDto> IsValid(StudentGroupUpdateDto update)
+        public override async Task<Result<StudentGroupDetailDto>> IsValid(StudentGroupUpdateDto update)
         {
             Result<StudentGroupDetailDto> result = new();
             IsValidString(update.Name, result, MessageCategory.STUDENT_GROUP, MessageItem.STRING_IS_EMPTY);
-            return result;
+            return await Task.FromResult(result);
         }
     }
 }

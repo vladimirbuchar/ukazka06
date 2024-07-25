@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Model.Link;
+﻿using Model.Link;
 using Services.OrganizationCulture.Dto;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Services.OrganizationCulture.Convertor
 {
@@ -9,42 +10,42 @@ namespace Services.OrganizationCulture.Convertor
     {
         public OrganizationCultureConvertor() { }
 
-        public OrganizationCultureDbo ConvertToBussinessEntity(OrganizationCultureCreateDto create, string culture)
+        public Task<OrganizationCultureDbo> ConvertToBussinessEntity(OrganizationCultureCreateDto create, string culture)
         {
-            return new OrganizationCultureDbo()
+            return Task.FromResult(new OrganizationCultureDbo()
             {
                 OrganizationId = create.OrganizationId,
                 CultureId = create.CultureId,
                 IsDefault = create.IsDefault
-            };
+            });
         }
 
-        public OrganizationCultureDbo ConvertToBussinessEntity(OrganizationCultureUpdateDto update, OrganizationCultureDbo entity, string culture)
+        public Task<OrganizationCultureDbo> ConvertToBussinessEntity(OrganizationCultureUpdateDto update, OrganizationCultureDbo entity, string culture)
         {
             entity.IsDefault = update.IsDefault;
-            return entity;
+            return Task.FromResult(entity);
         }
 
-        public List<OrganizationCultureListDto> ConvertToWebModel(List<OrganizationCultureDbo> list, string culture)
+        public Task<List<OrganizationCultureListDto>> ConvertToWebModel(List<OrganizationCultureDbo> list, string culture)
         {
-            return list.Select(item => new OrganizationCultureListDto()
-                {
-                    Id = item.Id,
-                    IsDefault = item.IsDefault,
-                    Name = item.Culture.Name,
-                    CultureId = item.CultureId
-                })
-                .ToList();
+            return Task.FromResult(list.Select(item => new OrganizationCultureListDto()
+            {
+                Id = item.Id,
+                IsDefault = item.IsDefault,
+                Name = item.Culture.Name,
+                CultureId = item.CultureId
+            })
+                .ToList());
         }
 
-        public OrganizationCultureDetailDto ConvertToWebModel(OrganizationCultureDbo detail, string culture)
+        public Task<OrganizationCultureDetailDto> ConvertToWebModel(OrganizationCultureDbo detail, string culture)
         {
-            return new OrganizationCultureDetailDto()
+            return Task.FromResult(new OrganizationCultureDetailDto()
             {
                 Id = detail.Id,
                 IsDefault = detail.IsDefault,
                 Name = detail.Culture.Name
-            };
+            });
         }
     }
 }

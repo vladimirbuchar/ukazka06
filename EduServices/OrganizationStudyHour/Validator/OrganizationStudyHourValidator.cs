@@ -1,5 +1,4 @@
-﻿using System;
-using Core.Base.Repository.CodeBookRepository;
+﻿using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Validator;
 using Core.Constants;
 using Core.DataTypes;
@@ -9,6 +8,8 @@ using Model.Edu.OrganizationStudyHour;
 using Repository.OrganizationHoursRepository;
 using Repository.OrganizationRepository;
 using Services.OrganizationStudyHour.Dto;
+using System;
+using System.Threading.Tasks;
 
 namespace Services.OrganizationStudyHour.Validator
 {
@@ -25,7 +26,7 @@ namespace Services.OrganizationStudyHour.Validator
         private readonly IOrganizationRepository _organizationRepository = organizationRepository;
         private readonly ICodeBookRepository<TimeTableDbo> _timeTable = timeTable;
 
-        public override Result<StudyHourDetailDto> IsValid(StudyHourCreateDto create)
+        public override async Task<Result> IsValid(StudyHourCreateDto create)
         {
             Result<StudyHourDetailDto> validate = new();
             Guid activeFromId = Guid.Empty;
@@ -39,23 +40,23 @@ namespace Services.OrganizationStudyHour.Validator
                 _ = Guid.TryParse(create.ActiveToId, out activeToId);
             }
 
-            if (_organizationRepository.GetEntity(create.OrganizationId) == null)
+            if (await _organizationRepository.GetEntity(create.OrganizationId) == null)
             {
                 validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.ORGANIZATION, MessageItem.NOT_EXISTS));
             }
-            if (_timeTable.GetEntity(activeFromId) == null)
+            if (await _timeTable.GetEntity(activeFromId) == null)
             {
                 validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, Constants.TIME_TABLE_FROM, MessageItem.NOT_EXISTS));
             }
 
-            if (_timeTable.GetEntity(activeToId) == null)
+            if (await _timeTable.GetEntity(activeToId) == null)
             {
                 validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, Constants.TIME_TABLE_TO, MessageItem.NOT_EXISTS));
             }
             return validate;
         }
 
-        public override Result<StudyHourDetailDto> IsValid(StudyHourUpdateDto update)
+        public override async Task<Result<StudyHourDetailDto>> IsValid(StudyHourUpdateDto update)
         {
             Result<StudyHourDetailDto> validate = new();
             Guid activeFromId = Guid.Empty;
@@ -69,12 +70,12 @@ namespace Services.OrganizationStudyHour.Validator
                 _ = Guid.TryParse(update.ActiveToId, out activeToId);
             }
 
-            if (_timeTable.GetEntity(activeFromId) == null)
+            if (await _timeTable.GetEntity(activeFromId) == null)
             {
                 validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, Constants.TIME_TABLE_FROM, MessageItem.NOT_EXISTS));
             }
 
-            if (_timeTable.GetEntity(activeToId) == null)
+            if (await _timeTable.GetEntity(activeToId) == null)
             {
                 validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, Constants.TIME_TABLE_TO, MessageItem.NOT_EXISTS));
             }

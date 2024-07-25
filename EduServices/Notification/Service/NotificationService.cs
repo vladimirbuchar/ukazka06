@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Core.Base.Service;
+﻿using Core.Base.Service;
 using Core.Constants;
 using Core.DataTypes;
 using Model.Edu.Notification;
@@ -10,6 +7,10 @@ using Repository.NotificationRepository;
 using Repository.OrganizationRepository;
 using Services.Notification.Convertor;
 using Services.Notification.Dto;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Services.Notification.Service
 {
@@ -23,10 +24,14 @@ namespace Services.Notification.Service
     {
         private readonly IOrganizationRepository _organizationRepository = organizationRepository;
 
-        public List<MyNotificationListDto> GetMyNotification(Guid userId, bool onlyNew)
+        public async Task<List<MyNotificationListDto>> GetMyNotification(Guid userId, bool onlyNew)
         {
             List<NotificationDbo> notifications = [];
-            notifications = [.. _repository.GetEntities(false, x => x.UserId == userId, null, x => x.AddDate).Result];
+            notifications = [.. await _repository.GetEntities(false, x => x.UserId == userId, null, [
+                new Core.Base.Sort.BaseSort<NotificationDbo>(){
+                    Sort = x => x.AddDate
+                }
+            ])];
             if (onlyNew)
             {
                 notifications = notifications.Where(x => x.IsNew).ToList();
@@ -35,20 +40,20 @@ namespace Services.Notification.Service
             {
                 if (item.SystemIdentificator == NotificationType.INVITE_TO_ORGANIZATION)
                 {
-                    OrganizationDbo getOrganizationDetail = _organizationRepository.GetEntity(false, x => x.Id == item.OrganizationId);
+                    OrganizationDbo getOrganizationDetail = await _organizationRepository.GetEntity(false, x => x.Id == item.OrganizationId);
                     item.Data.Add("{organizationName}", getOrganizationDetail.Name);
                 }
             }
             return _convertor.ConvertToWebModel(notifications);
         }
 
-        public Result SetIsNewNotificationToFalse(Guid userId)
+        public async Task<Result> SetIsNewNotificationToFalse(Guid userId)
         {
-            List<NotificationDbo> notificationDbo = _repository.GetEntities(false, x => x.UserId == userId && x.IsNew == true).Result;
+            List<NotificationDbo> notificationDbo = await _repository.GetEntities(false, x => x.UserId == userId && x.IsNew == true);
             foreach (NotificationDbo item in notificationDbo)
             {
                 item.IsNew = false;
-                _ = _repository.UpdateEntity(item, userId);
+                _ = await _repository.UpdateEntity(item, userId);
             }
             return new Result();
         }

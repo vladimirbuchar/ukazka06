@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Model.Edu.OrganizationRole;
+﻿using Model.Edu.OrganizationRole;
 using Model.Link;
 using Services.UserInOrganization.Dto;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Services.UserInOrganization.Convertor
 {
@@ -11,7 +12,7 @@ namespace Services.UserInOrganization.Convertor
     {
         public UserInOrganizationConvertor() { }
 
-        public List<UserInOrganizationListDto> ConvertToWebModel(List<UserInOrganizationDbo> getAllUserInOrganizations, string culture = "")
+        public Task<List<UserInOrganizationListDto>> ConvertToWebModel(List<UserInOrganizationDbo> getAllUserInOrganizations, string culture = "")
         {
             List<UserInOrganizationListDto> data = [];
             foreach (UserInOrganizationDbo item in getAllUserInOrganizations)
@@ -37,27 +38,30 @@ namespace Services.UserInOrganization.Convertor
                     find.UserRole.Add(item.OrganizationRole.SystemIdentificator);
                 }
             }
-            return data;
+            return Task.FromResult(data);
         }
 
-        public List<OrganizationRoleListDto> ConvertToWebModel(List<OrganizationRoleDbo> organizationRoles)
+
+
+        public Task<UserInOrganizationDbo> ConvertToBussinessEntity(UserInOrganizationCreateDto create, string culture)
         {
-            return organizationRoles
-                .Select(item => new OrganizationRoleListDto() { RoleIndentificator = item.SystemIdentificator, RoleId = item.Id })
-                .ToList();
+            return Task.FromResult(new UserInOrganizationDbo() { });
         }
 
-        public UserInOrganizationDbo ConvertToBussinessEntity(UserInOrganizationCreateDto create, string culture)
-        {
-            return new UserInOrganizationDbo() { };
-        }
-
-        public UserInOrganizationDetailDto ConvertToWebModel(UserInOrganizationDbo detail, string culture)
+        public Task<UserInOrganizationDetailDto> ConvertToWebModel(UserInOrganizationDbo detail, string culture)
         {
             throw new NotImplementedException();
         }
 
-        public UserInOrganizationDbo ConvertToBussinessEntity(UserInOrganizationUpdateDto update, UserInOrganizationDbo entity, string culture)
+
+        public Task<List<OrganizationRoleListDto>> ConvertToWebModel(List<OrganizationRoleDbo> organizationRoles)
+        {
+            return Task.FromResult(organizationRoles
+               .Select(item => new OrganizationRoleListDto() { RoleIndentificator = item.SystemIdentificator, RoleId = item.Id })
+               .ToList());
+        }
+
+        public Task<UserInOrganizationDbo> ConvertToBussinessEntity(UserInOrganizationUpdateDto update, UserInOrganizationDbo entity, string culture)
         {
             throw new NotImplementedException();
         }

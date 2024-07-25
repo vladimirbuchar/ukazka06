@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using Core.Base.Filter;
+﻿using Core.Base.Filter;
 using Core.Base.Service;
 using Model.Edu.CourseMaterial;
 using Services.CourseMaterial.Dto;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Services.CourseMaterial.Service
 {
@@ -18,7 +19,7 @@ namespace Services.CourseMaterial.Service
             FilterRequest
         >
     {
-        List<CourseMaterialFileListDto> GetFiles(Guid courseMaterialId);
-        List<CourseMaterialFileListDto> GetFilesStudent(Guid courseId);
+        Task<List<CourseMaterialFileListDto>> GetFiles(Guid courseMaterialId);
+        Task<List<CourseMaterialFileListDto>> GetFilesStudent(Guid courseId);
     }
 }

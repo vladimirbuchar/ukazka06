@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using Core.Base.Service;
+﻿using Core.Base.Service;
 using Core.DataTypes;
 using Services.Notification.Dto;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Services.Notification.Service
 {
     public interface INotificationService : IBaseService
     {
-        public List<MyNotificationListDto> GetMyNotification(Guid userId, bool onlyNew);
-        Result SetIsNewNotificationToFalse(Guid userId);
+        Task<List<MyNotificationListDto>> GetMyNotification(Guid userId, bool onlyNew);
+        Task<Result> SetIsNewNotificationToFalse(Guid userId);
     }
 }

@@ -5,6 +5,7 @@ using Model.Edu.CourseMaterial;
 using Repository.CourseMaterialRepository;
 using Repository.OrganizationRepository;
 using Services.CourseMaterial.Dto;
+using System.Threading.Tasks;
 
 namespace Services.CourseMaterial.Validator
 {
@@ -16,22 +17,22 @@ namespace Services.CourseMaterial.Validator
     {
         private readonly IOrganizationRepository _organizationRepository = organizationRepository;
 
-        public override Result<CourseMaterialDetailDto> IsValid(CourseMaterialCreateDto create)
+        public override async Task<Result> IsValid(CourseMaterialCreateDto create)
         {
             Result<CourseMaterialDetailDto> result = new();
             IsValidString(create.Name, result, MessageCategory.COURSE_MATERIAL, MessageItem.STRING_IS_EMPTY);
-            if (_organizationRepository.GetEntity(create.OrganizationId) == null)
+            if (await _organizationRepository.GetEntity(create.OrganizationId) == null)
             {
                 result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.ORGANIZATION, MessageItem.NOT_EXISTS));
             }
             return result;
         }
 
-        public override Result<CourseMaterialDetailDto> IsValid(CourseMaterialUpdateDto update)
+        public override async Task<Result<CourseMaterialDetailDto>> IsValid(CourseMaterialUpdateDto update)
         {
             Result<CourseMaterialDetailDto> result = new();
             IsValidString(update.Name, result, MessageCategory.COURSE_MATERIAL, MessageItem.STRING_IS_EMPTY);
-            return result;
+            return await Task.FromResult(result);
         }
     }
 }

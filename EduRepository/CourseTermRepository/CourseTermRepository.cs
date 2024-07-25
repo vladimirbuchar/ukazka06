@@ -1,10 +1,11 @@
-﻿using System;
-using System.Linq;
-using Core.Base.Repository;
+﻿using Core.Base.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
 using Model.Edu.CourseTerm;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Repository.CourseTermRepository
 {
@@ -12,9 +13,9 @@ namespace Repository.CourseTermRepository
         : BaseRepository<CourseTermDbo>(dbContext, memoryCache),
             ICourseTermRepository
     {
-        public override Guid GetOrganizationId(Guid objectId)
+        public override async Task<Guid> GetOrganizationId(Guid objectId)
         {
-            return _dbContext.Set<CourseTermDbo>().Include(x => x.Course).FirstOrDefault(x => x.Id == objectId).Course.OrganizationId;
+            return (await _dbContext.Set<CourseTermDbo>().Include(x => x.Course).FirstOrDefaultAsync(x => x.Id == objectId)).Course.OrganizationId;
         }
 
         protected override IQueryable<CourseTermDbo> PrepareDetailQuery()

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Core.Base.Filter;
+﻿using Core.Base.Filter;
 using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Repository.FileRepository;
 using Core.Base.Service;
@@ -12,6 +9,10 @@ using Repository.CourseRepository;
 using Services.CourseMaterial.Convertor;
 using Services.CourseMaterial.Dto;
 using Services.CourseMaterial.Validator;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Services.CourseMaterial.Service
 {
@@ -39,15 +40,17 @@ namespace Services.CourseMaterial.Service
     {
         private readonly ICourseRepository _courseRepository = courseRepository;
 
-        public List<CourseMaterialFileListDto> GetFiles(Guid courseMaterialId)
+        public async Task<List<CourseMaterialFileListDto>> GetFiles(Guid courseMaterialId)
         {
-            return _convertor.ConvertToWebModel(_repository.GetEntity(courseMaterialId).CourseMaterialFileRepositories.ToList());
+            CourseMaterialDbo data = await _repository.GetEntity(courseMaterialId);
+
+            return await _convertor.ConvertToWebModel(data.CourseMaterialFileRepositories.ToList());
         }
 
-        public List<CourseMaterialFileListDto> GetFilesStudent(Guid courseId)
+        public async Task<List<CourseMaterialFileListDto>> GetFilesStudent(Guid courseId)
         {
-            Guid? courseMaterialId = _courseRepository.GetEntity(courseId).CourseMaterialId;
-            return courseMaterialId != null ? GetFiles(courseMaterialId.Value) : null;
+            Guid? courseMaterialId = (await _courseRepository.GetEntity(courseId)).CourseMaterialId;
+            return courseMaterialId != null ? await GetFiles(courseMaterialId.Value) : null;
         }
     }
 }

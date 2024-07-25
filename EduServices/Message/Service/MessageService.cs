@@ -1,4 +1,5 @@
 ﻿using Core.Base.Service;
+using Core.Base.Sort;
 using Model.CodeBook;
 using Model.Edu.Branch;
 using Model.Edu.ClassRoom;
@@ -10,8 +11,10 @@ using Services.Message.Filter;
 using Services.Message.Sort;
 using Services.Message.Validator;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Web.Helpers;
 
 namespace Services.Message.Service
 {
@@ -55,7 +58,7 @@ namespace Services.Message.Service
                 || oldVersion.SendMessageTypeId != oldVersion.SendMessageTypeId;
         }
 
-        protected override Expression<Func<MessageDbo, object>> PrepareSort(string columnName, string culture)
+        protected override List<BaseSort<MessageDbo>> PrepareSort(string columnName, string culture, SortDirection sortDirection = SortDirection.Ascending)
         {
             if (columnName == MessageSort.Name.ToString())
             {
@@ -72,7 +75,13 @@ namespace Services.Message.Service
                     Expression.Convert(nameProperty, typeof(object)),
                     parameter
                 );
-                return lambda;
+                return
+                [
+                    new BaseSort<MessageDbo>()
+                    {
+                        Sort =lambda, SortDirection = sortDirection
+                    }
+                ];
             }
             else if (columnName == MessageSort.SendMessageType.ToString())
             {
@@ -83,7 +92,13 @@ namespace Services.Message.Service
                     Expression.Convert(nameProperty, typeof(object)),
                     parameter
                 );
-                return lambda;
+                return
+                [
+                    new BaseSort<MessageDbo>()
+                    {
+                        Sort =lambda, SortDirection = sortDirection
+                    }
+                ];
             }
             return base.PrepareSort(columnName, culture);
         }

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace EduApi.Controllers.ClientZone
 {
@@ -47,11 +48,11 @@ namespace EduApi.Controllers.ClientZone
         /// <param name="accessToken"></param>
         /// <param name="organizationId"></param>
         /// <param name="operationType"></param>
-        protected void CheckOrganizationPermition(Guid organizationId)
+        protected async Task CheckOrganizationPermition(Guid organizationId)
         {
             if (
                 _organizationRoleService != null
-                && !_organizationRoleService.CheckPermition(
+                && !await _organizationRoleService.CheckPermition(
                     GetLoggedUserId(),
                     organizationId,
                     Request.Path,

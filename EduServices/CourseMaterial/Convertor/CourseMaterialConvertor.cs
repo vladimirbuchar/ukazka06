@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Core.Base.Repository.CodeBookRepository;
+﻿using Core.Base.Repository.CodeBookRepository;
 using Core.Constants;
 using Microsoft.Extensions.Configuration;
 using Model.CodeBook;
 using Model.Edu.CourseMaterial;
 using Services.CourseMaterial.Dto;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Services.CourseMaterial.Convertor
 {
@@ -14,31 +15,30 @@ namespace Services.CourseMaterial.Convertor
         private readonly IConfiguration _configuration = configuration;
         private readonly List<CultureDbo> _cultureList = codeBookRepository.GetEntities(false).Result;
 
-        public List<CourseMaterialListDto> ConvertToWebModel(List<CourseMaterialDbo> getCourseMaterialInOrganizations, string culture)
+        public Task<List<CourseMaterialListDto>> ConvertToWebModel(List<CourseMaterialDbo> getCourseMaterialInOrganizations, string culture)
         {
-            return getCourseMaterialInOrganizations
+            return Task.FromResult(getCourseMaterialInOrganizations
                 .Select(x => new CourseMaterialListDto()
                 {
-                    Description = x.CourseMaterialTranslation.FindTranslation(culture)?.Description,
                     Name = x.CourseMaterialTranslation.FindTranslation(culture)?.Name,
                     Id = x.Id
                 })
-                .ToList();
+                .ToList());
         }
 
-        public CourseMaterialDetailDto ConvertToWebModel(CourseMaterialDbo getCourseMaterialDetail, string culture)
+        public Task<CourseMaterialDetailDto> ConvertToWebModel(CourseMaterialDbo getCourseMaterialDetail, string culture)
         {
-            return new CourseMaterialDetailDto()
+            return Task.FromResult(new CourseMaterialDetailDto()
             {
                 Description = getCourseMaterialDetail.CourseMaterialTranslation.FindTranslation(culture)?.Description,
                 Id = getCourseMaterialDetail.Id,
                 Name = getCourseMaterialDetail.CourseMaterialTranslation.FindTranslation(culture)?.Name,
-            };
+            });
         }
 
-        public List<CourseMaterialFileListDto> ConvertToWebModel(List<CourseMaterialFileRepositoryDbo> getFiles)
+        public Task<List<CourseMaterialFileListDto>> ConvertToWebModel(List<CourseMaterialFileRepositoryDbo> getFiles)
         {
-            return getFiles
+            return Task.FromResult(getFiles
                 .Select(x => new CourseMaterialFileListDto()
                 {
                     FileName = x.FileName,
@@ -47,10 +47,10 @@ namespace Services.CourseMaterial.Convertor
                     OriginalFileName = x.OriginalFileName,
                     Url = string.Format("{0}{1}/{2}", _configuration.GetSection(ConfigValue.FILE_SERVER_URL).Value, x.CourseMaterialId, x.FileName)
                 })
-                .ToList();
+                .ToList());
         }
 
-        public CourseMaterialDbo ConvertToBussinessEntity(CourseMaterialCreateDto create, string culture)
+        public Task<CourseMaterialDbo> ConvertToBussinessEntity(CourseMaterialCreateDto create, string culture)
         {
             CourseMaterialDbo material = new() { OrganizationId = create.OrganizationId };
             material.CourseMaterialTranslation = material.CourseMaterialTranslation.PrepareTranslation(
@@ -59,10 +59,10 @@ namespace Services.CourseMaterial.Convertor
                 culture,
                 _cultureList
             );
-            return material;
+            return Task.FromResult(material);
         }
 
-        public CourseMaterialDbo ConvertToBussinessEntity(CourseMaterialUpdateDto update, CourseMaterialDbo entity, string culture)
+        public Task<CourseMaterialDbo> ConvertToBussinessEntity(CourseMaterialUpdateDto update, CourseMaterialDbo entity, string culture)
         {
             entity.CourseMaterialTranslation = entity.CourseMaterialTranslation.PrepareTranslation(
                 update.Name,
@@ -70,7 +70,7 @@ namespace Services.CourseMaterial.Convertor
                 culture,
                 _cultureList
             );
-            return entity;
+            return Task.FromResult(entity);
         }
     }
 }

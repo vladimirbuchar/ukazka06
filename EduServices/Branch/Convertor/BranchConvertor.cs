@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Core.Base.Repository.CodeBookRepository;
+﻿using Core.Base.Repository.CodeBookRepository;
 using Model.CodeBook;
 using Model.Edu.Branch;
 using Services.Branch.Dto;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Services.Branch.Convertor
 {
@@ -11,7 +12,7 @@ namespace Services.Branch.Convertor
     {
         private readonly List<CultureDbo> _cultureList = codeBookRepository.GetEntities(false).Result;
 
-        public BranchDbo ConvertToBussinessEntity(BranchCreateDto addBranchDto, string culture)
+        public Task<BranchDbo> ConvertToBussinessEntity(BranchCreateDto addBranchDto, string culture)
         {
             BranchDbo branch =
                 new()
@@ -35,10 +36,10 @@ namespace Services.Branch.Convertor
                 culture,
                 _cultureList
             );
-            return branch;
+            return Task.FromResult(branch);
         }
 
-        public BranchDbo ConvertToBussinessEntity(BranchUpdateDto updateBranchDto, BranchDbo entity, string culture)
+        public Task<BranchDbo> ConvertToBussinessEntity(BranchUpdateDto updateBranchDto, BranchDbo entity, string culture)
         {
             entity.City = updateBranchDto.City;
             entity.Region = updateBranchDto.Region;
@@ -56,12 +57,12 @@ namespace Services.Branch.Convertor
                 _cultureList
             );
             entity.IsMainBranch = updateBranchDto.IsMainBranch;
-            return entity;
+            return Task.FromResult(entity);
         }
 
-        public List<BranchListDto> ConvertToWebModel(List<BranchDbo> getAllBranchInOrganizations, string culture)
+        public Task<List<BranchListDto>> ConvertToWebModel(List<BranchDbo> getAllBranchInOrganizations, string culture)
         {
-            return getAllBranchInOrganizations
+            return Task.FromResult(getAllBranchInOrganizations
                 .Select(item => new BranchListDto()
                 {
                     City = item.City,
@@ -78,12 +79,12 @@ namespace Services.Branch.Convertor
                     Id = item.Id,
                     IsMainBranch = item.IsMainBranch
                 })
-                .ToList();
+                .ToList());
         }
 
-        public BranchDetailDto ConvertToWebModel(BranchDbo getBranchDetail, string culture)
+        public Task<BranchDetailDto> ConvertToWebModel(BranchDbo getBranchDetail, string culture)
         {
-            return new BranchDetailDto()
+            return Task.FromResult(new BranchDetailDto()
             {
                 City = getBranchDetail.City,
                 CountryId = getBranchDetail.CountryId,
@@ -98,7 +99,7 @@ namespace Services.Branch.Convertor
                 WWW = getBranchDetail.WWW,
                 Id = getBranchDetail.Id,
                 IsMainBranch = getBranchDetail.IsMainBranch
-            };
+            });
         }
     }
 }

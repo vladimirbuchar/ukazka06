@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Core.Constants;
+﻿using Core.Constants;
 using Microsoft.Extensions.Configuration;
 using Model.Edu.Note;
 using Services.Note.Dto;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Services.Note.Convertor
 {
@@ -15,46 +16,46 @@ namespace Services.Note.Convertor
             ConfigValue.NOTE
         );
 
-        public NoteDbo ConvertToBussinessEntity(NoteCreateDto addNoteDto, string culture)
+        public Task<NoteDbo> ConvertToBussinessEntity(NoteCreateDto addNoteDto, string culture)
         {
-            return new NoteDbo()
+            return Task.FromResult(new NoteDbo()
             {
                 CourseId = addNoteDto.CourseId,
                 NoteTypeId = addNoteDto.NoteTypeId,
                 Text = addNoteDto.Text,
                 NoteName = addNoteDto.NoteName
-            };
+            });
         }
 
-        public NoteDbo ConvertToBussinessEntity(NoteUpdateDto updateNoteDto, NoteDbo entity, string culture)
+        public Task<NoteDbo> ConvertToBussinessEntity(NoteUpdateDto updateNoteDto, NoteDbo entity, string culture)
         {
             entity.Text = updateNoteDto.Text;
             entity.NoteName = updateNoteDto.NoteName;
-            return entity;
+            return Task.FromResult(entity);
         }
 
-        public List<NoteListDto> ConvertToWebModel(List<NoteDbo> getMyNotes, string culture)
+        public Task<List<NoteListDto>> ConvertToWebModel(List<NoteDbo> getMyNotes, string culture)
         {
-            return getMyNotes
+            return Task.FromResult(getMyNotes
                 .Select(x => new NoteListDto()
                 {
                     Id = x.Id,
                     NoteName = x.NoteName,
                     NoteType = x.NoteType.SystemIdentificator,
                 })
-                .ToList();
+                .ToList());
         }
 
-        public NoteDetailDto ConvertToWebModel(NoteDbo getNoteDetail, string culture)
+        public Task<NoteDetailDto> ConvertToWebModel(NoteDbo getNoteDetail, string culture)
         {
-            return new NoteDetailDto()
+            return Task.FromResult(new NoteDetailDto()
             {
                 Id = getNoteDetail.Id,
                 NoteName = getNoteDetail.NoteName,
                 NoteType = getNoteDetail.NoteType.SystemIdentificator,
                 Text = getNoteDetail.Text,
                 FilePath = string.Format("{0}{1}.png", _fileRepositoryPath, getNoteDetail.FileName)
-            };
+            });
         }
     }
 }

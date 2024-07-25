@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
 using Core.DataTypes;
 using EduApi.Controllers.ClientZone.Note;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +6,9 @@ using Microsoft.Extensions.Logging;
 using Services.Chat.Dto;
 using Services.Chat.Service;
 using Services.OrganizationRole.Service;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EduApi.Controllers.ClientZone.Chat
 {
@@ -28,7 +29,7 @@ namespace EduApi.Controllers.ClientZone.Chat
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Create(ChatItemCreateDto addChatItemDto)
+        public Task<ActionResult> Create(ChatItemCreateDto addChatItemDto)
         {
             try
             {
@@ -46,17 +47,16 @@ namespace EduApi.Controllers.ClientZone.Chat
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult List([FromQuery] ListRequestDto request)
+        public async Task<ActionResult> List([FromQuery] ListRequestDto request)
         {
             try
             {
-                return SendResponse(
-                    _chatService.GetList(x => x.UserId == GetLoggedUserId() && x.CourseTermId == request.ParentId, false, GetClientCulture())
-                );
+                var result = await _chatService.GetList(x => x.UserId == GetLoggedUserId() && x.CourseTermId == request.ParentId, false, GetClientCulture());
+                return await SendResponse(result);
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -66,7 +66,7 @@ namespace EduApi.Controllers.ClientZone.Chat
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Update(ChatItemUpdateDto updateChatItemDto)
+        public Task<ActionResult> Update(ChatItemUpdateDto updateChatItemDto)
         {
             try
             {
@@ -84,7 +84,7 @@ namespace EduApi.Controllers.ClientZone.Chat
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Delete([FromQuery] DeleteDto request)
+        public Task<ActionResult> Delete([FromQuery] DeleteDto request)
         {
             try
             {

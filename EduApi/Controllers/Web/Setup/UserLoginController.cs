@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using Core.DataTypes;
+﻿using Core.DataTypes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
-using Services.Permissions.Service;
 using Services.Route.Service;
 using Services.Setup.Dto;
 using Services.Setup.Service;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EduApi.Controllers.Web.UserLogin
 {
@@ -20,7 +20,6 @@ namespace EduApi.Controllers.Web.UserLogin
         public SetupController(
             ISetupService userService,
             ILogger<SetupController> logger,
-            IPermissionsService permissionsService,
             IRouteService routeService,
             IEnumerable<EndpointDataSource> endpointSources
         )
@@ -34,15 +33,15 @@ namespace EduApi.Controllers.Web.UserLogin
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [AllowAnonymous]
-        public ActionResult CreateAdministratorUser()
+        public async Task<ActionResult> CreateAdministratorUser()
         {
             try
             {
-                return SendResponse(_setupService.CreateAdministratorUser());
+                return await SendResponse(await _setupService.CreateAdministratorUser());
             }
             catch (Exception ex)
             {
-                return SendSystemError(ex);
+                return await SendSystemError(ex);
             }
         }
 
@@ -52,19 +51,21 @@ namespace EduApi.Controllers.Web.UserLogin
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult ImportDefaultPermissions([FromQuery] SetupLoginDto setupLogin, [FromQuery] bool delete = false)
+        public async Task<ActionResult> ImportDefaultPermissions([FromQuery] SetupLoginDto setupLogin, [FromQuery] bool delete = false)
         {
             try
             {
-                if (_setupService.CheckUser(setupLogin))
+                if (await _setupService.CheckUser(setupLogin))
                 {
-                    return SendResponse(_setupService.ImportDefaultPermitions(delete));
+                    return await SendResponse(await _setupService.ImportDefaultPermitions(delete));
                 }
-                return BadRequest();
+
+                return await SendResponse(null);
+
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -74,19 +75,19 @@ namespace EduApi.Controllers.Web.UserLogin
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult RegisterAllEndPoints([FromQuery] SetupLoginDto setupLogin)
+        public async Task<ActionResult> RegisterAllEndPoints([FromQuery] SetupLoginDto setupLogin)
         {
             try
             {
-                if (_setupService.CheckUser(setupLogin))
+                if (await _setupService.CheckUser(setupLogin))
                 {
-                    _setupService.RegisterAllEndpoints();
+                    await _setupService.RegisterAllEndpoints();
                 }
-                return BadRequest();
+                return await SendResponse(true);
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
     }

@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
-using Core.Base.Service;
+﻿using Core.Base.Service;
 using Services.Page.Dto;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Services.Page.Service
 {
     public interface IPageService : IBaseService
     {
-        List<PriceListDto> PriceList();
+        Task<List<PriceListDto>> PriceList();
     }
 }

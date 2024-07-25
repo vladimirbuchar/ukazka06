@@ -1,9 +1,10 @@
-﻿using System;
-using Core.Base.Filter;
+﻿using Core.Base.Filter;
 using Core.Base.Service;
 using Core.DataTypes;
 using Model.Edu.CourseLessonItem;
 using Services.CourseLessonItem.Dto;
+using System;
+using System.Threading.Tasks;
 
 namespace Services.CourseLessonItem.Service
 {
@@ -18,6 +19,6 @@ namespace Services.CourseLessonItem.Service
             FilterRequest
         >
     {
-        Result UpdatePositionCourseLessonItem(CourseLessonItemUpdatePositionDto updatePositionCourseLessonItem, Guid userId);
+        Task<Result> UpdatePositionCourseLessonItem(CourseLessonItemUpdatePositionDto updatePositionCourseLessonItem, Guid userId);
     }
 }

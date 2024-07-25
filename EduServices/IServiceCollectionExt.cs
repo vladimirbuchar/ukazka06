@@ -1,6 +1,5 @@
 ﻿using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Repository.FileRepository;
-using EduServices.User.Validator;
 using Integration.HttpClient;
 using Integration.MailKitIntegration;
 using Integration.PdfSharpIntegration;
@@ -116,9 +115,6 @@ using Services.OrganizationStudyHour.Convertor;
 using Services.OrganizationStudyHour.Service;
 using Services.OrganizationStudyHour.Validator;
 using Services.Page.Service;
-using Services.Permissions.Convertor;
-using Services.Permissions.Service;
-using Services.Permissions.Validator;
 using Services.Question.Convertor;
 using Services.Question.Service;
 using Services.Question.Validator;
@@ -139,14 +135,9 @@ using Services.SystemService.SendMailService.Convertor;
 using Services.SystemService.SendMailService.Service;
 using Services.Test.Convertor;
 using Services.Test.Service;
-using Services.User.Convertor;
-using Services.User.Service;
-using Services.User.Validator;
 using Services.UserInOrganization.Convertor;
 using Services.UserInOrganization.Service;
 using Services.UserInOrganization.Validator;
-using Services.UserProfile.Convertor;
-using Services.UserProfile.Service;
 
 namespace Services
 {
@@ -160,6 +151,7 @@ namespace Services
             _ = service.AddScoped<ICourseTestEvaluationValidator, CourseTestEvaluationValidator>();
         }
 
+        [System.Obsolete]
         public static void RegistrationStudentInGroup(this IServiceCollection service)
         {
             _ = service.AddScoped<IStudentInGroupRepository, StudentInGroupRepository>();
@@ -169,6 +161,7 @@ namespace Services
             _ = service.AddScoped<IStudentInGroupCourseTermRepository, StudentInGroupCourseTermRepository>();
         }
 
+        [System.Obsolete]
         public static void RegistrationOrganizationCulture(this IServiceCollection service)
         {
             _ = service.AddScoped<IOrganizationCultureService, OrganizationCultureService>();
@@ -184,6 +177,7 @@ namespace Services
             _ = service.AddScoped<ICourseTermDateRepository, CourseTermDateRepository>();
         }
 
+        [System.Obsolete]
         public static void RegistrationOrganizationStudyHour(this IServiceCollection service)
         {
             _ = service.AddScoped<IOrganizationStudyHourService, OrganizationStudyHourService>();
@@ -213,12 +207,11 @@ namespace Services
             _ = service.AddScoped<IHttpClient, HttpClient>();
         }
 
+        [System.Obsolete]
         public static void RegistrationUser(this IServiceCollection service)
         {
-            _ = service.AddScoped<IUserService, UserService>();
             _ = service.AddScoped<IUserRepository, UserRepository>();
-            _ = service.AddScoped<IUserConvertor, UserConvertor>();
-            _ = service.AddScoped<IUserValidator, UserValidator>();
+
         }
 
         public static void RegistrationRole(this IServiceCollection service)
@@ -249,6 +242,7 @@ namespace Services
             _ = service.AddScoped<IOrganizationValidator, OrganizationValidator>();
         }
 
+        [System.Obsolete]
         public static void RegistrationIUserInOrganization(this IServiceCollection service)
         {
             _ = service.AddScoped<IUserInOrganizationService, UserInOrganizationService>();
@@ -263,6 +257,7 @@ namespace Services
             _ = service.AddScoped<ILicenseChangeRepository, LicenseChangeRepository>();
         }
 
+        [System.Obsolete]
         public static void RegisterBranch(this IServiceCollection service)
         {
             _ = service.AddScoped<IBranchRepository, BranchRepository>();
@@ -279,6 +274,7 @@ namespace Services
             _ = service.AddScoped<ICourseValidator, CourseValidator>();
         }
 
+        [System.Obsolete]
         public static void RegistrationClassRoom(this IServiceCollection service)
         {
             _ = service.AddScoped<IClassRoomService, ClassRoomService>();
@@ -287,6 +283,7 @@ namespace Services
             _ = service.AddScoped<IClassRoomValidator, ClassRoomValidator>();
         }
 
+        [System.Obsolete]
         public static void RegistrationCourseTerm(this IServiceCollection service)
         {
             _ = service.AddScoped<ICourseTermConvertor, CourseTermConvertor>();
@@ -300,6 +297,7 @@ namespace Services
             _ = service.AddScoped<ICourseLectorRepository, CourseLectorRepository>();
         }
 
+        [System.Obsolete]
         public static void RegistrionCourseStudent(this IServiceCollection service)
         {
             _ = service.AddScoped<ICourseTermStudentService, CourseTermStudentService>();
@@ -415,6 +413,7 @@ namespace Services
             _ = service.AddScoped<ICourseMaterialValidator, CourseMaterialValidator>();
         }
 
+        [System.Obsolete]
         public static void RegisterNote(this IServiceCollection service)
         {
             _ = service.AddScoped<INoteService, NoteService>();
@@ -469,8 +468,7 @@ namespace Services
 
         public static void RegistrationUserProfile(this IServiceCollection service)
         {
-            _ = service.AddScoped<IUserProfileService, UserProfileService>();
-            _ = service.AddScoped<IUserProfileConvertor, UserProfileConvertor>();
+
         }
 
         public static void RegistrationRoute(this IServiceCollection service)
@@ -484,9 +482,7 @@ namespace Services
         public static void RegistrationPermissions(this IServiceCollection service)
         {
             _ = service.AddScoped<IPermissionsRepository, PermissionsRepository>();
-            _ = service.AddScoped<IPermissionsService, PermissionsService>();
-            _ = service.AddScoped<IPermissionsConvertor, PermissionsConvertor>();
-            _ = service.AddScoped<IPermissionsValidator, PermissionsValidator>();
+
         }
 
         public static void RegistrationSetup(this IServiceCollection service)

@@ -7,6 +7,7 @@ using Model.Link;
 using Repository.OrganizationCultureRepository;
 using Repository.OrganizationRepository;
 using Services.OrganizationCulture.Dto;
+using System.Threading.Tasks;
 
 namespace Services.OrganizationCulture.Validator
 {
@@ -27,14 +28,14 @@ namespace Services.OrganizationCulture.Validator
         private readonly IOrganizationRepository _organizationRepository = organizationRepository;
         private readonly ICodeBookRepository<CultureDbo> _culture = culture;
 
-        public override Result<OrganizationCultureDetailDto> IsValid(OrganizationCultureCreateDto create)
+        public override async Task<Result> IsValid(OrganizationCultureCreateDto create)
         {
             Result<OrganizationCultureDetailDto> validate = new();
-            if (_organizationRepository.GetEntity(create.OrganizationId) == null)
+            if (await _organizationRepository.GetEntity(create.OrganizationId) == null)
             {
                 validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.ORGANIZATION, MessageItem.NOT_EXISTS));
             }
-            if (_culture.GetEntity(create.CultureId) == null)
+            if (await _culture.GetEntity(create.CultureId) == null)
             {
                 validate.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.CULTURE, MessageItem.NOT_EXISTS));
             }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Core.Base.HangfireJob;
+﻿using Core.Base.HangfireJob;
 using Core.DataTypes;
 using Integration.MailKitIntegration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,23 +6,26 @@ using Model.Edu.OrganizationSetting;
 using Model.Edu.SendEmail;
 using Repository.OrganizationSettingRepository;
 using Repository.SendEmailRepository;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Services.HangfireJob
 {
     public class SendEmailJob(IServiceScopeFactory serviceScopeFactory) : Hangfire(serviceScopeFactory)
     {
-        public override void Execute()
+        public override async void Execute()
         {
             ISendEmailRepository _repository = _scope.ServiceProvider.GetRequiredService<ISendEmailRepository>();
             IOrganizationSettingRepository _organizationSettingRepository =
                 _scope.ServiceProvider.GetRequiredService<IOrganizationSettingRepository>();
             IMailKitIntegration _mailKitIntegration = _scope.ServiceProvider.GetRequiredService<IMailKitIntegration>();
-            List<SendEmailDbo> sendEmails = _repository.GetEntities(false, x => x.IsSended == false && x.IsError == false).Result;
+            List<SendEmailDbo> sendEmails = await _repository.GetEntities(false, x => x.IsSended == false && x.IsError == false);
             foreach (SendEmailDbo sendEmail in sendEmails)
             {
                 try
                 {
-                    OrganizationSettingDbo getOrganizationSetting = _organizationSettingRepository.GetEntity(
+                    OrganizationSettingDbo getOrganizationSetting = await _organizationSettingRepository.GetEntity(
                         false,
                         x => x.OrganizationId == sendEmail.OrganizationId
                     );
@@ -81,7 +81,7 @@ namespace Services.HangfireJob
                 }
                 finally
                 {
-                    _ = _repository.UpdateEntity(sendEmail, Guid.Empty);
+                    _ = await _repository.UpdateEntity(sendEmail, Guid.Empty);
                 }
             }
         }

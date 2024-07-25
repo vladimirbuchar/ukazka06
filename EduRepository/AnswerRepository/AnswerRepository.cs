@@ -1,10 +1,11 @@
-﻿using System;
-using System.Linq;
-using Core.Base.Repository;
+﻿using Core.Base.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Model;
 using Model.Edu.Answer;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Repository.AnswerRepository
 {
@@ -33,13 +34,13 @@ namespace Repository.AnswerRepository
                 .ThenInclude(x => x.Culture);
         }
 
-        public override Guid GetOrganizationId(Guid objectId)
+        public override async Task<Guid> GetOrganizationId(Guid objectId)
         {
-            return _dbContext
+            return (await _dbContext
                 .Set<AnswerDbo>()
                 .Include(x => x.TestQuestion)
                 .ThenInclude(x => x.BankOfQuestion)
-                .FirstOrDefault(x => x.Id == objectId)
+                .FirstOrDefaultAsync(x => x.Id == objectId))
                 .TestQuestion.BankOfQuestion.OrganizationId;
         }
     }

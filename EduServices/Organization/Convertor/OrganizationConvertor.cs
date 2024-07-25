@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Core.Base.Repository.CodeBookRepository;
+﻿using Core.Base.Repository.CodeBookRepository;
 using Core.Constants;
 using Core.DataTypes;
 using Microsoft.Extensions.Configuration;
@@ -15,6 +12,10 @@ using Model.Edu.OrganizationSetting;
 using Model.Link;
 using Repository.OrganizationRoleRepository;
 using Services.Organization.Dto;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Services.Organization.Convertor
 {
@@ -31,8 +32,10 @@ namespace Services.Organization.Convertor
         private readonly string _elearningUrl = configuration.GetSection(ConfigValue.ELEARNING_URL).Value;
         private readonly string _fileServerUrl = configuration.GetSection(ConfigValue.FILE_SERVER_URL).Value;
 
-        public OrganizationDbo ConvertToBussinessEntity(OrganizationCreateDto addOrganizationDto, string culture)
+        public async Task<OrganizationDbo> ConvertToBussinessEntity(OrganizationCreateDto addOrganizationDto, string culture)
         {
+            Guid ownerRoleId = (await _organizationRoleRepository
+                            .GetEntity(false, x => x.SystemIdentificator == Core.Constants.OrganizationRole.ORGANIZATION_OWNER)).Id;
             List<OrganizationAddressDbo> addresses = addOrganizationDto
                 .Addresses?.Select(item => new OrganizationAddressDbo()
                 {
@@ -46,7 +49,8 @@ namespace Services.Organization.Convertor
                     OrganizationId = Guid.Empty
                 })
                 .ToList();
-            return new OrganizationDbo()
+            return await Task.FromResult(new OrganizationDbo()
+
             {
                 Name = addOrganizationDto.Name,
                 Email = addOrganizationDto.Email,
@@ -75,9 +79,7 @@ namespace Services.Organization.Convertor
                     new UserInOrganizationDbo()
                     {
                         UserId = addOrganizationDto.UserId,
-                        OrganizationRoleId = _organizationRoleRepository
-                            .GetEntity(false, x => x.SystemIdentificator == Core.Constants.OrganizationRole.ORGANIZATION_OWNER)
-                            .Id
+                        OrganizationRoleId =  ownerRoleId
                     }
                 ],
                 Branch =
@@ -129,10 +131,10 @@ namespace Services.Organization.Convertor
                     UserDefaultPassword = addOrganizationDto.Name,
                     UseCustomSmtpServer = false
                 }
-            };
+            });
         }
 
-        public OrganizationDbo ConvertToBussinessEntity(OrganizationUpdateDto updateOrganizationDto, OrganizationDbo entity, string culture)
+        public Task<OrganizationDbo> ConvertToBussinessEntity(OrganizationUpdateDto updateOrganizationDto, OrganizationDbo entity, string culture)
         {
             foreach (OrganizationAddressDbo addr in entity.Addresses)
             {
@@ -174,10 +176,10 @@ namespace Services.Organization.Convertor
             entity.Email = updateOrganizationDto.Email;
             entity.PhoneNumber = updateOrganizationDto.PhoneNumber;
             entity.WWW = updateOrganizationDto.WWW;
-            return entity;
+            return Task.FromResult(entity);
         }
 
-        public OrganizationDetailDto ConvertToWebModel(OrganizationDbo getOrganizationDetail, string culture = "")
+        public Task<OrganizationDetailDto> ConvertToWebModel(OrganizationDbo getOrganizationDetail, string culture = "")
         {
             List<Address> addresss = getOrganizationDetail
                 .Addresses?.Select(item => new Address()
@@ -192,7 +194,7 @@ namespace Services.Organization.Convertor
                     Id = item.Id
                 })
                 .ToList();
-            return new OrganizationDetailDto()
+            return Task.FromResult(new OrganizationDetailDto()
             {
                 Id = getOrganizationDetail.Id,
                 Name = getOrganizationDetail.Name,
@@ -207,19 +209,19 @@ namespace Services.Organization.Convertor
                     getOrganizationDetail.Id,
                     getOrganizationDetail.OrganizationFileRepositories.FindTranslation(culture)?.FileName
                 )
-            };
+            });
         }
 
-        public List<OrganizationListDto> ConvertToWebModel(List<OrganizationDbo> getAllOrganizations, string culture = "")
+        public Task<List<OrganizationListDto>> ConvertToWebModel(List<OrganizationDbo> getAllOrganizations, string culture = "")
         {
-            return getAllOrganizations
+            return Task.FromResult(getAllOrganizations
                 .Select(item => new OrganizationListDto()
                 {
                     //Description = item.Description,
                     Id = item.Id,
                     Name = item.Name,
                 })
-                .ToList();
+                .ToList());
         }
 
         public OrganizationDetailWebDto ConvertToWebModelWeb(OrganizationDbo getOrganizationDetail)
@@ -248,5 +250,7 @@ namespace Services.Organization.Convertor
                 UserId = Guid.Empty,
             };
         }
+
+
     }
 }

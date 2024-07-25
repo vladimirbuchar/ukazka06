@@ -5,6 +5,7 @@ using Model;
 using Model.Edu.Course;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Repository.CourseRepository
 {
@@ -38,9 +39,9 @@ namespace Repository.CourseRepository
 
         }
 
-        public override Guid GetOrganizationId(Guid objectId)
+        public override async Task<Guid> GetOrganizationId(Guid objectId)
         {
-            return _dbContext.Set<CourseDbo>().FirstOrDefault(x => x.Id == objectId).OrganizationId;
+            return (await _dbContext.Set<CourseDbo>().FirstOrDefaultAsync(x => x.Id == objectId)).OrganizationId;
         }
     }
 }

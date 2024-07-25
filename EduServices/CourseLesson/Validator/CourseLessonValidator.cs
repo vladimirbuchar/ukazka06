@@ -5,6 +5,7 @@ using Model.Edu.CourseLesson;
 using Repository.CourseLessonRepository;
 using Repository.CourseMaterialRepository;
 using Services.CourseLesson.Dto;
+using System.Threading.Tasks;
 
 namespace Services.CourseLesson.Validator
 {
@@ -14,22 +15,22 @@ namespace Services.CourseLesson.Validator
     {
         private readonly ICourseMaterialRepository _courseMaterialRepository = courseMaterialRepository;
 
-        public override Result<CourseLessonDetailDto> IsValid(CourseLessonCreateDto create)
+        public override async Task<Result> IsValid(CourseLessonCreateDto create)
         {
             Result<CourseLessonDetailDto> result = new();
             IsValidString(create.Name, result, MessageCategory.COURSE_LESSON, MessageItem.STRING_IS_EMPTY);
-            if (_courseMaterialRepository.GetEntity(create.MaterialId) == null)
+            if (await _courseMaterialRepository.GetEntity(create.MaterialId) == null)
             {
                 result.AddResultStatus(new ValidationMessage(MessageType.ERROR, MessageCategory.COURSE_MATERIAL, MessageItem.NOT_EXISTS));
             }
             return result;
         }
 
-        public override Result<CourseLessonDetailDto> IsValid(CourseLessonUpdateDto update)
+        public override async Task<Result<CourseLessonDetailDto>> IsValid(CourseLessonUpdateDto update)
         {
             Result<CourseLessonDetailDto> result = new();
             IsValidString(update.Name, result, MessageCategory.COURSE_LESSON, MessageItem.STRING_IS_EMPTY);
-            return result;
+            return await Task.FromResult(result);
         }
     }
 }

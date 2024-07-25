@@ -1,4 +1,5 @@
 ﻿using Core.Base.Service;
+using Core.Base.Sort;
 using Model.Edu.Branch;
 using Model.Edu.Certificate;
 using Repository.CertificateRepository;
@@ -8,8 +9,10 @@ using Services.Certificate.Filter;
 using Services.Certificate.Sort;
 using Services.Certificate.Validator;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Web.Helpers;
 
 namespace Services.Certificate.Service
 {
@@ -55,7 +58,7 @@ namespace Services.Certificate.Service
                 || oldVersion.CertificateTranslations.FindTranslation(culture).Name != newVersion.Name;
         }
 
-        protected override Expression<Func<CertificateDbo, object>> PrepareSort(string columnName, string culture)
+        protected override List<BaseSort<CertificateDbo>> PrepareSort(string columnName, string culture, SortDirection sortDirection = SortDirection.Ascending)
         {
             if (columnName == CertificateSort.Name.ToString())
             {
@@ -72,7 +75,14 @@ namespace Services.Certificate.Service
                     Expression.Convert(nameProperty, typeof(object)),
                     parameter
                 );
-                return lambda;
+                return
+                [
+                    new BaseSort<CertificateDbo>()
+                    {
+                        Sort =lambda,
+                        SortDirection = sortDirection
+                    }
+                ];
             }
             return base.PrepareSort(columnName, culture);
         }

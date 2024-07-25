@@ -1,5 +1,5 @@
-﻿using System;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
+using System;
 
 namespace Services.CourseMaterial.Dto
 {

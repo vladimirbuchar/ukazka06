@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Core.Base.Repository.CodeBookRepository;
+﻿using Core.Base.Repository.CodeBookRepository;
 using Core.Base.Service;
 using Core.DataTypes;
 using Model.CodeBook;
@@ -10,6 +7,10 @@ using Model.Edu.SendEmailAttachment;
 using Repository.SendEmailRepository;
 using Services.SystemService.SendMailService.Convertor;
 using Services.SystemService.SendMailService.Dto;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Services.SystemService.SendMailService.Service
 {
@@ -21,7 +22,7 @@ namespace Services.SystemService.SendMailService.Service
     {
         private readonly ICodeBookRepository<EduEmailDbo> _email = codeBookRepository;
 
-        public void AddEmailToQueue(
+        public async Task AddEmailToQueue(
             string subject,
             string html,
             List<string> attachment,
@@ -30,7 +31,7 @@ namespace Services.SystemService.SendMailService.Service
             string reply
         )
         {
-            _ = _repository.CreateEntity(
+            _ = await _repository.CreateEntity(
                 new SendEmailDbo()
                 {
                     Body = html,
@@ -41,7 +42,7 @@ namespace Services.SystemService.SendMailService.Service
             );
         }
 
-        public void AddEmailToQueue(
+        public async Task AddEmailToQueue(
             string emailIdentificator,
             string culture,
             EmailAddress emailAddressTo,
@@ -50,11 +51,11 @@ namespace Services.SystemService.SendMailService.Service
             string reply = ""
         )
         {
-            EduEmailDbo eduEmail = _email.GetEntity(false, x => x.SystemIdentificator == string.Format("{0}_{1}", emailIdentificator, culture));
+            EduEmailDbo eduEmail = await _email.GetEntity(false, x => x.SystemIdentificator == string.Format("{0}_{1}", emailIdentificator, culture));
             if (eduEmail == null)
             {
                 culture = "en";
-                eduEmail = _email.GetEntity(false, x => x.SystemIdentificator == string.Format("{0}_{1}", emailIdentificator, culture));
+                eduEmail = await _email.GetEntity(false, x => x.SystemIdentificator == string.Format("{0}_{1}", emailIdentificator, culture));
             }
             if (eduEmail != null)
             {
@@ -65,7 +66,7 @@ namespace Services.SystemService.SendMailService.Service
                     emailBodyHtml = emailBodyHtml.Replace("{" + item.Key + "}", item.Value);
                     emailBodyPlainText = emailBodyPlainText.Replace("{" + item.Key + "}", item.Value);
                 }
-                _ = _repository.CreateEntity(
+                _ = await _repository.CreateEntity(
                     new SendEmailDbo()
                     {
                         Body = emailBodyHtml,
@@ -84,22 +85,22 @@ namespace Services.SystemService.SendMailService.Service
             }
         }
 
-        public List<SendMailListDto> GetList(Guid orgranizationId)
+        public async Task<List<SendMailListDto>> GetList(Guid orgranizationId)
         {
-            return _convertor.ConvertToWebModel(_repository.GetEntities(false, x => x.OrganizationId == orgranizationId).Result);
+            return _convertor.ConvertToWebModel(await _repository.GetEntities(false, x => x.OrganizationId == orgranizationId));
         }
 
-        public SendMaiDetailDto GetDetail(Guid id)
+        public async Task<SendMaiDetailDto> GetDetail(Guid id)
         {
-            return _convertor.ConvertToWebModel(_repository.GetEntity(id));
+            return _convertor.ConvertToWebModel(await _repository.GetEntity(id));
         }
 
-        public SendMaiDetailDto Update(SendMailUpdateDto updateDto, Guid userId)
+        public async Task<SendMaiDetailDto> Update(SendMailUpdateDto updateDto, Guid userId)
         {
-            SendEmailDbo email = _repository.GetEntity(updateDto.Id);
+            SendEmailDbo email = await _repository.GetEntity(updateDto.Id);
             email.IsSended = updateDto.IsSended;
-            _ = _repository.UpdateEntity(email, userId);
-            return GetDetail(updateDto.Id);
+            _ = await _repository.UpdateEntity(email, userId);
+            return await GetDetail(updateDto.Id);
         }
     }
 }

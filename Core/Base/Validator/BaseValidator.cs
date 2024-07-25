@@ -1,15 +1,17 @@
-﻿using System;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
 using Core.Base.Repository;
+using Core.Constants;
 using Core.DataTypes;
 using Core.Extension;
 using Model;
+using System;
+using System.Threading.Tasks;
 
 namespace Core.Base.Validator
 {
     public class BaseValidator<Model, Repository, Create, Detail, Update>(Repository repository)
-        : BaseValidator<Model, Repository, Create, Detail>(repository),
-            IBaseValidator<Model, Repository, Create, Detail>
+        : BaseValidator<Model, Repository, Create>(repository),
+            IBaseValidatorCreate<Model, Repository, Create>
         where Model : TableModel
         where Repository : IBaseRepository<Model>
         where Create : CreateDto
@@ -21,18 +23,37 @@ namespace Core.Base.Validator
         /// </summary>
         /// <param name="update"></param>
         /// <returns></returns>
-        public virtual Result<Detail> IsValid(Update update)
+        public virtual async Task<Result<Detail>> IsValid(Update update)
         {
-            return new Result<Detail>();
+            return await Task.FromResult(new Result<Detail>());
         }
     }
 
-    public class BaseValidator<Model, Repository, Create, Detail>(Repository repository)
+    public class BaseValidator<Model, Repository, Create>(Repository repository)
         : BaseValidator<Model, Repository>(repository),
-            IBaseValidator<Model, Repository, Create, Detail>
+            IBaseValidatorCreate<Model, Repository, Create>
         where Model : TableModel
         where Repository : IBaseRepository<Model>
         where Create : CreateDto
+
+    {
+        /// <summary>
+        /// check is object valid
+        /// </summary>
+        /// <param name="create"></param>
+        /// <returns></returns>
+        public virtual async Task<Result> IsValid(Create create)
+        {
+            return await Task.FromResult(new Result());
+        }
+    }
+
+    public class BaseValidatorUpdate<Model, Repository, Update, Detail>(Repository repository)
+        : BaseValidator<Model, Repository>(repository),
+            IBaseValidatorUpdate<Model, Repository, Update, Detail>
+        where Model : TableModel
+        where Repository : IBaseRepository<Model>
+        where Update : UpdateDto
         where Detail : DetailDto
     {
         /// <summary>
@@ -40,18 +61,14 @@ namespace Core.Base.Validator
         /// </summary>
         /// <param name="create"></param>
         /// <returns></returns>
-        public virtual Result<Detail> IsValid(Create create)
+        public virtual async Task<Result<Detail>> IsValid(Update update)
         {
-            return new Result<Detail>();
+            return await Task.FromResult(new Result<Detail>());
         }
     }
 
-    public class BaseValidator<Model, Repository>(Repository repository) : IBaseValidator<Model, Repository>
-        where Model : TableModel
-        where Repository : IBaseRepository<Model>
+    public class BaseValidator()
     {
-        protected Repository _repository = repository;
-
         /// <summary>
         /// is valid string
         /// </summary>
@@ -66,6 +83,15 @@ namespace Core.Base.Validator
                 result.AddResultStatus(new ValidationMessage(MessageType.ERROR, category, item));
             }
         }
+    }
+
+    public class BaseValidator<Model, Repository>(Repository repository) : BaseValidator, IBaseValidator<Model, Repository>
+        where Model : TableModel
+        where Repository : IBaseRepository<Model>
+    {
+        protected Repository _repository = repository;
+
+
 
         /// <summary>
         /// check is valid email
@@ -177,7 +203,7 @@ namespace Core.Base.Validator
         /// <param name="category"></param>
         /// <param name="item"></param>
         /// <param name="value"></param>
-        protected virtual void IsExist(
+        protected virtual async Task IsExist(
             System.Linq.Expressions.Expression<Func<Model, bool>> predicate,
             Result result,
             string category,
@@ -185,11 +211,11 @@ namespace Core.Base.Validator
             string value = ""
         )
         {
-            if (_repository.GetEntities(false, predicate).Result.Count > 0)
+            if ((await _repository.GetEntity(false, predicate)) != null)
             {
                 result.AddResultStatus(new ValidationMessage(MessageType.ERROR, category, item, value));
             }
-            if (_repository.GetEntities(true, predicate).Result.Count > 0)
+            if ((await _repository.GetEntity(true, predicate)) != null)
             {
                 result.AddResultStatus(new ValidationMessage(MessageType.ERROR, category, item, value));
             }
@@ -205,7 +231,7 @@ namespace Core.Base.Validator
         /// <param name="category"></param>
         /// <param name="item"></param>
         /// <param name="value"></param>
-        protected virtual void CodeBookValueExist<T>(
+        protected virtual async Task CodeBookValueExist<T>(
             IBaseRepository<T> codeBookData,
             System.Linq.Expressions.Expression<Func<T, bool>> predicate,
             Result result,
@@ -215,10 +241,17 @@ namespace Core.Base.Validator
         )
             where T : TableModel
         {
-            if (codeBookData.GetEntities(false, predicate).Result.Count == 0)
+            T codeBook = await codeBookData.GetEntity(false, predicate);
+            if (codeBook == null)
             {
                 result.AddResultStatus(new ValidationMessage(MessageType.ERROR, category, item, value));
             }
+            else if (codeBook.SystemIdentificator == CodebookValue.CODEBOOK_SELECT_VALUE)
+            {
+                result.AddResultStatus(new ValidationMessage(MessageType.ERROR, category, item, value));
+            }
+
+
         }
     }
 }

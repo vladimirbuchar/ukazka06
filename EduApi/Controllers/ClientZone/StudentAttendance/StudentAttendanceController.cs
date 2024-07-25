@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using Core.Base.Dto;
+﻿using Core.Base.Dto;
 using Core.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.OrganizationRole.Service;
 using Services.StudentAttendance.Dto;
 using Services.StudentAttendance.Service;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EduApi.Controllers.ClientZone.StudentAttendance
 {
@@ -31,7 +32,7 @@ namespace EduApi.Controllers.ClientZone.StudentAttendance
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Create(StudentAttendanceCreateDto saveStudentAttendanceDto)
+        public Task<ActionResult> Create(StudentAttendanceCreateDto saveStudentAttendanceDto)
         {
             try
             {
@@ -49,15 +50,16 @@ namespace EduApi.Controllers.ClientZone.StudentAttendance
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult List([FromQuery] ListRequestDto request)
+        public async Task<ActionResult> List([FromQuery] ListRequestDto request)
         {
             try
             {
-                return SendResponse(_studentAttendanceService.GetList(x => x.CourseTermId == request.ParentId));
+                var result = await _studentAttendanceService.GetList(x => x.CourseTermId == request.ParentId);
+                return await SendResponse(result);
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -67,16 +69,16 @@ namespace EduApi.Controllers.ClientZone.StudentAttendance
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Delete([FromQuery] DeleteDto request)
+        public async Task<ActionResult> Delete([FromQuery] DeleteDto request)
         {
             try
             {
-                CheckOrganizationPermition(_studentAttendanceService.GetOrganizationIdByObjectId(request.Id));
-                return SendResponse(_studentAttendanceService.DeleteObject(request.Id, GetLoggedUserId()));
+                await CheckOrganizationPermition(await _studentAttendanceService.GetOrganizationIdByObjectId(request.Id));
+                return await SendResponse(await _studentAttendanceService.DeleteObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
 
@@ -86,16 +88,16 @@ namespace EduApi.Controllers.ClientZone.StudentAttendance
         [ProducesResponseType(typeof(SystemError), 500)]
         [ProducesResponseType(typeof(Result), 400)]
         [ProducesResponseType(typeof(void), 403)]
-        public ActionResult Restore([FromQuery] RestoreDto request)
+        public async Task<ActionResult> Restore([FromQuery] RestoreDto request)
         {
             try
             {
-                CheckOrganizationPermition(_studentAttendanceService.GetOrganizationIdByObjectId(request.Id));
-                return SendResponse(_studentAttendanceService.RestoreObject(request.Id, GetLoggedUserId()));
+                await CheckOrganizationPermition(await _studentAttendanceService.GetOrganizationIdByObjectId(request.Id));
+                return await SendResponse(await _studentAttendanceService.RestoreObject(request.Id, GetLoggedUserId()));
             }
             catch (Exception e)
             {
-                return SendSystemError(e);
+                return await SendSystemError(e);
             }
         }
     }
