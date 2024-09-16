@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="StudentAttendance\Convertor\**" />
+    <Compile Remove="StudentAttendance\Service\**" />
+    <Compile Remove="StudentAttendance\Validator\**" />
+    <EmbeddedResource Remove="StudentAttendance\Convertor\**" />
+    <EmbeddedResource Remove="StudentAttendance\Service\**" />
+    <EmbeddedResource Remove="StudentAttendance\Validator\**" />
+    <None Remove="StudentAttendance\Convertor\**" />
+    <None Remove="StudentAttendance\Service\**" />
+    <None Remove="StudentAttendance\Validator\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj" />
+    <ProjectReference Include="..\EduRepository\Repository.csproj" />
+    <ProjectReference Include="..\Model\Model.csproj" />
+  </ItemGroup>
+
+</Project>

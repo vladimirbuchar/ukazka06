@@ -1,0 +1,25 @@
+﻿using Core.Base.Dto;
+
+namespace CourseService.Course.CourseDetail.Dto
+{
+    public class CourseDetailDto : DetailDto
+    {
+        public bool IsPrivateCourse { get; set; }
+        public double Price { get; set; }
+        public int Sale { get; set; }
+        public Guid CourseStatusId { get; set; }
+        public Guid CourseTypeId { get; set; }
+        public string CourseType { get; set; } = string.Empty;
+        public string FileName { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public int MinimumStudent { get; set; }
+        public int MaximumStudent { get; set; }
+        public Guid? CertificateId { get; set; }
+        public bool AutomaticGenerateCertificate { get; set; }
+        public Guid? CourseMaterialId { get; set; }
+        public Guid? SendMessageId { get; set; }
+        public bool SendEmail { get; set; }
+        public bool CourseWithLector { get; set; }
+    }
+}

@@ -1,0 +1,20 @@
+﻿using Model.Edu.Organization;
+using Model.Link;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Model.Edu.StudentGroup
+{
+    [Table("Edu_StudentGroup")]
+    public class StudentGroupDbo : TableModel
+    {
+        public virtual Guid OrganizationId { get; set; }
+        public virtual OrganizationDbo Organization { get; set; }
+
+        [Column("Name")]
+        public virtual string Name { get; set; }
+        public virtual ICollection<StudentInGroupCourseTermDbo> StudentInGroupCourseTerms { get; set; }
+        public virtual ICollection<UserInOrganizationDbo> UserInOrganization { get; set; }
+    }
+}

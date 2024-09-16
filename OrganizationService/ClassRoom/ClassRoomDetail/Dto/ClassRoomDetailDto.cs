@@ -1,0 +1,11 @@
+﻿using Core.Base.Dto;
+
+namespace OrganizationService.ClassRoom.ClassRoomDetail.Dto
+{
+    public class ClassRoomDetailDto : DetailDto
+    {
+        public int Floor { get; set; }
+        public int MaxCapacity { get; set; }
+        public string? Name { get; set; }
+    }
+}

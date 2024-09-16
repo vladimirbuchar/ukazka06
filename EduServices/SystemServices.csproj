@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="CourseTermLector\**" />
+    <Compile Remove="CourseTest\**" />
+    <Compile Remove="DataMigrationSerivce\**" />
+    <Compile Remove="SystemService\**" />
+    <EmbeddedResource Remove="CourseTermLector\**" />
+    <EmbeddedResource Remove="CourseTest\**" />
+    <EmbeddedResource Remove="DataMigrationSerivce\**" />
+    <EmbeddedResource Remove="SystemService\**" />
+    <None Remove="CourseTermLector\**" />
+    <None Remove="CourseTest\**" />
+    <None Remove="DataMigrationSerivce\**" />
+    <None Remove="SystemService\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj" />
+    <ProjectReference Include="..\CourseService\CourseService.csproj" />
+    <ProjectReference Include="..\EduRepository\Repository.csproj" />
+    <ProjectReference Include="..\Integration\Integration.csproj" />
+    <ProjectReference Include="..\Model\Model.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="8.0.8" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.0.2" />
+  </ItemGroup>
+
+</Project>
